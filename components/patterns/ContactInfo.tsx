@@ -1,0 +1,50 @@
+import Link from "next/link";
+const ContactInfo = () => {
+  return (
+    <div className="w-full max-w-sm text-sm bg-gray-50 shadow-lg dark:bg-gray-900/50 rounded-tl-2xl rounded-tr-2xl">
+      <div className="flex h-14 pb-0.5 items-center overflow-hidden rounded-tl-2xl rounded-tr-2xl">
+        {/* Active: Github — left-rounded background + gradient text */}
+        <Link
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center h-full rounded-tl-2xl px-12 py-3 font-semibold"
+          style={{
+            background:
+              "var(--gradient-BGlight, linear-gradient(114deg, rgba(62, 123, 250, 0.02) 20.34%, rgba(102, 0, 204, 0.04) 36.8%, rgba(102, 0, 204, 0) 56.12%, rgba(62, 123, 250, 0.02) 76.52%))",
+            boxShadow:
+              "0 8px 8px -4px rgba(0, 0, 0, 0.04), 0 20px 24px -4px rgba(0, 0, 0, 0.08)",
+          }}
+        >
+          <span className="text-gradient-blue">Github</span>
+        </Link>
+
+        {/* Inactive: LinkedIn */}
+        <Link
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center px-5 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+        >
+          LinkedIn
+        </Link>
+
+        {/* Divider */}
+        <div
+          className="h-5 w-px shrink-0 bg-gray-300 dark:bg-gray-700"
+          aria-hidden
+        />
+
+        {/* Inactive: Email (underlined) */}
+        <a
+          href="mailto:contact@ronniekiyegga.com"
+          className="flex items-center px-5 py-3 text-sm text-gray-400 decoration-gray-400 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+        >
+          contact
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default ContactInfo;

@@ -50,7 +50,7 @@ export const FaceScanIllustration = () => {
         transition={{ duration: 0.5, delay: 1.5, type: "spring" }}
         className="aspect-2/3 absolute inset-0 z-10 m-auto w-24"
       >
-        <CardDecorator className="scale-125 border-white blur-[3px]" />
+        <CardDecorator className="scale-125 border-white blur-[6px]" />
         <motion.div
           initial={{ "--frame-color": "white" }}
           animate={{ "--frame-color": "var(--color-lime-400)" }}

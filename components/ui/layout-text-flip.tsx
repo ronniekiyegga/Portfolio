@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export const LayoutTextFlip = ({
-  text = "Build Amazing",
-  words = ["Landing Pages", "Component Blocks", "Page Sections", "3D Shaders"],
+  text = "DESIGN-FOCUSED",
+  words = ["ENGINEER", "DESIGNER", "BACKEND", "3D Shaders"],
   duration = 3000,
 }: {
   text: string;
@@ -26,14 +26,14 @@ export const LayoutTextFlip = ({
     <>
       <motion.span
         layoutId="subtext"
-        className="text-2xl font-bold tracking-tight drop-shadow-lg md:text-4xl"
+        className="text-sm font-bold tracking-tight drop-shadow-lg md:text-xl text-gradient-blue"
       >
         {text}
       </motion.span>
 
       <motion.span
         layout
-        className="relative w-fit overflow-hidden rounded-md border border-transparent bg-white px-4 py-2 font-sans text-2xl font-bold tracking-tight text-black shadow-sm ring shadow-black/10 ring-black/10 drop-shadow-lg md:text-4xl dark:bg-neutral-900 dark:text-white dark:shadow-sm dark:ring-1 dark:shadow-white/10 dark:ring-white/10"
+        className="relative w-fit overflow-hidden rounded-md border border-transparent bg-white px-4 py-2 font-sans text-xl font-bold tracking-tight text-black shadow-sm ring shadow-black/10 ring-black/10 drop-shadow-lg md:text-4xl dark:bg-neutral-900 dark:text-white dark:shadow-sm dark:ring-1 dark:shadow-white/10 dark:ring-white/10"
       >
         <AnimatePresence mode="popLayout">
           <motion.span
