@@ -2,7 +2,7 @@
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
 
 import { encode } from "qss";
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   AnimatePresence,
   motion,
@@ -55,12 +55,13 @@ export const LinkPreview = ({
     src = imageSrc;
   }
 
-  const [isOpen, setOpen] = React.useState(false);
+  const [isOpen, setOpen] = useState(false);
 
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  React.useEffect(() => {
-    setIsMounted(true);
+  useEffect(() => {
+    const id = setTimeout(() => setIsMounted(true), 0);
+    return () => clearTimeout(id);
   }, []);
 
   const springConfig = { stiffness: 100, damping: 15 };
@@ -129,10 +130,11 @@ export const LinkPreview = ({
                   className="block p-1 bg-white border-2 border-transparent shadow rounded-xl hover:border-neutral-200 dark:hover:border-neutral-800"
                   style={{ fontSize: 0 }}
                 >
-                  <img
+                  <Image
                     src={isStatic ? imageSrc : src}
                     width={width}
                     height={height}
+                    // target="_blank"
                     className="rounded-lg"
                     alt="preview image"
                   />

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import LampHeader from "./LampHeader";
+import FeaturesSliderSection from "./FeaturesSliderSection";
 
 const inter = Inter({ subsets: ["latin"] });
 import { TracingBeam } from "../components/ui/tracing-beam";
@@ -14,15 +15,24 @@ export default function ProjectSection() {
       className="w-full py-10"
       style={{
         backgroundImage: "url(/BG_1.png)",
+        // backgroundImage: "url(/Hero_Background.png)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
       <LampHeader />
-      <TracingBeam className="w-full px-16 sm:px-20 lg:px-4 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-4xl antialiased pt-4 relative">
-          {dummyContent.map((item, index) => (
+      <TracingBeam className="w-full px-12 sm:px-20 lg:px-20 py-16 md:py-20">
+        <div className="mx-auto w-full max-w-4xl lg:max-w-2xl antialiased pt-2 relative">
+          {PROJECTDISPLAY.map((tab) => {
+            const { content: Content, ...tabProps } = tab;
+            return (
+              <span key={tab.title}>
+                <Content {...tabProps} />
+              </span>
+            );
+          })}
+          {projectContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
               <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
                 {item.badge}
@@ -54,7 +64,7 @@ export default function ProjectSection() {
   );
 }
 
-const dummyContent = [
+const projectContent = [
   // EduFeedbPro
   {
     title: "EduFeedbackPro",
@@ -93,7 +103,7 @@ const dummyContent = [
   },
   // Ms Maryam's Maths
   {
-    title: "Ms. Maryam's Maths",
+    title: "Mathematics Tutoring",
     description: (
       <>
         <p>
@@ -142,7 +152,7 @@ const dummyContent = [
   },
   // Google Teachable Machine
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "Google Teachable Machine",
     description: (
       <>
         <p>
@@ -177,13 +187,21 @@ const dummyContent = [
       </>
     ),
     badge: "/Design'/",
-    image: "/DMI FOOTER.svg",
-    TechStack: [
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "Express",
-        "Figma",
-      ],
+    image: "/DMI.svg",
+    TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
   },
+];
+
+const PROJECTDISPLAY = [
+  {
+    title: "Code",
+    content: FeaturesSliderSection,
+    backgroundImage: "/BackgroundImage_2.svg",
+    backgroundColor: "black",
+    color: "white",
+  },
+  // {
+  //   title: "Design",
+  //   content: <FeaturesSliderSection />,
+  // },
 ];

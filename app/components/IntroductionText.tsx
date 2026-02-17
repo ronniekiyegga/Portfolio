@@ -16,14 +16,20 @@ export default function IntroductionText() {
         I turn{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
-            className={`${styleScript.className} text-lg md:text-2xl font-bold text-gradient-blue mr-1`}
+            className={`${styleScript.className} text-lg md:text-2xl font-bold  mr-1`}
           >
             ideas
           </span>
           <ImageBadgeFolder />
         </span>{" "}
-        into pixel-perfect products. Design-focused engineer who ships
-        full-stack products from concept to deployment.
+        into pixel-perfect products and treats engineering as a craft,{" "}
+        <span
+          className={`${styleScript.className} text-lg md:text-2xl font-bold  mr-1`}
+        >
+          1 byte at a time
+        </span>
+        . As a design-focused engineer, i enjoy building who ships full-stack
+        products from concept to deployment.
       </div>
     </div>
   );

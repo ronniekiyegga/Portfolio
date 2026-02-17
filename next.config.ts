@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      // Fix mistaken /public/* requests: public folder is served at root
+      { source: "/public/:path*", destination: "/:path*" },
+    ];
+  },
   allowedDevOrigins: [
     "localhost",
     "127.0.0.1",
@@ -12,6 +18,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "api.microlink.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
         pathname: "/**",
       },
     ],

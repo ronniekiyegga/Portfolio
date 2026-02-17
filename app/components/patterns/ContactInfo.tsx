@@ -30,7 +30,7 @@ const ContactInfo = () => {
           className="flex items-center px-5 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
           <span className="hidden sm:block">LinkedIn</span>
-          <Linkedin className="sm:hidden" size={20}/>
+          <Linkedin className="sm:hidden" size={20} />
         </Link>
 
         {/* Divider */}
@@ -45,7 +45,7 @@ const ContactInfo = () => {
           className="flex items-center px-5 mr-4 py-3 text-sm text-gray-400 decoration-gray-400 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
           <span className="hidden sm:block">Contact</span>
-          <Mails className="sm:hidden" size={20}/>
+          <Mails className="sm:hidden" size={20} />
         </Link>
       </div>
     </div>

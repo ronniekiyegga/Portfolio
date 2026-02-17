@@ -4,6 +4,7 @@ import ContactInfo from "@/app/components/patterns/ContactInfo";
 import ProjectSection from "./components/ProjectSection";
 import AnimatedText from "./components/AnimatedText";
 import Marquee from "./components/Marquee";
+import FeaturesSliderSection from "./components/FeaturesSliderSection";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
           <ContactInfo />
         </div>
         <ProjectSection />
+        <FeaturesSliderSection />
         <AnimatedText />
         <Marquee />
       </main>

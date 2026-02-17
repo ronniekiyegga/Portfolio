@@ -8,8 +8,8 @@ export default function AnimatedText() {
       <div className="text-neutral-500 dark:text-neutral-400 text-xl md:text-3xl max-w-3xl text-left mb-10">
         Visit{" "}
         <LinkPreview
-          url="https://ui.aceternity.com"
-          className="font-bold bg-clip-text text-transparent bg-gradient-to-br from-purple-500 to-pink-500"
+          url="https://www.msmaryamsmaths.com"
+          className="font-bold bg-clip-text text-transparent bg-linear-to-br from-purple-500 to-pink-500"
         >
           Aceternity UI
         </LinkPreview>{" "}
@@ -19,8 +19,8 @@ export default function AnimatedText() {
       <div className="text-neutral-500 dark:text-neutral-400 text-xl md:text-3xl max-w-3xl text-left ">
         I listen to{" "}
         <LinkPreview
-          url="https://www.youtube.com/watch?v=S-z6vyR89Ig&list=RDMM&index=3"
-          imageSrc="/images/imraan-hashmi.jpeg"
+          url="https://www.msmaryamsmaths.com"
+          imageSrc="/MATHS_TUTORING.svg"
           isStatic
           className="font-bold"
         >
@@ -29,7 +29,7 @@ export default function AnimatedText() {
         and I watch{" "}
         <LinkPreview
           url="/templates"
-          imageSrc="/images/fight-club.jpeg"
+          imageSrc="/NUMERIX_AI.svg"
           isStatic
           className="font-bold"
         >
