@@ -24,14 +24,6 @@ export default function ProjectSection() {
       <LampHeader />
       <TracingBeam className="w-full px-12 sm:px-20 lg:px-20 py-16 md:py-20">
         <div className="mx-auto w-full max-w-4xl lg:max-w-2xl antialiased pt-2 relative">
-          {PROJECTDISPLAY.map((tab) => {
-            const { content: Content, ...tabProps } = tab;
-            return (
-              <span key={tab.title}>
-                <Content {...tabProps} />
-              </span>
-            );
-          })}
           {projectContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
               <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
@@ -58,6 +50,15 @@ export default function ProjectSection() {
               </div>
             </div>
           ))}
+
+          {/* {PROJECTDISPLAY.map((tab) => {
+            const { content: Content, ...tabProps } = tab;
+            return (
+              <span key={tab.title}>
+                <Content {...tabProps} />
+              </span>
+            );
+          })} */}
         </div>
       </TracingBeam>
     </section>

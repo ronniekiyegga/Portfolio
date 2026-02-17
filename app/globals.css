@@ -14,6 +14,11 @@
   );
 }
 
+html,
+body {
+  background-color: white;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -25,13 +30,7 @@
   --gradient-fade-left: linear-gradient(to left, white, transparent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Theme fixed to light; removed prefers-color-scheme so it doesn't follow system */
 body {
   background: var(--background);
   color: var(--foreground);

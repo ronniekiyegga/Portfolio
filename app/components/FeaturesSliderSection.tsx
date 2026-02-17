@@ -1,8 +1,4 @@
 import { Card } from "@/app/components/ui/card";
-// import { NotesIllustration } from "@/app/components/ui/illustrations/notes-illustration";
-// import { Notes3Illustration } from "@/app/components/ui/illustrations/notes-3-illustration";
-// import { AiAutocompleteIllustration } from "@/app/components/ui/illustrations/ai-autocomplete-illustration";
-// import { TranslationInterfaceIllustration } from "@/app/components/ui/illustrations/translation-interface-illustration";
 import {
   Carousel,
   CarouselContent,
@@ -11,7 +7,10 @@ import {
   CarouselPrevious,
 } from "@/app/components/ui/carousel";
 import SectionKicker from "./ui/section-kicker";
+import { Style_Script } from "next/font/google";
 import Image from "next/image";
+
+const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 const projectCard = [
   {
@@ -130,7 +129,9 @@ export default function FeaturesSliderSection({
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
           <SectionKicker>Exploration</SectionKicker>
-          <h2 className="text-foreground max-w-xs text-balance text-4xl font-semibold">
+          <h2
+            className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}
+          >
             Intersection Of Projects
           </h2>
           <div className="flex items-center gap-2">
@@ -166,25 +167,6 @@ export default function FeaturesSliderSection({
               {content.description}
             </CarouselItem>
           ))}
-
-          {/* <CarouselItem className="space-y-4 md:basis-1/2">
-            <Card className="inset-ring-1 inset-ring-border-illustration shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-md ring-0">
-              <Image
-                src="/NUMERIX_AI.svg"
-                alt="bg c4"
-                width={980}
-                height={980}
-                className="absolute inset-0 size-full opacity-50"
-              />
-            </Card>
-            <p className="text-muted-foreground text-balance">
-              <strong className="text-foreground font-medium">
-                Real-time translation
-              </strong>{" "}
-              across 50+ languages with automatic detection and natural-sounding
-              output for global teams.
-            </p>
-          </CarouselItem> */}
         </CarouselContent>
       </Carousel>
     </section>

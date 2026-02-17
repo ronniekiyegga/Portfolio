@@ -20,11 +20,12 @@
     "dotted-map": "^2.2.3",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.564.0",
-    "motion": "^12.34.0",
+    "motion": "^12.34.1",
     "next": "16.1.6",
     "qss": "^3.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-use-measure": "^2.1.7",
     "tailwind-merge": "^3.4.1"
   },
   "devDependencies": {
