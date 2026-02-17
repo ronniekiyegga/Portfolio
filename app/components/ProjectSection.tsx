@@ -163,7 +163,7 @@ const dummyContent = [
   },
   // TrueFounders
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "TrueFounders",
     description: (
       <>
         <p>
@@ -176,7 +176,14 @@ const dummyContent = [
         </p>
       </>
     ),
-    badge: "/ˈEngineering'/",
+    badge: "/Design'/",
     image: "/DMI FOOTER.svg",
+    TechStack: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Express",
+        "Figma",
+      ],
   },
 ];

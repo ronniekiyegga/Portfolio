@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Github, Linkedin, Mails } from "lucide-react";
+
 const ContactInfo = () => {
   return (
-    <div className="w-full  text-sm font-medium  dark:bg-gray-900/50 rounded-tl-2xl rounded-tr-2xl">
+    <div className="w-full text-sm font-medium  dark:bg-gray-900/50 rounded-tl-2xl rounded-tr-2xl">
       <div className="flex max-w-sm bg-gray-150 shadow-lg h-14 pb-0.5 dark:bg-gray-900/50 items-center justify-between overflow-hidden rounded-tl-2xl rounded-tr-2xl">
         {/* Active: Github — left-rounded background + gradient text */}
         <Link
@@ -16,7 +18,8 @@ const ContactInfo = () => {
               "0 8px 8px -4px rgba(0, 0, 0, 0.04), 0 20px 24px -4px rgba(0, 0, 0, 0.08)",
           }}
         >
-          <span className="text-gradient-blue">Github</span>
+          <span className="hidden sm:block text-gradient-blue">Github</span>
+          <Github className="sm:hidden " size={20} />
         </Link>
 
         {/* Inactive: LinkedIn */}
@@ -26,7 +29,8 @@ const ContactInfo = () => {
           rel="noopener noreferrer"
           className="flex items-center px-5 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
-          LinkedIn
+          <span className="hidden sm:block">LinkedIn</span>
+          <Linkedin className="sm:hidden" size={20}/>
         </Link>
 
         {/* Divider */}
@@ -40,7 +44,8 @@ const ContactInfo = () => {
           href="mailto:contact@ronniekiyegga.com"
           className="flex items-center px-5 mr-4 py-3 text-sm text-gray-400 decoration-gray-400 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
-          contact
+          <span className="hidden sm:block">Contact</span>
+          <Mails className="sm:hidden" size={20}/>
         </Link>
       </div>
     </div>

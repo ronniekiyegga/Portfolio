@@ -26,18 +26,18 @@ export const FaceScanIllustration = () => {
   }, []);
 
   return (
-    <div aria-hidden className="group relative mx-auto w-fit">
+    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden">
       {/* Grid overlay - FIXED: proper circle mask */}
 
       {/* Large name: z-10, behind image but extending wider */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-24 z-0 w-[450px] md:w-[650px] lg:w-[800px] flex justify-between items-start pointer-events-none"
+        className="absolute text-xl left-1/2 -translate-x-1/2 top-24 z-0 w-full max-w-[450px] md:max-w-[650px] lg:max-w-[800px] flex justify-between items-start pointer-events-none"
         aria-hidden
       >
-        <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
+        <span className=" sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
           Ronnie
         </span>
-        <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
+        <span className=" sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
           Kiyegga
         </span>
       </div>
@@ -100,7 +100,7 @@ export const FaceScanIllustration = () => {
 
       {/* Face image in front of text (z-20) */}
       <div
-        className="relative z-50 bg-radial ring-2 aspect-square w-[400px] md:w-[500px] lg:w-[600px] mx-auto group-hover:opacity-95"
+        className="relative z-50 bg-radial ring-2 aspect-square w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto group-hover:opacity-95"
         style={{
           maskImage:
             "radial-gradient(circle closest-side at 50% 50%, #000 70%, transparent 100%)",

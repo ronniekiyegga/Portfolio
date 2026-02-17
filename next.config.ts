@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
     "192.168.1.13", // Your current device
     "::1", // IPv6 localhost
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.microlink.io",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
