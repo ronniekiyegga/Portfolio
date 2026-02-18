@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { PortableText } from '@portabletext/react'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/app/components/ui/breadcrumb'
 import { formatDate } from '@/lib/format-date'
 import { portableTextComponents } from '@/app/components/content-components'
 import { getPostBySlug, getAllPostSlugs } from '@/lib/actions'
