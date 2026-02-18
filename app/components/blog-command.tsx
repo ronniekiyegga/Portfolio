@@ -52,8 +52,7 @@ export function BlogCommandDialog({ categories, pageVariant, posts }: BlogComman
             </Button>
             <CommandDialog
                 open={open}
-                onOpenChange={setOpen}
-                className="ring-background **:data-[slot=command]:bg-card rounded-xl ring-1">
+                onOpenChange={setOpen}>
                 <CommandInput placeholder="Search posts or categories..." />
                 <CommandList className="pb-1">
                     <CommandEmpty>No results found.</CommandEmpty>
