@@ -4,7 +4,12 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useMedia } from "@/app/hooks/use-media";
+import SectionKicker from "./ui/section-kicker";
+import { Style_Script } from "next/font/google";
+
 const AUTOPLAY_DURATION = 7000;
+
+const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 const features = [
   {
@@ -88,9 +93,12 @@ export default function ExpandableFeatures() {
                 }
             `}</style>
       <div className="mx-auto max-w-5xl px-6">
+        <SectionKicker>Exploration</SectionKicker>
         <div className="mb-6 lg:mb-10">
-          <h2 className="text-foreground max-w-xs text-balance text-4xl font-semibold">
-            Exploration
+          <h2
+            className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}
+          >
+            Currently Exploring
           </h2>
         </div>
 

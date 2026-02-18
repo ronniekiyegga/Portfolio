@@ -128,7 +128,7 @@ export default function FeaturesSliderSection({
         className="mx-auto max-w-5xl"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
-          <SectionKicker>Exploration</SectionKicker>
+          <SectionKicker>Design Work</SectionKicker>
           <h2
             className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}
           >
