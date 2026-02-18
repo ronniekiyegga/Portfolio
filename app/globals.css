@@ -28,6 +28,20 @@
   /* Brand Gradients (also in :root for use in utility classes) */
   --gradient-fade-right: linear-gradient(to right, #fcfcfc, transparent);
   --gradient-fade-left: linear-gradient(to left, white, transparent);
+
+  /* Spotlight animation */
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
 }
 
 /* Theme fixed to light; removed prefers-color-scheme so it doesn't follow system */

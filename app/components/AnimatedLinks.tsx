@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
+import Spotlight from "./SpotlightCard";
 
 export const AnimatedLinks = () => {
   const [active, setActive] = useState<number | null>(null);
@@ -45,30 +46,10 @@ export const AnimatedLinks = () => {
 
       <UnderlayTransition active={active} />
     </nav>
+    // <Spotlight>
+    // </Spotlight>
   );
 };
-
-// const Logo = () => {
-//   return (
-//     <svg
-//       width="50"
-//       height="39"
-//       viewBox="0 0 50 39"
-//       fill="none"
-//       xmlns="http://www.w3.org/2000/svg"
-//       className="mb-4 scale-75 fill-neutral-100 md:scale-100"
-//     >
-//       <path
-//         d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-//         stopColor="#000000"
-//       ></path>
-//       <path
-//         d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-//         stopColor="#000000"
-//       ></path>
-//     </svg>
-//   );
-// };
 
 const UnderlayTransition = ({ active }: { active: number | null }) => {
   const [underlayScope, animateUnderlay] = useAnimate();
@@ -170,22 +151,22 @@ const LinkImage = ({
       animate={active === id ? "active" : "inactive"}
       variants={{
         active: {
-          opacity: 0.25,
+          opacity: 0.5,
         },
         inactive: {
           opacity: 0,
         },
       }}
       transition={{
-        duration: 0.6,
-        ease: [0.4, 0, 0.2, 1],
+        duration: 0.5,
+        ease: [0.4, 0, 0.2, 0.5],
         delay: 0.3,
       }}
       style={{
         backgroundImage: `url(${imgSrc})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        filter: "blur(8px)",
+        filter: "blur(6px)",
       }}
     />
   );
@@ -195,7 +176,7 @@ const LINKS = [
   {
     href: "#",
     text: "DESIGN",
-    imgSrc: "/BackgroundImage_2.svg",
+    imgSrc: "/DESIGN.svg",
     id: 1,
   },
   {
@@ -207,7 +188,7 @@ const LINKS = [
   {
     href: "#",
     text: "BLOG",
-    imgSrc: "/Marquee_BIO.svg",
+    imgSrc: "/BLOG.svg",
     id: 3,
   },
   {

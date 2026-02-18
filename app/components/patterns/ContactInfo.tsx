@@ -3,7 +3,7 @@ import { Github, Linkedin, Mails } from "lucide-react";
 
 const ContactInfo = () => {
   return (
-    <div className="w-full text-sm font-medium  dark:bg-gray-900/50 rounded-tl-2xl rounded-tr-2xl">
+    <div className="w-full text-sm font-medium  rounded-tl-2xl rounded-tr-2xl">
       <div className="flex max-w-sm bg-gray-150 shadow-lg h-14 pb-0.5 dark:bg-gray-900/50 items-center justify-between overflow-hidden rounded-tl-2xl rounded-tr-2xl">
         {/* Active: Github — left-rounded background + gradient text */}
         <Link
