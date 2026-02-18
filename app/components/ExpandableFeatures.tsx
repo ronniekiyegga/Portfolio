@@ -93,7 +93,7 @@ export default function ExpandableFeatures() {
                 }
             `}</style>
       <div className="mx-auto max-w-5xl px-6">
-        <SectionKicker>Exploration</SectionKicker>
+        <SectionKicker>Thoughts</SectionKicker>
         <div className="mb-6 lg:mb-10">
           <h2
             className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}

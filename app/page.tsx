@@ -8,11 +8,13 @@ import ProjectSection from "./components/ProjectSection";
 import Marquee from "./components/Marquee";
 import { ThemeToggle } from "./components/ThemeToggle";
 import DynamicIsland from "./components/DynamicIsland";
+import FooterSection from "./components/footer";
+
 export default function Home() {
   return (
     <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans bg-background">
       <main className="flex w-full min-w-0 flex-col items-center overflow-x-hidden">
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <div
           id="contact-info-section"
           className="flex w-full max-w-6xl flex-col items-center justify-center px-8 py-32 md:px-16"
@@ -27,6 +29,7 @@ export default function Home() {
         <AnimatedLinks />
         <Marquee />
         <DynamicIsland />
+        <FooterSection />
       </main>
     </div>
   );

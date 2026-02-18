@@ -196,7 +196,7 @@ const projectContent = [
       </>
     ),
     badge: "DEVELOPER TOOL",
-    image: "/DMI.svg",
+    image: "/AI_PSEUDOCODE_2.svg",
     TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
   },
 ];
