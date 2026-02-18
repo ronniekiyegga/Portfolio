@@ -128,12 +128,13 @@ export default function FeaturesSliderSection({
         className="mx-auto max-w-5xl"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
-          <SectionKicker>Design Work</SectionKicker>
-          <h2
-            className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}
+          <h5 className="text-left text-xs tracking-widest">EXPERIENCE</h5>
+          {/* <SectionKicker>Design Work</SectionKicker> */}
+          {/* <h2
+            className={` text-foreground max-w-xs text-balance text-sm font-semibold`}
           >
             Intersection Of Projects
-          </h2>
+          </h2> */}
           <div className="flex items-center gap-2">
             <CarouselPrevious />
             <CarouselNext />

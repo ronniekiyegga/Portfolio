@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import React from "react";
 import {
   NavigationMenu,
@@ -218,7 +218,11 @@ export default function Header() {
               className="in-has-data-[state=open]:block bg-size-[4px_1px] absolute inset-x-0 bottom-0 hidden h-px bg-[linear-gradient(90deg,var(--color-foreground)_1px,transparent_1px)] bg-repeat-x opacity-20"
             />
             <div className="flex items-center justify-between gap-8 max-lg:h-14 max-lg:w-full max-lg:border-b">
-              <Link href="/" aria-label="home" className="relative block h-6 w-6 overflow-hidden rounded-full">
+              <Link
+                href="/"
+                aria-label="home"
+                className="relative block h-6 w-6 overflow-hidden rounded-full"
+              >
                 <Image
                   src="/Avatar.svg"
                   alt="Home"
