@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
 
 export const AnimatedLinks = () => {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <nav
@@ -70,7 +70,7 @@ export const AnimatedLinks = () => {
 //   );
 // };
 
-const UnderlayTransition = ({ active }) => {
+const UnderlayTransition = ({ active }: { active: number | null }) => {
   const [underlayScope, animateUnderlay] = useAnimate();
 
   useEffect(() => {
@@ -94,7 +94,19 @@ const UnderlayTransition = ({ active }) => {
   );
 };
 
-const AnimatedLink = ({ children, href, setActive, active, id }) => {
+const AnimatedLink = ({
+  children,
+  href,
+  setActive,
+  active,
+  id,
+}: {
+  children: string;
+  href: string;
+  setActive: (id: number | null) => void;
+  active: number | null;
+  id: number;
+}) => {
   return (
     <motion.a
       onMouseEnter={() => {
@@ -143,7 +155,15 @@ const AnimatedLink = ({ children, href, setActive, active, id }) => {
   );
 };
 
-const LinkImage = ({ imgSrc, active, id }) => {
+const LinkImage = ({
+  imgSrc,
+  active,
+  id,
+}: {
+  imgSrc: string;
+  active: number | null;
+  id: number;
+}) => {
   return (
     <motion.div
       className="absolute inset-0 z-0"
