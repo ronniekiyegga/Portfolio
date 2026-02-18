@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 
 export function ThemeToggle() {

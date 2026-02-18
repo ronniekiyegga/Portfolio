@@ -19,6 +19,30 @@
   --foreground: #fafafa;
 }
 
+/* DynamicIsland / Pill styles */
+:root {
+  --Corner-radius-32: 2.26806rem;
+  --Gradients-Cream-Buttons: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.55) 4.86%,
+    rgba(255, 241, 254, 0.08) 22.6%,
+    rgba(251, 233, 217, 0.29) 35.05%,
+    rgba(222, 168, 255, 0.13) 44.56%,
+    rgba(251, 233, 217, 0.07) 57.23%,
+    rgba(255, 255, 255, 0.42) 85.1%
+  );
+  --Gradients-Cream: #fff;
+  --Gradients-White-1: linear-gradient(180deg, #fbfbfb 38.73%, #f7f7f9 100%);
+  --BG-Black-2: #1a1a1a;
+  --Gradients-Button-Outer: linear-gradient(
+    135deg,
+    #fff 54.8%,
+    rgba(251, 233, 217, 0.59) 69.69%,
+    #dedaf9 86.6%,
+    rgba(240, 172, 247, 0.76) 97.21%
+  );
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

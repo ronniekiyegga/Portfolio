@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script } from "next/font/google";
 import "./globals.css";
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-dancing-script",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif",
+});
+
+const styleScript = Style_Script({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-style-script",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} antialiased overflow-x-hidden bg-background text-foreground`}
         suppressHydrationWarning
       >
         <Script

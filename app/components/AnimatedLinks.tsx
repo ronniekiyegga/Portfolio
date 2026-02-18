@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
-import Spotlight from "./SpotlightCard";
+import { Style_Script } from "next/font/google";
+
+
 
 export const AnimatedLinks = () => {
   const [active, setActive] = useState<number | null>(null);

@@ -24,6 +24,7 @@
     "@reui": "https://reui.io/r/{style}/{name}.json",
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json",
     "@tailark": "https://tailark.com/r/{name}.json",
-    "@magicui": "https://magicui.design/r/{name}"
+    "@magicui": "https://magicui.design/r/{name}",
+    "@react-bits": "https://reactbits.dev/r/{name}.json"
   }
 }
