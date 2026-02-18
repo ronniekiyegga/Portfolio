@@ -26,7 +26,7 @@ export const FaceScanIllustration = () => {
   }, []);
 
   return (
-    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden">
+    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden px-28 md:px-40 lg:px-52">
       {/* Grid overlay - FIXED: proper circle mask */}
 
       {/* Large name: z-10, behind image but extending wider */}
@@ -34,10 +34,10 @@ export const FaceScanIllustration = () => {
         className="absolute text-xl left-1/2 -translate-x-1/2 top-24 z-0 w-full max-w-[450px] md:max-w-[650px] lg:max-w-[800px] flex justify-between items-start pointer-events-none"
         aria-hidden
       >
-        <span className=" sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
+        <span className="sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-50 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.5)] select-none">
           Ronnie
         </span>
-        <span className=" sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-200 drop-shadow-sm select-none">
+        <span className="sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-50 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.5)] select-none">
           Kiyegga
         </span>
       </div>
@@ -70,8 +70,8 @@ export const FaceScanIllustration = () => {
         <div className="bg-linear-to-r/increasing animate-hue-rotate absolute inset-0 rounded-full from-pink-300 to-indigo-300" />
       </div>
 
-      {/* Scan line */}
-      <div className="animate-scan absolute inset-x-12 inset-y-0 z-10">
+      {/* Scan line - hidden to remove shadow above face in dark mode */}
+      <div className="animate-scan absolute inset-x-12 inset-y-0 z-10 hidden">
         <div className="absolute inset-x-0 m-auto h-6 rounded-full bg-white/50 blur-2xl" />
       </div>
 

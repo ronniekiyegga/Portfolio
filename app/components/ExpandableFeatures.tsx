@@ -4,8 +4,6 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useMedia } from "@/app/hooks/use-media";
-import { MapIllustration } from "@/app/components/ui/illustrations/map-illustration";
-
 const AUTOPLAY_DURATION = 7000;
 
 const features = [
@@ -16,8 +14,6 @@ const features = [
     ariaLabel: "extend smart email composition feature",
     image: "/AI_PSEUDOCODE.svg",
     imageAlt: "bg c1",
-    illustration: <MapIllustration />,
-    illustrationClassName: "scale-80",
     cardClassName: "h-96",
   },
   {
@@ -27,8 +23,7 @@ const features = [
     ariaLabel: "extend AI autocomplete feature",
     image: "/NUMERIX_AI.png",
     imageAlt: "bg c3",
-    illustration: <MapIllustration />,
-    illustrationClassName: "pt-8",
+    cardClassName: "h-96",
   },
 ];
 
@@ -125,11 +120,8 @@ export default function ExpandableFeatures() {
                   alt={feature.imageAlt}
                   width={980}
                   height={980}
-                  className="absolute inset-0 size-full object-cover opacity-50 dark:opacity-25"
+                  className="absolute inset-0 size-full object-cover opacity-80 dark:opacity-25"
                 />
-                <div className={feature.illustrationClassName}>
-                  {feature.illustration}
-                </div>
               </div>
               <div>
                 {isMd && (
