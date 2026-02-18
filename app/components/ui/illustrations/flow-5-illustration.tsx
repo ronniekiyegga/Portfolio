@@ -1,6 +1,6 @@
 'use client'
 
-import { LogoIcon } from '@/components/logo'
+import { LogoIcon } from "@/app/components/logo"
 import { cn } from '@/lib/utils'
 
 export const Flow5Illustration = () => {
