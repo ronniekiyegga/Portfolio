@@ -1,8 +1,8 @@
 import { Gemini } from "@/app/components/ui/svgs/gemini";
 import { MistralAi } from "@/app/components/ui/svgs/mistral-ai";
-import { Openai } from "@/components/ui/svgs/openai";
-import { Deepseek } from "@/components/ui/svgs/deepseek";
-import { QwenLight as Qwen } from "@/components/ui/svgs/qwen";
+import { OpenAI } from "@/app/components/ui/svgs/open-ai";
+import { Deepseek } from "@/app/components/ui/svgs/deepseek";
+import { QwenLight as Qwen } from "@/app/components/ui/svgs/qwen";
 import { Play } from "lucide-react";
 
 type Model = {
@@ -13,7 +13,7 @@ type Model = {
 export const Models3Illustration = () => {
   const models: Model[] = [
     { name: "Gemini", icon: <Gemini /> },
-    { name: "Open AI", icon: <Openai className="fill-foreground" /> },
+    { name: "Open AI", icon: <OpenAI className="fill-foreground" /> },
     { name: "Deepseek", icon: <Deepseek /> },
     { name: "Mistral AI", icon: <MistralAi /> },
     { name: "Qwen", icon: <Qwen className="fill-foreground" /> },
