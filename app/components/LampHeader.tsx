@@ -3,10 +3,11 @@
 import { motion } from "motion/react";
 import { LampContainer } from "./ui/lamp";
 import SectionKicker from "./ui/section-kicker";
+import AnimatedText from "./AnimatedText";
 
 export default function LampHeader() {
   return (
-    <LampContainer kicker={<SectionKicker>Random Shots</SectionKicker>}>
+    <LampContainer kicker={<SectionKicker>Projects</SectionKicker>}>
       <motion.h1
         initial={{ opacity: 0.5, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -17,7 +18,7 @@ export default function LampHeader() {
         }}
         className="mt-8 text-white bg-linear-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-xl font-medium tracking-tight md:text-3xl"
       >
-        Intersection Of Design & Engineering
+        <AnimatedText />
       </motion.h1>
     </LampContainer>
   );
