@@ -6,9 +6,9 @@ import ContactInfo from "@/app/components/patterns/ContactInfo";
 import { AnimatedLinks } from "./components/AnimatedLinks";
 import ProjectSection from "./components/ProjectSection";
 import Marquee from "./components/Marquee";
-import { ThemeToggle } from "./components/ThemeToggle";
 import DynamicIsland from "./components/DynamicIsland";
 import FooterSection from "./components/footer";
+import Experiences from "./components/Experiences";
 
 export default function Home() {
   return (
@@ -24,6 +24,7 @@ export default function Home() {
           <ContactInfo />
         </div>
         <ProjectSection />
+        <Experiences />
         <FeaturesSliderSection />
         <ExpandableFeatures />
         <AnimatedLinks />
