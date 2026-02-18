@@ -62,4 +62,4 @@ export default function Marquee() {
       <ThreeDMarquee images={images} />
     </div>
   );
-}
+}6

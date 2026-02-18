@@ -26,7 +26,7 @@ export const FaceScanIllustration = () => {
   }, []);
 
   return (
-    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden px-28 md:px-40 lg:px-52">
+    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden px-8 md:px-40 lg:px-52">
       {/* Grid overlay - FIXED: proper circle mask */}
 
       {/* Large name: z-10, behind image but extending wider */}
