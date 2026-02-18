@@ -3,7 +3,7 @@ import ImagesBadge from "@/app/components/ui/images-badge";
 
 const PROJECT_IMAGES = [
   "/NUMERIX_AI.svg",
-  "/DMI FOOTER.svg",
+  "/DMI.svg",
   "/GOOGLE_TEACHABLE.svg",
 ];
 

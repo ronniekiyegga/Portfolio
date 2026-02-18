@@ -174,25 +174,25 @@ const LinkImage = ({ imgSrc, active, id }) => {
 const LINKS = [
   {
     href: "#",
-    text: "Design",
+    text: "DESIGN",
     imgSrc: "/BackgroundImage_2.svg",
     id: 1,
   },
   {
     href: "#",
-    text: "Engineering",
+    text: "ENGINEERING",
     imgSrc: "/Portfolio_IMG.svg",
     id: 2,
   },
   {
     href: "#",
-    text: "Blog",
+    text: "BLOG",
     imgSrc: "/Marquee_BIO.svg",
     id: 3,
   },
   {
     href: "#",
-    text: "Tools",
+    text: "Snapshots",
     imgSrc: "/BG_1.png",
     id: 4,
   },

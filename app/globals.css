@@ -14,9 +14,9 @@
   );
 }
 
-html,
-body {
-  background-color: white;
+.dark {
+  --background: #000000;
+  --foreground: #fafafa;
 }
 
 @theme inline {
@@ -43,4 +43,8 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

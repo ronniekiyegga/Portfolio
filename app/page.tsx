@@ -7,10 +7,12 @@ import { AnimatedLinks } from "./components/AnimatedLinks";
 import ProjectSection from "./components/ProjectSection";
 import AnimatedText from "./components/AnimatedText";
 import Marquee from "./components/Marquee";
+import { ThemeToggle } from "./components/ThemeToggle";
 export default function Home() {
   return (
-    <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans dark:bg-black">
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans bg-background">
       <main className="flex w-full min-w-0 flex-col items-center overflow-x-hidden">
+        <ThemeToggle />
         <div className="flex w-full max-w-6xl flex-col items-center justify-center px-8 py-32 md:px-16">
           <FaceScanIllustration />
           <IntroductionText />
