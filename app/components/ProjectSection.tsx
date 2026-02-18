@@ -23,17 +23,20 @@ export default function ProjectSection() {
       }}
     >
       <LampHeader />
-      <TracingBeam className="w-full px-12 sm:px-20 lg:px-24 py-16 md:py-20">
+      <TracingBeam className="w-full px-12 sm:px-20 lg:px-32 py-16 md:py-2">
         <div className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative">
           {/* <ExpandableFeatures /> */}
           {projectContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
-              <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
+              <h4 className=" text-white rounded-full text-[12px] w-fit py-1 mb-2 text-gradient-blue">
                 {item.badge}
-              </h2>
+              </h4>
 
               <p
-                className={twMerge(inter.className, "text-xl mb-4 text-white")}
+                className={twMerge(
+                  inter.className,
+                  "text-2xl font-bold mb-4 text-white",
+                )}
               >
                 {item.title}
               </p>
@@ -74,12 +77,11 @@ const projectContent = [
     description: (
       <>
         <p>
-          Schools needed real-time CAT4 score analysis, KHDA compliance
-          reporting, and cross-year performance tracking. Existing solutions
-          were prohibitively expensive ($800/month) and required extensive
-          manual data entry.
+          School analytics platform for KHDA compliance and student performance
+          tracking across UAE schools. Reduced manual reporting time from 12
+          hours to 15 minutes per cycle.
         </p>
-        <p>
+        {/* <p>
           Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad
           veniam in commodo id reprehenderit adipisicing. Proident duis
           exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.
@@ -90,10 +92,18 @@ const projectContent = [
           irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud.
           Amet culpa officia aliquip deserunt veniam deserunt officia
           adipisicing aliquip proident officia sunt.
-        </p>
+        </p> */}
       </>
     ),
-    badge: "/ˈEngineering/",
+    badge: "B2B SAAS PLATFORM",
+    statistics: [
+      {
+        ActiveStudents: 1200,
+        schools: 1,
+        timesSaved: 98,
+        costReduction: 2.4,
+      },
+    ],
     image: "/NUMERIX_AI.svg",
     TechStack: [
       "Next.js",
@@ -139,7 +149,7 @@ const projectContent = [
         </p>
       </>
     ),
-    badge: "/ˈEngineering/",
+    badge: "B2C SAAS PLATFORM",
     image: "/MATHS_TUTORING.svg",
     TechStack: [
       "Next.js",
@@ -171,25 +181,21 @@ const projectContent = [
         </p>
       </>
     ),
-    badge: "/ˈEngineering'/",
+    badge: "EDUCATIONAL TOOL",
     image: "/GOOGLE_TEACHABLE.svg",
   },
   // TrueFounders
   {
-    title: "TrueFounders",
+    title: "AI-Powered Pseudocode IDE",
     description: (
       <>
         <p>
-          Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat
-          deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation
-          non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur
-          sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea
-          velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam
-          commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.
+          Web-based IDE for Cambridge IGCSE pseudocode specification. Used by
+          400+ students for exam preparation and coursework development.
         </p>
       </>
     ),
-    badge: "/Design'/",
+    badge: "DEVELOPER TOOL",
     image: "/DMI.svg",
     TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
   },
