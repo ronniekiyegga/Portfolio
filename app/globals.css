@@ -171,10 +171,55 @@
 }
 
 /* Theme fixed to light; removed prefers-color-scheme so it doesn't follow system */
+html {
+  scrollbar-gutter: stable;
+}
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Footer background - ensure dark mode applies when theme is toggled */
+.footer-section {
+  background-color: #ffffff;
+}
+.dark .footer-section {
+  background-color: #0a0a0a;
+  background-image: url("/BG_1.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Footer CTA text - force white in dark mode */
+.dark .footer-section .footer-cta-heading,
+.dark .footer-section .footer-cta-heading span:not([class*="gradient"]),
+.dark .footer-section .footer-cta-paragraph {
+  color: #ffffff !important;
+}
+
+/* Footer "DESIGN ENGINEER" watermark - Bodoni 72 Oldstyle / Bodoni Moda, light vs dark gradient */
+.footer-design-engineer {
+  font-family: "Bodoni 72 Oldstyle", var(--font-bodoni-moda), "Bodoni Moda", serif;
+  background: linear-gradient(
+    180deg,
+    rgba(148, 148, 148, 0.61) 56.07%,
+    rgba(7, 7, 7, 0) 86.27%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark .footer-design-engineer {
+  background: linear-gradient(
+    180deg,
+    #d9d9d9 56.07%,
+    rgba(243, 243, 243, 0) 86.27%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Gradient text using --gradient-blue */

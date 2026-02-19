@@ -18,7 +18,7 @@ export const ThreeDMarquee = ({
   return (
     <div
       className={cn(
-        "mx-auto block h-[800px] overflow-hidden max-sm:h-100",
+        "mx-auto block h-[800px] overflow-hidden max-sm:h-[400px]",
         className,
       )}
     >
@@ -38,6 +38,7 @@ export const ThreeDMarquee = ({
                   repeat: Infinity,
                   repeatType: "reverse",
                 }}
+                style={{ willChange: "transform" }}
                 key={colIndex + "marquee"}
                 className="flex flex-col items-start gap-8"
               >
