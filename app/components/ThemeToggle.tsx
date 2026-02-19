@@ -52,7 +52,7 @@ export default function ThemeToggle({
       </div>
       <div className="theme-toggle-outer shrink-0 overflow-hidden">
         <div className="theme-toggle-inner overflow-hidden">
-          <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-700 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+          <AnimatedThemeToggler className="size-3 shrink-0 overflow-hidden text-neutral-700 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
         </div>
       </div>
     </div>

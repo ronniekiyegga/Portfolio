@@ -44,7 +44,7 @@ export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="w-full py-16 md:py-32 dark:bg-neutral-950 ">
+    <section className="w-full min-w-0 overflow-x-hidden py-16 md:py-32 dark:bg-neutral-950">
       <div className="mx-auto max-w-5xl px-4 lg:px-0">
         <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES

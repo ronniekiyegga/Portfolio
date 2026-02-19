@@ -13,7 +13,7 @@ export default function FooterSection() {
   return (
     <footer
       role="contentinfo"
-      className="footer-section flex w-full flex-col pt-12 pb-4"
+      className="footer-section flex w-full min-w-0 flex-col overflow-x-hidden pt-12 pb-4"
     >
       {/* Main content area - CTA + faded text */}
       <div className="relative flex flex-col items-center justify-between px-6 py-16 md:px-12 lg:py-12 lg:px-16">

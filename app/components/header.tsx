@@ -86,7 +86,7 @@ export default function Header({
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 lg:gap-12 max-lg:gap-3">
+          <div className="mx-auto flex w-full max-w-7xl min-w-0 items-center justify-between gap-8 lg:gap-12 max-lg:gap-3">
             {/* Mobile: logo + single MobileHeaderPill | Desktop: two pills */}
             {!isLarge ? (
               <>

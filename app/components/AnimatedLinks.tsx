@@ -8,7 +8,7 @@ export const AnimatedLinks = () => {
 
   return (
     <nav
-      className="relative flex min-h-screen w-full items-center  justify-center overflow-hidden bg-neutral-950 py-12 text-neutral-100"
+      className="relative flex min-h-screen w-full min-w-0 items-center justify-center overflow-hidden bg-neutral-950 py-12 text-neutral-100"
       style={{
         backgroundImage: "url(/BackgroundImage_2.svg)",
         // backgroundImage: "url(/Hero_Background.png)",
@@ -108,7 +108,7 @@ const AnimatedLink = ({
         staggerChildren: 0.04,
       }}
       whileHover="hovered"
-      className="flex overflow-hidden py-2 text-5xl font-thin uppercase md:text-6xl lg:text-8xl"
+      className="flex min-w-0 overflow-hidden py-2 text-5xl font-thin uppercase md:text-6xl lg:text-8xl"
     >
       {children.split("").map((ch, idx) => {
         return (
