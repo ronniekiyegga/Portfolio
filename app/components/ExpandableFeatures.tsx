@@ -85,7 +85,7 @@ export default function ExpandableFeatures() {
   };
 
   return (
-    <section className="bg-background @container py-24 w-full max-lg:px-1">
+    <section className="bg-background @container py-24 w-full max-lg:px-1 ">
       <style>{`
                 @keyframes expandProgress {
                     from { transform: scaleX(0); }
@@ -96,7 +96,7 @@ export default function ExpandableFeatures() {
         <SectionKicker>Thoughts</SectionKicker>
         <div className="mb-6 lg:mb-10">
           <h2
-            className={`${styleScript.className} text-foreground max-w-xs text-balance text-4xl font-semibold`}
+            className={`text-foreground max-w-xs text-balance text-sm uppercase tracking-[0.19rem] font-medium opacity-60`}
           >
             Currently Exploring
           </h2>
@@ -128,7 +128,7 @@ export default function ExpandableFeatures() {
                   alt={feature.imageAlt}
                   width={980}
                   height={980}
-                  className="absolute inset-0 size-full object-cover opacity-80 dark:opacity-25"
+                  className="absolute inset-0 size-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 dark:opacity-25"
                 />
               </div>
               <div>

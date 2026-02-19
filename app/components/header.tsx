@@ -1,13 +1,13 @@
 'use client'
 import Link from 'next/link'
 import { Logo } from '@/app/components/logo'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/app/components/ui/button'
 import React from 'react'
 import { useScroll, useMotionValueEvent } from 'motion/react'
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/app/components/ui/navigation-menu'
 import { Headset, Menu, X, Shield, SquareActivity, Sparkles, Cpu, Gem, ShoppingBag, GraduationCap, BookOpen, Notebook, Croissant } from 'lucide-react'
-import { useMedia } from '@/hooks/use-media'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { useMedia } from '@/app/hooks/use-media'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion'
 import { cn } from '@/lib/utils'
 
 interface FeatureLink {
