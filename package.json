@@ -27,7 +27,7 @@
     "dotted-map": "^2.2.3",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.564.0",
-    "motion": "^12.34.1",
+    "motion": "^12.34.2",
     "next": "16.1.6",
     "next-sanity": "^12.1.0",
     "qss": "^3.0.0",
