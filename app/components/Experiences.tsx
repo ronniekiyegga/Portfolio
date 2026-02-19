@@ -50,7 +50,7 @@ export default function Experiences() {
           EXPERIENCES
         </h2>
 
-        <div className="flex flex-col gap-6 pl-12">
+        <div className="flex flex-col gap-6 pl-4 md:pl-12">
           {experiences.map((item) => {
             const isOpen = hoveredId === item.id;
             return (

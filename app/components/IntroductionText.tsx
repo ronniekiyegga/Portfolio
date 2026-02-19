@@ -12,7 +12,7 @@ export default function IntroductionText() {
       <motion.div className="relative w-full my-1 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
         <LayoutTextFlip text="FULL STACK" words={["DESIGNER", "ENGINEER"]} />
       </motion.div>
-      <div className="mt-4 text-sm md:text-lg text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
+        <div className="mt-6 text-sm md:text-lg text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
         I turn{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
@@ -28,7 +28,7 @@ export default function IntroductionText() {
         >
           1 byte at a time
         </span>
-        . As a design-focused engineer, i enjoy building who ships full-stack
+        . As a design-focused engineer, I enjoy building and shipping full-stack
         products from concept to deployment.
       </div>
     </div>

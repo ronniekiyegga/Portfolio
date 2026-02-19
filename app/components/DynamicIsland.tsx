@@ -32,7 +32,7 @@ export default function DynamicIsland() {
     return () => observer.disconnect();
   }, []);
 
-  const showPills = isVisible && !isDismissed;
+  const showPills = !isDismissed;
 
   return (
     <AnimatePresence>

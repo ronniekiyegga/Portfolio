@@ -12,6 +12,7 @@ import { TracingBeam } from "../components/ui/tracing-beam";
 export default function ProjectSection() {
   return (
     <section
+      id="projects"
       className="w-full py-10 contrast-100"
       style={{
         backgroundImage: "url(/BG_1.png)",

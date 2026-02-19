@@ -801,9 +801,9 @@ export default function SplashCursor({
       const dyeRes = getResolution(config.DYE_RESOLUTION!);
 
       const texType = ext.halfFloatTexType;
-      const rgba = ext.formatRGBA;
-      const rg = ext.formatRG;
-      const r = ext.formatR;
+      const rgba = ext.formatRGBA!;
+      const rg = ext.formatRG!;
+      const r = ext.formatR!;
       const filtering = ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
       gl.disable(gl.BLEND);
 
