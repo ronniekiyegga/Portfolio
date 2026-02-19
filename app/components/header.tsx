@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import { Menu, X } from "lucide-react";
+import { RiMenu4Line } from "react-icons/ri";
 import { useMedia } from "@/app/hooks/use-media";
 import { Style_Script } from "next/font/google";
 import {
@@ -15,6 +17,12 @@ import {
 } from "@/app/components/ui/navigation-menu";
 import { FaWandSparkles } from "react-icons/fa6";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/app/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import MobileHeaderPill from "./MobileHeaderPill";
 import { motion, AnimatePresence } from "motion/react";
@@ -31,22 +39,40 @@ const coursesLinks = [
   { name: "Tutorials", href: "#" },
 ];
 
+const mobileLinks = [
+  { groupName: "Projects", links: projectsLinks },
+  { groupName: "Courses", links: coursesLinks },
+  { name: "Blog", href: "/blog" },
+  { name: "Resume", href: "#" },
+];
+
 const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left");
 const pillBaseRight = cn("backdrop-blur-sm pill-light pill-dark-right");
 
 interface HeaderProps {
   isHeaderVisible: boolean;
+  isMobileMenuOpen?: boolean;
+  onMobileMenuChange?: (open: boolean) => void;
   splashActive: boolean;
   setSplashActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Header({
   isHeaderVisible,
+  isMobileMenuOpen = false,
+  onMobileMenuChange,
   splashActive,
   setSplashActive,
 }: HeaderProps) {
   const isLarge = useMedia("(min-width: 64rem)");
   const showHeader = isHeaderVisible;
+
+  React.useEffect(() => {
+    if (isMobileMenuOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <AnimatePresence>
@@ -64,11 +90,11 @@ export default function Header({
             {/* Mobile: logo + single MobileHeaderPill | Desktop: two pills */}
             {!isLarge ? (
               <>
-                {/* Mobile: compact logo container */}
+                {/* Mobile: single bar - logo | dark pill | hamburger */}
                 <div
                   className={cn(
                     pillBaseLeft,
-                    "flex items-center rounded-2xl px-3 py-2",
+                    "flex w-full items-center justify-between gap-3 rounded-2xl px-3 py-2",
                   )}
                 >
                   <Link href="/" aria-label="Home" className="shrink-0">
@@ -81,10 +107,28 @@ export default function Header({
                       priority
                     />
                   </Link>
+                  <div className="flex items-center gap-2">
+                    <MobileHeaderPill
+                      splashActive={splashActive}
+                      setSplashActive={setSplashActive}
+                    />
+                    <button
+                      onClick={() => onMobileMenuChange?.(!isMobileMenuOpen)}
+                      aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                      className="-m-2 flex size-10 items-center justify-center rounded-lg p-2 text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                    >
+                      {isMobileMenuOpen ? (
+                        <X className="size-5" />
+                      ) : (
+                        <RiMenu4Line className="size-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
-                <MobileHeaderPill
-                  splashActive={splashActive}
-                  setSplashActive={setSplashActive}
+                {/* Mobile menu overlay */}
+                <MobileMenu
+                  isOpen={isMobileMenuOpen}
+                  onClose={() => onMobileMenuChange?.(false)}
                 />
               </>
             ) : (
@@ -244,5 +288,80 @@ export default function Header({
         </motion.header>
       )}
     </AnimatePresence>
+  );
+}
+
+function MobileMenu({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+        onClick={onClose}
+        aria-hidden
+      />
+      {/* Menu panel */}
+      <nav
+        role="navigation"
+        className={cn(
+          pillBaseLeft,
+          "fixed left-4 right-4 top-18 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl px-4 py-4",
+        )}
+      >
+        <Accordion type="single" collapsible className="w-full">
+          {mobileLinks.map((link, index) => {
+            if ("groupName" in link && link.links) {
+              return (
+                <AccordionItem
+                  key={index}
+                  value={link.groupName!}
+                  className="border-neutral-200/60 dark:border-neutral-700/60"
+                >
+                  <AccordionTrigger className="py-3 text-neutral-700 hover:no-underline dark:text-neutral-300">
+                    {link.groupName}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-1 pl-2">
+                      {link.links.map((l, i) => (
+                        <li key={i}>
+                          <Link
+                            href={l.href}
+                            onClick={onClose}
+                            className="block py-2 text-sm text-neutral-600 dark:text-neutral-400"
+                          >
+                            {l.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            }
+            if ("name" in link && link.href) {
+              return (
+                <Link
+                  key={index}
+                  href={link.href}
+                  onClick={onClose}
+                  className="block border-b border-neutral-200/60 py-3 text-neutral-700 dark:border-neutral-700/60 dark:text-neutral-300"
+                >
+                  {link.name}
+                </Link>
+              );
+            }
+            return null;
+          })}
+        </Accordion>
+      </nav>
+    </>
   );
 }

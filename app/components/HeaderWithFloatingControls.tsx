@@ -15,6 +15,7 @@ const SCROLL_THRESHOLD = 20;
 export default function HeaderWithFloatingControls() {
   const [isHeaderVisible, setIsHeaderVisible] = React.useState(true);
   const [splashActive, setSplashActive] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -28,7 +29,9 @@ export default function HeaderWithFloatingControls() {
   return (
     <>
       <Header
-        isHeaderVisible={isHeaderVisible}
+        isHeaderVisible={isHeaderVisible || isMobileMenuOpen}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onMobileMenuChange={setIsMobileMenuOpen}
         splashActive={splashActive}
         setSplashActive={setSplashActive}
       />

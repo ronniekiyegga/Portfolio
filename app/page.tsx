@@ -4,7 +4,6 @@ import { AnimatedLinks } from "./components/AnimatedLinks";
 import ProjectSection from "./components/ProjectSection";
 import Marquee from "./components/Marquee";
 import DynamicIsland from "./components/DynamicIsland";
-import FooterSection from "./components/footer";
 import Experiences from "./components/Experiences";
 import HeroSection from "./components/HeroSection";
 
@@ -21,7 +20,6 @@ export default function Home() {
         <AnimatedLinks />
         <Marquee />
         <DynamicIsland />
-        <FooterSection />
       </main>
     </div>
   );

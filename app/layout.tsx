@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script } from "next/font/google";
+import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import HeaderWithFloatingControls from "./components/HeaderWithFloatingControls";
 import FooterSection from "./components/footer";
@@ -13,6 +13,7 @@ const dancingScript = Dancing_Script({
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-source-serif",
+  weight: ["400", "600", "700"],
 });
 
 const styleScript = Style_Script({
@@ -31,6 +32,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const bodoniModa = Bodoni_Moda({
+  variable: "--font-bodoni-moda",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga",
   description: "Personal Portfolio",
@@ -44,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} antialiased overflow-x-hidden bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} antialiased overflow-x-hidden bg-background text-foreground`}
         suppressHydrationWarning
       >
         <Script

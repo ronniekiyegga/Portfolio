@@ -61,9 +61,8 @@ export default function Marquee() {
     "/Marquee_Theme_Toggle.svg",
   ];
   return (
-    <div className="mx-auto my-10 w-screen bg-gray-950/5 p-1 ring-1 ring-neutral-700/10 dark:bg-neutral-800">
+    <div className="relative  w-full overflow-x-hidden bg-gray-950/5 p-1 ring-1 ring-neutral-700/10 dark:bg-neutral-800">
       <ThreeDMarquee images={images} />
     </div>
   );
 }
-6;
