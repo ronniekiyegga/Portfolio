@@ -3,8 +3,8 @@ import { LinkPreview } from "@/app/components/ui/link-preview";
 import { Style_Script } from "next/font/google";
 
 interface AnimatedTextProps {
-  figma: string;
-  engineering: string;
+  figma?: string;
+  engineering?: string;
 }
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
