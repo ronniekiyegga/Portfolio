@@ -6,11 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/app/components/ui/carousel";
-import SectionKicker from "./ui/section-kicker";
-import { Style_Script } from "next/font/google";
 import Image from "next/image";
-
-const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 const projectCard = [
   {

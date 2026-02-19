@@ -9,26 +9,34 @@ const experiences = [
   {
     id: "SRS",
     organisation: "The School Of Research Science",
-    role: "Design Engineer / Computer Science Teacher",
+    role: "Design Engineer / CS Teacher",
     dates: "2023 - 2026",
     responsibilities:
       "Built and deployed internal analytics and ML platforms used by 300+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
   },
   {
     id: "Freelance",
-    organisation: "Consultant",
-    role: "Freelance Design Engineer / CS Tutor",
-    dates: "2023 - 2026",
+    organisation: "Freelance Consultant",
+    role: "Design Engineer / CS Tutor",
+    dates: "2020 - 2023",
     responsibilities:
       "Built and deployed internal analytics and ML platforms used by 300+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
   },
   {
-    id: "freelance",
-    organisation: "Consultant",
-    role: "Freelance Design Engineer / Tutor",
-    dates: "2020 - 2023",
+    id: "Internship",
+    organisation: "Adaptive Financial Consulting ",
+    role: "Software Engineer Intern ",
+    dates: "2019 - 2019",
     responsibilities:
-      "Developed full-stack applications and production UI systems for 8+ clients using React, Next.js, and Node.js, improving performance by up to 40%. Designed reusable component systems and scalable frontend architectures.",
+      "Built React dashboards and internal tools for financial systems, collaborating with engineers and designers to deliver production features supporting engineering and analytics workflows.",
+  },
+  {
+    id: "Fitness",
+    organisation: "DW Fitness First Baker Street",
+    role: "Senior Strength & Conditioning Consultant",
+    dates: "2015 - 2019",
+    responsibilities:
+      "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
   },
 ];
 
@@ -36,9 +44,9 @@ export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="w-full py-16 md:py-24 dark:bg-neutral-950 ">
+    <section className="w-full py-16 md:py-32 dark:bg-neutral-950 ">
       <div className="mx-auto max-w-5xl px-4 lg:px-0">
-        <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.1rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
+        <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES
         </h2>
 
@@ -64,7 +72,7 @@ export default function Experiences() {
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         {item.role && (
                           <>
-                            <span className="text-sm text-neutral-600 dark:text-neutral-400">
+                            <span className="text-sm text-neutral-500 dark:text-neutral-400">
                               {item.role}
                             </span>
                             <span className="text-neutral-400">•</span>

@@ -16,7 +16,7 @@ export default function Integrations({
     return (
       <span className="inline-flex flex-wrap items-center gap-2">
         <span className="text-sm text-neutral-600 dark:text-neutral-400">
-          Integrate with:
+          Tech Stack:
         </span>
         <span className="inline-flex flex-wrap items-center gap-3 divide-x divide-neutral-300 *:pr-3 dark:divide-neutral-600">
           <span>
