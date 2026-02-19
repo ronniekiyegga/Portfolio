@@ -19,7 +19,7 @@ export default function Marquee() {
     // "https://assets.aceternity.com/flip-text.png",
     "/Marquee_Folder.svg",
     "/Marquee_NumerixAI.svg",
-    "/Marquee_Folder.svg",
+    "/Marquee_Theme_Toggle.svg",
     // "https://assets.aceternity.com/hero-highlight.png",
     "/Marquee_Folder.svg",
     // "https://assets.aceternity.com/carousel.webp",
@@ -35,11 +35,13 @@ export default function Marquee() {
     // "https://assets.aceternity.com/cloudinary_bkp/Parallax_Scroll_pzlatw_anfkh7.png",
     // "https://assets.aceternity.com/tabs.png",
     "/Marquee_BIO.svg",
-    "/Marquee_BIO.svg",
-    "/Marquee_BIO.svg",
+    // "/Marquee_BIO.svg",
+    // "/Marquee_BIO.svg",
     "/Marquee_BIO.svg",
     "/Marquee_NumerixAI.svg",
-    "/Marquee_NumerixAI.svg",
+    "/Marquee_Theme_Toggle.svg",
+    "/Marquee_Theme_Toggle.svg",
+    // "/Marquee_NumerixAI.svg",
     "/Marquee_NumerixAI.svg",
     "https://assets.aceternity.com/cloudinary_bkp/Tracing_Beam_npujte.png",
     "https://assets.aceternity.com/cloudinary_bkp/typewriter-effect.png",
@@ -53,13 +55,15 @@ export default function Marquee() {
     "https://assets.aceternity.com/cloudinary_bkp/Meteors_fye3ys.png",
     "https://assets.aceternity.com/cloudinary_bkp/Moving_Border_yn78lv.png",
     "https://assets.aceternity.com/multi-step-loader.png",
-    "https://assets.aceternity.com/vortex.png",
-    "https://assets.aceternity.com/wobble-card.png",
-    "https://assets.aceternity.com/world-map.webp",
+    // "https://assets.aceternity.com/vortex.png",
+    // "https://assets.aceternity.com/wobble-card.png",
+    // "https://assets.aceternity.com/world-map.webp",
+    "/Marquee_Theme_Toggle.svg",
   ];
   return (
     <div className="mx-auto my-10 w-screen bg-gray-950/5 p-1 ring-1 ring-neutral-700/10 dark:bg-neutral-800">
       <ThreeDMarquee images={images} />
     </div>
   );
-}6
+}
+6;

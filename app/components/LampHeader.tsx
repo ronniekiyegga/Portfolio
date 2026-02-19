@@ -7,7 +7,9 @@ import AnimatedText from "./AnimatedText";
 
 export default function LampHeader() {
   return (
-    <LampContainer kicker={<SectionKicker>Projects</SectionKicker>}>
+    <LampContainer
+      kicker={<SectionKicker>Things I&apos;ve Built</SectionKicker>}
+    >
       <motion.h1
         initial={{ opacity: 0.5, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
