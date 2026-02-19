@@ -1,338 +1,248 @@
-'use client'
-import Link from 'next/link'
-import { Logo } from '@/app/components/logo'
-import { Button } from '@/app/components/ui/button'
-import React from 'react'
-import { useScroll, useMotionValueEvent } from 'motion/react'
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/app/components/ui/navigation-menu'
-import { Headset, Menu, X, Shield, SquareActivity, Sparkles, Cpu, Gem, ShoppingBag, GraduationCap, BookOpen, Notebook, Croissant } from 'lucide-react'
-import { useMedia } from '@/app/hooks/use-media'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/app/components/ui/accordion'
-import { cn } from '@/lib/utils'
+"use client";
 
-interface FeatureLink {
-    href: string
-    name: string
-    description?: string
-    icon: React.ReactElement
+import Link from "next/link";
+import Image from "next/image";
+import React from "react";
+import { useMedia } from "@/app/hooks/use-media";
+import { Style_Script } from "next/font/google";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/app/components/ui/navigation-menu";
+import { FaWandSparkles } from "react-icons/fa6";
+import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
+import { cn } from "@/lib/utils";
+import MobileHeaderPill from "./MobileHeaderPill";
+import { motion, AnimatePresence } from "motion/react";
+
+const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
+const projectsLinks = [
+  { name: "All Projects", href: "/#projects" },
+  { name: "Web Apps", href: "/#projects" },
+  { name: "Design Systems", href: "/#projects" },
+];
+
+const coursesLinks = [
+  { name: "All Courses", href: "#" },
+  { name: "Tutorials", href: "#" },
+];
+
+const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left");
+const pillBaseRight = cn("backdrop-blur-sm pill-light pill-dark-right");
+
+interface HeaderProps {
+  isHeaderVisible: boolean;
+  splashActive: boolean;
+  setSplashActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface MobileLink {
-    groupName?: string
-    links?: FeatureLink[]
-    name?: string
-    href?: string
-}
+export default function Header({
+  isHeaderVisible,
+  splashActive,
+  setSplashActive,
+}: HeaderProps) {
+  const isLarge = useMedia("(min-width: 64rem)");
+  const showHeader = isHeaderVisible;
 
-const features: FeatureLink[] = [
-    {
-        href: '#ux',
-        name: 'AI',
-        description: 'Generate Insights and Recommendations',
-        icon: <Sparkles className="stroke-foreground fill-green-500/15" />,
-    },
-    {
-        href: '#performance',
-        name: 'Performance',
-        description: 'Lightning-fast load times',
-        icon: <SquareActivity className="stroke-foreground fill-indigo-500/15" />,
-    },
-    {
-        href: '#security',
-        name: 'Security',
-        description: 'Keep your data safe and secure',
-        icon: <Shield className="stroke-foreground fill-blue-500/15" />,
-    },
-    {
-        href: '#support',
-        name: 'Customer Support',
-        description: 'Get help when you need it',
-        icon: <Headset className="stroke-foreground fill-pink-500/15" />,
-    },
-]
-
-const useCases: FeatureLink[] = [
-    {
-        href: '#ux',
-        name: 'Marketplace',
-        description: 'Find and buy AI tools',
-        icon: <ShoppingBag className="stroke-foreground fill-emerald-500/25" />,
-    },
-    {
-        href: '#performance',
-        name: 'Guides',
-        description: 'Learn how to use AI tools',
-        icon: <GraduationCap className="stroke-foreground fill-indigo-500/15" />,
-    },
-    {
-        href: '#security',
-        name: 'API Integration',
-        description: 'Integrate AI tools into your app',
-        icon: <Cpu className="stroke-foreground fill-blue-500/15" />,
-    },
-    {
-        href: '#support',
-        name: 'Partnerships',
-        description: 'Get help when you need it',
-        icon: <Gem className="stroke-foreground fill-pink-500/15" />,
-    },
-]
-
-const contentLinks: FeatureLink[] = [
-    { name: 'Announcements', href: '#link', icon: <BookOpen className="stroke-foreground fill-purple-500/15" /> },
-    { name: 'Resources', href: '#link', icon: <Croissant className="stroke-foreground fill-red-500/15" /> },
-    { name: 'Blog', href: '#link', icon: <Notebook className="stroke-foreground fill-zinc-500/15" /> },
-]
-
-const mobileLinks: MobileLink[] = [
-    {
-        groupName: 'Product',
-        links: features,
-    },
-    {
-        groupName: 'Solutions',
-        links: [...useCases, ...contentLinks],
-    },
-    { name: 'Pricing', href: '#' },
-    { name: 'Company', href: '#' },
-]
-
-export default function HeaderOne() {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-    const [isScrolled, setIsScrolled] = React.useState(false)
-    const isLarge = useMedia('(min-width: 64rem)')
-
-    const { scrollY } = useScroll()
-
-    useMotionValueEvent(scrollY, 'change', (latest) => {
-        setIsScrolled(latest > 50)
-    })
-
-    return (
-        <>
-            <header
-                role="banner"
-                data-state={isMobileMenuOpen ? 'active' : 'inactive'}
-                {...(isScrolled && { 'data-scrolled': true })}>
-                <div className={cn('in-data-scrolled:border-b in-data-scrolled:bg-background/50 in-data-scrolled:backdrop-blur fixed inset-x-0 top-0 z-50', !isLarge && 'h-14 overflow-hidden border-b', isMobileMenuOpen && 'bg-background/75 h-screen backdrop-blur')}>
-                    <div className="mx-auto max-w-6xl px-6 lg:px-12">
-                        <div className="relative flex flex-wrap items-center justify-between lg:py-5">
-                            <div className="flex justify-between gap-8 max-lg:h-14 max-lg:w-full max-lg:border-b">
-                                <Link
-                                    href="/"
-                                    aria-label="home"
-                                    className="flex items-center space-x-2">
-                                    <Logo uniColor />
-                                </Link>
-
-                                {isLarge && <NavMenu />}
-                                <button
-                                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                    aria-label={isMobileMenuOpen == true ? 'Close Menu' : 'Open Menu'}
-                                    className="relative z-20 -m-2.5 -mr-3 block cursor-pointer p-2.5 lg:hidden">
-                                    <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-5 duration-200" />
-                                    <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-5 -rotate-180 scale-0 opacity-0 duration-200" />
-                                </button>
-                            </div>
-
-                            {!isLarge && isMobileMenuOpen && <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />}
-
-                            <div className="max-lg:in-data-[state=active]:mt-6 in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                                <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                    <Button
-                                        asChild
-                                        variant="outline"
-                                        size="sm">
-                                        <Link href="#">
-                                            <span>Login</span>
-                                        </Link>
-                                    </Button>
-                                    <Button
-                                        asChild
-                                        size="sm">
-                                        <Link href="#">
-                                            <span>Get Started</span>
-                                        </Link>
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <AnimatePresence>
+      {showHeader && (
+        <motion.header
+          key="header"
+          role="banner"
+          className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-8 lg:pt-6"
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 lg:gap-12 max-lg:gap-3">
+            {/* Mobile: logo + single MobileHeaderPill | Desktop: two pills */}
+            {!isLarge ? (
+              <>
+                {/* Mobile: compact logo container */}
+                <div
+                  className={cn(
+                    pillBaseLeft,
+                    "flex items-center rounded-2xl px-3 py-2",
+                  )}
+                >
+                  <Link href="/" aria-label="Home" className="shrink-0">
+                    <Image
+                      src="/Ronnie_Logo.svg"
+                      alt="Ronnie Kiyegga - Engineer"
+                      width={80}
+                      height={44}
+                      className="h-8 w-auto dark:invert"
+                      priority
+                    />
+                  </Link>
                 </div>
-            </header>
-            <main
-                role="main"
-                className="bg-background h-[120vh]"
-            />
-        </>
-    )
-}
+                <MobileHeaderPill
+                  splashActive={splashActive}
+                  setSplashActive={setSplashActive}
+                />
+              </>
+            ) : (
+              <>
+                {/* Desktop: Left pill - Logo + Projects + Courses */}
+                <div
+                  className={cn(
+                    pillBaseLeft,
+                    "flex items-center gap-2 px-3 py-2 lg:gap-3 lg:px-2 lg:py-2.5",
+                  )}
+                >
+                  <Link href="/" aria-label="Home" className="shrink-0">
+                    <Image
+                      src="/Ronnie_Logo.svg"
+                      alt="Ronnie Kiyegga - Engineer"
+                      width={105}
+                      height={57}
+                      className="h-9 w-auto dark:invert lg:h-10"
+                      priority
+                    />
+                  </Link>
 
-const MobileMenu = ({ closeMenu }: { closeMenu: () => void }) => {
-    return (
-        <nav
-            role="navigation"
-            className="w-full">
-            <Accordion
-                type="single"
-                collapsible
-                className="**:hover:no-underline -mx-4 mt-0.5 space-y-0.5">
-                {mobileLinks.map((link, index) => {
-                    if (link.groupName && link.links) {
-                        return (
-                            <AccordionItem
-                                key={index}
-                                value={link.groupName}
-                                className="group relative border-b-0 before:pointer-events-none before:absolute before:inset-x-4 before:bottom-0 before:border-b">
-                                <AccordionTrigger className="**:!font-normal data-[state=open]:bg-foreground/5 flex items-center justify-between px-4 py-3 text-lg">{link.groupName}</AccordionTrigger>
-                                <AccordionContent className="pb-5">
-                                    <ul>
-                                        {link.links.map((feature, featureIndex) => (
-                                            <li key={featureIndex}>
-                                                <Link
-                                                    href={feature.href}
-                                                    onClick={closeMenu}
-                                                    className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2">
-                                                    <div
-                                                        aria-hidden
-                                                        className="flex items-center justify-center *:size-4">
-                                                        {feature.icon}
-                                                    </div>
-                                                    <div className="text-base">{feature.name}</div>
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </AccordionContent>
-                            </AccordionItem>
-                        )
-                    }
-                    return null
-                })}
-            </Accordion>
-            {mobileLinks.map((link, index) => {
-                if (link.name && link.href) {
-                    return (
-                        <Link
-                            key={index}
-                            href={link.href}
-                            onClick={closeMenu}
-                            className="group relative block border-0 border-b py-4 text-lg">
-                            {link.name}
-                        </Link>
-                    )
-                }
-                return null
-            })}
-        </nav>
-    )
-}
-
-const NavMenu = () => {
-    return (
-        <NavigationMenu className="**:data-[slot=navigation-menu-viewport]:left-8 **:data-[slot=navigation-menu-viewport]:top-3 max-lg:hidden">
-            <NavigationMenuList className="gap-3">
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>Product</NavigationMenuTrigger>
-                    <NavigationMenuContent className="p-0">
-                        <div className="w-72">
-                            <div className="bg-card ring-border relative rounded-xl p-0.5 pt-2 shadow ring-1">
-                                <span className="text-muted-foreground ml-3 text-xs font-medium uppercase">Features</span>
-                                <ul className="mt-1">
-                                    {features.map((feature, index) => (
-                                        <ListItem
-                                            key={index}
-                                            href={feature.href}
-                                            title={feature.name}
-                                            description={feature.description}>
-                                            {feature.icon}
-                                        </ListItem>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className="-mt-2">
-                                <NavigationMenuLink
-                                    asChild
-                                    className={navigationMenuTriggerStyle({ className: 'w-full items-start pb-5 pt-7' })}>
+                  <nav className="flex items-center gap-0.5">
+                    <NavigationMenu>
+                      <NavigationMenuList className=" border-0 bg-transparent p-0">
+                        <NavigationMenuItem value="projects">
+                          <NavigationMenuTrigger
+                            className={cn(
+                              "bg-transparent text-neutral-600 hover:bg-transparent dark:text-neutral-400 dark:hover:bg-transparent",
+                              "text-gradient-blue hover:text-gradient-blue data-[state=open]:text-gradient-blue",
+                            )}
+                          >
+                            Projects
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <ul className="grid w-[180px] gap-1 p-2">
+                              {projectsLinks.map((link, i) => (
+                                <li key={i}>
+                                  <NavigationMenuLink asChild>
                                     <Link
-                                        href="#"
-                                        className="text-primary">
-                                        More features
+                                      href={link.href}
+                                      className="block rounded-md px-3 py-2 text-xs text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                    >
+                                      {link.name}
                                     </Link>
-                                </NavigationMenuLink>
-                            </div>
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>Solutions</NavigationMenuTrigger>
-                    <NavigationMenuContent className="min-w-lg grid grid-cols-[auto_1fr] gap-1.5 p-0">
-                        <div className="bg-card ring-border rounded-xl p-0.5 pt-2 shadow ring-1">
-                            <span className="text-muted-foreground ml-3 text-xs font-medium uppercase">Use Cases</span>
-                            <ul className="mt-1">
-                                {useCases.map((useCase, index) => (
-                                    <ListItem
-                                        key={index}
-                                        href={useCase.href}
-                                        title={useCase.name}
-                                        description={useCase.description}>
-                                        {useCase.icon}
-                                    </ListItem>
-                                ))}
+                                  </NavigationMenuLink>
+                                </li>
+                              ))}
                             </ul>
-                        </div>
-                        <div className="p-0.5 pt-2">
-                            <span className="text-muted-foreground ml-3 text-xs font-medium uppercase">Content</span>
-                            <ul className="mt-1">
-                                {contentLinks.map((content, index) => (
-                                    <NavigationMenuLink
-                                        key={index}
-                                        asChild>
-                                        <Link
-                                            href={content.href}
-                                            className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-3">
-                                            {content.icon}
-                                            <div className="text-foreground text-sm font-medium">{content.name}</div>
-                                        </Link>
-                                    </NavigationMenuLink>
-                                ))}
+                          </NavigationMenuContent>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem value="courses">
+                          <NavigationMenuTrigger className="bg-transparent text-neutral-600 hover:bg-transparent hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
+                            Courses
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <ul className="grid w-[180px] gap-1 p-2">
+                              {coursesLinks.map((link, i) => (
+                                <li key={i}>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      href={link.href}
+                                      className="block rounded-md px-3 py-2 text-xs text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                    >
+                                      {link.name}
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              ))}
                             </ul>
-                        </div>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuLink
-                        asChild
-                        className={navigationMenuTriggerStyle()}>
-                        <Link href="#">Pricing</Link>
-                    </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuLink
-                        asChild
-                        className={navigationMenuTriggerStyle()}>
-                        <Link href="#">Company</Link>
-                    </NavigationMenuLink>
-                </NavigationMenuItem>
-            </NavigationMenuList>
-        </NavigationMenu>
-    )
-}
+                          </NavigationMenuContent>
+                        </NavigationMenuItem>
+                      </NavigationMenuList>
+                    </NavigationMenu>
+                  </nav>
+                </div>
 
-function ListItem({ title, description, children, href, ...props }: React.ComponentPropsWithoutRef<'li'> & { href: string; title: string; description?: string }) {
-    return (
-        <li {...props}>
-            <NavigationMenuLink asChild>
-                <Link
-                    href={href}
-                    className="grid grid-cols-[auto_1fr] gap-2.5 p-3">
-                    <div className="bg-illustration ring-foreground/10 before:bg-radial before:to-foreground/3 *:drop-shadow-black/6.5 relative flex size-9 items-center justify-center rounded-lg border border-transparent shadow shadow-sm ring-1 *:drop-shadow before:absolute before:inset-0 before:rounded-lg">{children}</div>
-                    <div className="space-y-0.5">
-                        <div className="text-foreground text-sm font-medium">{title}</div>
-                        <p className="text-muted-foreground line-clamp-1 text-xs">{description}</p>
+                {/* Desktop: Right pill - Blog + Resume + dark pill */}
+                <div
+                  className={cn(
+                    pillBaseRight,
+                    "flex items-center gap-2 overflow-hidden px-3 py-2 lg:gap-3 lg:px-4 lg:py-2.5",
+                  )}
+                >
+                  <Link
+                    href="/blog"
+                    className="relative text-[13px] font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                  >
+                    Blog
+                    <span
+                      className="absolute -right-2 -top-1 size-1.5 rounded-full bg-blue-500"
+                      aria-hidden
+                    />
+                  </Link>
+                  <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+                  <Link
+                    href="#"
+                    className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                  >
+                    Resume
+                  </Link>
+                  <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+
+                  {/* Let's chat + SplashCursor + theme toggle (dark pill) */}
+                  <div
+                    className={cn(
+                      "flex items-center gap-1 rounded-full px-2.5 py-1.5",
+                      "bg-neutral-900 shadow-[0_0_20px_rgba(59,7,242,0.3)]",
+                      "dark:bg-neutral-950 dark:border dark:border-neutral-600 dark:shadow-[0_0_24px_rgba(59,7,242,0.4)]",
+                    )}
+                    style={{
+                      backgroundImage: "url(/BG_1.png)",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                  >
+                    <Link
+                      href="mailto:ronniekiyegga@dmi.com"
+                      className={cn(
+                        "flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
+                        styleScript.className,
+                      )}
+                    >
+                      <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                      Let&apos;s chat
+                    </Link>
+                    <div className="h-3.5 w-px shrink-0 bg-white/30" />
+                    <button
+                      type="button"
+                      onClick={() => setSplashActive((prev) => !prev)}
+                      className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
+                      aria-label={
+                        splashActive
+                          ? "Disable fluid cursor"
+                          : "Enable fluid cursor"
+                      }
+                    >
+                      <FaWandSparkles
+                        className={cn(
+                          "size-3.5 shrink-0 transition-colors",
+                          splashActive && "text-cyan-400",
+                        )}
+                      />
+                    </button>
+                    <div className="h-3.5 w-px shrink-0 bg-white/20" />
+                    <div className="theme-toggle-outer shrink-0 pr-1.5">
+                      <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
+                        <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-700 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                      </div>
                     </div>
-                </Link>
-            </NavigationMenuLink>
-        </li>
-    )
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </motion.header>
+      )}
+    </AnimatePresence>
+  );
 }

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/app/components/Hero";
-import FooterSection from "@/app/components/footer";
 
 export const metadata: Metadata = {
   title: "Tailark Quartz pages",
@@ -13,22 +11,18 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Header />
-      <main
-        role="main"
-        data-theme="dark"
-        className="bg-background"
-        style={{
-          backgroundImage: `url(/BG_2.svg)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        {children}
-      </main>
-      <FooterSection />
-    </>
+    <main
+      role="main"
+      data-theme="dark"
+      className="bg-background"
+      style={{
+        backgroundImage: `url(/BG_2.svg)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {children}
+    </main>
   );
 }

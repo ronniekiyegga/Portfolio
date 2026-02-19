@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script } from "next/font/google";
 import "./globals.css";
-import { ThemeToggle } from "./components/ThemeToggle";
+import HeaderWithFloatingControls from "./components/HeaderWithFloatingControls";
+import FooterSection from "./components/footer";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -59,8 +60,9 @@ export default function RootLayout({
             `,
           }}
         />
-        <ThemeToggle />
+        <HeaderWithFloatingControls />
         {children}
+        <FooterSection />
       </body>
     </html>
   );

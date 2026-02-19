@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --Corner-Full: 62.5rem;
+  --Spacing-4: 4px;
+  --Spacing-xl: 20px;
+  --Spacing-40: 40px;
+  --Pill-Light-Border: 1px solid rgba(255, 255, 255, 0.06);
+  --Pill-Light-BG: linear-gradient(253deg, rgba(255, 255, 255, 0.3) 52.37%, rgba(249, 252, 255, 0.3) 96.98%);
+  --Pill-Light-Shadow: var(--Spacing-4) var(--Spacing-xl) var(--Spacing-40) 0 rgba(219, 220, 230, 0.3);
   --gradient-blue: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
   --wand-sparkles-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z'/%3E%3Cpath d='M20 2v4'/%3E%3Cpath d='M22 4h-4'/%3E%3Ccircle cx='4' cy='20' r='2'/%3E%3C/svg%3E");
   --gradient-darkBlue: linear-gradient(144deg, #3e7bfa 3.63%, #60c 94.05%);
@@ -18,6 +25,41 @@
 .dark {
   --background: #000000;
   --foreground: #fafafa;
+  --Gradients-Emoji: rgba(62, 123, 250, 0.05);
+  --Gradients-Pill-BG-Dark: linear-gradient(
+    101deg,
+    rgba(5, 5, 25, 0) 6.16%,
+    rgba(20, 25, 44, 0.09) 23.42%,
+    rgba(51, 66, 84, 0.29) 46.84%,
+    rgba(25, 33, 46, 0.34) 72.6%,
+    rgba(2, 2, 9, 0.71) 101.64%
+  );
+  --Pill-Box-Shadow-Left: 2.353px 11.764px 23.528px 0 rgba(5, 5, 5, 0.3);
+  --Pill-Box-Shadow-Right: 2.353px 11.764px 23.528px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode pill styles - header and DynamicIsland */
+.pill-light {
+  border-radius: var(--Corner-Full, 62.5rem);
+  border: var(--Pill-Light-Border);
+  background: var(--Pill-Light-BG);
+  box-shadow: var(--Pill-Light-Shadow);
+}
+
+/* Dark mode - left pill (header left, DynamicIsland left/middle) */
+.dark .pill-dark-left {
+  border-radius: 36.76213rem;
+  border: 0.588px solid var(--Gradients-Emoji);
+  background: var(--Gradients-Pill-BG-Dark);
+  box-shadow: var(--Pill-Box-Shadow-Left);
+}
+
+/* Dark mode - right pill (header right, DynamicIsland right) */
+.dark .pill-dark-right {
+  border-radius: 36.76213rem;
+  border: 0.588px solid var(--Gradients-Emoji);
+  background: var(--Gradients-Pill-BG-Dark);
+  box-shadow: var(--Pill-Box-Shadow-Right);
 }
 
 /* DynamicIsland / Pill styles */
@@ -42,6 +84,44 @@
     #dedaf9 86.6%,
     rgba(240, 172, 247, 0.76) 97.21%
   );
+}
+
+/* Theme toggle button on right pill - outer/inner structure (transparent) */
+.theme-toggle-outer {
+  border-radius: 1.89169rem;
+  background: transparent;
+  padding: 2px;
+  overflow: hidden;
+}
+.theme-toggle-inner {
+  border-radius: 1.89169rem;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  overflow: hidden;
+}
+
+/* Compact theme toggle for mobile pill (transparent) */
+.theme-toggle-outer-mobile {
+  border-radius: 1.5rem;
+  background: transparent;
+  padding: 2px;
+  overflow: hidden;
+}
+.theme-toggle-inner-mobile {
+  border-radius: 1.5rem;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  overflow: hidden;
 }
 
 @theme inline {

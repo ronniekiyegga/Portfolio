@@ -24,7 +24,8 @@ export default function DynamicIsland() {
       },
       {
         threshold: 0,
-        rootMargin: "-10px 0px 0px 0px",
+        // Trigger when hero has scrolled ~40% out of view (earlier, before lamp)
+        rootMargin: "0px 0px -40% 0px",
       },
     );
 
@@ -32,7 +33,7 @@ export default function DynamicIsland() {
     return () => observer.disconnect();
   }, []);
 
-  const showPills = !isDismissed;
+  const showPills = isVisible && !isDismissed;
 
   return (
     <AnimatePresence>
@@ -45,13 +46,7 @@ export default function DynamicIsland() {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           {/* Left pill - Avatar + Name */}
-          <div
-            className="flex p-[2px]"
-            style={{
-              borderRadius: "var(--Corner-radius-32, 2.26806rem)",
-              background: "var(--Gradients-Cream-Buttons)",
-            }}
-          >
+          <div className="flex p-[2px] pill-light pill-dark-left">
             <div
               className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5"
               style={{
@@ -75,13 +70,7 @@ export default function DynamicIsland() {
           </div>
 
           {/* Middle pill - Email (slightly bigger), hidden on mobile */}
-          <div
-            className="hidden min-w-[180px] max-w-[240px] p-[2px] md:flex"
-            style={{
-              borderRadius: "var(--Corner-radius-32, 2.26806rem)",
-              background: "var(--Gradients-Cream-Buttons)",
-            }}
-          >
+          <div className="hidden min-w-[180px] max-w-[240px] p-[2px] md:flex pill-light pill-dark-left">
             <div
               className="flex flex-1 items-center justify-between gap-1.5 rounded-full px-3.5 py-3"
               style={{
@@ -102,13 +91,7 @@ export default function DynamicIsland() {
           </div>
 
           {/* Right pill - Let's chat + Close */}
-          <div
-            className="flex gap-1.5 p-[2px]"
-            style={{
-              borderRadius: "var(--Corner-radius-32, 2.26806rem)",
-              background: "var(--Gradients-Cream-Buttons)",
-            }}
-          >
+          <div className="flex gap-1.5 p-[2px] pill-light pill-dark-right">
             <div
               className="flex items-center gap-1.5 rounded-full px-1.5 py-0.5"
               style={{

@@ -66,7 +66,7 @@ export default function Experiences() {
                 <div className="flex cursor-default flex-col items-start gap-0 py-2">
                   <div className="flex w-full flex-row items-start justify-between gap-x-4">
                     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                      <span className="text-sm font-medium text-neutral-900 dark:text-neutral-50">
                         {item.organisation}
                       </span>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
