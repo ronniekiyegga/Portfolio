@@ -107,7 +107,7 @@ export default function FeaturesSliderSection({
   backgroundColor = "bg-transparent",
 }: FeaturesSliderSectionProps) {
   return (
-    <section className="bg-transparent w-full min-w-0 overflow-x-hidden @container py-24 max-lg:px-1">
+    <section className="bg-transparent w-full min-w-0 overflow-x-hidden @container py-24 max-lg:px-1 dark:bg-neutral-950">
       <Carousel
         opts={{
           align: "start",
@@ -124,7 +124,7 @@ export default function FeaturesSliderSection({
         className="mx-auto max-w-5xl"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
-          <h5 className="text-left text-xs tracking-widest">EXPERIENCE</h5>
+          <h5 className="text-left text-xs tracking-widest text-foreground">EXPERIENCE</h5>
         
           <div className="flex items-center gap-2">
             <CarouselPrevious />

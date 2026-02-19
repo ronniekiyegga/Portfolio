@@ -13,7 +13,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="w-full min-w-0 overflow-x-hidden py-10 contrast-100"
+      className="w-full min-w-0 overflow-x-hidden py-10 contrast-100 dark:bg-neutral-950"
       style={{
         backgroundImage: "url(/BG_1.png)",
         // backgroundImage: "url(/Hero_Background.png)",
@@ -41,7 +41,7 @@ export default function ProjectSection() {
                 {item.title}
               </p>
 
-              <div className="text-sm  prose prose-sm dark:prose-invert text-gray-700">
+              <div className="text-sm prose prose-sm dark:prose-invert text-gray-700 dark:text-gray-300">
                 {item?.image && (
                   <Image
                     src={item.image}

@@ -85,7 +85,7 @@ export default function ExpandableFeatures() {
   };
 
   return (
-    <section className="bg-background @container py-24 w-full max-lg:px-1 ">
+    <section className="bg-background @container py-24 w-full max-lg:px-1 dark:bg-neutral-950">
       <style>{`
                 @keyframes expandProgress {
                     from { transform: scaleX(0); }
