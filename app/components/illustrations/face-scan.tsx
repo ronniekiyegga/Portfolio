@@ -26,7 +26,10 @@ export const FaceScanIllustration = () => {
   }, []);
 
   return (
-    <div aria-hidden className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden px-8 md:px-40 lg:px-52">
+    <div
+      aria-hidden
+      className="group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden px-8 md:px-40 lg:px-52"
+    >
       {/* Grid overlay - FIXED: proper circle mask */}
 
       {/* Large name: z-10, behind image but extending wider */}
@@ -80,7 +83,7 @@ export const FaceScanIllustration = () => {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 1.5, type: "spring" }}
-        className="aspect-2/3 absolute inset-0 z-[60] m-auto w-24"
+        className="aspect-2/3 absolute inset-0 z-60 m-auto w-24"
       >
         <CardDecorator className="scale-125 border-white blur-[3px]" />
         <motion.div

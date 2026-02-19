@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
-import { Style_Script } from "next/font/google";
 
 export const AnimatedLinks = () => {
   const [active, setActive] = useState<number | null>(null);
@@ -65,7 +64,7 @@ const UnderlayTransition = ({ active }: { active: number | null }) => {
         { duration: 1.2, ease: [0.4, 0, 0.2, 1] },
       );
     }
-  }, [active]);
+  }, [active, animateUnderlay, underlayScope]);
 
   return (
     <div

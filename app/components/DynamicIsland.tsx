@@ -68,7 +68,7 @@ export default function DynamicIsland() {
                   className="object-cover"
                 />
               </div>
-              <span className="text-neutral-800 font-[family-name:var(--font-style-script)] text-xs font-medium">
+              <span className="text-neutral-800 font-(family-name:--font-style-script) text-xs font-medium">
                 Ronnie
               </span>
             </div>
@@ -90,7 +90,7 @@ export default function DynamicIsland() {
                 background: "var(--Gradients-White-1)",
               }}
             >
-              <span className="truncate font-[family-name:var(--font-source-serif)] text-[12px] text-neutral-800">
+              <span className="truncate font-(family-name:--font-source-serif) text-[12px] text-neutral-800">
                 ronniekiyegga@dmi.com
               </span>
               <div className="flex shrink-0 items-center gap-1 text-gray-400">
@@ -128,7 +128,7 @@ export default function DynamicIsland() {
               >
                 <Link
                   href="mailto:ronniekiyegga@dmi.com"
-                  className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-[family-name:var(--font-dancing-script)] text-xs font-medium text-white transition-opacity hover:opacity-90 whitespace-nowrap"
+                  className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-(family-name:--font-dancing-script) text-xs font-medium text-white transition-opacity hover:opacity-90 whitespace-nowrap"
                   style={{
                     borderRadius: "1.38813rem",
                     background: "var(--BG-Black-2)",

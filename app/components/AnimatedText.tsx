@@ -4,7 +4,7 @@ import { Style_Script } from "next/font/google";
 
 interface AnimatedTextProps {
   figma: string;
-  engineernig: string;
+  engineering: string;
 }
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
@@ -12,9 +12,9 @@ const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 export default function AnimatedText({
   figma = "Design",
   engineering = " Engineering",
-}) {
+}: AnimatedTextProps) {
   return (
-    <div className="flex justify-center items-start h-[10rem] flex-col px-4">
+    <div className="flex justify-center items-start h-40 flex-col px-4">
       {/* <div className="text-neutral-500 dark:text-neutral-400 text-xl md:text-3xl max-w-3xl text-left mb-10">
         Visit{" "}
         <LinkPreview

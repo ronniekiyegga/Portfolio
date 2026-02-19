@@ -28,7 +28,7 @@ export default function FooterSection() {
           <h2 className="mb-4 max-w-xl text-3xl font-semibold leading-tight text-neutral-800 dark:text-white md:text-4xl">
             Let&apos;s create something{" "}
             <span
-              className="font-[family-name:var(--font-style-script)] italic text-gradient-blue"
+              className="font-(family-name:--font-style-script) italic text-gradient-blue"
               style={{
                 fontStyle: "italic",
                 WebkitBackgroundClip: "text",
@@ -46,7 +46,7 @@ export default function FooterSection() {
           </p>
           <Link
             href="mailto:contact@ronniekiyegga.com"
-            className="flex w-[10rem] items-stretch gap-[0.2rem] p-[0.14rem_0.16rem] transition-opacity hover:opacity-95"
+            className="flex w-40 items-stretch gap-[0.2rem] p-[0.14rem_0.16rem] transition-opacity hover:opacity-95"
             style={{
               borderRadius: "1.44438rem",
               background:

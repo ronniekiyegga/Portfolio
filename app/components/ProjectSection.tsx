@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
-import ExpandableFeatures from "./ExpandableFeatures";
 
 const inter = Inter({ subsets: ["latin"] });
 import { TracingBeam } from "../components/ui/tracing-beam";
