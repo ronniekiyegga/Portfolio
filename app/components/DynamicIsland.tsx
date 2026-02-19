@@ -63,7 +63,7 @@ export default function DynamicIsland() {
                   className="object-cover"
                 />
               </div>
-              <span className="text-neutral-800 font-(family-name:--font-style-script) text-xs font-medium">
+              <span className="text-neutral-800 dark:text-neutral-100 font-(family-name:--font-style-script) text-xs font-medium">
                 Ronnie
               </span>
             </div>
@@ -79,10 +79,10 @@ export default function DynamicIsland() {
                 background: "var(--Gradients-White-1)",
               }}
             >
-              <span className="truncate font-(family-name:--font-source-serif) text-[12px] text-neutral-800">
+              <span className="truncate font-(family-name:--font-source-serif) text-[12px] text-neutral-800 dark:text-neutral-100">
                 ronniekiyegga@dmi.com
               </span>
-              <div className="flex shrink-0 items-center gap-1 text-gray-400">
+              <div className="flex shrink-0 items-center gap-1 text-gray-400 dark:text-gray-500">
                 <User className="h-3.5 w-3.5" />
                 <Link2 className="h-3.5 w-3.5" />
                 <Mail className="h-3.5 w-3.5" />
@@ -127,7 +127,7 @@ export default function DynamicIsland() {
                 type="button"
                 onClick={() => setIsDismissed(true)}
                 aria-label="Close"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-200"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                 style={{
                   background: "var(--Gradients-White-1)",
                 }}

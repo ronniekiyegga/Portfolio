@@ -38,7 +38,7 @@ export default function SectionKicker({
     >
       {/* Left line */}
       <div
-        className="h-0.5 shrink-0 opacity-10"
+        className="h-0.5 shrink-0 opacity-10 dark:opacity-20"
         style={{ width: lineWidth, background: GRADIENT_1 }}
         aria-hidden
       />
@@ -88,7 +88,7 @@ export default function SectionKicker({
       </div>
       {/* Right line */}
       <div
-        className="h-0.5 shrink-0 opacity-5"
+        className="h-0.5 shrink-0 opacity-5 dark:opacity-15"
         style={{ width: lineWidth, background: GRADIENT_1 }}
         aria-hidden
       />

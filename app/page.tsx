@@ -9,7 +9,7 @@ import HeroSection from "./components/HeroSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans bg-background">
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans bg-background dark:bg-neutral-950">
       <main className="flex w-full min-w-0 flex-col items-center overflow-x-hidden">
         {/* <ThemeToggle /> */}
         <HeroSection />

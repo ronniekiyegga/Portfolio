@@ -43,7 +43,7 @@ export default function Integrations({
   }
 
   return (
-    <section>
+    <section className="dark:bg-neutral-950">
       <div className="mx-auto max-w-5xl px-6 py-8">
         <div className="flex flex-wrap items-center gap-4">
           <p className="text-muted-foreground font-medium">Built with : </p>

@@ -13,10 +13,8 @@ const SCROLL_THRESHOLD = 20;
  * - Floating div (ThemeToggle + SplashCursor) shows only when header is hidden (scrolled)
  */
 export default function HeaderWithFloatingControls() {
-  const [isHeaderVisible, setIsHeaderVisible] = React.useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.scrollY <= SCROLL_THRESHOLD;
-  });
+  // Use consistent initial value to avoid hydration mismatch (server has no window)
+  const [isHeaderVisible, setIsHeaderVisible] = React.useState(true);
   const [splashActive, setSplashActive] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
