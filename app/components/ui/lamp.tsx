@@ -76,9 +76,9 @@ export const LampContainer = ({
           {/* <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" /> */}
         </motion.div>
 
-        <div className="absolute top-1/2 h-58 w-full translate-x-12 scale-y-[2] bg-transparent blur-2xl"></div>
+        {/* <div className="absolute top-1/2 h-58 w-full translate-x-12 scale-y-[2] bg-transparent blur-2xl"></div> */}
         <div className="absolute top-1/2 z-50 h-52 w-full bg-transparent opacity-10 backdrop-blur-3xl"></div>
-        <div className="absolute inset-auto z-50 h-40 w-xl -translate-y-1/2 rounded-full bg-cyan-600 opacity-40 blur-3xl"></div>
+        {/* <div className="absolute inset-auto z-50 h-40 w-xl -translate-x-2/2 rounded-full bg-cyan-600 opacity-40 blur-3xl"></div> */}
         {/* ... light ... */}
         <motion.div
           initial={{ width: "8rem" }}
@@ -88,7 +88,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-30 h-50 w-64 -translate-y-24 rounded-full bg-cyan-400 blur-2xl"
+          className="absolute inset-auto z-30 h-40 w-64 -translate-y-24  bg-cyan-400 blur-2xl"
         ></motion.div>
 
         {/* ... line ... */}

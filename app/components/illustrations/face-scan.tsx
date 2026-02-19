@@ -34,7 +34,7 @@ export const FaceScanIllustration = () => {
 
       {/* Large name: z-10, behind image but extending wider */}
       <div
-        className="absolute text-xl left-1/2 -translate-x-1/2 top-24 z-0 w-full max-w-[450px] md:max-w-[650px] lg:max-w-[800px] flex justify-between items-start pointer-events-none"
+        className="absolute text-xl left-1/2 -translate-x-1/2 top-24 z-0 w-full max-w-[90vw] sm:max-w-[450px] md:max-w-[650px] lg:max-w-[800px] flex justify-between items-start pointer-events-none"
         aria-hidden
       >
         <span className="sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-neutral-800 dark:text-neutral-50 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(255,255,255,0.4),0_2px_4px_rgba(0,0,0,0.5)] select-none">

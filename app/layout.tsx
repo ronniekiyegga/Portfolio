@@ -49,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="overflow-x-hidden" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} antialiased overflow-x-hidden bg-background text-foreground`}
         suppressHydrationWarning

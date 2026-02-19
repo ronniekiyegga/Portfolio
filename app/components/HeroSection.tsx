@@ -7,7 +7,7 @@ export default function HeroSection() {
   return (
     <section
       id="contact-info-section"
-      className="flex w-full max-w-6xl flex-col items-center justify-center px-8 py-32 md:px-16"
+      className="flex w-full max-w-6xl min-w-0 flex-col items-center justify-center px-6 py-32 md:px-16 sm:px-8"
     >
       <FaceScanIllustration />
       <IntroductionText />
