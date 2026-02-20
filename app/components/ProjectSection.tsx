@@ -3,55 +3,124 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
-
+import NativeStartNow from "./ui/NativeButton";
 const inter = Inter({ subsets: ["latin"] });
 import { TracingBeam } from "../components/ui/tracing-beam";
 
 export default function ProjectSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const cards = container.querySelectorAll<HTMLElement>(
+      "[data-project-card]",
+    );
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      const els = [
+        card.querySelector("[data-project-badge]"),
+        card.querySelector("[data-project-title]"),
+        card.querySelector("[data-project-content]"),
+        card.querySelector("[data-project-cta]"),
+      ].filter(Boolean) as HTMLElement[];
+      gsap.set(els, { autoAlpha: 0, force3D: true });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const card = entry.target as HTMLElement;
+          const badge = card.querySelector("[data-project-badge]");
+          const title = card.querySelector("[data-project-title]");
+          const content = card.querySelector("[data-project-content]");
+          const cta = card.querySelector("[data-project-cta]");
+          const els = [badge, title, content, cta].filter(
+            Boolean,
+          ) as HTMLElement[];
+
+          gsap.to(els, {
+            autoAlpha: 1,
+            duration: 1,
+            stagger: 0.12,
+            ease: "sine.out",
+            overwrite: "auto",
+            force3D: true,
+          });
+          observer.unobserve(card);
+        });
+      },
+      {
+        rootMargin: "0px 0px -20% 0px",
+        threshold: 0,
+      }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="projects"
-      className="w-full min-w-0 overflow-x-hidden py-10 contrast-100 dark:bg-neutral-950"
-      style={{
-        backgroundImage: "url(/BG_1.png)",
-        // backgroundImage: "url(/Hero_Background.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="w-full min-w-0 overflow-x-hidden py-10 contrast-100 bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
     >
       <LampHeader />
       <TracingBeam className="w-full px-12 sm:px-20 lg:px-32 py-16 md:py-2">
-        <div className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative">
-          {/* <ExpandableFeatures /> */}
+        <div
+          ref={containerRef}
+          className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
+        >
           {projectContent.map((item, index) => (
-            <div key={`content-${index}`} className="mb-10">
-              <h4 className=" text-white rounded-full text-[12px] w-fit py-1 mb-2 text-gradient-blue">
+            <div key={`content-${index}`} data-project-card className="mb-10">
+              <h4
+                data-project-badge
+                className="opacity-0 text-white font-bold rounded-full text-[11px] w-fit py-1 mb-2 text-gradient-blue"
+              >
                 {item.badge}
               </h4>
 
               <p
+                data-project-title
                 className={twMerge(
                   inter.className,
-                  "text-2xl font-bold mb-4 text-white",
+                  "opacity-0 text-2xl font-bold mb-4 text-white ",
                 )}
               >
                 {item.title}
               </p>
 
-              <div className="text-sm prose prose-sm dark:prose-invert text-gray-700 dark:text-gray-300">
+              <div
+                data-project-content
+                className="opacity-0 text-sm prose prose-sm dark:prose-invert text-gray-400"
+              >
                 {item?.image && (
                   <Image
                     src={item.image}
                     alt="blog thumbnail"
                     height="1000"
                     width="1000"
-                    className="rounded-lg mb-10 object-cover"
+                    className="rounded-lg mb-10 object-cover text-black dark:text-white"
                   />
                 )}
                 {item.description}
+              </div>
+              <div data-project-cta className="opacity-0">
+                <NativeStartNow
+                  variant="gradient"
+                  size="sm"
+                  onStart={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 1500));
+                  }}
+                />
               </div>
             </div>
           ))}

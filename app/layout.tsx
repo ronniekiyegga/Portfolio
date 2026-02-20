@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
+import { SplashProvider } from "./contexts/SplashContext";
 import HeaderWithFloatingControls from "./components/HeaderWithFloatingControls";
 import FooterSection from "./components/footer";
 
@@ -67,9 +68,11 @@ export default function RootLayout({
             `,
           }}
         />
-        <HeaderWithFloatingControls />
-        {children}
-        <FooterSection />
+        <SplashProvider>
+          <HeaderWithFloatingControls />
+          {children}
+          <FooterSection />
+        </SplashProvider>
       </body>
     </html>
   );

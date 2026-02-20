@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FaWandSparkles } from "react-icons/fa6";
+import { BsStars } from "react-icons/bs";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { cn } from "@/lib/utils";
 
@@ -41,7 +41,7 @@ export default function ThemeToggle({
               splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
             }
           >
-            <FaWandSparkles
+            <BsStars
               className={cn(
                 "size-3 shrink-0 text-neutral-600 transition-colors dark:text-neutral-400",
                 splashActive && "text-cyan-500",

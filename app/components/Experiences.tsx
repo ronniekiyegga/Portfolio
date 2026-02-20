@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CornerDownRight } from "lucide-react";
 import Integrations from "./integrations-one";
 import { cn } from "@/lib/utils";
@@ -43,17 +43,41 @@ const experiences = [
 
 export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [showLanyard, setShowLanyard] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowLanyard(true);
+        }
+      },
+      { threshold: 0.9 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950">
-      {/* Lanyard: fixed position on the right, between text and years */}
+    <section
+      ref={sectionRef}
+      className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950"
+    >
+      {/* Lanyard: drops when the whole experience section scrolls into view */}
       <div className="absolute inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
-        <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
+        {showLanyard && (
+          <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
+        )}
       </div>
       <div className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0">
         <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES
-        </h2>
+      </h2>
 
         <div className="flex flex-col gap-6 pl-4 md:pl-12">
           {experiences.map((item) => {
