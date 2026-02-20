@@ -47,7 +47,7 @@ export default function Experiences() {
   return (
     <section className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950">
       {/* Lanyard: fixed position on the right, between text and years */}
-      <div className="absolute hidden md:block inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
+      <div className="absolute inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
         <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
       </div>
       <div className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0">
