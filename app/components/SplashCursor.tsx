@@ -1484,7 +1484,7 @@ export default function SplashCursor({
           updatePointerDownData(pointer, touches[i].identifier, posX, posY);
         }
       },
-      false,
+      { passive: true },
     );
 
     window.addEventListener(
@@ -1498,7 +1498,7 @@ export default function SplashCursor({
           updatePointerMoveData(pointer, posX, posY, pointer.color);
         }
       },
-      false,
+      { passive: true },
     );
 
     window.addEventListener("touchend", (e) => {

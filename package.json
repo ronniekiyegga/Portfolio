@@ -39,7 +39,7 @@
     "next-sanity": "^12.1.0",
     "ogl": "^1.0.11",
     "qss": "^3.0.0",
-    "react": "^19.2.3",
+    "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "react-use-measure": "^2.1.7",

@@ -3,6 +3,13 @@
 /* Use class-based dark mode (add .dark to html) instead of prefers-color-scheme */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Ensure scroll works - explicit overflow prevents capture from blocking scroll */
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: none;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -87,6 +94,30 @@
     #dedaf9 86.6%,
     rgba(240, 172, 247, 0.76) 97.21%
   );
+}
+
+/* Middle pill (email) - cream gradient border/glow */
+.middle-pill-outer {
+  border-radius: 48px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    #fff 54.8%,
+    rgba(251, 233, 217, 0.59) 69.69%,
+    #dedaf9 86.6%,
+    rgba(240, 172, 247, 0.76) 97.21%
+  );
+  box-shadow:
+    0 0 1.357px 0 rgba(0, 0, 0, 0.08) inset,
+    0 1.018px 0 0 rgba(255, 255, 255, 0.1),
+    0 4px 14px rgba(0, 0, 0, 0.06);
+}
+.dark .middle-pill-outer {
+  background: linear-gradient(to bottom, #3e7bfa, #6600cc);
+  box-shadow:
+    0 0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Right pill "Let's chat" outer wrapper - cream gradient in light mode only */

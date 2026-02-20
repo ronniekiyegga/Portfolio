@@ -9,7 +9,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useSplash } from "@/app/contexts/SplashContext";
 import { cn } from "@/lib/utils";
+import { Style_Script } from "next/font/google";
 
+const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 const CONTACT_SECTION_ID = "contact-info-section";
 
 export default function DynamicIsland() {
@@ -48,43 +50,32 @@ export default function DynamicIsland() {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           {/* Left pill - Avatar + Name */}
-          <div className="flex p-[2px] pill-light pill-dark-left">
-            <div
-              className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5"
-              style={{
-                borderRadius: "10.31175rem",
-                border: "1.134px solid var(--Gradients-Cream, #FFF)",
-                background: "var(--Gradients-White-1)",
-              }}
-            >
-              <div className="relative h-7 w-7 overflow-hidden rounded-full">
-                <Image
-                  src="/Avatar.svg"
-                  alt="Ronnie"
-                  fill
-                  className="object-cover"
-                />
+          <div className="flex flex-col gap-2.5 rounded-[32px] bg-gradient-to-b from-white via-[#fff1fe] via-[#fbe9d9] via-[#dea8ff] to-white p-1.5 dark:from-[#050519] dark:via-[#1a2134] dark:via-[#334254] dark:to-[#020209]">
+            <div className="flex h-[44.07px] self-stretch items-center gap-[9.65px] rounded-[172.11px] bg-gradient-to-b from-[#050519] via-[#1a2134] via-[#334254] to-[#020209]">
+              <div className="flex items-center gap-[4.2px] rounded-[145.49px] border border-solid border-white/20 bg-gradient-to-b from-[#fbfbfb] to-[#e1e7fb] pl-1 pr-2 pt-0.5 pb-0.5 dark:border-0 dark:bg-[#fcfcfc] dark:pl-1.5">
+                <div className="flex h-[42.96px] w-[42.96px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[1.698px] border-solid border-white/90 bg-[#f9f9f9] dark:border-white/20 dark:bg-[linear-gradient(to_bottom,#3e7bfa,#c7e9e8,#3e7bfa)]">
+                  <Image
+                    src="/Avatar.svg"
+                    alt="Ronnie"
+                    width={47}
+                    height={47}
+                    className="object-cover"
+                  />
+                </div>
+                <span className="font-(family-name:--font-style-script) text-center text-[14.69px] leading-[28.33px] font-normal text-[#212225] dark:text-[#f0f0f0]">
+                  Ronniè
+                </span>
               </div>
-              <span className="text-neutral-800 dark:text-neutral-100 font-(family-name:--font-style-script) text-xs font-medium">
-                Ronnie
-              </span>
             </div>
           </div>
 
-          {/* Middle pill - Email (slightly bigger), hidden on mobile */}
-          <div className="hidden min-w-[190px] max-w-[280px] p-[2px] md:flex pill-light pill-dark-left">
-            <div
-              className="flex flex-1 items-center justify-between gap-4 rounded-full px-4 py-4"
-              style={{
-                borderRadius: "10.31175rem",
-                border: "1.134px solid var(--Gradients-Cream, #FFF)",
-                background: "var(--Gradients-White-1)",
-              }}
-            >
-              <span className="truncate font-(family-name:--font-source-serif) text-xs text-neutral-800 dark:text-neutral-100">
-                Ronniekiyegga@dmi.com
+          {/* Middle pill - Email, hidden on mobile */}
+          <div className="middle-pill-outer hidden min-w-[190px] max-w-[280px] md:flex items-center">
+            <div className="flex h-[44px] min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-4 py-3 dark:bg-[#fcfcfc]">
+              <span className="truncate font-(family-name:--font-source-serif) text-[12px] leading-[13.32px] text-[#212225] dark:text-[#f0f0f0]">
+                Ronniekiyegga@hotmail.com
               </span>
-              <div className="flex shrink-0 items-center gap-2 text-gray-400 dark:text-gray-500">
+              <div className="flex shrink-0 items-center gap-2 text-[#8d8fae]">
                 <User className="h-3.5 w-3.5" />
                 <Link2 className="h-3.5 w-3.5" />
                 <Mail className="h-3.5 w-3.5" />
@@ -92,53 +83,55 @@ export default function DynamicIsland() {
             </div>
           </div>
 
-          {/* Right pill - Let's chat + SplashCursor + Theme */}
-          <div className="flex p-[2px] pill-light pill-dark-right">
+          {/* Right pill - Let's chat + SplashCursor + Theme (matches header button) */}
+          <div className="p-2 pill-outer-cream">
             <div
-              className="flex items-center gap-1.5 p-[2px]"
+              className={cn(
+                "flex items-center gap-0.5 rounded-full px-1.5 py-0.5",
+                "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.3)]",
+                "dark:pill-inner-dark",
+              )}
               style={{
-                borderRadius: "1.38813rem",
-                background: "var(--Gradients-Button-Outer)",
-                boxShadow:
-                  "0 0 0.996px 0 rgba(0, 0, 0, 0.08) inset, 0 0.747px 0 0 rgba(255, 255, 255, 0.10)",
+                backgroundImage: "url(/BG_1.png)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
               }}
             >
               <Link
-                href="mailto:ronniekiyegga@dmi.com"
-                className="flex items-center rounded-full px-3 py-1.5 font-(family-name:--font-style-script)  text-sm font-medium text-white transition-opacity hover:opacity-90 whitespace-nowrap"
-                style={{
-                  borderRadius: "1.38813rem",
-                  background: "var(--BG-Black-2)",
-                  boxShadow:
-                    "0 1.378px 1.102px 0 rgba(0, 0, 0, 0.12), 0 1.494px 1.494px 0 rgba(0, 0, 0, 0.14), 0 11.122px 8.898px 0 rgba(0, 0, 0, 0.14), 0 6.235px 4.988px 0 rgba(0, 0, 0, 0.14), 0 1.378px 1.102px 0 rgba(0, 0, 0, 0.12), 0 0.498px 0 0 rgba(255, 255, 255, 0.30) inset",
-                }}
+                href="mailto:ronniekiyegga@hotmail.com"
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
+                  styleScript.className,
+                )}
               >
+                <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                 Let&apos;s chat
-                <div className="h-3.5 w-px shrink-0 bg-white/20" />
-                <button
-                  type="button"
-                  onClick={() => setSplashActive((prev) => !prev)}
-                  className="flex items-center justify-center rounded-full p-1 transition-colors hover:opacity-80"
-                  aria-label={
-                    splashActive
-                      ? "Disable fluid cursor"
-                      : "Enable fluid cursor"
-                  }
-                >
-                  <BsStars
-                    className={cn(
-                      "h-3.5 w-3.5 shrink-0 text-white transition-colors",
-                      splashActive && "text-sky-300",
-                    )}
-                  />
-                </button>
-                <div className="h-3.5 w-px shrink-0 bg-white/20" />
-                <div className="theme-toggle-outer shrink-0 overflow-hidden">
-                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
-                    <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
-                  </div>
-                </div>
               </Link>
+              <div className="h-3.5 w-px shrink-0 bg-white/20" />
+              <button
+                type="button"
+                onClick={() => setSplashActive((prev) => !prev)}
+                className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
+                aria-label={
+                  splashActive
+                    ? "Disable fluid cursor"
+                    : "Enable fluid cursor"
+                }
+              >
+                <BsStars
+                  className={cn(
+                    "size-3 shrink-0 transition-colors",
+                    splashActive && "text-cyan-400",
+                  )}
+                />
+              </button>
+              <div className="h-3.5 w-px shrink-0 bg-white/20" />
+              <div className="theme-toggle-outer shrink-0 pr-1.5">
+                <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
+                  <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-400 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
