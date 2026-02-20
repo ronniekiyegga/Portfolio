@@ -26,7 +26,7 @@ export default function ScrollAnimations({
 
     sections.forEach((section, i) => {
       if (i === 0) return;
-      gsap.set(section, { opacity: 0, y: 50, force3D: true });
+      gsap.set(section, { opacity: 0, force3D: true });
     });
 
     const observer = new IntersectionObserver(
@@ -36,11 +36,10 @@ export default function ScrollAnimations({
           const section = entry.target as HTMLElement;
           gsap.to(section, {
             opacity: 1,
-            y: 0,
             visibility: "visible",
-            duration: 0.8,
-            ease: "power3.out",
-            delay: 0.1,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: 0.05,
             force3D: true,
             overwrite: "auto",
           });
