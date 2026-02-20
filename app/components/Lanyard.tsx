@@ -20,9 +20,9 @@ import {
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 
-// replace with your own imports, see the usage snippet for details
-import cardGLB from "./card.glb";
-import lanyard from "./lanyard.png";
+import lanyard from "./lanyard/lanyard.png";
+
+const CARD_GLB = "/lanyard/card.glb";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -126,8 +126,10 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
     linearDamping: 4,
   };
 
-  const { nodes, materials } = useGLTF(cardGLB) as any;
-  const texture = useTexture(lanyard);
+  const { nodes, materials } = useGLTF(CARD_GLB) as any;
+  const texture = useTexture(
+    typeof lanyard === "string" ? lanyard : lanyard.src,
+  );
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -140,9 +142,9 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.7]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.7]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.7]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0],
@@ -240,10 +242,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
               : ("dynamic" as RigidBodyProps["type"])
           }
         >
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <CuboidCollider args={[0.8, 1.111, 0.01]} />
           <group
             scale={2.25}
             position={[0, -1.2, -0.05]}
+            rotation={[0.15, -0.7, 0.01]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e: any) => {
@@ -283,11 +286,11 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
         <meshLineMaterial
           color="white"
           depthTest={false}
-          resolution={isMobile ? [1000, 2000] : [1000, 1000]}
+          resolution={isMobile ? [900, 1000] : [1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={1}
+          lineWidth={3}
         />
       </mesh>
     </>

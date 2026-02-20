@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CornerDownRight } from "lucide-react";
 import Integrations from "./integrations-one";
 import { cn } from "@/lib/utils";
+import Lanyard from "./Lanyard";
 
 const experiences = [
   {
@@ -44,8 +45,12 @@ export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <section className="w-full min-w-0 overflow-x-hidden py-16 md:py-32 dark:bg-neutral-950">
-      <div className="mx-auto max-w-5xl px-4 lg:px-0">
+    <section className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950">
+      {/* Lanyard: fixed position on the right, between text and years */}
+      <div className="absolute hidden md:block inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
+        <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
+      </div>
+      <div className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0">
         <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES
         </h2>
@@ -56,14 +61,15 @@ export default function Experiences() {
             return (
               <div
                 key={item.id}
+                data-experience-id={item.id}
                 className={cn(
-                  "group/exp rounded-lg transition-all duration-300 ease-out",
+                  "group/exp cursor-pointer rounded-lg transition-all duration-300 ease-out",
                   isOpen && " ",
                 )}
                 onMouseEnter={() => setHoveredId(item.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="flex cursor-default flex-col items-start gap-0 py-2">
+                <div className="flex flex-col items-start gap-0 py-2">
                   <div className="flex w-full flex-row items-start justify-between gap-x-4">
                     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="text-sm font-medium text-neutral-900 dark:text-neutral-50">

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { Menu, X } from "lucide-react";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 import { RiMenu4Line } from "react-icons/ri";
 import { useMedia } from "@/app/hooks/use-media";
 import { Style_Script } from "next/font/google";
@@ -37,13 +38,6 @@ const projectsLinks = [
 const coursesLinks = [
   { name: "All Courses", href: "#" },
   { name: "Tutorials", href: "#" },
-];
-
-const mobileLinks = [
-  { groupName: "Projects", links: projectsLinks },
-  { groupName: "Courses", links: coursesLinks },
-  { name: "Blog", href: "/blog" },
-  { name: "Resume", href: "#" },
 ];
 
 const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left");
@@ -293,6 +287,13 @@ export default function Header({
   );
 }
 
+const exploreLinks = [
+  { name: "Projects", href: "/#projects" },
+  { name: "Courses", href: "#" },
+  { name: "Blog", href: "/blog" },
+  { name: "Resume", href: "#" },
+];
+
 function MobileMenu({
   isOpen,
   onClose,
@@ -302,68 +303,175 @@ function MobileMenu({
 }) {
   if (!isOpen) return null;
 
-  return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden
-      />
-      {/* Menu panel */}
-      <nav
-        role="navigation"
-        className={cn(
-          pillBaseLeft,
-          "fixed left-4 right-4 top-18 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl px-4 py-4",
-        )}
-      >
-        <Accordion type="single" collapsible className="w-full">
-          {mobileLinks.map((link, index) => {
-            if ("groupName" in link && link.links) {
-              return (
-                <AccordionItem
-                  key={index}
-                  value={link.groupName!}
-                  className="border-neutral-200/60 dark:border-neutral-700/60"
+  const menuContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex flex-col"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile menu"
+    >
+      <div className="relative flex h-full w-full flex-col overflow-hidden">
+        {/* Backdrop - matches reference: light overlay + blur */}
+        <div
+          className="absolute inset-0 h-full w-full"
+          style={{
+            background: "rgba(255, 255, 255, 0.48)",
+            backdropFilter: "blur(32px)",
+            WebkitBackdropFilter: "blur(32px)",
+          }}
+          aria-hidden
+          onClick={onClose}
+        />
+        <div className="relative z-10 flex h-full w-full flex-col overflow-hidden dark:bg-neutral-950/80">
+          {/* Top: Logo + Close */}
+          <div className="flex w-full shrink-0 items-center justify-between px-4 pt-4 pb-4">
+            <Link
+              href="/"
+              onClick={onClose}
+              className="shrink-0"
+              aria-label="Home"
+            >
+              <Image
+                src="/Ronnie_Logo.svg"
+                alt="Ronnie Kiyegga - Engineer"
+                width={80}
+                height={44}
+                className="h-8 w-auto dark:invert"
+              />
+            </Link>
+            <button
+              onClick={onClose}
+              aria-label="Close menu"
+              className="-m-2 p-3 text-black dark:text-white"
+            >
+              <X className="size-6" strokeWidth={2} />
+            </button>
+          </div>
+
+          {/* Scrollable middle: Explore + Our features */}
+          <div className="flex min-h-0 flex-1 flex-col justify-center">
+            <div className="min-h-0 overflow-y-auto overflow-x-hidden px-8 pb-5">
+              <div className="flex w-full flex-col items-start gap-1">
+                <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
+                  Explore
+                </p>
+                {exploreLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={onClose}
+                    className={cn(
+                      "w-full rounded-lg py-0.5 pr-3 text-lg font-bold text-neutral-900 dark:text-neutral-100",
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                {/* Gradient divider */}
+                <div
+                  className="my-6 h-px w-12"
+                  style={{
+                    background: "linear-gradient(77deg, #3A07F2 10.26%, #0CD1CF 98.05%)",
+                  }}
+                  aria-hidden
+                />
+                <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
+                  Our features
+                </p>
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="w-full **:hover:no-underline"
                 >
-                  <AccordionTrigger className="py-3 text-neutral-700 hover:no-underline dark:text-neutral-300">
-                    {link.groupName}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <ul className="space-y-1 pl-2">
-                      {link.links.map((l, i) => (
-                        <li key={i}>
-                          <Link
-                            href={l.href}
-                            onClick={onClose}
-                            className="block py-2 text-sm text-neutral-600 dark:text-neutral-400"
-                          >
-                            {l.name}
-                          </Link>
-                        </li>
+                  <AccordionItem
+                    value="Projects"
+                    className="w-full border-b-0"
+                  >
+                    <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
+                      Projects
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-2 pt-0">
+                      {projectsLinks.map((l, i) => (
+                        <Link
+                          key={i}
+                          href={l.href}
+                          onClick={onClose}
+                          className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                          {l.name}
+                        </Link>
                       ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            }
-            if ("name" in link && link.href) {
-              return (
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem
+                    value="Courses"
+                    className="w-full border-b-0"
+                  >
+                    <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
+                      Courses
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-2 pt-0">
+                      {coursesLinks.map((l, i) => (
+                        <Link
+                          key={i}
+                          href={l.href}
+                          onClick={onClose}
+                          className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
+                        >
+                          {l.name}
+                        </Link>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom: Blog | Resume + Let's chat button */}
+          <div className="flex h-24 flex-col">
+            <div className="flex w-full mx-auto items-center justify-center gap-4 pl-1 pb-8 pt-4">
+              <div className="flex items-center gap-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
                 <Link
-                  key={index}
-                  href={link.href}
+                  href="/blog"
                   onClick={onClose}
-                  className="block border-b border-neutral-200/60 py-3 text-neutral-700 dark:border-neutral-700/60 dark:text-neutral-300"
+                  className="flex items-center gap-1.5 relative"
                 >
-                  {link.name}
+                  <span
+                    className="size-1.5 rounded-full bg-blue-500 absolute top-0 -right-2"
+                    aria-hidden
+                  />
+                  Blog
                 </Link>
-              );
-            }
-            return null;
-          })}
-        </Accordion>
-      </nav>
-    </>
+                <span className="h-4 w-px bg-neutral-300 dark:bg-neutral-600" aria-hidden />
+                <Link href="#" onClick={onClose}>
+                  Resume
+                </Link>
+              </div>
+              <Link
+                href="mailto:ronniekiyegga@dmi.com"
+                onClick={onClose}
+                className={cn(
+                  "flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-medium text-white",
+                  styleScript.className,
+                )}
+                style={{
+                  background: "#1a1a1a",
+                  boxShadow:
+                    "0 1.434px 1.147px 0 rgba(0, 0, 0, 0.12), 0 1.554px 1.554px 0 rgba(0, 0, 0, 0.14)",
+                }}
+              >
+                <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                Let&apos;s chat
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(menuContent, document.body)
+    : null;
 }
