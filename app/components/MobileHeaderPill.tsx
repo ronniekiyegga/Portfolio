@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaWandSparkles } from "react-icons/fa6";
+import { BsStars } from "react-icons/bs";
 import { Style_Script } from "next/font/google";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { cn } from "@/lib/utils";
@@ -27,7 +27,8 @@ export default function MobileHeaderPill({
         "flex items-center overflow-hidden rounded-full",
         "border shadow-sm",
         "border-neutral-200/80 shadow-neutral-200/40",
-        "dark:border-blue-400/40 dark:shadow-[0_0_16px_rgba(96,165,250,0.25)]",
+        "dark:border-blue-400/40",
+        "dark:[box-shadow:0_0_1.357px_0_rgba(0,0,0,0.08)_inset,0_1.018px_0_0_rgba(255,255,255,0.10)]",
       )}
     >
       <div
@@ -60,7 +61,7 @@ export default function MobileHeaderPill({
             splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
           }
         >
-          <FaWandSparkles
+          <BsStars
             className={cn(
               "size-3.5 shrink-0 transition-colors",
               splashActive && "text-cyan-400",

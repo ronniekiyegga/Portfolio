@@ -16,7 +16,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/app/components/ui/navigation-menu";
-import { FaWandSparkles } from "react-icons/fa6";
+import { BsStars } from "react-icons/bs";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import {
   Accordion,
@@ -62,7 +62,11 @@ export default function Header({
   const showHeader = isHeaderVisible;
 
   React.useEffect(() => {
-    if (isMobileMenuOpen) document.body.style.overflow = "hidden";
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -262,7 +266,7 @@ export default function Header({
                             : "Enable fluid cursor"
                         }
                       >
-                        <FaWandSparkles
+                        <BsStars
                           className={cn(
                             "size-3 shrink-0 transition-colors",
                             splashActive && "text-cyan-400",
@@ -301,30 +305,45 @@ function MobileMenu({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  if (!isOpen) return null;
-
   const menuContent = (
-    <div
-      className="fixed inset-0 z-[9999] flex flex-col"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Mobile menu"
-    >
-      <div className="relative flex h-full w-full flex-col overflow-hidden">
-        {/* Backdrop - matches reference: light overlay + blur */}
-        <div
-          className="absolute inset-0 h-full w-full"
-          style={{
-            background: "rgba(255, 255, 255, 0.48)",
-            backdropFilter: "blur(32px)",
-            WebkitBackdropFilter: "blur(32px)",
-          }}
-          aria-hidden
-          onClick={onClose}
-        />
-        <div className="relative z-10 flex h-full w-full flex-col overflow-hidden dark:bg-neutral-950/80">
-          {/* Top: Logo + Close */}
-          <div className="flex w-full shrink-0 items-center justify-between px-4 pt-4 pb-4">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          key="mobile-menu"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[9999] flex flex-col"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile menu"
+        >
+          <div className="relative flex h-full w-full flex-col overflow-hidden">
+            {/* Backdrop - matches reference: light overlay + blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0 h-full w-full"
+              style={{
+                background: "rgba(255, 255, 255, 0.48)",
+                backdropFilter: "blur(32px)",
+                WebkitBackdropFilter: "blur(32px)",
+              }}
+              aria-hidden
+              onClick={onClose}
+            />
+            <div className="relative z-10 flex h-full w-full flex-col overflow-hidden dark:bg-neutral-950/80">
+              {/* Top: Logo + Close */}
+              <motion.div
+                initial={{ y: -24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -12, opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="flex w-full shrink-0 items-center justify-between px-4 pt-4 pb-4"
+              >
             <Link
               href="/"
               onClick={onClose}
@@ -346,10 +365,20 @@ function MobileMenu({
             >
               <X className="size-6" strokeWidth={2} />
             </button>
-          </div>
+          </motion.div>
 
           {/* Scrollable middle: Explore + Our features */}
-          <div className="flex min-h-0 flex-1 flex-col justify-center">
+          <motion.div
+            initial={{ y: -24, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -12, opacity: 0 }}
+            transition={{
+              duration: 0.35,
+              delay: 0.08,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="flex min-h-0 flex-1 flex-col justify-center"
+          >
             <div className="min-h-0 overflow-y-auto overflow-x-hidden px-8 pb-5">
               <div className="flex w-full flex-col items-start gap-1">
                 <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
@@ -426,10 +455,20 @@ function MobileMenu({
                 </Accordion>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bottom: Blog | Resume + Let's chat button */}
-          <div className="flex h-24 flex-col">
+          <motion.div
+            initial={{ y: -24, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -12, opacity: 0 }}
+            transition={{
+              duration: 0.35,
+              delay: 0.16,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="flex h-24 flex-col"
+          >
             <div className="flex w-full mx-auto items-center justify-center gap-4 pl-1 pb-8 pt-4">
               <div className="flex items-center gap-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
                 <Link
@@ -465,10 +504,12 @@ function MobileMenu({
                 Let&apos;s chat
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 
   return typeof document !== "undefined"
