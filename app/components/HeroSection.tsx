@@ -18,18 +18,16 @@ export default function HeroSection() {
     const container = containerRef.current;
     if (!container) return;
 
-    const illustration = container.querySelector("[data-hero-illustration]");
     const intro = container.querySelector("[data-hero-intro]");
     const contact = container.querySelector("[data-hero-contact]");
 
-    if (!illustration || !intro || !contact) return;
+    if (!intro || !contact) return;
 
     hasAnimated.current = true;
 
-    gsap.set([illustration, intro, contact], {
+    gsap.set([intro, contact], {
       opacity: 0,
-      y: 32,
-      x: -16,
+      y: 24,
       force3D: true,
     });
 
@@ -37,23 +35,16 @@ export default function HeroSection() {
       defaults: { ease: "power2.out", force3D: true },
     });
 
-    tl.to(illustration, {
+    tl.to(intro, {
       opacity: 1,
       y: 0,
-      x: 0,
-      duration: 0.7,
+      duration: 0.6,
       ease: "expo.out",
-    })
-      .to(
-        intro,
-        { opacity: 1, y: 0, x: 0, duration: 0.6, ease: "expo.out" },
-        ">-0.25"
-      )
-      .to(
-        contact,
-        { opacity: 1, y: 0, x: 0, duration: 0.5, ease: "expo.out" },
-        ">-0.2"
-      );
+    }).to(
+      contact,
+      { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" },
+      ">-0.2"
+    );
   }, [isAppReady]);
 
   return (
@@ -63,7 +54,7 @@ export default function HeroSection() {
     >
       <div ref={containerRef} className="max-w-6xl w-full">
         <div data-hero-illustration>
-          <FaceScanIllustration startWhenVisible={isAppReady} />
+          <FaceScanIllustration />
         </div>
         <div data-hero-intro>
           <IntroductionText />
