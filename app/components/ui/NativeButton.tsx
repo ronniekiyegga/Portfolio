@@ -30,7 +30,7 @@ export interface NativeStartNowProps {
    * Size variant
    * Default: "md"
    */
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   /**
    * Show sparkle animation on hover
    * Default: true
@@ -57,18 +57,21 @@ export interface NativeStartNowProps {
 }
 
 const sizeVariants = {
+  xs: "h-8 px-3 text-xs !font-medium",
   sm: "h-9 px-4 text-sm",
   default: "h-11 px-6 text-base",
   lg: "h-14 px-8 text-lg",
 };
 
 const sizeMap = {
+  xs: "sm" as const,
   sm: "sm" as const,
   md: "default" as const,
   lg: "lg" as const,
 };
 
 const iconSizeVariants = {
+  xs: "h-3 w-3",
   sm: "h-3.5 w-3.5",
   md: "h-4 w-4",
   lg: "h-5 w-5",
@@ -134,7 +137,7 @@ export default function NativeStartNow({
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {/* Sparkle particles */}
+      {/* Sparkle particles - gradient color for visibility on dark button */}
       <AnimatePresence>
         {showRocket && isHovered && status === "idle" && (
           <>
@@ -160,11 +163,11 @@ export default function NativeStartNow({
                   delay: i * 0.1,
                   ease: "easeOut",
                 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-[#0CD1CF] [&_svg]:stroke-[#0CD1CF] [&_svg]:fill-[#0CD1CF]"
               >
-                <div className="h-3 w-3 text-primary fill-primary">
+                <div className="h-3 w-3">
                   {icon || (
-                    <Rocket className="h-3 w-3 text-primary fill-primary" />
+                    <Rocket className="h-3 w-3 stroke-[#0CD1CF] fill-[#0CD1CF]" />
                   )}
                 </div>
               </motion.div>
@@ -177,19 +180,19 @@ export default function NativeStartNow({
         onClick={handleClick}
         disabled={disabled || status !== "idle"}
         loading={false}
-        size={size === "md" ? "default" : size === "sm" ? "sm" : "lg"}
+        size={sizeMap[size ?? "md"]}
         variant="custom"
         className={cn(
-          sizeVariants[size === "md" ? "default" : size],
+          sizeVariants[size === "md" ? "default" : size ?? "sm"],
           getButtonStyles(),
           disabled && "opacity-50 cursor-not-allowed",
           "rounded-md shadow-md",
         )}
       >
-        {/* Shimmer effect */}
+        {/* Shimmer effect - gradient colors */}
         {variant === "gradient" && status === "idle" && (
           <motion.div
-            className="absolute inset-0 pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            className="absolute inset-0 pointer-events-none bg-[linear-gradient(90deg,transparent_0%,rgba(58,7,242,0.5)_40%,rgba(12,209,207,0.5)_60%,transparent_100%)]"
             animate={{
               x: ["-200%", "200%"],
             }}

@@ -8,7 +8,7 @@ import { Code2 } from "lucide-react";
 const WORDS = [
   { text: "DESIGN.", icon: "figma" },
   { text: "CODE.", icon: "code" },
-  { text: "DEPLOY.", icon: "deploy" },
+  { text: "PRODUCTION.", icon: "deploy" },
   { text: "PIZZA!", icon: "pizza" },
 ];
 
@@ -45,7 +45,7 @@ function SlotIcon({
   if (type === "deploy") {
     return (
       <span
-        className={`${className ?? ""} flex items-center justify-center text-2xl md:text-3xl`}
+        className={`${className ?? ""} flex items-center justify-center text-xl md:text-2xl`}
         role="img"
         aria-label="Deploy"
       >
@@ -81,7 +81,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       onComplete: onComplete,
     });
 
-    const fromLeft = { opacity: 0, x: -20, y: 0 };
+    const fromLeft = { opacity: 0, x: -24, y: 0 };
     const toVisible = { opacity: 1, x: 0, y: 0 };
 
     slots.forEach((slot) => {
@@ -111,39 +111,39 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       // Word fades out
       tl.to(
         prevWord,
-        { opacity: 0, duration: 0.4, ease: "power2.in" },
-        `step${i}`
+        { opacity: 0, duration: 0.2, ease: "power2.in" },
+        `step${i}`,
       );
 
       // Icon slides in - overlaps: starts 0.15s before word fully exits (crossfade)
       tl.to(
         prevIcon,
-        { ...toVisible, duration: 0.4, ease: "expo.out" },
-        `step${i}>-0.25`
+        { ...toVisible, duration: 0.3, ease: "expo.out" },
+        `step${i}>-0.25`,
       );
 
       // Next word - overlaps: starts 0.2s before icon lands (fluid handoff)
       tl.fromTo(
         currWord,
         fromLeft,
-        { ...toVisible, duration: 0.4, ease: "expo.out" },
-        `step${i}>-0.2`
+        { ...toVisible, duration: 0.3, ease: "expo.out" },
+        `step${i}>-0.2`,
       );
     }
 
     // Hold, then replace PIZZA with icon
-    tl.addLabel("replaceLast", "+=0.3");
+    tl.addLabel("replaceLast", "+=0.2");
 
     tl.to(
       slots[3].querySelector("[data-word]"),
       { opacity: 0, duration: 0.4, ease: "power2.in" },
-      "replaceLast"
+      "replaceLast",
     );
 
     tl.to(
       slots[3].querySelector("[data-icon]"),
       { ...toVisible, duration: 0.4, ease: "expo.out" },
-      "replaceLast>-0.25"
+      "replaceLast>-0.25",
     );
 
     // Hold with icons, then exit
@@ -157,7 +157,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           overlay.style.pointerEvents = "none";
         },
       },
-      "+=0.5"
+      "+=0.5",
     );
 
     return () => {
@@ -168,10 +168,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#FDFBF7] dark:bg-neutral-950"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-[#FDFBF7] dark:bg-neutral-950"
       style={{
         backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px)`,
-        backgroundSize: "24px 24px",
+        backgroundSize: "20px 20px",
       }}
     >
       <div
@@ -184,11 +184,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             ref={(el) => {
               slotsRef.current[index] = el;
             }}
-            className="relative flex min-h-10 min-w-[100px] shrink-0 items-center justify-center overflow-visible sm:min-w-[130px] md:min-h-11 md:min-w-[170px]"
+            className="relative flex min-h-10 min-w-[150px] shrink-0 items-center justify-center overflow-visible sm:min-w-[150px] md:min-h-11 md:min-w-[200px]"
           >
             <span
               data-word
-              className="absolute inset-0 flex items-center justify-center text-2xl font-semibold tracking-tight text-gradient-blue sm:text-3xl md:text-4xl"
+              className="absolute inset-0 flex items-center justify-center text-xl font-semibold tracking-tight text-gradient-blue md:text-2xl"
               style={{ opacity: 0 }}
             >
               {text}

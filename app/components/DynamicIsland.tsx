@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Mail } from "lucide-react";
 import { GoLink } from "react-icons/go";
+import { BsStars } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
+import { useSplash } from "@/app/contexts/SplashContext";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
@@ -15,6 +17,7 @@ const CONTACT_SECTION_ID = "contact-info-section";
 
 export default function DynamicIsland() {
   const [isVisible, setIsVisible] = useState(false);
+  const { splashActive, setSplashActive } = useSplash();
 
   useEffect(() => {
     const contactSection = document.getElementById(CONTACT_SECTION_ID);
@@ -158,6 +161,24 @@ export default function DynamicIsland() {
                 </span>
                 Let&apos;s chat
               </Link>
+              <div className="h-3.5 w-px shrink-0 bg-white/20" />
+              <button
+                type="button"
+                onClick={() => setSplashActive((prev) => !prev)}
+                className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
+                aria-label={
+                  splashActive
+                    ? "Disable fluid cursor"
+                    : "Enable fluid cursor"
+                }
+              >
+                <BsStars
+                  className={cn(
+                    "size-3.5 shrink-0 transition-colors",
+                    splashActive && "text-cyan-400",
+                  )}
+                />
+              </button>
               <div className="h-3.5 w-px shrink-0 bg-white/20" />
               <div className="theme-toggle-outer shrink-0 pr-1.5">
                 <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
