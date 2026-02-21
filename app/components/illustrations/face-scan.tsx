@@ -6,11 +6,18 @@ import { cn } from "@/lib/utils";
 import { LightDarkParticles } from "@/app/blocks/bento/three/particles";
 import Image from "next/image";
 
-export const FaceScanIllustration = () => {
+export const FaceScanIllustration = ({
+  startWhenVisible = true,
+}: {
+  startWhenVisible?: boolean;
+} = {}) => {
   const [show, setShow] = useState(false);
   const [showName, setShowName] = useState(false);
 
   useEffect(() => {
+    if (!startWhenVisible) return;
+
+    // When hero becomes visible, run scan effect 1.2s later (after entrance settles)
     const timer = setTimeout(() => {
       setShow(true);
 
@@ -20,10 +27,10 @@ export const FaceScanIllustration = () => {
       }, 100);
 
       return () => clearTimeout(hideTimer);
-    }, 4000);
+    }, 1200);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [startWhenVisible]);
 
   return (
     <div
@@ -80,16 +87,16 @@ export const FaceScanIllustration = () => {
 
       {/* Card frame — z-[60] so it appears on top of the face image (z-50) */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
+        initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 1.5, type: "spring" }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
         className="aspect-2/3 absolute inset-0 z-60 m-auto w-24"
       >
         <CardDecorator className="scale-125 border-white blur-[3px]" />
         <motion.div
           initial={{ "--frame-color": "white" }}
           animate={{ "--frame-color": "var(--color-lime-400)" }}
-          transition={{ duration: 0.4, delay: 3.5, type: "spring" }}
+          transition={{ duration: 0.5, delay: 1.2, ease: [0.22, 0.61, 0.36, 1] }}
         >
           <CardDecorator className="border-(--frame-color) z-10" />
         </motion.div>

@@ -16,7 +16,7 @@ export default function IntroductionText() {
         I turn{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
-            className={`${styleScript.className} text-lg md:text-2xl font-bold  mr-1`}
+            className={`${styleScript.className} text-lg md:text-2xl font-bold mr-1`}
           >
             ideas
           </span>
