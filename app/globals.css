@@ -23,6 +23,7 @@ html {
   --gradient-blue: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
   --wand-sparkles-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z'/%3E%3Cpath d='M20 2v4'/%3E%3Cpath d='M22 4h-4'/%3E%3Ccircle cx='4' cy='20' r='2'/%3E%3C/svg%3E");
   --gradient-darkBlue: linear-gradient(144deg, #3e7bfa 3.63%, #60c 94.05%);
+  --gradient-tracing-beam: linear-gradient(to right, #18CCFC, #6344F5, #AE48FF);
   --gradient-BGlight: linear-gradient(
     114deg,
     rgba(62, 123, 250, 0.02) 20.34%,
@@ -311,6 +312,12 @@ body {
 
 .icon-gradient-blue {
   background: var(--gradient-blue);
+}
+
+/* Tracing beam gradient border - matches tracing-beam.tsx stroke colors */
+.border-tracing-gradient {
+  border-image: var(--gradient-tracing-beam) 1;
+  border-style: solid;
 }
 ::view-transition-old(root), ::view-transition-new(root) {
     animation: none;

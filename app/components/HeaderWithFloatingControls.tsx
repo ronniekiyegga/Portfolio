@@ -2,7 +2,6 @@
 
 import React from "react";
 import Header from "./header";
-import ThemeToggle from "./ThemeToggle";
 import SplashCursor from "./SplashCursor";
 import { useSplash } from "@/app/contexts/SplashContext";
 
@@ -11,7 +10,7 @@ const SCROLL_THRESHOLD = 20;
 /**
  * Wrapper that coordinates header visibility and floating controls.
  * - Header (with right pill: theme + SplashCursor) shows when at top
- * - Floating div (ThemeToggle + SplashCursor) shows only when header is hidden (scrolled)
+ * - SplashCursor still works when enabled from header or DynamicIsland
  */
 export default function HeaderWithFloatingControls() {
   const { splashActive, setSplashActive } = useSplash();
@@ -33,11 +32,6 @@ export default function HeaderWithFloatingControls() {
         isHeaderVisible={isHeaderVisible || isMobileMenuOpen}
         isMobileMenuOpen={isMobileMenuOpen}
         onMobileMenuChange={setIsMobileMenuOpen}
-        splashActive={splashActive}
-        setSplashActive={setSplashActive}
-      />
-      <ThemeToggle
-        isVisible={!isHeaderVisible}
         splashActive={splashActive}
         setSplashActive={setSplashActive}
       />
