@@ -3,8 +3,10 @@ import Script from "next/script";
 import { Geist, Geist_Mono, Dancing_Script, Source_Serif_4, Style_Script, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import { SplashProvider } from "./contexts/SplashContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
 import HeaderWithFloatingControls from "./components/HeaderWithFloatingControls";
 import FooterSection from "./components/footer";
+import LoadingScreenGate from "./components/LoadingScreenGate";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -68,11 +70,14 @@ export default function RootLayout({
             `,
           }}
         />
-        <SplashProvider>
-          <HeaderWithFloatingControls />
-          {children}
-          <FooterSection />
-        </SplashProvider>
+        <LoadingProvider>
+          <SplashProvider>
+            <HeaderWithFloatingControls />
+            {children}
+            <FooterSection />
+          </SplashProvider>
+          <LoadingScreenGate />
+        </LoadingProvider>
       </body>
     </html>
   );

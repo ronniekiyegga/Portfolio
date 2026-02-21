@@ -101,7 +101,7 @@ export default function DynamicIsland() {
           {/* Middle pill - Email, hidden on mobile */}
           <div
             className={cn(
-              "flex items-center gap-0.5 rounded-full p-2",
+              "items-center gap-0.5 rounded-full p-2 hidden md:flex",
               "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
               "dark:pill-inner-dark",
             )}
