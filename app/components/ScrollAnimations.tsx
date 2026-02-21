@@ -18,46 +18,53 @@ export default function ScrollAnimations({
     const container = containerRef.current;
     if (!container) return;
 
-    const sections = Array.from(container.children).filter(
-      (el) => el instanceof HTMLElement
-    ) as HTMLElement[];
+    let observer: IntersectionObserver | null = null;
 
-    if (!sections.length) return;
+    const rafId = requestAnimationFrame(() => {
+      const sections = Array.from(container.children).filter(
+        (el) => el instanceof HTMLElement
+      ) as HTMLElement[];
 
-    sections.forEach((section, i) => {
-      if (i === 0) return;
-      gsap.set(section, { opacity: 0, force3D: true });
-    });
+      if (!sections.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const section = entry.target as HTMLElement;
-          gsap.to(section, {
-            opacity: 1,
-            visibility: "visible",
-            duration: 0.6,
-            ease: "power2.out",
-            delay: 0.05,
-            force3D: true,
-            overwrite: "auto",
+      sections.forEach((section, i) => {
+        if (i === 0) return;
+        gsap.set(section, { opacity: 0, force3D: true });
+      });
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const section = entry.target as HTMLElement;
+            gsap.to(section, {
+              opacity: 1,
+              visibility: "visible",
+              duration: 0.6,
+              ease: "power2.out",
+              delay: 0.05,
+              force3D: true,
+              overwrite: "auto",
+            });
+            observer?.unobserve(section);
           });
-          observer.unobserve(section);
-        });
-      },
-      {
-        rootMargin: "0px 0px -20% 0px",
-        threshold: 0,
-      }
-    );
+        },
+        {
+          rootMargin: "0px 0px -10% 0px",
+          threshold: 0,
+        }
+      );
 
-    sections.forEach((section, i) => {
-      if (i === 0) return;
-      observer.observe(section);
+      sections.forEach((section, i) => {
+        if (i === 0) return;
+        observer?.observe(section);
+      });
     });
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer?.disconnect();
+    };
   }, []);
 
   return (

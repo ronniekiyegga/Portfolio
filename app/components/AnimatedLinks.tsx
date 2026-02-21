@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
 import DarkVeil from "./DarkVeil";
-import FloatingLines from "./FloatingLines";
-import LightRays from "./LightRays";
-import Prism from "./Prism";
-import LightPillar from "./LightPillar";
+import PrismComponent from "./ui/gradients/PrismComponent";
+import LightPillarComponent from "./ui/gradients/LightPillarComponent";
+import LightRaysComponent from "./ui/gradients/LightRaysComponent";
+import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 
 export const AnimatedLinks = () => {
   const [active, setActive] = useState<number | null>(null);
@@ -203,90 +203,37 @@ const LinkImage = ({
   );
 };
 
-const LINKS = [
+type LinkConfig = {
+  href: string;
+  text: string;
+  id: number;
+  imgSrc?: string;
+  background?: React.ReactNode;
+};
+
+const LINKS: LinkConfig[] = [
   {
     href: "#",
     text: "DESIGN",
     id: 1,
-    background: (
-      <div className="absolute inset-0 w-full h-full">
-        <FloatingLines
-          enabledWaves={["top", "middle", "bottom"]}
-          lineCount={5}
-          lineDistance={5}
-          bendRadius={5}
-          bendStrength={-0.5}
-          interactive={true}
-          parallax={true}
-        />
-      </div>
-    ),
+    background: <FloatingLinesComponent />,
   },
   {
     href: "#",
     text: "ENGINEERING",
     id: 2,
-    background: (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#ffffff"
-          raysSpeed={1}
-          lightSpread={0.5}
-          rayLength={3}
-          followMouse={true}
-          mouseInfluence={0.1}
-          noiseAmount={0}
-          distortion={0}
-          className="custom-rays"
-          pulsating={false}
-          fadeDistance={1}
-          saturation={1}
-        />
-      </div>
-    ),
+    background: <LightRaysComponent />,
   },
   {
     href: "/blog",
     text: "BLOG",
     id: 3,
-    background: (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <Prism
-          animationType="rotate"
-          timeScale={0.5}
-          height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0}
-          glow={1}
-        />
-      </div>
-    ),
+    background: <PrismComponent />,
   },
   {
     href: "#",
     text: "Snapshots",
     id: 4,
-    background: (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <LightPillar
-          topColor="#5227FF"
-          bottomColor="#FF9FFC"
-          intensity={1}
-          rotationSpeed={0.3}
-          glowAmount={0.002}
-          pillarWidth={3}
-          pillarHeight={0.4}
-          noiseIntensity={0.5}
-          pillarRotation={25}
-          interactive={false}
-          mixBlendMode="screen"
-          quality="high"
-        />
-      </div>
-    ),
+    background: <LightPillarComponent />,
   },
 ];
