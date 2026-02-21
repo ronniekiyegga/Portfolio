@@ -319,6 +319,18 @@ body {
   border-image: var(--gradient-tracing-beam) 1;
   border-style: solid;
 }
+
+/* Sharp diagonal cut-off corners: top-right and bottom-left */
+.corner-cut-tr-bl {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 5rem) 0,
+    100% 5rem,
+    100% 100%,
+    5rem 100%,
+    0 calc(100% - 5rem)
+  );
+}
 ::view-transition-old(root), ::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
