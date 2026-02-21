@@ -2,12 +2,19 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { type ReactNode, useState, useEffect, useRef, useCallback } from "react";
+import {
+  type ReactNode,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import Notes2Illustration from "@/app/components/ui/illustrations/notes-2-illustration";
 import Calendar10Illustration from "@/app/components/ui/illustrations/calendar-10-illustration";
 import { AnimatePresence, motion } from "motion/react";
 import AgentTaskPlanningIllustration from "@/app/components/ui/illustrations/agent-task-planning-illustration";
 import NativeStartNow from "./ui/NativeButton";
+import { StickyFooterDialog } from "./ui/sticky-footer-dialog";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -51,6 +58,8 @@ interface ExpandableFeatures4Props {
   description: ReactNode;
   /** When true, image appears on left, text on right (for alternating layout) */
   imageOnLeft?: boolean;
+  /** Image src for the details modal header */
+  detailsImage?: string;
 }
 
 const BADGE: string = "Platform Features";
@@ -67,8 +76,10 @@ export default function ExpandableFeatures4({
   title = TITLE,
   description = DESC,
   imageOnLeft = false,
+  detailsImage,
 }: ExpandableFeatures4Props) {
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const textColRef = useRef<HTMLDivElement>(null);
@@ -217,11 +228,42 @@ export default function ExpandableFeatures4({
             <div ref={ctaRef} data-project-cta className="opacity-0">
               <NativeStartNow
                 variant="gradient"
-                size="sm"
-                onStart={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 1500));
+                size="xs"
+                onStart={() => {
+                  setDetailsOpen(true);
+                  return Promise.resolve();
                 }}
               />
+              <StickyFooterDialog
+                open={detailsOpen}
+                onOpenChange={setDetailsOpen}
+                title={title}
+                description="Project details and overview."
+                badge="Project"
+                image={detailsImage}
+              >
+                <div className="space-y-4 text-sm text-muted-foreground">
+                  {description}
+                  <p className="mt-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Sed do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  </p>
+                  <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
+                  <p>
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam, eaque ipsa quae ab illo inventore veritatis et
+                    quasi architecto beatae vitae dicta sunt explicabo.
+                  </p>
+                </div>
+              </StickyFooterDialog>
             </div>
 
             <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col">
@@ -238,7 +280,10 @@ export default function ExpandableFeatures4({
                 >
                   <div className="flex size-4 shrink-0 items-center justify-center">
                     {expandedIndex === index && (
-                      <Loader key={expandedIndex} duration={AUTOPLAY_DURATION} />
+                      <Loader
+                        key={expandedIndex}
+                        duration={AUTOPLAY_DURATION}
+                      />
                     )}
                   </div>
                   {feature.title}

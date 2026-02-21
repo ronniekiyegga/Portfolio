@@ -70,7 +70,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="w-full min-w-0 overflow-x-hidden py-10 contrast-100 bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="w-full min-w-0 overflow-x-hidden py-20 contrast-100 bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
     >
       <LampHeader />
       <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
@@ -85,6 +85,7 @@ export default function ProjectSection() {
                 title={item.title}
                 description={item.description}
                 imageOnLeft={index % 2 === 1}
+                detailsImage={item.image}
               />
             </div>
           ))}

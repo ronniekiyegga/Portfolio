@@ -13,6 +13,16 @@ html {
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* ReUI semantic tokens - for destructive, info, success, warning, invert states */
+  --destructive-foreground: #ffffff;
+  --info: #0ea5e9;
+  --info-foreground: #ffffff;
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --invert: #171717;
+  --invert-foreground: #fafafa;
   --Corner-Full: 62.5rem;
   --Spacing-4: 4px;
   --Spacing-xl: 20px;
@@ -36,6 +46,8 @@ html {
 .dark {
   --background: #000000;
   --foreground: #fafafa;
+  --invert: #fafafa;
+  --invert-foreground: #171717;
   --Gradients-Emoji: rgba(62, 123, 250, 0.05);
   --Gradients-Pill-BG-Dark: linear-gradient(
     101deg,
