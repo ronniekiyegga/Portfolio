@@ -5,6 +5,10 @@ import { CornerDownRight } from "lucide-react";
 import Integrations from "./integrations-one";
 import { cn } from "@/lib/utils";
 import Lanyard from "./Lanyard";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
@@ -45,6 +49,7 @@ export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [showLanyard, setShowLanyard] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -63,6 +68,42 @@ export default function Experiences() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    const content = contentRef.current;
+    if (!section || !content) return;
+
+    const heading = content.querySelector("h2");
+    const items = content.querySelectorAll("[data-experience-item]");
+
+    gsap.set([heading, ...items], { opacity: 0, y: 24, force3D: true });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    tl.to(heading, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }).to(
+      items,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out",
+      },
+      "-=0.2"
+    );
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -74,10 +115,13 @@ export default function Experiences() {
           <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
         )}
       </div>
-      <div className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0">
+      <div
+        ref={contentRef}
+        className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0"
+      >
         <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES
-      </h2>
+        </h2>
 
         <div className="flex flex-col gap-6 pl-4 md:pl-12">
           {experiences.map((item) => {
@@ -86,6 +130,7 @@ export default function Experiences() {
               <div
                 key={item.id}
                 data-experience-id={item.id}
+                data-experience-item
                 className={cn(
                   "group/exp cursor-pointer rounded-lg transition-all duration-300 ease-out",
                   isOpen && " ",
