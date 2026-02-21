@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { type ReactNode, useState, useEffect, useRef } from "react";
+import { type ReactNode, useState, useEffect, useRef, useCallback } from "react";
 import Notes2Illustration from "@/app/components/ui/illustrations/notes-2-illustration";
 import Calendar10Illustration from "@/app/components/ui/illustrations/calendar-10-illustration";
 import { AnimatePresence, motion } from "motion/react";
@@ -12,6 +12,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const AUTOPLAY_DURATION = 10000;
+
 const features = [
   {
     title: "Design",
@@ -66,6 +69,7 @@ export default function ExpandableFeatures4({
   imageOnLeft = false,
 }: ExpandableFeatures4Props) {
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const textColRef = useRef<HTMLDivElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
@@ -75,9 +79,24 @@ export default function ExpandableFeatures4({
   const ctaRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
 
+  const resetTimer = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setExpandedIndex((current) => (current + 1) % features.length);
+    }, AUTOPLAY_DURATION);
+  }, []);
+
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [resetTimer]);
+
   const handleSelect = (index: number) => {
     if (index === expandedIndex) return;
     setExpandedIndex(index);
+    resetTimer();
   };
 
   useEffect(() => {
@@ -211,12 +230,17 @@ export default function ExpandableFeatures4({
                   key={feature.title}
                   onClick={() => handleSelect(index)}
                   className={cn(
-                    "active:scale-98 relative w-fit cursor-pointer px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
+                    "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
                     expandedIndex === index
                       ? "text-white dark:text-white"
                       : "text-white/40 hover:text-foreground/75 dark:text-white/70 dark:hover:text-white/90",
                   )}
                 >
+                  <div className="flex size-4 shrink-0 items-center justify-center">
+                    {expandedIndex === index && (
+                      <Loader key={expandedIndex} duration={AUTOPLAY_DURATION} />
+                    )}
+                  </div>
                   {feature.title}
                 </button>
               ))}
@@ -283,5 +307,49 @@ export default function ExpandableFeatures4({
         </div>
       </div>
     </section>
+  );
+}
+
+const r = 10;
+const circumference = 2 * Math.PI * r;
+
+function Loader({ duration }: { duration: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="size-4"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r={r}
+        stroke="currentColor"
+        strokeWidth="2"
+        opacity="0.2"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r={r}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        transform="rotate(-90 12 12)"
+        strokeDasharray={circumference}
+        strokeDashoffset={circumference}
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          from={circumference}
+          to={0}
+          dur={`${duration}ms`}
+          fill="freeze"
+        />
+      </circle>
+    </svg>
   );
 }
