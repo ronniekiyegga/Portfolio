@@ -113,7 +113,11 @@ html {
     0 4px 14px rgba(0, 0, 0, 0.06);
 }
 .dark .middle-pill-outer {
-  background: linear-gradient(to bottom, #3e7bfa, #6600cc);
+  background: linear-gradient(
+    144deg,
+    rgba(62, 123, 250, 0.74) 3.63%,
+    rgba(102, 0, 204, 0.74) 94.05%
+  );
   box-shadow:
     0 0 1px 0 rgba(255, 255, 255, 0.06) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.04),

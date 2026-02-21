@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { User, Link2, Mail } from "lucide-react";
+import { User, Mail } from "lucide-react";
+import { GoLink } from "react-icons/go";
 import { BsStars } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
@@ -44,25 +45,53 @@ export default function DynamicIsland() {
       {showPills && (
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 px-2"
+          className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 px-2"
           exit={{ opacity: 0, y: 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           {/* Left pill - Avatar + Name */}
-          <div className="flex flex-col gap-2.5 rounded-[32px] bg-gradient-to-b from-white via-[#fff1fe] via-[#fbe9d9] via-[#dea8ff] to-white p-1.5 dark:from-[#050519] dark:via-[#1a2134] dark:via-[#334254] dark:to-[#020209]">
-            <div className="flex h-[44.07px] self-stretch items-center gap-[9.65px] rounded-[172.11px] bg-gradient-to-b from-[#050519] via-[#1a2134] via-[#334254] to-[#020209]">
-              <div className="flex items-center gap-[4.2px] rounded-[145.49px] border border-solid border-white/20 bg-gradient-to-b from-[#fbfbfb] to-[#e1e7fb] pl-1 pr-2 pt-0.5 pb-0.5 dark:border-0 dark:bg-[#fcfcfc] dark:pl-1.5">
-                <div className="flex h-[42.96px] w-[42.96px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[1.698px] border-solid border-white/90 bg-[#f9f9f9] dark:border-white/20 dark:bg-[linear-gradient(to_bottom,#3e7bfa,#c7e9e8,#3e7bfa)]">
-                  <Image
-                    src="/Avatar.svg"
-                    alt="Ronnie"
-                    width={47}
-                    height={47}
-                    className="object-cover"
-                  />
+          <div
+            className={cn(
+              "flex items-center gap-0.5 rounded-full p-2",
+              "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
+              "dark:pill-inner-dark",
+            )}
+            style={{
+              borderRadius: "var(--Corner-radius-32, 2rem)",
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.55) 4.86%, rgba(255, 241, 254, 0.08) 22.6%, rgba(251, 233, 217, 0.29) 35.05%, rgba(222, 168, 255, 0.13) 44.56%, rgba(251, 233, 217, 0.07) 57.23%, rgba(255, 255, 255, 0.42) 85.1%)",
+            }}
+          >
+            <div
+              className="flex h-[45px] self-stretch items-center gap-[9.65px] dark:border-linear-gradient(144deg, rgba(62, 123, 250, 0.74) 3.63%, rgba(102, 0, 204, 0.74) 94.05%); rounded-[172.11px] bg-linear-to-b from-[#050519] via-[#334254] to-[#020209]"
+              style={{
+                borderRadius: "9.093rem",
+                background:
+                  "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.26) 97.21%)",
+              }}
+            >
+              {/* ... image container ... */}
+              <div className="flex items-center gap-[4.2px] rounded-[145.49px] bg-white dark:bg-[url('/BG_1.png')]  border border-solid border-white/20 pl-1 pr-2 pt-0.5 pb-0.5 dark:border-0 dark:bg-[#fcfcfc]  dark:text-white">
+                <div
+                  className={cn(
+                    "flex h-[42.96px] w-[42.96px] shrink-0 items-center justify-center overflow-hidden rounded-full",
+                    "border-[1.698px] border-solid border-white/90",
+                    "[background:linear-gradient(180deg,#FBFBFB_68.72%,#E1E7FB_130.66%)]",
+                    "dark:border-0 dark:p-[1.698px] dark:[background:linear-gradient(144deg,rgba(62,123,250,0.74)_3.63%,rgba(102,0,204,0.74)_94.05%)]",
+                  )}
+                >
+                  <div className="size-full overflow-hidden rounded-full bg-inherit dark:bg-[#0a0a12]">
+                    <Image
+                      src="/Avatar.svg"
+                      alt="Ronnie"
+                      width={47}
+                      height={47}
+                      className="size-full object-cover"
+                    />
+                  </div>
                 </div>
-                <span className="font-(family-name:--font-style-script) text-center text-[14.69px] leading-[28.33px] font-normal text-[#212225] dark:text-[#f0f0f0]">
+                <span className="font-(family-name:--font-style-script) px-1 text-center text-[14.69px] leading-[28.33px] font-normal text-[#212225] dark:text-white">
                   Ronniè
                 </span>
               </div>
@@ -70,14 +99,34 @@ export default function DynamicIsland() {
           </div>
 
           {/* Middle pill - Email, hidden on mobile */}
-          <div className="middle-pill-outer hidden min-w-[190px] max-w-[280px] md:flex items-center">
-            <div className="flex h-[44px] min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-4 py-3 dark:bg-[#fcfcfc]">
-              <span className="truncate font-(family-name:--font-source-serif) text-[12px] leading-[13.32px] text-[#212225] dark:text-[#f0f0f0]">
+          <div
+            className={cn(
+              "flex items-center gap-0.5 rounded-full p-2",
+              "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
+              "dark:pill-inner-dark",
+            )}
+            style={{
+              borderRadius: "var(--Corner-radius-32, 2rem)",
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.55) 4.86%, rgba(255, 241, 254, 0.08) 22.6%, rgba(251, 233, 217, 0.29) 35.05%, rgba(222, 168, 255, 0.13) 44.56%, rgba(251, 233, 217, 0.07) 57.23%, rgba(255, 255, 255, 0.42) 85.1%)",
+            }}
+          >
+            <div
+              className="flex py-4.5 min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-8  dark:bg-[#0d0d1a] dark:px-4 dark:py-3"
+              style={{
+                border:
+                  "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
+              }}
+            >
+              <span className="min-w-0 flex-1 font-(family-name:--font-source-serif) text-xs leading-[13.32px] text-[#212225] dark:text-white">
                 Ronniekiyegga@hotmail.com
               </span>
-              <div className="flex shrink-0 items-center gap-2 text-[#8d8fae]">
+              <div className="flex shrink-0 items-center gap-1 text-[#8d8fae] dark:text-white/70">
+                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
                 <User className="h-3.5 w-3.5" />
-                <Link2 className="h-3.5 w-3.5" />
+                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
+                <GoLink className="h-3.5 w-3.5" />
+                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
                 <Mail className="h-3.5 w-3.5" />
               </div>
             </div>
@@ -87,8 +136,8 @@ export default function DynamicIsland() {
           <div className="p-2 pill-outer-cream">
             <div
               className={cn(
-                "flex items-center gap-0.5 rounded-full px-1.5 py-0.5",
-                "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.3)]",
+                "flex items-center gap-0.5 rounded-full px-1.5 py-1 ",
+                "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
                 "dark:pill-inner-dark",
               )}
               style={{
@@ -101,11 +150,11 @@ export default function DynamicIsland() {
               <Link
                 href="mailto:ronniekiyegga@hotmail.com"
                 className={cn(
-                  "flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
+                  "flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm text-nowrap font-medium text-white transition-opacity hover:opacity-90",
                   styleScript.className,
                 )}
               >
-                <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                <span className="size-1.5 shrink-0 rounded-full bg-teal-400 text-nowrap" />
                 Let&apos;s chat
               </Link>
               <div className="h-3.5 w-px shrink-0 bg-white/20" />
@@ -114,9 +163,7 @@ export default function DynamicIsland() {
                 onClick={() => setSplashActive((prev) => !prev)}
                 className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
                 aria-label={
-                  splashActive
-                    ? "Disable fluid cursor"
-                    : "Enable fluid cursor"
+                  splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
                 }
               >
                 <BsStars
