@@ -127,7 +127,7 @@ export default function ExpandableFeatures4({
               className="mask-y-from-75% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-12 border-x"
             />
 
-            <div className="corner-tr-bevel corner-bl-bevel aspect-4/5 min-h-0 min-w-0 bg-muted relative overflow-hidden rounded-xl rounded-bl-[5rem] rounded-tr-[5rem]">
+            <div className="corner-cut-tr-bl aspect-4/5 min-h-0 min-w-0 bg-muted relative overflow-hidden">
               <AnimatePresence initial={false} mode="wait">
                 <motion.div
                   key={expandedIndex}
