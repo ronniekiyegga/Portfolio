@@ -7,10 +7,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
-import NativeStartNow from "./ui/NativeButton";
+import ExpandableFeatures4 from "./ExpandableFeatures4";
 const inter = Inter({ subsets: ["latin"] });
 import { TracingBeam } from "../components/ui/tracing-beam";
-
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +59,7 @@ export default function ProjectSection() {
       {
         rootMargin: "0px 0px -20% 0px",
         threshold: 0,
-      }
+      },
     );
 
     cards.forEach((card) => observer.observe(card));
@@ -80,6 +79,17 @@ export default function ProjectSection() {
           className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
         >
           {projectContent.map((item, index) => (
+            <div key={`content-${index}`} data-project-card className="mb-10">
+              <ExpandableFeatures4
+                badge={item.badge}
+                title={item.title}
+                description={item.description}
+                imageOnLeft={index % 2 === 1}
+              />
+            </div>
+          ))}
+
+          {/* {projectContent.map((item, index) => (
             <div key={`content-${index}`} data-project-card className="mb-10">
               <h4
                 data-project-badge
@@ -113,17 +123,8 @@ export default function ProjectSection() {
                 )}
                 {item.description}
               </div>
-              <div data-project-cta className="opacity-0">
-                <NativeStartNow
-                  variant="gradient"
-                  size="sm"
-                  onStart={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 1500));
-                  }}
-                />
-              </div>
             </div>
-          ))}
+          ))} */}
 
           {/* {PROJECTDISPLAY.map((tab) => {
             const { content: Content, ...tabProps } = tab;
@@ -150,18 +151,6 @@ const projectContent = [
           tracking across UAE schools. Reduced manual reporting time from 12
           hours to 15 minutes per cycle.
         </p>
-        {/* <p>
-          Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad
-          veniam in commodo id reprehenderit adipisicing. Proident duis
-          exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.
-        </p>
-        <p>
-          Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod
-          reprehenderit deserunt amet laborum consequat adipisicing officia qui
-          irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud.
-          Amet culpa officia aliquip deserunt veniam deserunt officia
-          adipisicing aliquip proident officia sunt.
-        </p> */}
       </>
     ),
     badge: "B2B SAAS PLATFORM",
@@ -193,7 +182,7 @@ const projectContent = [
           Full-stack application with modern design, student engagement
           features, and production deployment architecture.
         </p>
-        <p>
+        {/* <p>
           CHALLEGE: Building a professional tutoring presence with engaging UX
           while maintaining scalability for future student management features.
           Needed production-grade infrastructure on a budget, with reliable
@@ -215,7 +204,7 @@ const projectContent = [
           zero-downtime deployments using PM2 and GitHub Actions. Integrated
           CORS configuration, environment-based routing, and production-ready
           error handling.
-        </p>
+        </p> */}
       </>
     ),
     badge: "B2C SAAS PLATFORM",
@@ -242,12 +231,12 @@ const projectContent = [
           Teachable Machine for iPad-only classrooms. Enabled 400+ students to
           build ML models without desktop access.
         </p>
-        <p>
+        {/* <p>
           In dolore veniam excepteur eu est et sunt velit. Ipsum sint esse
           veniam fugiat esse qui sint ad sunt reprehenderit do qui proident
           reprehenderit. Laborum exercitation aliqua reprehenderit ea sint
           cillum ut mollit.
-        </p>
+        </p> */}
       </>
     ),
     badge: "EDUCATIONAL TOOL",

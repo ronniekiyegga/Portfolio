@@ -4,11 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Mail } from "lucide-react";
 import { GoLink } from "react-icons/go";
-import { BsStars } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
-import { useSplash } from "@/app/contexts/SplashContext";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
@@ -17,7 +15,6 @@ const CONTACT_SECTION_ID = "contact-info-section";
 
 export default function DynamicIsland() {
   const [isVisible, setIsVisible] = useState(false);
-  const { splashActive, setSplashActive } = useSplash();
 
   useEffect(() => {
     const contactSection = document.getElementById(CONTACT_SECTION_ID);
@@ -112,7 +109,7 @@ export default function DynamicIsland() {
             }}
           >
             <div
-              className="flex py-4.5 min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-8  dark:bg-[#0d0d1a] dark:px-4 dark:py-3"
+              className="flex py-4.5 min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-8  dark:bg-[#0d0d1a]  "
               style={{
                 border:
                   "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
@@ -132,7 +129,7 @@ export default function DynamicIsland() {
             </div>
           </div>
 
-          {/* Right pill - Let's chat + SplashCursor + Theme (matches header button) */}
+          {/* Right pill - Let's chat + Theme (matches header button) */}
           <div className="p-2 pill-outer-cream">
             <div
               className={cn(
@@ -154,25 +151,13 @@ export default function DynamicIsland() {
                   styleScript.className,
                 )}
               >
-                <span className="size-1.5 shrink-0 rounded-full bg-teal-400 text-nowrap" />
+                {/* <span className="size-1.5 shrink-0 rounded-full bg-teal-400 text-nowrap animate-ping" /> */}
+                <span className="relative flex size-3">
+                  <span className="absolute -top-0.5 -left-0.5 inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+                </span>
                 Let&apos;s chat
               </Link>
-              <div className="h-3.5 w-px shrink-0 bg-white/20" />
-              <button
-                type="button"
-                onClick={() => setSplashActive((prev) => !prev)}
-                className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
-                aria-label={
-                  splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
-                }
-              >
-                <BsStars
-                  className={cn(
-                    "size-3 shrink-0 transition-colors",
-                    splashActive && "text-cyan-400",
-                  )}
-                />
-              </button>
               <div className="h-3.5 w-px shrink-0 bg-white/20" />
               <div className="theme-toggle-outer shrink-0 pr-1.5">
                 <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">

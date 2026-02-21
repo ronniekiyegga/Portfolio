@@ -77,8 +77,8 @@ const iconSizeVariants = {
 
 export default function NativeStartNow({
   onStart,
-  label = "Start Now",
-  loadingLabel = "Starting...",
+  label = "View Details",
+  loadingLabel = "loading...",
   successLabel = "Let's Go!",
   size = "md",
   showRocket = true,
@@ -116,11 +116,7 @@ export default function NativeStartNow({
           "border-0",
         );
       case "solid":
-        return cn(
-          baseStyles,
-          "!bg-black text-white",
-          "hover:!bg-neutral-900",
-        );
+        return cn(baseStyles, "!bg-black text-white", "hover:!bg-neutral-900");
       case "outline":
         return cn(
           baseStyles,

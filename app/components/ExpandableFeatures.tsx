@@ -147,8 +147,9 @@ export default function ExpandableFeatures() {
                     {activeIndex === index && (
                       <div
                         key={progressKey}
-                        className="bg-linear-to-r to-foreground absolute inset-0 h-full origin-left rounded-full"
+                        className="absolute inset-0 h-full origin-left rounded-full"
                         style={{
+                          background: "linear-gradient(to right, #18CCFC, #6344F5, #AE48FF)",
                           animation: `expandProgress ${AUTOPLAY_DURATION}ms linear forwards`,
                           animationPlayState: paused ? "paused" : "running",
                         }}
