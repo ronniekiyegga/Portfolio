@@ -73,13 +73,13 @@ export default function ProjectSection() {
       className="w-full min-w-0 overflow-x-hidden py-10 contrast-100 bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
     >
       <LampHeader />
-      <TracingBeam className="w-full px-12 sm:px-20 lg:px-32 py-16 md:py-2">
+      <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
         <div
           ref={containerRef}
           className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
         >
           {projectContent.map((item, index) => (
-            <div key={`content-${index}`} data-project-card className="mb-10">
+            <div key={`content-${index}`} data-project-card className="mb-20">
               <ExpandableFeatures4
                 badge={item.badge}
                 title={item.title}
