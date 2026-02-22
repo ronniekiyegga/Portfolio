@@ -1,14 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { twMerge } from "tailwind-merge";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
 import ExpandableFeatures4 from "./ExpandableFeatures4";
-const inter = Inter({ subsets: ["latin"] });
 import { TracingBeam } from "../components/ui/tracing-beam";
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
