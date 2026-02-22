@@ -348,13 +348,13 @@ export default function ExpandableFeatures4({
                   }}
                   className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4"
                 >
-                  <div className="relative max-h-full min-w-0 scale-75 sm:scale-[0.7] aspect-square w-full max-w-[280px]">
+                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[0.85] aspect-square w-full max-w-[400px]">
                     <Image
                       src={featuresList[expandedIndex].image}
                       alt={featuresList[expandedIndex].title}
                       fill
                       className="object-contain"
-                      sizes="(max-width: 640px) 200px, 280px"
+                      sizes="(max-width: 640px) 240px, 340px"
                     />
                   </div>
                 </motion.div>
