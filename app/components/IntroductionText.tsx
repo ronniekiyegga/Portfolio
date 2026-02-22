@@ -12,24 +12,24 @@ export default function IntroductionText() {
       <motion.div className="relative w-full my-1 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
         <LayoutTextFlip text="FULL STACK" words={["DESIGNER", "ENGINEER"]} />
       </motion.div>
-      <div className="mt-6 text-sm md:text-lg text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
-        I turn{" "}
+      <div className="mt-6 text-sm md:text-lg text-left text-neutral-600 dark:text-neutral-400 max-w-2xl">
+        I'm a design-focused software engineer, passionate about {" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
             className={`${styleScript.className} text-lg md:text-2xl font-bold mr-1`}
           >
-            ideas
+            crafting
           </span>
           <ImageBadgeFolder />
         </span>{" "}
-        into pixel-perfect products and treats engineering as a craft,{" "}
+        intuitive, pixel-perfect user interfaces and scalable systems & bridging
+        creativity and code from concept to production -
         <span
           className={`${styleScript.className} text-lg md:text-2xl font-bold  mr-1`}
         >
           1 byte at a time
         </span>
-        . As a design-focused engineer, I enjoy building and shipping full-stack
-        products from concept to deployment.
+        .
       </div>
     </div>
   );
