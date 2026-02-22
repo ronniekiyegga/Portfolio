@@ -17,6 +17,7 @@ import NativeStartNow from "./ui/NativeButton";
 import { StickyFooterDialog } from "./ui/sticky-footer-dialog";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import LightPillarComponent from "./ui/gradients/LightPillarComponent";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -245,8 +246,8 @@ export default function ExpandableFeatures4({
                 <div className="space-y-4 text-sm text-muted-foreground">
                   {description}
                   <p className="mt-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Sed do eiusmod tempor incididunt ut labore et dolore magna
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.
                   </p>
