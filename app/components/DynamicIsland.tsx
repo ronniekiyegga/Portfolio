@@ -13,15 +13,15 @@ import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
-const CONTACT_SECTION_ID = "contact-info-section";
+const HERO_SECTION_ID = "hero-section";
 
 export default function DynamicIsland() {
   const [isVisible, setIsVisible] = useState(false);
   const { splashActive, setSplashActive } = useSplash();
 
   useEffect(() => {
-    const contactSection = document.getElementById(CONTACT_SECTION_ID);
-    if (!contactSection) return;
+    const heroSection = document.getElementById(HERO_SECTION_ID);
+    if (!heroSection) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -34,7 +34,7 @@ export default function DynamicIsland() {
       },
     );
 
-    observer.observe(contactSection);
+    observer.observe(heroSection);
     return () => observer.disconnect();
   }, []);
 

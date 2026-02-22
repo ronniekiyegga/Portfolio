@@ -9,48 +9,68 @@ import {
   useRef,
   useCallback,
 } from "react";
-import Notes2Illustration from "@/app/components/ui/illustrations/notes-2-illustration";
-import Calendar10Illustration from "@/app/components/ui/illustrations/calendar-10-illustration";
 import { AnimatePresence, motion } from "motion/react";
-import AgentTaskPlanningIllustration from "@/app/components/ui/illustrations/agent-task-planning-illustration";
 import NativeStartNow from "./ui/NativeButton";
 import { StickyFooterDialog } from "./ui/sticky-footer-dialog";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LightPillarComponent from "./ui/gradients/LightPillarComponent";
+import PrismComponent from "./ui/gradients/PrismComponent";
+import LightRaysComponent from "./ui/gradients/LightRaysComponent";
+import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const AUTOPLAY_DURATION = 10000;
 
-const features = [
+const BACKGROUND_MAP = {
+  lightPillar: <LightPillarComponent />,
+  prism: <PrismComponent />,
+  lightRays: <LightRaysComponent />,
+  floatingLines: <FloatingLinesComponent />,
+} as const;
+
+export type BackgroundKey = keyof typeof BACKGROUND_MAP;
+export type FeatureBackground = ReactNode | string | BackgroundKey;
+
+export type Feature = {
+  title: string;
+  description: string;
+  /** Foreground image shown in the card (from /public) */
+  image: string;
+  /** Background: image path (string), gradient key (lightPillar | prism | lightRays | floatingLines), or ReactNode */
+  background: FeatureBackground;
+};
+
+function resolveBackground(background: FeatureBackground): ReactNode {
+  if (typeof background === "string" && background in BACKGROUND_MAP) {
+    return BACKGROUND_MAP[background as BackgroundKey];
+  }
+  return background;
+}
+
+const features: Feature[] = [
   {
     title: "Design",
     description:
       "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
-    image:
-      "https://images.unsplash.com/photo-1770490085047-1460359929e7?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/DESIGN.svg",
+    background: "lightPillar",
   },
   {
     title: "Engineering",
     description:
       "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
-    image:
-      "https://images.unsplash.com/photo-1721111648084-5e4f18a8635c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/NUMERIX_AI.svg",
+    background: "prism",
   },
   {
     title: "Production",
     description:
       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-    image:
-      "https://images.unsplash.com/photo-1770106678115-ec9aa241cdf6?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/GOOGLE_TEACHABLE.svg",
+    background: "lightRays",
   },
-];
-
-const illustrations = [
-  <Notes2Illustration key="m3" />,
-  <Calendar10Illustration key="map" />,
-  <AgentTaskPlanningIllustration key="m4" />,
 ];
 
 interface ExpandableFeatures4Props {
@@ -61,6 +81,8 @@ interface ExpandableFeatures4Props {
   imageOnLeft?: boolean;
   /** Image src for the details modal header */
   detailsImage?: string;
+  /** Per-card features (image + background). When provided, overrides the default. */
+  features?: Feature[];
 }
 
 const BADGE: string = "Platform Features";
@@ -78,7 +100,9 @@ export default function ExpandableFeatures4({
   description = DESC,
   imageOnLeft = false,
   detailsImage,
+  features: featuresProp,
 }: ExpandableFeatures4Props) {
+  const featuresList = featuresProp ?? features;
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -94,7 +118,7 @@ export default function ExpandableFeatures4({
   const resetTimer = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setExpandedIndex((current) => (current + 1) % features.length);
+      setExpandedIndex((current) => (current + 1) % featuresList.length);
     }, AUTOPLAY_DURATION);
   }, []);
 
@@ -268,7 +292,7 @@ export default function ExpandableFeatures4({
             </div>
 
             <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col">
-              {features.map((feature, index) => (
+              {featuresList.map((feature, index) => (
                 <button
                   key={feature.title}
                   onClick={() => handleSelect(index)}
@@ -321,13 +345,22 @@ export default function ExpandableFeatures4({
                   }}
                   className="absolute inset-0"
                 >
-                  <Image
-                    src={features[expandedIndex].image}
-                    alt=""
-                    fill
-                    className="size-full object-cover opacity-75 dark:opacity-50"
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                  />
+                  {(() => {
+                    const bg = featuresList[expandedIndex].background;
+                    const resolved = resolveBackground(bg);
+                    if (typeof resolved === "string") {
+                      return (
+                        <Image
+                          src={resolved}
+                          alt=""
+                          fill
+                          className="object-cover opacity-75 dark:opacity-50"
+                          sizes="(max-width: 640px) 100vw, 50vw"
+                        />
+                      );
+                    }
+                    return resolved;
+                  })()}
                 </motion.div>
               </AnimatePresence>
 
@@ -343,8 +376,14 @@ export default function ExpandableFeatures4({
                   }}
                   className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4"
                 >
-                  <div className="max-h-full min-w-0 scale-75 sm:scale-[0.7]">
-                    {illustrations[expandedIndex]}
+                  <div className="relative max-h-full min-w-0 scale-75 sm:scale-[0.7] aspect-square w-full max-w-[280px]">
+                    <Image
+                      src={featuresList[expandedIndex].image}
+                      alt={featuresList[expandedIndex].title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 640px) 200px, 280px"
+                    />
                   </div>
                 </motion.div>
               </AnimatePresence>

@@ -306,6 +306,14 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Hero name "Ronnie Kiyegga" - subtle text shadow for depth */
+.hero-name {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.22), 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+.dark .hero-name {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 255, 255, 0.12);
+}
+
 /* Gradient text using --gradient-blue */
 .text-gradient-blue {
   background: var(--gradient-blue);

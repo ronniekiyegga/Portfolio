@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
-import ExpandableFeatures4 from "./ExpandableFeatures4";
+import ExpandableFeatures4, { type Feature } from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -82,6 +82,7 @@ export default function ProjectSection() {
                 description={item.description}
                 imageOnLeft={index % 2 === 1}
                 detailsImage={item.image}
+                features={item.features}
               />
             </div>
           ))}
@@ -137,7 +138,15 @@ export default function ProjectSection() {
   );
 }
 
-const projectContent = [
+const projectContent: Array<{
+  title: string;
+  description: React.ReactNode;
+  badge: string;
+  image?: string;
+  statistics?: Array<Record<string, number>>;
+  TechStack?: string[];
+  features?: Feature[];
+}> = [
   // EduFeedbPro
   {
     title: "EduFeedbackPro",
@@ -167,6 +176,11 @@ const projectContent = [
       "NextAuth",
       "Vercel",
       "Github Actions",
+    ],
+    features: [
+      { title: "Analytics", description: "", image: "/NUMERIX_AI.svg", background: "lightPillar" },
+      { title: "Schools", description: "", image: "/EDUFEEDBACKPRO.svg", background: "prism" },
+      { title: "Reports", description: "", image: "/DMI.svg", background: "lightRays" },
     ],
   },
   // Ms Maryam's Maths
@@ -217,6 +231,11 @@ const projectContent = [
       "Certbot",
       "GitHub Actions",
     ],
+    features: [
+      { title: "Design", description: "", image: "/MATHS_TUTORING.svg", background: "floatingLines" },
+      { title: "Tutoring", description: "", image: "/MATHS_TUTORING2.svg", background: "prism" },
+      { title: "Platform", description: "", image: "/BLOG.svg", background: "lightPillar" },
+    ],
   },
   // Google Teachable Machine
   {
@@ -238,6 +257,11 @@ const projectContent = [
     ),
     badge: "EDUCATIONAL TOOL",
     image: "/GOOGLE_TEACHABLE.svg",
+    features: [
+      { title: "ML Model", description: "", image: "/GOOGLE_TEACHABLE.svg", background: "lightRays" },
+      { title: "Training", description: "", image: "/AI_PSEUDOCODE.svg", background: "prism" },
+      { title: "Classroom", description: "", image: "/CODE.svg", background: "lightPillar" },
+    ],
   },
   // TrueFounders
   {
@@ -253,6 +277,11 @@ const projectContent = [
     badge: "DEVELOPER TOOL",
     image: "/AI_PSEUDOCODE_2.svg",
     TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
+    features: [
+      { title: "IDE", description: "", image: "/AI_PSEUDOCODE_2.svg", background: "prism" },
+      { title: "Pseudocode", description: "", image: "/AI_PSEUDOCODE.svg", background: "lightPillar" },
+      { title: "Cambridge", description: "", image: "/CODE.svg", background: "floatingLines" },
+    ],
   },
 ];
 
