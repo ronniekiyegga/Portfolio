@@ -42,13 +42,6 @@ export type Feature = {
   background: FeatureBackground;
 };
 
-function resolveBackground(background: FeatureBackground): ReactNode {
-  if (typeof background === "string" && background in BACKGROUND_MAP) {
-    return BACKGROUND_MAP[background as BackgroundKey];
-  }
-  return background;
-}
-
 const features: Feature[] = [
   {
     title: "Design",
@@ -332,37 +325,16 @@ export default function ExpandableFeatures4({
               className="mask-y-from-75% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-12 border-x"
             />
 
-            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 bg-muted relative overflow-hidden">
-              <AnimatePresence initial={false} mode="sync">
-                <motion.div
-                  key={`bg-${expandedIndex}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    duration: 0.35,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                  className="absolute inset-0"
-                >
-                  {(() => {
-                    const bg = featuresList[expandedIndex].background;
-                    const resolved = resolveBackground(bg);
-                    if (typeof resolved === "string") {
-                      return (
-                        <Image
-                          src={resolved}
-                          alt=""
-                          fill
-                          className="object-cover opacity-75 dark:opacity-50"
-                          sizes="(max-width: 640px) 100vw, 50vw"
-                        />
-                      );
-                    }
-                    return resolved;
-                  })()}
-                </motion.div>
-              </AnimatePresence>
+            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
+              {/* Shared background - fallback to BG_1.png if Hero_background.png missing */}
+              <div
+                className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: "url(/Hero_background.png), url(/BG_1.png)",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
 
               <AnimatePresence initial={false} mode="wait">
                 <motion.div
