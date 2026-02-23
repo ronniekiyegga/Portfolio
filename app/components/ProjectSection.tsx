@@ -6,6 +6,7 @@ import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
 import ExpandableFeatures4, { type Feature } from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
+import { LiquidChrome } from "./LiquidChrome";
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,28 +67,39 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="w-full min-w-0 overflow-x-hidden py-20  bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full min-w-0 overflow-x-hidden py-20 dark:bg-[url('/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat"
     >
-      <LampHeader />
-      <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
-        <div
-          ref={containerRef}
-          className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
-        >
-          {projectContent.map((item, index) => (
-            <div key={`content-${index}`} data-project-card className="mb-20">
-              <ExpandableFeatures4
-                badge={item.badge}
-                title={item.title}
-                description={item.description}
-                imageOnLeft={index % 2 === 1}
-                detailsImage={item.image}
-                features={item.features}
-              />
-            </div>
-          ))}
+      {/* Light mode: LiquidChrome background */}
+      <div className="absolute inset-0 z-0 dark:hidden">
+        <LiquidChrome
+          baseColor={[0.9, 0.9, 1]}
+          speed={0.2}
+          amplitude={0.5}
+          interactive
+          className="size-full"
+        />
+      </div>
+      <div className="relative z-10">
+        <LampHeader />
+        <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
+          <div
+            ref={containerRef}
+            className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
+          >
+            {projectContent.map((item, index) => (
+              <div key={`content-${index}`} data-project-card className="mb-32">
+                <ExpandableFeatures4
+                  badge={item.badge}
+                  title={item.title}
+                  description={item.description}
+                  imageOnLeft={index % 2 === 1}
+                  detailsImage={item.image}
+                  features={item.features}
+                />
+              </div>
+            ))}
 
-          {/* {projectContent.map((item, index) => (
+            {/* {projectContent.map((item, index) => (
             <div key={`content-${index}`} data-project-card className="mb-10">
               <h4
                 data-project-badge
@@ -124,7 +136,7 @@ export default function ProjectSection() {
             </div>
           ))} */}
 
-          {/* {PROJECTDISPLAY.map((tab) => {
+            {/* {PROJECTDISPLAY.map((tab) => {
             const { content: Content, ...tabProps } = tab;
             return (
               <span key={tab.title}>
@@ -132,8 +144,9 @@ export default function ProjectSection() {
               </span>
             );
           })} */}
-        </div>
-      </TracingBeam>
+          </div>
+        </TracingBeam>
+      </div>
     </section>
   );
 }
@@ -178,9 +191,24 @@ const projectContent: Array<{
       "Github Actions",
     ],
     features: [
-      { title: "Design", description: "", image: "/NUMERIX_AI.svg", background: "lightPillar" },
-      { title: "Engineering", description: "", image: "/EDUFEEDBACKPRO.svg", background: "prism" },
-      { title: "Architecture", description: "", image: "/DMI.svg", background: "lightRays" },
+      {
+        title: "Design",
+        description: "",
+        image: "/NUMERIX_AI.svg",
+        background: "lightPillar",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/EDUFEEDBACKPRO.svg",
+        background: "prism",
+      },
+      {
+        title: "Features",
+        description: "",
+        image: "/DMI.svg",
+        background: "lightRays",
+      },
     ],
   },
   // Ms Maryam's Maths
@@ -232,9 +260,24 @@ const projectContent: Array<{
       "GitHub Actions",
     ],
     features: [
-      { title: "Design", description: "", image: "/MATHS_TUTORING.svg", background: "floatingLines" },
-      { title: "Engineering", description: "", image: "/MATHS_TUTORING2.svg", background: "prism" },
-      { title: "Architecture", description: "", image: "/BLOG.svg", background: "lightPillar" },
+      {
+        title: "Design",
+        description: "",
+        image: "/MATHS_TUTORING_HERO.svg",
+        background: "floatingLines",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/MATHS_TUTORING2.svg",
+        background: "prism",
+      },
+      {
+        title: "Features",
+        description: "",
+        image: "/BLOG.svg",
+        background: "lightPillar",
+      },
     ],
   },
   // Google Teachable Machine
@@ -258,14 +301,29 @@ const projectContent: Array<{
     badge: "EDUCATIONAL TOOL",
     image: "/GOOGLE_TEACHABLE.svg",
     features: [
-      { title: "Design", description: "", image: "/GOOGLE_TEACHABLE.svg", background: "lightRays" },
-      { title: "Engineering", description: "", image: "/AI_PSEUDOCODE.svg", background: "prism" },
-      { title: "Architecture", description: "", image: "/CODE.svg", background: "lightPillar" },
+      {
+        title: "Design",
+        description: "",
+        image: "/GOOGLE_TEACHABLE.svg",
+        background: "lightRays",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/AI_PSEUDOCODE.svg",
+        background: "prism",
+      },
+      {
+        title: "Features",
+        description: "",
+        image: "/CODE.svg",
+        background: "lightPillar",
+      },
     ],
   },
   // TrueFounders
   {
-    title: "AI-Powered Pseudocode IDE",
+    title: "PSEUDOLAB IDE",
     description: (
       <>
         <p>
@@ -275,12 +333,27 @@ const projectContent: Array<{
       </>
     ),
     badge: "DEVELOPER TOOL",
-    image: "/AI_PSEUDOCODE_2.svg",
+    image: "/PSEUDOLAB_HERO.svg",
     TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
     features: [
-      { title: "Design", description: "", image: "/AI_PSEUDOCODE_2.svg", background: "prism" },
-      { title: "Engineering", description: "", image: "/AI_PSEUDOCODE.svg", background: "lightPillar" },
-      { title: "Architecture", description: "", image: "/CODE.svg", background: "floatingLines" },
+      {
+        title: "Design",
+        description: "",
+        image: "/PSEUDOLAB_HERO.svg",
+        background: "prism",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/AI_PSEUDOCODE.svg",
+        background: "lightPillar",
+      },
+      {
+        title: "Features",
+        description: "",
+        image: "/CODE.svg",
+        background: "floatingLines",
+      },
     ],
   },
 ];

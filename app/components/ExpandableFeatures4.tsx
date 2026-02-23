@@ -66,11 +66,23 @@ const features: Feature[] = [
   },
 ];
 
-const CARD_BACKGROUNDS = [
+/** Used when page theme is dark (card contrasts with dark page) */
+const LIGHT_BACKGROUNDS = [
   "/BG_HERO1.svg",
   "/BG_1.png",
   "/BackgroundImage_2.svg",
 ] as const;
+
+/** Used when page theme is light (card contrasts with light page) */
+const DARK_BACKGROUNDS = [
+  "/BackgroundImage_2.svg",
+  "/BackgroundImage_2.svg",
+  "/BackgroundImage_2.svg",
+] as const;
+
+/** Theme-aware backgrounds: light theme → DARK_BACKGROUNDS, dark theme → LIGHT_BACKGROUNDS */
+const getCardBackgrounds = (isDark: boolean) =>
+  isDark ? LIGHT_BACKGROUNDS : DARK_BACKGROUNDS;
 
 interface ExpandableFeatures4Props {
   badge: string;
@@ -104,7 +116,23 @@ export default function ExpandableFeatures4({
   const featuresList = featuresProp ?? features;
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const cardBackgrounds = getCardBackgrounds(isDark);
   const sectionRef = useRef<HTMLElement>(null);
   const textColRef = useRef<HTMLDivElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
@@ -238,13 +266,13 @@ export default function ExpandableFeatures4({
               </h4>
               <h2
                 ref={titleRef}
-                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white dark:text-white"
+                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-black dark:text-white "
               >
                 {title}
               </h2>
               <div
                 ref={descRef}
-                className="text-white/30 mt-3 text-sm sm:text-md dark:text-white/80"
+                className=" mt-3 text-sm sm:text-md text-gray-500 dark:text-white/50"
               >
                 {description}
               </div>
@@ -298,8 +326,8 @@ export default function ExpandableFeatures4({
                   className={cn(
                     "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
                     expandedIndex === index
-                      ? "text-white dark:text-white"
-                      : "text-white/40 hover:text-foreground/75 dark:text-white/70 dark:hover:text-white/90",
+                      ? "text-black  dark:text-white"
+                      : "  text-gray-400 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90",
                   )}
                 >
                   <div className="flex size-4 shrink-0 items-center justify-center">
@@ -336,7 +364,7 @@ export default function ExpandableFeatures4({
               <div
                 className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
                 style={{
-                  backgroundImage: `url(${CARD_BACKGROUNDS[expandedIndex % CARD_BACKGROUNDS.length]})`,
+                  backgroundImage: `url(${cardBackgrounds[expandedIndex % cardBackgrounds.length]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -354,7 +382,7 @@ export default function ExpandableFeatures4({
                   }}
                   className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4"
                 >
-                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[0.85] aspect-square w-full max-w-[400px]">
+                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[0.9] aspect-square w-full max-w-[450px]">
                     <Image
                       src={featuresList[expandedIndex].image}
                       alt={featuresList[expandedIndex].title}

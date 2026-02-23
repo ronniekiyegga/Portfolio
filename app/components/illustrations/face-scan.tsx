@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { TextScramble } from "@/app/components/motion-primitives/text-scramble";
-import { cn } from "@/lib/utils";
 import { LightDarkParticles } from "@/app/blocks/bento/three/particles";
 import Image from "next/image";
 
@@ -85,14 +84,6 @@ export const FaceScanIllustration = () => {
         transition={{ duration: 0.5, delay: 1.5, type: "spring" }}
         className="aspect-2/3 absolute inset-0 z-60 m-auto w-24"
       >
-        <CardDecorator className="scale-125 border-white blur-[3px]" />
-        <motion.div
-          initial={{ "--frame-color": "white" }}
-          animate={{ "--frame-color": "var(--color-lime-400)" }}
-          transition={{ duration: 0.4, delay: 3.5, type: "spring" }}
-        >
-          <CardDecorator className="border-(--frame-color) z-10" />
-        </motion.div>
         <LightDarkParticles id="light-dark-particles" />
       </motion.div>
 
@@ -103,7 +94,7 @@ export const FaceScanIllustration = () => {
 
       {/* Face image in front of text (z-20) */}
       <div
-        className="relative z-50 bg-radial ring-4 aspect-square w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto group-hover:opacity-95"
+        className="relative z-50 bg-radial ring- aspect-square w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto group-hover:opacity-95"
         style={{
           maskImage:
             "radial-gradient(circle closest-side at 50% 50%, #000 70%, transparent 100%)",
@@ -134,34 +125,5 @@ export const FaceScanIllustration = () => {
     </div>
   );
 };
-
-export const CardDecorator = ({ className }: { className?: string }) => (
-  <>
-    <span
-      className={cn(
-        "absolute -left-px -top-px block size-2.5 border-l-[1.5px] border-t-[1.5px] border-white",
-        className,
-      )}
-    ></span>
-    <span
-      className={cn(
-        "absolute -right-px -top-px block size-2.5 border-r-[1.5px] border-t-[1.5px] border-white",
-        className,
-      )}
-    ></span>
-    <span
-      className={cn(
-        "absolute -bottom-px -left-px block size-2.5 border-b-[1.5px] border-l-[1.5px] border-white",
-        className,
-      )}
-    ></span>
-    <span
-      className={cn(
-        "absolute -bottom-px -right-px block size-2.5 border-b-[1.5px] border-r-[1.5px] border-white",
-        className,
-      )}
-    ></span>
-  </>
-);
 
 export default FaceScanIllustration;
