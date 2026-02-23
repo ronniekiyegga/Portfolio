@@ -1,10 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { CornerDownRight } from "lucide-react";
 import Integrations from "./integrations-one";
 import { cn } from "@/lib/utils";
-import Lanyard from "./Lanyard";
+
+const Lanyard = dynamic(() => import("./Lanyard"), {
+  ssr: false,
+  loading: () => <div className="w-full h-screen" aria-hidden />,
+});
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -55,17 +60,13 @@ export default function Experiences() {
     const section = sectionRef.current;
     if (!section) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowLanyard(true);
-        }
-      },
-      { threshold: 0.9 }
-    );
+    const st = ScrollTrigger.create({
+      trigger: section,
+      start: "top 80%",
+      onEnter: () => setShowLanyard(true),
+    });
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    return () => st.kill();
   }, []);
 
   useEffect(() => {

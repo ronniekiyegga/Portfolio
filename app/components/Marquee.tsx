@@ -14,7 +14,7 @@ export default function Marquee() {
     // "https://assets.aceternity.com/layout-grid.png",
     "/Marquee_BIO.svg",
     "/MATHS_TUTORING.svg",
-    "/public/Marquee_TrueFounders_Dark.svg",
+    "/Marquee_TrueFounders_Dark.svg",
     "/AI_PSEUDOCODE.svg",
     // "https://assets.aceternity.com/flip-text.png",
     "/Marquee_Folder.svg",

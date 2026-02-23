@@ -150,7 +150,7 @@ export default function Header({
                   </Link>
 
                   <nav className="flex items-center gap-0.5">
-                    <NavigationMenu>
+                    <NavigationMenu viewport={false}>
                       <NavigationMenuList className=" border-0 bg-transparent p-0">
                         <NavigationMenuItem value="projects">
                           <NavigationMenuTrigger
@@ -161,14 +161,14 @@ export default function Header({
                           >
                             Projects
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent>
-                            <ul className="grid w-[180px] gap-1 p-2">
+                          <NavigationMenuContent className="left-0 right-auto min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border border-white dark:border-neutral-800">
+                            <ul className="grid w-[180px] gap-0 py-2">
                               {projectsLinks.map((link, i) => (
                                 <li key={i}>
                                   <NavigationMenuLink asChild>
                                     <Link
                                       href={link.href}
-                                      className="block rounded-md px-3 py-2 text-xs text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                      className="block border-b border-neutral-100 last:border-b-0 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-800/50"
                                     >
                                       {link.name}
                                     </Link>
@@ -182,14 +182,14 @@ export default function Header({
                           <NavigationMenuTrigger className="bg-transparent text-neutral-600 hover:bg-transparent hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
                             Courses
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent>
-                            <ul className="grid w-[180px] gap-1 p-2">
+                          <NavigationMenuContent className="left-auto right-0 min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border border-white dark:border-neutral-800">
+                            <ul className="grid gap-0 py-2">
                               {coursesLinks.map((link, i) => (
                                 <li key={i}>
                                   <NavigationMenuLink asChild>
                                     <Link
                                       href={link.href}
-                                      className="block rounded-md px-3 py-2 text-xs text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+                                      className="block border-b border-neutral-100 last:border-b-0 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-800/50"
                                     >
                                       {link.name}
                                     </Link>

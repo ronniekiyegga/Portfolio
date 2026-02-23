@@ -96,7 +96,7 @@ export default function ExpandableFeatures() {
         <SectionKicker>Thoughts</SectionKicker>
         <div className="mb-6 lg:mb-10">
           <h2
-            className={`text-foreground max-w-xs text-balance text-sm uppercase tracking-[0.19rem] font-medium opacity-60`}
+            className={`text-foreground max-w-xs text-balance text-xs uppercase tracking-[0.15rem] font-medium opacity-60`}
           >
             Currently Exploring
           </h2>
@@ -149,7 +149,8 @@ export default function ExpandableFeatures() {
                         key={progressKey}
                         className="absolute inset-0 h-full origin-left rounded-full"
                         style={{
-                          background: "linear-gradient(to right, #18CCFC, #6344F5, #AE48FF)",
+                          background:
+                            "linear-gradient(to right, #18CCFC, #6344F5, #AE48FF)",
                           animation: `expandProgress ${AUTOPLAY_DURATION}ms linear forwards`,
                           animationPlayState: paused ? "paused" : "running",
                         }}

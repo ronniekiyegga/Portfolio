@@ -21,7 +21,7 @@ import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AUTOPLAY_DURATION = 10000;
+export const AUTOPLAY_DURATION = 10000;
 
 const BACKGROUND_MAP = {
   lightPillar: <LightPillarComponent />,
@@ -58,13 +58,19 @@ const features: Feature[] = [
     background: "prism",
   },
   {
-    title: "Production",
+    title: "Architecture",
     description:
       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
     image: "/GOOGLE_TEACHABLE.svg",
     background: "lightRays",
   },
 ];
+
+const CARD_BACKGROUNDS = [
+  "/BG_HERO1.svg",
+  "/BG_1.png",
+  "/BackgroundImage_2.svg",
+] as const;
 
 interface ExpandableFeatures4Props {
   badge: string;
@@ -113,7 +119,7 @@ export default function ExpandableFeatures4({
     intervalRef.current = setInterval(() => {
       setExpandedIndex((current) => (current + 1) % featuresList.length);
     }, AUTOPLAY_DURATION);
-  }, []);
+  }, [featuresList.length]);
 
   useEffect(() => {
     resetTimer();
@@ -326,11 +332,11 @@ export default function ExpandableFeatures4({
             />
 
             <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
-              {/* Shared background - fallback to BG_1.png if Hero_background.png missing */}
+              {/* Shared background - cycles with AUTOPLAY_DURATION */}
               <div
                 className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
                 style={{
-                  backgroundImage: "url(/Hero_background.png), url(/BG_1.png)",
+                  backgroundImage: `url(${CARD_BACKGROUNDS[expandedIndex % CARD_BACKGROUNDS.length]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
