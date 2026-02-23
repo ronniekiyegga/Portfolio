@@ -7,6 +7,7 @@ import { LoadingProvider } from "./contexts/LoadingContext";
 import HeaderWithFloatingControls from "./components/HeaderWithFloatingControls";
 import FooterSection from "./components/footer";
 import LoadingScreenGate from "./components/LoadingScreenGate";
+import ScrollTriggerReset from "./components/ScrollTriggerReset";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -70,7 +71,20 @@ export default function RootLayout({
             `,
           }}
         />
+        <Script
+          id="scroll-reset"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                window.scrollTo(0, 0);
+              })();
+            `,
+          }}
+        />
         <LoadingProvider>
+          <ScrollTriggerReset />
           <SplashProvider>
             <HeaderWithFloatingControls />
             {children}

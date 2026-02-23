@@ -66,7 +66,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="w-full min-w-0 overflow-x-hidden py-20 contrast-100 bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="w-full min-w-0 overflow-x-hidden py-20  bg-[url('/BG_1.png')] dark:bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
     >
       <LampHeader />
       <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
@@ -178,9 +178,9 @@ const projectContent: Array<{
       "Github Actions",
     ],
     features: [
-      { title: "Analytics", description: "", image: "/NUMERIX_AI.svg", background: "lightPillar" },
-      { title: "Schools", description: "", image: "/EDUFEEDBACKPRO.svg", background: "prism" },
-      { title: "Reports", description: "", image: "/DMI.svg", background: "lightRays" },
+      { title: "Design", description: "", image: "/NUMERIX_AI.svg", background: "lightPillar" },
+      { title: "Engineering", description: "", image: "/EDUFEEDBACKPRO.svg", background: "prism" },
+      { title: "Architecture", description: "", image: "/DMI.svg", background: "lightRays" },
     ],
   },
   // Ms Maryam's Maths
@@ -233,8 +233,8 @@ const projectContent: Array<{
     ],
     features: [
       { title: "Design", description: "", image: "/MATHS_TUTORING.svg", background: "floatingLines" },
-      { title: "Tutoring", description: "", image: "/MATHS_TUTORING2.svg", background: "prism" },
-      { title: "Platform", description: "", image: "/BLOG.svg", background: "lightPillar" },
+      { title: "Engineering", description: "", image: "/MATHS_TUTORING2.svg", background: "prism" },
+      { title: "Architecture", description: "", image: "/BLOG.svg", background: "lightPillar" },
     ],
   },
   // Google Teachable Machine
@@ -258,9 +258,9 @@ const projectContent: Array<{
     badge: "EDUCATIONAL TOOL",
     image: "/GOOGLE_TEACHABLE.svg",
     features: [
-      { title: "ML Model", description: "", image: "/GOOGLE_TEACHABLE.svg", background: "lightRays" },
-      { title: "Training", description: "", image: "/AI_PSEUDOCODE.svg", background: "prism" },
-      { title: "Classroom", description: "", image: "/CODE.svg", background: "lightPillar" },
+      { title: "Design", description: "", image: "/GOOGLE_TEACHABLE.svg", background: "lightRays" },
+      { title: "Engineering", description: "", image: "/AI_PSEUDOCODE.svg", background: "prism" },
+      { title: "Architecture", description: "", image: "/CODE.svg", background: "lightPillar" },
     ],
   },
   // TrueFounders
@@ -278,9 +278,9 @@ const projectContent: Array<{
     image: "/AI_PSEUDOCODE_2.svg",
     TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
     features: [
-      { title: "IDE", description: "", image: "/AI_PSEUDOCODE_2.svg", background: "prism" },
-      { title: "Pseudocode", description: "", image: "/AI_PSEUDOCODE.svg", background: "lightPillar" },
-      { title: "Cambridge", description: "", image: "/CODE.svg", background: "floatingLines" },
+      { title: "Design", description: "", image: "/AI_PSEUDOCODE_2.svg", background: "prism" },
+      { title: "Engineering", description: "", image: "/AI_PSEUDOCODE.svg", background: "lightPillar" },
+      { title: "Architecture", description: "", image: "/CODE.svg", background: "floatingLines" },
     ],
   },
 ];

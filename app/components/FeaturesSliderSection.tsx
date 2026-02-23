@@ -11,7 +11,7 @@ import Image from "next/image";
 const projectCard = [
   {
     title: "EduFeedbackPro",
-    src: "/public/DMI.svg",
+    src: "/DMI.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -124,8 +124,10 @@ export default function FeaturesSliderSection({
         className="mx-auto max-w-5xl"
       >
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
-          <h5 className="text-left text-xs tracking-widest text-foreground">EXPERIENCE</h5>
-        
+          <h5 className="text-left text-xs tracking-widest text-foreground">
+            UX/UI DESIGNS
+          </h5>
+
           <div className="flex items-center gap-2">
             <CarouselPrevious />
             <CarouselNext />
@@ -150,10 +152,11 @@ export default function FeaturesSliderSection({
               >
                 <Image
                   src={content.src}
-                  alt="bg c1"
-                  width={980}
-                  height={980}
-                  className="absolute inset-0 size-full opacity-95 hover:opacity-100 transition-opacity duration-500"
+                  alt={content.title}
+                  width={400}
+                  height={400}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="absolute inset-0 size-full opacity-95 hover:opacity-100 transition-opacity duration-500 object-cover"
                 />
               </Card>
               {content.description}
