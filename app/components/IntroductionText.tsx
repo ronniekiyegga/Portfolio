@@ -12,7 +12,7 @@ export default function IntroductionText() {
       <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
         <LayoutTextFlip text="FULL STACK" words={["DESIGNER", "ENGINEER"]} />
       </motion.div>
-      <div className="mt-6 text-sm md:text-md text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
+      <div className="mt-6 text-sm md:text-base text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
         I'm a design-focused software engineer, passionate about{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
@@ -27,10 +27,11 @@ export default function IntroductionText() {
         <span
           className={`${styleScript.className} text-md md:text-lg font-bold text-gradient-blue mr-1`}
         >
-          1 byte at a time
+          1 byte at a time.
         </span>
-        .
+        
       </div>
     </div>
   );
 }
+
