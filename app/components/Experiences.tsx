@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { CornerDownRight } from "lucide-react";
-import Integrations from "./integrations-one";
+import Integrations, { type TechIconKey } from "./integrations-one";
 import { cn } from "@/lib/utils";
 
 const Lanyard = dynamic(() => import("./Lanyard"), {
@@ -15,14 +15,30 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const experiences = [
+const experiences: {
+  id: string;
+  organisation: string;
+  role: string;
+  dates: string;
+  responsibilities: string;
+  techStack?: TechIconKey[];
+}[] = [
   {
     id: "SRS",
     organisation: "The School Of Research Science",
     role: "Design Engineer / CS Teacher",
     dates: "2023 - 2026",
     responsibilities:
-      "Built and deployed internal analytics and ML platforms used by 300+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
+      "Built and deployed internal analytics and ML platforms used by 1200+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
+    techStack: [
+      "Figma",
+      "Nextjs",
+      "Python",
+      "TypeScript",
+      "Docker",
+      "Redis",
+      "Nginx",
+    ],
   },
   {
     id: "Freelance",
@@ -31,6 +47,7 @@ const experiences = [
     dates: "2020 - 2023",
     responsibilities:
       "Built and deployed internal analytics and ML platforms used by 300+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
+    techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
   },
   {
     id: "Internship",
@@ -39,6 +56,7 @@ const experiences = [
     dates: "2019 - 2019",
     responsibilities:
       "Built React dashboards and internal tools for financial systems, collaborating with engineers and designers to deliver production features supporting engineering and analytics workflows.",
+    techStack: ["React", "TypeScript", "Figma", "Slack", "Nodejs"],
   },
   {
     id: "Fitness",
@@ -47,6 +65,7 @@ const experiences = [
     dates: "2015 - 2019",
     responsibilities:
       "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
+    techStack: [], // No tech stack for this role
   },
 ];
 
@@ -96,7 +115,7 @@ export default function Experiences() {
         stagger: 0.1,
         ease: "power2.out",
       },
-      "-=0.2"
+      "-=0.2",
     );
 
     return () => {
@@ -112,9 +131,7 @@ export default function Experiences() {
     >
       {/* Lanyard: drops when the whole experience section scrolls into view */}
       <div className="absolute inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
-        {showLanyard && (
-          <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />
-        )}
+        {showLanyard && <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />}
       </div>
       <div
         ref={contentRef}
@@ -147,14 +164,22 @@ export default function Experiences() {
                       </span>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         {item.role && (
+                          <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                            {item.role}
+                          </span>
+                        )}
+                        {(item.techStack === undefined ||
+                          item.techStack.length > 0) && (
                           <>
-                            <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                              {item.role}
-                            </span>
-                            <span className="text-neutral-400">•</span>
+                            {item.role && (
+                              <span className="text-neutral-400">•</span>
+                            )}
+                            <Integrations
+                              variant="inline"
+                              icons={item.techStack}
+                            />
                           </>
                         )}
-                        <Integrations variant="inline" />
                       </div>
                     </div>
                     <span className="shrink-0 text-xs text-neutral-500 dark:text-neutral-500">

@@ -50,7 +50,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero-section"
-      className="flex w-full min-w-0 flex-col items-center justify-center px-6 py-32 md:px-16 sm:px-8 bg-[#FDFBF7] dark:bg-neutral-950"
+      className="flex w-full min-w-0 flex-col items-center justify-center px-6 py-24 md:px-16 sm:px-8 bg-[#FDFBF7] dark:bg-neutral-950"
     >
       <div ref={containerRef} className="max-w-6xl w-full">
         <div data-hero-illustration>

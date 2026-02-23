@@ -103,7 +103,7 @@ export const FaceScanIllustration = () => {
 
       {/* Face image in front of text (z-20) */}
       <div
-        className="relative z-50 bg-radial ring-2 aspect-square w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto group-hover:opacity-95"
+        className="relative z-50 bg-radial ring-4 aspect-square w-full max-w-[400px] md:max-w-[500px] lg:max-w-[600px] mx-auto group-hover:opacity-95"
         style={{
           maskImage:
             "radial-gradient(circle closest-side at 50% 50%, #000 70%, transparent 100%)",
