@@ -252,7 +252,7 @@ export default function ExpandableFeatures4({
   return (
     <section
       ref={sectionRef}
-      className="w-full min-w-0 bg-transparent @container overflow-hidden py-12 md:py-16"
+      className="w-full min-w-0 bg-transparent @container overflow-hidden py-8 md:py-16"
     >
       <div className="mx-auto w-full min-w-0 max-w-full px-2 sm:px-4">
         <div className="grid w-full min-w-0 grid-cols-1 gap-8 sm:grid-cols-7 sm:gap-8 md:gap-12 lg:gap-16">

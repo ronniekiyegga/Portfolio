@@ -181,7 +181,7 @@ const projectContent: Array<{
         costReduction: 2.4,
       },
     ],
-    image: "/NUMERIX_AI.svg",
+    image: "/DMI_HERO.svg",
     TechStack: [
       "Next.js",
       "MongoDB",
@@ -194,7 +194,7 @@ const projectContent: Array<{
       {
         title: "Design",
         description: "",
-        image: "/NUMERIX_AI.svg",
+        image: "/DMI_HERO.svg",
         background: "lightPillar",
       },
       {
@@ -206,7 +206,7 @@ const projectContent: Array<{
       {
         title: "Features",
         description: "",
-        image: "/DMI.svg",
+        image: "/NUMERIX_AI.svg",
         background: "lightRays",
       },
     ],
