@@ -42,29 +42,29 @@ export type Feature = {
   background: FeatureBackground;
 };
 
-// const features: Feature[] = [
-//   {
-//     title: "Design",
-//     description:
-//       "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
-//     image: "/DESIGN.svg",
-//     background: "lightPillar",
-//   },
-//   {
-//     title: "Engineering",
-//     description:
-//       "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
-//     image: "/NUMERIX_AI.svg",
-//     background: "prism",
-//   },
-//   {
-//     title: "Architecture",
-//     description:
-//       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-//     image: "/GOOGLE_TEACHABLE.svg",
-//     background: "lightRays",
-//   },
-// ];
+const DEFAULT_FEATURES: Feature[] = [
+  {
+    title: "Design",
+    description:
+      "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
+    image: "/DESIGN.svg",
+    background: "lightPillar",
+  },
+  {
+    title: "Engineering",
+    description:
+      "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
+    image: "/NUMERIX_AI.svg",
+    background: "prism",
+  },
+  {
+    title: "Architecture",
+    description:
+      "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
+    image: "/GOOGLE_TEACHABLE.svg",
+    background: "lightRays",
+  },
+];
 
 /** Used when page theme is dark (card contrasts with dark page) */
 const LIGHT_BACKGROUNDS = [
@@ -119,7 +119,7 @@ export default function ExpandableFeatures4({
   detailsImage,
   features: featuresProp,
 }: ExpandableFeatures4Props) {
-  const featuresList = featuresProp ?? features;
+  const featuresList = featuresProp ?? DEFAULT_FEATURES;
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
