@@ -152,16 +152,16 @@ export default function Header({
                   <nav className="flex items-center gap-0.5">
                     <NavigationMenu viewport={false}>
                       <NavigationMenuList className=" border-0 bg-transparent p-0">
-                        <NavigationMenuItem value="projects">
+                        <NavigationMenuItem value="about">
                           <NavigationMenuTrigger
                             className={cn(
-                              "bg-transparent text-neutral-600 hover:bg-transparent dark:text-neutral-400 dark:hover:bg-transparent",
+                              "bg-transparent text-neutral-600 hover:bg-transparent dark:text-neutral-400 dark:hover:bg-transparent ",
                               "text-gradient-blue hover:text-gradient-blue data-[state=open]:text-gradient-blue",
                             )}
                           >
-                            Projects
+                            About
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent className="left-0 right-auto min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border border-white dark:border-neutral-800">
+                          {/* <NavigationMenuContent className="left-0 right-auto min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border-white dark:border-neutral-800">
                             <ul className="grid w-[180px] gap-0 py-2">
                               {projectsLinks.map((link, i) => (
                                 <li key={i}>
@@ -176,11 +176,11 @@ export default function Header({
                                 </li>
                               ))}
                             </ul>
-                          </NavigationMenuContent>
+                          </NavigationMenuContent> */}
                         </NavigationMenuItem>
-                        <NavigationMenuItem value="courses">
+                        <NavigationMenuItem value="more">
                           <NavigationMenuTrigger className="bg-transparent text-neutral-600 hover:bg-transparent hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
-                            Courses
+                            More
                           </NavigationMenuTrigger>
                           <NavigationMenuContent className="left-auto right-0 min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border border-white dark:border-neutral-800">
                             <ul className="grid gap-0 py-2">
@@ -213,22 +213,32 @@ export default function Header({
                 >
                   <Link
                     href="/blog"
-                    className="relative text-[13px] font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                    className="relative text-[13px] mx-2 font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                   >
                     Blog
-                    <span
+                    {/* <span
                       className="absolute -right-2 -top-1 size-1.5 rounded-full bg-blue-500"
                       aria-hidden
-                    />
+                    /> */}
                   </Link>
-                  <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+                  <span
+                    className=" size-1 rounded-full bg-gray-300"
+                    aria-hidden
+                  />
+                  {/* <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" /> */}
                   <Link
-                    href="#"
+                    href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                   >
                     Resume
                   </Link>
-                  <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+                  {/* <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" /> */}
+                  <span
+                    className=" size-1 rounded-full bg-gray-300"
+                    aria-hidden
+                  />
 
                   {/* Let's chat + SplashCursor + theme toggle (cream outer in light mode, dark pill in dark mode) */}
                   <div className="p-2 pill-outer-cream">
@@ -292,10 +302,10 @@ export default function Header({
 }
 
 const exploreLinks = [
-  { name: "Projects", href: "/#projects" },
-  { name: "Courses", href: "#" },
+  { name: "About", href: "/#about" },
+  { name: "More", href: "#" },
   { name: "Blog", href: "/blog" },
-  { name: "Resume", href: "#" },
+  { name: "Resume", href: "/Ronnie%20Kiyegga%20-%20SWE.pdf" },
 ];
 
 function MobileMenu({
@@ -344,170 +354,185 @@ function MobileMenu({
                 transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="flex w-full shrink-0 items-center justify-between px-4 pt-4 pb-4"
               >
-            <Link
-              href="/"
-              onClick={onClose}
-              className="shrink-0"
-              aria-label="Home"
-            >
-              <Image
-                src="/Ronnie_Logo.svg"
-                alt="Ronnie Kiyegga - Engineer"
-                width={80}
-                height={44}
-                className="h-8 w-auto dark:invert"
-              />
-            </Link>
-            <button
-              onClick={onClose}
-              aria-label="Close menu"
-              className="-m-2 p-3 text-black dark:text-white"
-            >
-              <X className="size-6" strokeWidth={2} />
-            </button>
-          </motion.div>
+                <Link
+                  href="/"
+                  onClick={onClose}
+                  className="shrink-0"
+                  aria-label="Home"
+                >
+                  <Image
+                    src="/Ronnie_Logo.svg"
+                    alt="Ronnie Kiyegga - Engineer"
+                    width={80}
+                    height={44}
+                    className="h-8 w-auto dark:invert"
+                  />
+                </Link>
+                <button
+                  onClick={onClose}
+                  aria-label="Close menu"
+                  className="-m-2 p-3 text-black dark:text-white"
+                >
+                  <X className="size-6" strokeWidth={2} />
+                </button>
+              </motion.div>
 
-          {/* Scrollable middle: Explore + Our features */}
-          <motion.div
-            initial={{ y: -24, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -12, opacity: 0 }}
-            transition={{
-              duration: 0.35,
-              delay: 0.08,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            className="flex min-h-0 flex-1 flex-col justify-center"
-          >
-            <div className="min-h-0 overflow-y-auto overflow-x-hidden px-8 pb-5">
-              <div className="flex w-full flex-col items-start gap-1">
-                <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
-                  Explore
-                </p>
-                {exploreLinks.map((item) => (
+              {/* Scrollable middle: Explore + Our features */}
+              <motion.div
+                initial={{ y: -24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -12, opacity: 0 }}
+                transition={{
+                  duration: 0.35,
+                  delay: 0.08,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className="flex min-h-0 flex-1 flex-col justify-center"
+              >
+                <div className="min-h-0 overflow-y-auto overflow-x-hidden px-8 pb-5">
+                  <div className="flex w-full flex-col items-start gap-1">
+                    <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
+                      Explore
+                    </p>
+                    {exploreLinks.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={onClose}
+                        {...(item.name === "Resume"
+                          ? {
+                              target: "_blank",
+                              rel: "noopener noreferrer",
+                            }
+                          : {})}
+                        className={cn(
+                          "w-full rounded-lg py-0.5 pr-3 text-lg font-bold text-neutral-900 dark:text-neutral-100",
+                        )}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    {/* Gradient divider */}
+                    <div
+                      className="my-6 h-px w-12"
+                      style={{
+                        background:
+                          "linear-gradient(77deg, #3A07F2 10.26%, #0CD1CF 98.05%)",
+                      }}
+                      aria-hidden
+                    />
+                    <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
+                      Our features
+                    </p>
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="w-full **:hover:no-underline"
+                    >
+                      <AccordionItem
+                        value="Projects"
+                        className="w-full border-b-0"
+                      >
+                        <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
+                          Projects
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-2 pt-0">
+                          {projectsLinks.map((l, i) => (
+                            <Link
+                              key={i}
+                              href={l.href}
+                              onClick={onClose}
+                              className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
+                            >
+                              {l.name}
+                            </Link>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem
+                        value="Courses"
+                        className="w-full border-b-0"
+                      >
+                        <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
+                          Courses
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-2 pt-0">
+                          {coursesLinks.map((l, i) => (
+                            <Link
+                              key={i}
+                              href={l.href}
+                              onClick={onClose}
+                              className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
+                            >
+                              {l.name}
+                            </Link>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Bottom: Blog | Resume + Let's chat button */}
+              <motion.div
+                initial={{ y: -24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -12, opacity: 0 }}
+                transition={{
+                  duration: 0.35,
+                  delay: 0.16,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className="flex h-24 flex-col"
+              >
+                <div className="flex w-full mx-auto items-center justify-center gap-4 pl-1 pb-8 pt-4">
+                  <div className="flex items-center gap-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                    <Link
+                      href="/blog"
+                      onClick={onClose}
+                      className="flex items-center gap-1.5 relative"
+                    >
+                      <span
+                        className="size-1.5 rounded-full bg-blue-500 absolute top-0 -right-2"
+                        aria-hidden
+                      />
+                      Blog
+                    </Link>
+                    <span
+                      className="h-4 w-px bg-neutral-300 dark:bg-neutral-600"
+                      aria-hidden
+                    />
+                    <Link
+                      href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={onClose}
+                    >
+                      Resume
+                    </Link>
+                  </div>
                   <Link
-                    key={item.name}
-                    href={item.href}
+                    href="mailto:ronniekiyegga@dmi.com"
                     onClick={onClose}
                     className={cn(
-                      "w-full rounded-lg py-0.5 pr-3 text-lg font-bold text-neutral-900 dark:text-neutral-100",
+                      "flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-medium text-white",
+                      styleScript.className,
                     )}
+                    style={{
+                      background: "#1a1a1a",
+                      boxShadow:
+                        "0 1.434px 1.147px 0 rgba(0, 0, 0, 0.12), 0 1.554px 1.554px 0 rgba(0, 0, 0, 0.14)",
+                    }}
                   >
-                    {item.name}
+                    <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                    Let&apos;s chat
                   </Link>
-                ))}
-                {/* Gradient divider */}
-                <div
-                  className="my-6 h-px w-12"
-                  style={{
-                    background: "linear-gradient(77deg, #3A07F2 10.26%, #0CD1CF 98.05%)",
-                  }}
-                  aria-hidden
-                />
-                <p className="mb-1 text-sm text-neutral-500 dark:text-neutral-400">
-                  Our features
-                </p>
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="w-full **:hover:no-underline"
-                >
-                  <AccordionItem
-                    value="Projects"
-                    className="w-full border-b-0"
-                  >
-                    <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
-                      Projects
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-2 pt-0">
-                      {projectsLinks.map((l, i) => (
-                        <Link
-                          key={i}
-                          href={l.href}
-                          onClick={onClose}
-                          className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
-                        >
-                          {l.name}
-                        </Link>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="Courses"
-                    className="w-full border-b-0"
-                  >
-                    <AccordionTrigger className="flex w-full items-center justify-between py-1.5 text-base font-medium text-neutral-900 hover:no-underline hover:bg-transparent data-[state=open]:bg-transparent dark:text-neutral-100">
-                      Courses
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-2 pt-0">
-                      {coursesLinks.map((l, i) => (
-                        <Link
-                          key={i}
-                          href={l.href}
-                          onClick={onClose}
-                          className="block py-1.5 text-sm text-neutral-600 dark:text-neutral-400"
-                        >
-                          {l.name}
-                        </Link>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
-
-          {/* Bottom: Blog | Resume + Let's chat button */}
-          <motion.div
-            initial={{ y: -24, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -12, opacity: 0 }}
-            transition={{
-              duration: 0.35,
-              delay: 0.16,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            className="flex h-24 flex-col"
-          >
-            <div className="flex w-full mx-auto items-center justify-center gap-4 pl-1 pb-8 pt-4">
-              <div className="flex items-center gap-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                <Link
-                  href="/blog"
-                  onClick={onClose}
-                  className="flex items-center gap-1.5 relative"
-                >
-                  <span
-                    className="size-1.5 rounded-full bg-blue-500 absolute top-0 -right-2"
-                    aria-hidden
-                  />
-                  Blog
-                </Link>
-                <span className="h-4 w-px bg-neutral-300 dark:bg-neutral-600" aria-hidden />
-                <Link href="#" onClick={onClose}>
-                  Resume
-                </Link>
-              </div>
-              <Link
-                href="mailto:ronniekiyegga@dmi.com"
-                onClick={onClose}
-                className={cn(
-                  "flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-medium text-white",
-                  styleScript.className,
-                )}
-                style={{
-                  background: "#1a1a1a",
-                  boxShadow:
-                    "0 1.434px 1.147px 0 rgba(0, 0, 0, 0.12), 0 1.554px 1.554px 0 rgba(0, 0, 0, 0.14)",
-                }}
-              >
-                <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
-                Let&apos;s chat
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

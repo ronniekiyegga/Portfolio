@@ -67,21 +67,21 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="relative w-full min-w-0 overflow-x-hidden py-20 dark:bg-[url('/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat"
+      className="relative w-full min-w-0 overflow-x-hidden py-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
     >
       {/* Light mode: LiquidChrome background */}
       <div className="absolute inset-0 z-0 dark:hidden">
-        <LiquidChrome
+        {/* <LiquidChrome
           baseColor={[0.9, 0.9, 1]}
           speed={0.2}
           amplitude={0.5}
           interactive
-          className="size-full"
-        />
+          className="size-full opacity-10"
+        /> */}
       </div>
       <div className="relative z-10">
         <LampHeader />
-        <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-16 md:py-2">
+        <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-12 md:py-2">
           <div
             ref={containerRef}
             className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"

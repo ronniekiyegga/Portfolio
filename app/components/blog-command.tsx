@@ -73,7 +73,7 @@ export function BlogCommandDialog({
               <CommandItem
                 key={category.slug}
                 onSelect={() => {
-                  router.push(`/dark/${pageVariant}/category/${category.slug}`);
+                  router.push(`/blog/category/${category.slug}`);
                   setOpen(false);
                 }}
               >
@@ -90,7 +90,7 @@ export function BlogCommandDialog({
               <CommandItem
                 key={post.slug}
                 onSelect={() => {
-                  router.push(`/dark/${pageVariant}/${post.href}`);
+                  router.push(`/blog/${post.href}`);
                   setOpen(false);
                 }}
               >

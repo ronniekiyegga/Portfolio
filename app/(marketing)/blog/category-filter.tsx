@@ -23,13 +23,13 @@ export const BlogFilter = ({ categories, posts }: BlogFilterProps) => {
   const router = useRouter();
 
   const activeCategory =
-    pathname === "/dark/blog-three"
+    pathname === "/blog"
       ? "all"
-      : pathname.split("/dark/blog-three/category/")[1]?.split("/")[0] || "all";
+      : pathname.split("/blog/category/")[1]?.split("/")[0] || "all";
 
   const handleClick = (slug: string) => {
-    if (slug === "all") router.push("/dark/blog-three");
-    else router.push(`/dark/blog-three/category/${slug}`);
+    if (slug === "all") router.push("/blog");
+    else router.push(`/blog/category/${slug}`);
   };
 
   return (
