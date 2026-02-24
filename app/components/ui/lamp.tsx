@@ -14,7 +14,7 @@ export default function LampDemo() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-8 dark:bg-linear-to-br dark:from-slate-300 dark:to-slate-500 py-4 dark:bg-clip-text text-center text-4xl font-medium tracking-tight md:text-7xl"
+        className="mt-2 text-white bg-linear-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight md:text-7xl"
       >
         Intersection Of Design & Engineering
       </motion.h1>
@@ -51,7 +51,7 @@ export const LampContainer = ({
           style={{
             backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
           }}
-          className="absolute inset-auto right-1/2 h-30 overflow-visible w-152 dark:bg-gradient-conic dark:from-cyan-600 dark:via-transparent dark:to-transparent text-white [--conic-position:from_90deg_at_center_top]"
+          className="absolute inset-auto right-1/2 h-30 overflow-visible w-152 bg-gradient-conic from-cyan-600 via-transparent to-transparent text-white [--conic-position:from_90deg_at_center_top]"
         >
           {/* <div className="absolute  w-full left-0 bg-transparent h-40 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" /> */}
           {/* <div className="absolute bg-slate-950  w-28 h-full left-0 bottom-0 z-20 mask-[linear-gradient(to_right,white,transparent)]" /> */}
@@ -68,15 +68,15 @@ export const LampContainer = ({
           style={{
             backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
           }}
-          className="absolute inset-auto left-1/2 h-60 w-152 dark:bg-gradient-conic dark:from-transparent dark:via-transparent dark:to-cyan-500 text-white [--conic-position:from_270deg_at_center_top]"
+          className="absolute inset-auto left-1/2 h-60 w-152 bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_270deg_at_center_top]"
         >
-          {/* <div className="absolute w-48 h-full right-0 bg-transparent bottom-0 z-20 mask-[linear-gradient(to_left,white,transparent)]" /> */}
-          {/* <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" /> */}
-          {/* <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" /> */}
-          {/* <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" /> */}
+          <div className="absolute w-48 h-full right-0 bg-transparent bottom-0 z-20 mask-[linear-gradient(to_left,white,transparent)]" />
+          <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
+          <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
+          <div className="absolute  w-full right-0 bg-slate-950 h-80 bottom-0 z-20 mask-[linear-gradient(to_top,white,transparent)]" />
         </motion.div>
 
-        {/* <div className="absolute top-1/2 h-58 w-full translate-x-12 scale-y-[2] bg-transparent blur-2xl"></div> */}
+        <div className="absolute top-1/2 h-58 w-full translate-x-12 scale-y-[2] bg-transparent blur-2xl"></div>
         <div className="absolute top-1/2 z-50 h-52 w-full bg-transparent opacity-10 backdrop-blur-3xl"></div>
         {/* <div className="absolute inset-auto z-50 h-40 w-xl -translate-x-2/2 rounded-full bg-cyan-600 opacity-40 blur-3xl"></div> */}
         {/* ... light ... */}
@@ -88,7 +88,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-30 h-40 w-64 -translate-y-24  dark:bg-cyan-400 blur-2xl"
+          className="absolute inset-auto z-30 h-40 w-64 -translate-y-24  bg-cyan-400 blur-2xl"
         ></motion.div>
 
         {/* ... line ... */}
@@ -100,7 +100,7 @@ export const LampContainer = ({
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-50 h-0.5 w-38rem -translate-y-28 dark:bg-cyan-400"
+          className="absolute inset-auto z-50 h-0.5 w-38rem -translate-y-28 bg-cyan-400"
         ></motion.div>
 
         {/* Section kicker: at the top of the lamp, just above the cyan bar */}
@@ -110,7 +110,7 @@ export const LampContainer = ({
           </div>
         )}
 
-        <div className="absolute inset-auto z-40 h-44 w-full -translate-y-50 dark:bg-black "></div>
+        <div className="absolute inset-auto z-40 h-44 w-full -translate-y-50 bg-black "></div>
       </div>
 
       <div className="relative z-50 flex -translate-y-80 flex-col items-center px-12">

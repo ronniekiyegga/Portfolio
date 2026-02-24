@@ -42,29 +42,29 @@ export type Feature = {
   background: FeatureBackground;
 };
 
-const features: Feature[] = [
-  {
-    title: "Design",
-    description:
-      "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
-    image: "/DESIGN.svg",
-    background: "lightPillar",
-  },
-  {
-    title: "Engineering",
-    description:
-      "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
-    image: "/NUMERIX_AI.svg",
-    background: "prism",
-  },
-  {
-    title: "Architecture",
-    description:
-      "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-    image: "/GOOGLE_TEACHABLE.svg",
-    background: "lightRays",
-  },
-];
+// const features: Feature[] = [
+//   {
+//     title: "Design",
+//     description:
+//       "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
+//     image: "/DESIGN.svg",
+//     background: "lightPillar",
+//   },
+//   {
+//     title: "Engineering",
+//     description:
+//       "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
+//     image: "/NUMERIX_AI.svg",
+//     background: "prism",
+//   },
+//   {
+//     title: "Architecture",
+//     description:
+//       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
+//     image: "/GOOGLE_TEACHABLE.svg",
+//     background: "lightRays",
+//   },
+// ];
 
 /** Used when page theme is dark (card contrasts with dark page) */
 const LIGHT_BACKGROUNDS = [
@@ -72,6 +72,30 @@ const LIGHT_BACKGROUNDS = [
   "/BG_1.png",
   "/BackgroundImage_2.svg",
 ] as const;
+
+const features = [
+  {
+    title: "AI Models",
+    description:
+      "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
+    image:
+      "https://images.unsplash.com/photo-1770490085047-1460359929e7?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    title: "Global Reach",
+    description:
+      "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
+    image:
+      "https://images.unsplash.com/photo-1721111648084-5e4f18a8635c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    title: "Smart Agent",
+    description:
+      "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
+    image:
+      "https://images.unsplash.com/photo-1770106678115-ec9aa241cdf6?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
 
 /** Used when page theme is light (card contrasts with light page) */
 const DARK_BACKGROUNDS = [
@@ -266,7 +290,7 @@ export default function ExpandableFeatures4({
               </h4>
               <h2
                 ref={titleRef}
-                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-black dark:text-white "
+                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white "
               >
                 {title}
               </h2>
@@ -326,8 +350,8 @@ export default function ExpandableFeatures4({
                   className={cn(
                     "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
                     expandedIndex === index
-                      ? "text-black  dark:text-white"
-                      : "  text-gray-400 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90",
+                      ? "text-white"
+                      : "  text-gray-500 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90",
                   )}
                 >
                   <div className="flex size-4 shrink-0 items-center justify-center">

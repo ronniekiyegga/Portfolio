@@ -23,6 +23,16 @@ export function CategoryBlogListWithPagination({ initialPosts, totalCount, loadM
         })
     }
 
+    if (posts.length === 0 && totalCount === 0) {
+        return (
+            <div className="mx-auto max-w-5xl px-6 py-16 text-center">
+                <p className="text-muted-foreground">
+                    No posts in this topic yet. Check back later or browse other topics.
+                </p>
+            </div>
+        )
+    }
+
     return (
         <>
             <BlogPostGrid posts={posts} />

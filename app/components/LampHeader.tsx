@@ -18,7 +18,7 @@ export default function LampHeader() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-8 py-4 text-center text-4xl font-medium tracking-tight md:text-7xl dark:bg-linear-to-br dark:from-slate-300 dark:to-slate-500 dark:bg-clip-text dark:text-transparent text-black"
+        className="mt-8 py-4 text-center text-4xl font-medium tracking-tight md:text-7xl bg-linear-to-br from-slate-300 to-slate-500 bg-clip-text text-white"
       >
         <AnimatedText />
       </motion.h1>

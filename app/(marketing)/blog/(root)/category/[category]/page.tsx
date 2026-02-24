@@ -1,25 +1,21 @@
-import { notFound } from 'next/navigation'
 import { CategoryBlogListWithPagination } from '@/app/(marketing)/blog/category-blog-list-with-pagination'
-import { loadMoreCategoryPosts, getCategoryPosts, getCategoryPostsCount, getAllPosts, getAllCategories } from '@/lib/actions'
+import { loadMoreCategoryPosts, getCategoryPosts, getCategoryPostsCount } from '@/lib/actions'
+import { BLOG_CATEGORIES } from '@/lib/blog-categories'
 
 const PAGE_SIZE = 9
 
 export async function generateStaticParams() {
-    const categories = await getAllCategories()
-    return categories.map((category) => ({
-        category: category.slug,
+    return BLOG_CATEGORIES.map((c) => ({
+        category: c.slug,
     }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
     const { category: categorySlug } = await params
-    const categories = await getAllCategories()
-    const category = categories.find((c) => c.slug === categorySlug)
+    const category = BLOG_CATEGORIES.find((c) => c.slug === categorySlug)
 
     if (!category) {
-        return {
-            title: 'Category Not Found',
-        }
+        return { title: 'Category Not Found' }
     }
 
     return {
@@ -30,11 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
     const { category } = await params
-    const [posts, totalCount] = await Promise.all([getCategoryPosts(category, PAGE_SIZE), getCategoryPostsCount(category), getAllPosts()])
-
-    if (posts.length === 0) {
-        notFound()
-    }
+    const [posts, totalCount] = await Promise.all([
+        getCategoryPosts(category, PAGE_SIZE),
+        getCategoryPostsCount(category),
+    ])
 
     const loadMoreAction = loadMoreCategoryPosts.bind(null, category)
 

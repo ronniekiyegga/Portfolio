@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             ],
         },
         alternates: {
-            canonical: `/dark/blog-three/${slug}`,
+            canonical: `/blog/${slug}`,
         },
     }
 }
@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <Breadcrumb>
                         <BreadcrumbList className="justify-center gap-0.5 sm:gap-0.5">
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="/dark/blog-three">Blog</BreadcrumbLink>
+                                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator>
                                 <Slash className="-rotate-16" />
@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                             <BreadcrumbItem>
                                 <BreadcrumbLink
                                     className="text-foreground"
-                                    href={`/dark/blog-three/category/${post.category.slug}`}>
+                                    href={`/blog/category/${post.category.slug}`}>
                                     {post.category.title}
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
