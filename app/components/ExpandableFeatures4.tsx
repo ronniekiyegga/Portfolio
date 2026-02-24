@@ -73,36 +73,18 @@ const LIGHT_BACKGROUNDS = [
   "/BackgroundImage_2.svg",
 ] as const;
 
-const features = [
-  {
-    title: "AI Models",
-    description:
-      "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
-    image:
-      "https://images.unsplash.com/photo-1770490085047-1460359929e7?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Global Reach",
-    description:
-      "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
-    image:
-      "https://images.unsplash.com/photo-1721111648084-5e4f18a8635c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Smart Agent",
-    description:
-      "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-    image:
-      "https://images.unsplash.com/photo-1770106678115-ec9aa241cdf6?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+const DARK_BACKGROUNDS = [
+  "https://images.unsplash.com/photo-1770490085047-1460359929e7?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1721111648084-5e4f18a8635c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1770106678115-ec9aa241cdf6?q=80&w=2342&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+] as const;
 
 /** Used when page theme is light (card contrasts with light page) */
-const DARK_BACKGROUNDS = [
-  "/BackgroundImage_2.svg",
-  "/BackgroundImage_2.svg",
-  "/BackgroundImage_2.svg",
-] as const;
+// const DARK_BACKGROUNDS = [
+//   "/BackgroundImage_2.svg",
+//   "/BackgroundImage_2.svg",
+//   "/BackgroundImage_2.svg",
+// ] as const;
 
 /** Theme-aware backgrounds: light theme → DARK_BACKGROUNDS, dark theme → LIGHT_BACKGROUNDS */
 const getCardBackgrounds = (isDark: boolean) =>
@@ -406,7 +388,7 @@ export default function ExpandableFeatures4({
                   }}
                   className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4"
                 >
-                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[0.9] aspect-square w-full max-w-[450px]">
+                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[1] aspect-square w-full max-w-[450px]">
                     <Image
                       src={featuresList[expandedIndex].image}
                       alt={featuresList[expandedIndex].title}
