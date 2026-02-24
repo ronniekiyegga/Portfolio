@@ -16,7 +16,7 @@ export default function IntroductionText() {
         I'm a design-focused software engineer, passionate about{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">
           <span
-            className={`${styleScript.className} text-md md:text-xl font-bold mr-1`}
+            className={`${styleScript.className} text-lg md:text-xl font-bold mr-1`}
           >
             crafting
           </span>
@@ -25,13 +25,11 @@ export default function IntroductionText() {
         intuitive, pixel-perfect user interfaces and scalable systems - bridging
         creativity and code from concept to production,
         <span
-          className={`${styleScript.className} text-md md:text-lg font-bold text-gradient-blue mr-1`}
+          className={`${styleScript.className} text-lg md:text-xl font-bold text-gradient-blue`}
         >
           1 byte at a time.
         </span>
-        
       </div>
     </div>
   );
 }
-
