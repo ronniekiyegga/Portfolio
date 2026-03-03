@@ -214,6 +214,11 @@ html {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* V2 fonts */
+  --font-cormorant: var(--font-cormorant), serif;
+  --font-jetbrains: var(--font-jetbrains), monospace;
+  --font-outfit: var(--font-outfit), sans-serif;
+
   /* Brand Gradients (also in :root for use in utility classes) */
   --gradient-fade-right: linear-gradient(to right, #fcfcfc, transparent);
   --gradient-fade-left: linear-gradient(to left, white, transparent);
@@ -351,7 +356,169 @@ body {
     0 calc(100% - 2.5rem)
   );
 }
-::view-transition-old(root), ::view-transition-new(root) {
+::view-transition-old(root) {
     animation: none;
     mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+    mix-blend-mode: normal;
+}
+
+/* ================================================================
+   V2 DESIGN TOKENS
+   ================================================================ */
+
+/* :root fallback — dark values so first paint is never unstyled */
+:root {
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #1a1a1a;
+  --border: rgba(255,255,255,0.07);
+  --text: #f0ede8;
+  --muted: #555555;
+  --nav-bg: rgba(8,8,8,0.88);
+  --pill-bg: rgba(255,255,255,0.04);
+  --accent: #d4ff47;
+  --accent-text: #080808;
+  --gap: rgba(255,255,255,0.07);
+  --grid-line: rgba(255,255,255,0.04);
+  --tag-bg: rgba(212,255,71,0.08);
+  --tag-color: #d4ff47;
+  --stat-suffix: #d4ff47;
+  --metric-color: #d4ff47;
+  --process-bg: #111111;
+  --cta-glow: rgba(212,255,71,0.06);
+  --dropdown-bg: #1a1a1a;
+}
+
+/* Dark mode (default) */
+html.dark {
+  --bg: #080808;
+  --surface: #111111;
+  --surface2: #1a1a1a;
+  --border: rgba(255,255,255,0.07);
+  --text: #f0ede8;
+  --muted: #555555;
+  --nav-bg: rgba(8,8,8,0.88);
+  --pill-bg: rgba(255,255,255,0.04);
+  --accent: #d4ff47;
+  --accent-text: #080808;
+  --gap: rgba(255,255,255,0.07);
+  --grid-line: rgba(255,255,255,0.04);
+  --tag-bg: rgba(212,255,71,0.08);
+  --tag-color: #d4ff47;
+  --stat-suffix: #d4ff47;
+  --metric-color: #d4ff47;
+  --process-bg: #111111;
+  --cta-glow: rgba(212,255,71,0.06);
+  --dropdown-bg: #1a1a1a;
+}
+
+/* Light mode */
+html.light {
+  --bg: #F0EDE8;
+  --surface: #E8E4DD;
+  --surface2: #DDD9D1;
+  --border: rgba(15,20,50,0.08);
+  --text: #0F1432;
+  --muted: #8A8EA8;
+  --nav-bg: rgba(240,237,232,0.9);
+  --pill-bg: rgba(15,20,50,0.05);
+  --accent: #0F1432;
+  --accent-text: #F0EDE8;
+  --gap: rgba(15,20,50,0.08);
+  --grid-line: rgba(15,20,50,0.04);
+  --tag-bg: rgba(15,20,50,0.07);
+  --tag-color: #0F1432;
+  --stat-suffix: #C8A84B;
+  --metric-color: #0F1432;
+  --process-bg: #E8E4DD;
+  --cta-glow: rgba(200,168,75,0.08);
+  --dropdown-bg: #DDD9D1;
+}
+
+/* ================================================================
+   V2 SCROLL REVEAL
+   ================================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================================================
+   V2 ANIMATIONS
+   ================================================================ */
+@keyframes cycleWords {
+  0%   { transform: translateY(0px); }
+  33%  { transform: translateY(-14px); }
+  66%  { transform: translateY(-28px); }
+  100% { transform: translateY(0px); }
+}
+.role-words { animation: cycleWords 6s steps(1) infinite; }
+
+@keyframes pulse-dot-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+.pulse-dot { animation: pulse-dot-anim 2s ease-in-out infinite; }
+
+/* ================================================================
+   V2 WORK CARD HOVER IMAGE
+   ================================================================ */
+.work-card-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.work-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.85) 100%);
+}
+.work-card:hover .work-card-image { opacity: 1; }
+.work-card-body { position: relative; z-index: 2; }
+.work-card:hover .wc-title { color: rgba(255,255,255,0.95) !important; }
+.work-card:hover .wc-desc  { color: rgba(255,255,255,0.65) !important; }
+.work-card:hover .wc-type  { color: rgba(255,255,255,0.5)  !important; }
+.work-card:hover .wc-tag {
+  border-color: rgba(255,255,255,0.2) !important;
+  color: rgba(255,255,255,0.55) !important;
+}
+
+/* ================================================================
+   V2 DESIGN CAROUSEL
+   ================================================================ */
+.light .design-fade::after {
+  background: linear-gradient(to top, rgba(232,228,221,0.9) 0%, transparent 100%);
+}
+
+/* ================================================================
+   V2 NOISE TEXTURE (subtle grain)
+   ================================================================ */
+.v2-noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* ================================================================
+   V2 TRACING BEAM — full width override
+   ================================================================ */
+.v2-tracing-beam > div {
+  max-width: 100% !important;
+  padding-left: 0 !important;
 }
