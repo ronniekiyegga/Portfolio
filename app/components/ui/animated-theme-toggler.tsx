@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import { flushSync } from "react-dom"
-
+import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
 interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
@@ -15,35 +15,18 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const [isDark, setIsDark] = useState(() =>
-    typeof window !== "undefined"
-      ? document.documentElement.classList.contains("dark")
-      : true
-  )
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    const updateTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"))
-    }
+  useEffect(() => { setMounted(true) }, [])
 
-    updateTheme()
-
-    const observer = new MutationObserver(updateTheme)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    })
-
-    return () => observer.disconnect()
-  }, [])
+  const isDark = resolvedTheme === "dark"
 
   const toggleTheme = useCallback(() => {
     if (!buttonRef.current) return
 
-    // Capture position BEFORE the transition starts
-    const { top, left, width, height } =
-      buttonRef.current.getBoundingClientRect()
+    const { top, left, width, height } = buttonRef.current.getBoundingClientRect()
     const x = left + width / 2
     const y = top + height / 2
     const maxRadius = Math.hypot(
@@ -51,25 +34,19 @@ export const AnimatedThemeToggler = ({
       Math.max(top, window.innerHeight - top)
     )
 
-    const newTheme = !isDark
+    const newTheme = isDark ? "light" : "dark"
 
     if (!document.startViewTransition) {
-      // Fallback: no animation
-      setIsDark(newTheme)
-      document.documentElement.classList.toggle("dark")
-      localStorage.setItem("theme", newTheme ? "dark" : "light")
+      setTheme(newTheme)
       return
     }
 
     const transition = document.startViewTransition(() => {
       flushSync(() => {
-        setIsDark(newTheme)
-        document.documentElement.classList.toggle("dark")
-        localStorage.setItem("theme", newTheme ? "dark" : "light")
+        setTheme(newTheme)
       })
     })
 
-    // Use .then() — avoids async/await issues inside React event handlers
     transition.ready.then(() => {
       document.documentElement.animate(
         {
@@ -85,7 +62,17 @@ export const AnimatedThemeToggler = ({
         }
       )
     })
-  }, [isDark, duration])
+  }, [isDark, duration, setTheme])
+
+  // Render placeholder before mount to avoid layout shift
+  if (!mounted) {
+    return (
+      <button className={cn(className)} {...props} aria-label="Toggle theme">
+        <Moon />
+        <span className="sr-only">Toggle theme</span>
+      </button>
+    )
+  }
 
   return (
     <button
@@ -93,6 +80,7 @@ export const AnimatedThemeToggler = ({
       onClick={toggleTheme}
       className={cn(className)}
       {...props}
+      aria-label="Toggle theme"
     >
       {isDark ? <Sun /> : <Moon />}
       <span className="sr-only">Toggle theme</span>

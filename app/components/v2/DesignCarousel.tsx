@@ -1,7 +1,97 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { designItems } from '@/lib/v2-data'
+import { designItems, type DesignItem } from '@/lib/v2-data'
+
+function CardExtras({ item }: { item: DesignItem }) {
+  switch (item.extras) {
+    case 'buttons':
+      return (
+        <div className="flex gap-2 mt-4">
+          <div className="h-7 w-14 rounded" style={{ background: `${item.accentColor}22`, border: `1px solid ${item.accentColor}44` }} />
+          <div className="h-7 w-14 rounded" style={{ background: `${item.accentColor}11`, border: `1px solid ${item.accentColor}22` }} />
+        </div>
+      )
+    case 'logo-circle':
+      return (
+        <div
+          className="mt-4 w-11 h-11 rounded-full flex items-center justify-center font-jetbrains text-[8px] tracking-widest mx-auto"
+          style={{ border: `1px solid ${item.accentColor}55`, color: `${item.accentColor}88` }}
+        >
+          LOGO
+        </div>
+      )
+    case 'code':
+      return (
+        <div
+          className="mt-3 w-full rounded p-3 font-jetbrains text-[10px] text-left leading-relaxed"
+          style={{ background: 'rgba(0,0,0,0.55)', border: `1px solid ${item.accentColor}33`, color: item.accentColor }}
+        >
+          <div>FOR i = 1 TO 10</div>
+          <div className="pl-4">OUTPUT 1</div>
+          <div>NEXT 1</div>
+        </div>
+      )
+    case 'dots':
+      return (
+        <div className="flex gap-2 mt-4 justify-center">
+          <div className="w-3 h-3 rounded-full" style={{ background: '#ff4777' }} />
+          <div className="w-3 h-3 rounded-full" style={{ background: '#ff8c47' }} />
+          <div className="w-3 h-3 rounded-full" style={{ background: '#47a8ff' }} />
+        </div>
+      )
+    case 'search':
+      return (
+        <div
+          className="mt-4 w-full rounded px-3 py-2 flex items-center gap-2"
+          style={{ background: `${item.accentColor}18`, border: `1px solid ${item.accentColor}44` }}
+        >
+          <span className="font-jetbrains text-[8px] tracking-wider flex-1" style={{ color: `${item.accentColor}99` }}>
+            GITHUB FINDER
+          </span>
+          <div className="w-6 h-4 rounded-sm" style={{ background: `${item.accentColor}44` }} />
+        </div>
+      )
+    default:
+      return null
+  }
+}
+
+function CardCenter({ item }: { item: DesignItem }) {
+  if (item.extras === 'code') {
+    return (
+      <div className="w-full px-5">
+        <p
+          className="font-jetbrains text-[10px] tracking-[0.18em] mb-3 text-center"
+          style={{ color: item.accentColor }}
+        >
+          {item.label}
+        </p>
+        <CardExtras item={item} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="text-center">
+      <div
+        className="font-cormorant leading-none italic mb-2"
+        style={{ fontSize: 'clamp(36px, 4vw, 52px)', color: item.accentColor }}
+      >
+        {item.label}
+      </div>
+      {item.sublabel && (
+        <p
+          className="font-jetbrains text-[8px] tracking-[0.15em]"
+          style={{ color: 'rgba(255,255,255,0.25)' }}
+        >
+          {item.sublabel}
+        </p>
+      )}
+      <CardExtras item={item} />
+    </div>
+  )
+}
 
 export function DesignCarousel() {
   const trackRef    = useRef<HTMLDivElement>(null)
@@ -21,7 +111,6 @@ export function DesignCarousel() {
     else if (containerW < 640) vis = 2
     else if (containerW < 900) vis = 3
     setVisible(vis)
-
     const items = trackRef.current.querySelectorAll<HTMLElement>('.design-slide')
     if (items.length > 0) setItemWidth(items[0].offsetWidth + 2)
   }, [])
@@ -51,10 +140,7 @@ export function DesignCarousel() {
   return (
     <div className="reveal">
       {/* Track */}
-      <div
-        className="overflow-hidden rounded-2xl border"
-        style={{ borderColor: 'var(--border)' }}
-      >
+      <div className="overflow-hidden rounded-xl" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
         <div
           ref={trackRef}
           className="flex gap-[2px] transition-transform duration-500 ease-out"
@@ -66,44 +152,25 @@ export function DesignCarousel() {
             <div
               key={item.name}
               className="design-slide flex-shrink-0 relative overflow-hidden flex flex-col justify-end"
-              style={{
-                minWidth: '280px',
-                height: '360px',
-                background: 'var(--surface)',
-              }}
+              style={{ minWidth: '260px', height: '360px', background: item.gradient }}
             >
-              {/* Coloured preview bg */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{ background: item.gradient }}
-              >
-                <div className="text-center">
-                  <div
-                    className="font-cormorant text-4xl mb-2 italic"
-                    style={{ color: item.accentColor }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    className="font-jetbrains text-[8px] tracking-[0.12em]"
-                    style={{ color: 'rgba(255,255,255,0.3)' }}
-                  >
-                    {item.sublabel}
-                  </div>
-                </div>
+              {/* Center content */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <CardCenter item={item} />
               </div>
 
               {/* Bottom fade */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none design-fade"
-                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)' }}
+                className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)' }}
               />
 
-              <div className="relative z-10 p-6">
-                <p className="font-jetbrains text-[9px] tracking-[0.12em] uppercase mb-1.5" style={{ color: 'var(--muted)' }}>
+              {/* Bottom text */}
+              <div className="relative z-10 p-5">
+                <p className="font-jetbrains text-[9px] tracking-[0.14em] uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
                   {item.type}
                 </p>
-                <p className="font-cormorant text-[18px] font-normal" style={{ color: 'var(--text)' }}>
+                <p className="font-cormorant text-[17px] font-normal" style={{ color: 'rgba(255,255,255,0.9)' }}>
                   {item.name}
                 </p>
               </div>
@@ -114,7 +181,7 @@ export function DesignCarousel() {
 
       {/* Controls */}
       <div className="flex items-center justify-between mt-5">
-        {/* Dots */}
+        {/* Progress indicators */}
         <div className="flex gap-1.5 items-center">
           {Array.from({ length: pages }).map((_, i) => (
             <button
@@ -122,10 +189,10 @@ export function DesignCarousel() {
               onClick={() => goTo(i)}
               className="rounded-full transition-all duration-300"
               style={{
-                width: i === current ? '20px' : '6px',
-                height: '6px',
+                width:  i === current ? '20px' : '6px',
+                height: '4px',
                 background: i === current ? 'var(--accent)' : 'var(--border)',
-                borderRadius: i === current ? '3px' : '50%',
+                borderRadius: '2px',
               }}
             />
           ))}
@@ -138,7 +205,7 @@ export function DesignCarousel() {
             className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
             style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
           >
-            &#8592;
+            ←
           </button>
           <button
             onClick={() => move(1)}
@@ -146,7 +213,7 @@ export function DesignCarousel() {
             className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
             style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
           >
-            &#8594;
+            →
           </button>
         </div>
       </div>
