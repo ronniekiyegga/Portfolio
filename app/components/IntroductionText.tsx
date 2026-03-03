@@ -23,12 +23,12 @@ export default function IntroductionText() {
           <ImageBadgeFolder />
         </span>{" "}
         intuitive, pixel-perfect user interfaces and scalable systems - bridging
-        creativity and code from concept to production,
-        <span
+        creativity and code from concept to production.
+        {/* <span
           className={`${styleScript.className} text-lg md:text-xl font-bold `}
         >
           1 Byte at a time.
-        </span>
+        </span> */}
       </div>
     </div>
   );
