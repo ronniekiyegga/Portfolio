@@ -15,7 +15,11 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(() =>
+    typeof window !== "undefined"
+      ? document.documentElement.classList.contains("dark")
+      : true
+  )
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -34,18 +38,10 @@ export const AnimatedThemeToggler = ({
     return () => observer.disconnect()
   }, [])
 
-  const toggleTheme = useCallback(async () => {
+  const toggleTheme = useCallback(() => {
     if (!buttonRef.current) return
 
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        const newTheme = !isDark
-        setIsDark(newTheme)
-        document.documentElement.classList.toggle("dark")
-        localStorage.setItem("theme", newTheme ? "dark" : "light")
-      })
-    }).ready
-
+    // Capture position BEFORE the transition starts
     const { top, left, width, height } =
       buttonRef.current.getBoundingClientRect()
     const x = left + width / 2
@@ -55,19 +51,40 @@ export const AnimatedThemeToggler = ({
       Math.max(top, window.innerHeight - top)
     )
 
-    document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${maxRadius}px at ${x}px ${y}px)`,
-        ],
-      },
-      {
-        duration,
-        easing: "ease-in-out",
-        pseudoElement: "::view-transition-new(root)",
-      }
-    )
+    const newTheme = !isDark
+
+    if (!document.startViewTransition) {
+      // Fallback: no animation
+      setIsDark(newTheme)
+      document.documentElement.classList.toggle("dark")
+      localStorage.setItem("theme", newTheme ? "dark" : "light")
+      return
+    }
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => {
+        setIsDark(newTheme)
+        document.documentElement.classList.toggle("dark")
+        localStorage.setItem("theme", newTheme ? "dark" : "light")
+      })
+    })
+
+    // Use .then() — avoids async/await issues inside React event handlers
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${maxRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      )
+    })
   }, [isDark, duration])
 
   return (
