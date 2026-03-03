@@ -6,10 +6,6 @@ import { CornerDownRight } from "lucide-react";
 import Integrations, { type TechIconKey } from "./integrations-one";
 import { cn } from "@/lib/utils";
 
-const Lanyard = dynamic(() => import("./Lanyard"), {
-  ssr: false,
-  loading: () => <div className="w-full h-screen" aria-hidden />,
-});
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -72,7 +68,6 @@ const experiences: {
 
 export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [showLanyard, setShowLanyard] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +78,7 @@ export default function Experiences() {
     const st = ScrollTrigger.create({
       trigger: section,
       start: "top 80%",
-      onEnter: () => setShowLanyard(true),
+      onEnter: () => {},
     });
 
     return () => st.kill();
@@ -130,10 +125,6 @@ export default function Experiences() {
       ref={sectionRef}
       className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950"
     >
-      {/* Lanyard: drops when the whole experience section scrolls into view */}
-      <div className="absolute inset-y-0 right-[2%] top-0 z-20 h-full w-[min(280px,38%)] overflow-visible lg:right-[25%] lg:w-[min(320px,32%)]">
-        {showLanyard && <Lanyard position={[0, 0, 20]} gravity={[0, -40, 1]} />}
-      </div>
       <div
         ref={contentRef}
         className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0"
