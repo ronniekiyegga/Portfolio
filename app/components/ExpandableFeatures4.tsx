@@ -431,27 +431,7 @@ export default function ExpandableFeatures4({
               className="mask-y-from-75% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-12 border-x"
             />
 
-            <div className="relative aspect-4/5 min-h-0 min-w-0">
-              {/* Accent lines next to the cut-out corners (in dark area), not on the corner edge */}
-              {/* Top-right: diagonal runs down-right, line parallel to it (135deg) */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-0 top-0 z-20 h-[2px] w-[2.5rem] origin-top-right rotate-[135deg]"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #18CCFC, #6344F5, #AE48FF)",
-                }}
-              />
-              {/* Bottom-left: diagonal runs up-left, line parallel to it (225deg) */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute bottom-0 left-0 z-20 h-[2px] w-[2.5rem] origin-bottom-left rotate-[225deg]"
-                style={{
-                  background:
-                    "linear-gradient(315deg, #18CCFC, #6344F5, #AE48FF)",
-                }}
-              />
-            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg absolute inset-0 overflow-hidden">
+            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
               {/* Shared background - cycles with AUTOPLAY_DURATION */}
               <div
                 className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
@@ -485,7 +465,6 @@ export default function ExpandableFeatures4({
                   </div>
                 </motion.div>
               </AnimatePresence>
-            </div>
             </div>
           </div>
         </div>
