@@ -206,7 +206,7 @@ const projectContent: Array<{
         background: "prism",
       },
       {
-        title: "Features",
+        title: "Github",
         description: "",
         image: "/NUMERIX_AI.svg",
         background: "lightRays",
@@ -280,7 +280,7 @@ const projectContent: Array<{
         background: "prism",
       },
       {
-        title: "Features",
+        title: "Github",
         description: "",
         image: "/BLOG.svg",
         background: "lightPillar",
@@ -321,10 +321,11 @@ const projectContent: Array<{
         background: "prism",
       },
       {
-        title: "Features",
+        title: "Github",
         description: "",
         image: "/CODE.svg",
         background: "lightPillar",
+        href: "https://github.com/BlissfulCoda/teachablemachine",
       },
     ],
   },
@@ -356,7 +357,7 @@ const projectContent: Array<{
         background: "lightPillar",
       },
       {
-        title: "Features",
+        title: "Github",
         description: "",
         image: "/CODE.svg",
         background: "floatingLines",

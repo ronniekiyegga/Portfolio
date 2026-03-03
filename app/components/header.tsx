@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
@@ -10,11 +11,9 @@ import { useMedia } from "@/app/hooks/use-media";
 import { Style_Script } from "next/font/google";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/app/components/ui/navigation-menu";
 import { BsStars } from "react-icons/bs";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
@@ -60,6 +59,18 @@ export default function Header({
 }: HeaderProps) {
   const isLarge = useMedia("(min-width: 64rem)");
   const showHeader = isHeaderVisible;
+  const pathname = usePathname();
+  const [hash, setHash] = React.useState("");
+  React.useEffect(() => {
+    setHash(typeof window !== "undefined" ? window.location.hash.slice(1) : "");
+    const onHashChange = () => setHash(window.location.hash.slice(1));
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [pathname]);
+  const isAboutActive =
+    pathname === "/" && hash !== "projects" && hash !== "design";
+  const isWorkActive = pathname === "/" && hash === "projects";
+  const isDesignActive = pathname === "/" && hash === "design";
 
   React.useEffect(() => {
     if (isMobileMenuOpen) {
@@ -151,53 +162,79 @@ export default function Header({
 
                   <nav className="flex items-center gap-0.5">
                     <NavigationMenu viewport={false}>
-                      <NavigationMenuList className=" border-0 bg-transparent p-0">
+                      <NavigationMenuList className="flex-none justify-start gap-6 border-0 bg-transparent p-0">
                         <NavigationMenuItem value="about">
-                          <NavigationMenuTrigger
-                            className={cn(
-                              "bg-transparent text-neutral-600 hover:bg-transparent dark:text-neutral-400 dark:hover:bg-transparent ",
-                              "text-gradient-blue hover:text-gradient-blue data-[state=open]:text-gradient-blue",
-                            )}
-                          >
-                            About
-                          </NavigationMenuTrigger>
-                          {/* <NavigationMenuContent className="left-0 right-auto min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border-white dark:border-neutral-800">
-                            <ul className="grid w-[180px] gap-0 py-2">
-                              {projectsLinks.map((link, i) => (
-                                <li key={i}>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      href={link.href}
-                                      className="block border-b border-neutral-100 last:border-b-0 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-800/50"
-                                    >
-                                      {link.name}
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </NavigationMenuContent> */}
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/"
+                              className={cn(
+                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent!",
+                                isAboutActive
+                                  ? "text-gradient-blue"
+                                  : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
+                              )}
+                            >
+                              About
+                            </Link>
+                          </NavigationMenuLink>
                         </NavigationMenuItem>
-                        <NavigationMenuItem value="more">
-                          <NavigationMenuTrigger className="bg-transparent text-neutral-600 hover:bg-transparent hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
-                            More
-                          </NavigationMenuTrigger>
-                          <NavigationMenuContent className="left-auto right-0 min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg">
-                            <ul className="grid gap-0 py-2">
-                              {coursesLinks.map((link, i) => (
-                                <li key={i}>
-                                  <NavigationMenuLink asChild>
-                                    <Link
-                                      href={link.href}
-                                      className="block border-b border-neutral-100 last:border-b-0 px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-800/50"
-                                    >
-                                      {link.name}
-                                    </Link>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </NavigationMenuContent>
+                        <NavigationMenuItem value="work">
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/#projects"
+                              onClick={(e) => {
+                                if (pathname === "/") {
+                                  e.preventDefault();
+                                  document
+                                    .getElementById("projects")
+                                    ?.scrollIntoView({ behavior: "smooth" });
+                                  window.history.replaceState(
+                                    null,
+                                    "",
+                                    "/#projects",
+                                  );
+                                  setHash("projects");
+                                }
+                              }}
+                              className={cn(
+                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent!",
+                                isWorkActive
+                                  ? "text-gradient-blue"
+                                  : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
+                              )}
+                            >
+                              Work
+                            </Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem value="design">
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href="/#design"
+                              onClick={(e) => {
+                                if (pathname === "/") {
+                                  e.preventDefault();
+                                  document
+                                    .getElementById("design")
+                                    ?.scrollIntoView({ behavior: "smooth" });
+                                  window.history.replaceState(
+                                    null,
+                                    "",
+                                    "/#design",
+                                  );
+                                  setHash("design");
+                                }
+                              }}
+                              className={cn(
+                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent! hover:text-neutral-900 dark:hover:text-neutral-100",
+                                isDesignActive
+                                  ? "text-gradient-blue"
+                                  : "text-neutral-600 dark:text-neutral-400",
+                              )}
+                            >
+                              Design
+                            </Link>
+                          </NavigationMenuLink>
                         </NavigationMenuItem>
                       </NavigationMenuList>
                     </NavigationMenu>

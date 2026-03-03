@@ -10,7 +10,7 @@ export default function IntroductionText() {
   return (
     <div className="flex flex-col w-full mb-8">
       <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
-        <LayoutTextFlip text="FULL STACK" words={["DESIGNER", "ENGINEER"]} />
+        <LayoutTextFlip text="FRONTEND" words={["DESIGNER", "ENGINEER"]} />
       </motion.div>
       <div className="mt-6 text-sm md:text-base text-left text-neutral-600 dark:text-neutral-400 max-w-xl">
         I'm a design-focused software engineer, passionate about{" "}
