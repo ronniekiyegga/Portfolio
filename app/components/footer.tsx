@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 const footerLinks = [
   { title: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
   { title: "Github", href: "https://github.com/BlissfulCoda" },
-  { title: "Email", href: "mailto:contact@ronniekiyegga.com" },
+  { title: "Email", href: "mailto:ronniekiyegga@hotmail.com" },
 ];
 
 export default function FooterSection() {
@@ -44,7 +44,7 @@ export default function FooterSection() {
             project.
           </p>
           <Link
-            href="mailto:contact@ronniekiyegga.com"
+            href="mailto:ronniekiyegga@hotmail.com"
             className="flex w-40 items-stretch gap-[0.2rem] p-[0.14rem_0.16rem] transition-opacity hover:opacity-95"
             style={{
               borderRadius: "1.44438rem",

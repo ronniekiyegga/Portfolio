@@ -25,9 +25,9 @@ export default function IntroductionText() {
         intuitive, pixel-perfect user interfaces and scalable systems - bridging
         creativity and code from concept to production,
         <span
-          className={`${styleScript.className} text-lg md:text-xl font-bold text-gradient-blue`}
+          className={`${styleScript.className} text-lg md:text-xl font-bold `}
         >
-          1 byte at a time.
+          1 Byte at a time.
         </span>
       </div>
     </div>

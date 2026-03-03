@@ -18,8 +18,8 @@ const ContactInfo = () => {
               "0 8px 8px -4px rgba(0, 0, 0, 0.04), 0 20px 24px -4px rgba(0, 0, 0, 0.08)",
           }}
         >
-          <span className="hidden sm:block text-gradient-blue">Github</span>
-          <Github className="sm:hidden " size={20} />
+          <span className="text-xs text-gradient-blue lg:text-sm">Github</span>
+          {/* <Github className="sm:hidden " size={20} /> */}
         </Link>
 
         {/* Inactive: LinkedIn */}
@@ -29,23 +29,23 @@ const ContactInfo = () => {
           rel="noopener noreferrer"
           className="flex items-center px-5 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
-          <span className="hidden sm:block">LinkedIn</span>
-          <Linkedin className="sm:hidden" size={20} />
+          <span className="block text-xs lg:text-sm">LinkedIn</span>
+          {/* <Linkedin className="sm:hidden" size={20} /> */}
         </Link>
 
         {/* Divider */}
         <div
-          className="h-5 w-px shrink-0 bg-gray-300 dark:bg-gray-700"
+          className="h-5 w-px shrink-0 bg-gray-200 dark:bg-gray-700"
           aria-hidden
         />
 
         {/* Inactive: Email (underlined) */}
         <Link
-          href="mailto:contact@ronniekiyegga.com"
+          href="mailto:ronniekiyegga@hotmail.com"
           className="flex items-center px-5 mr-4 py-3 text-sm text-gray-400 decoration-gray-400 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
-          <span className="hidden sm:block">Contact</span>
-          <Mails className="sm:hidden" size={20} />
+          <span className="block text-xs lg:text-sm">Contact</span>
+          <Mails className="hidden" size={20} />
         </Link>
       </div>
     </div>

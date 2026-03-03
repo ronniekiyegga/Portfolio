@@ -9,7 +9,6 @@ const WORDS = [
   { text: "DESIGN.", icon: "figma" },
   { text: "CODE.", icon: "code" },
   { text: "PRODUCTION.", icon: "deploy" },
-  { text: "PIZZA!", icon: "pizza" },
 ];
 
 interface LoadingScreenProps {
@@ -20,7 +19,7 @@ function SlotIcon({
   type,
   className,
 }: {
-  type: "figma" | "code" | "deploy" | "pizza";
+  type: "figma" | "code" | "deploy";
   className?: string;
 }) {
   if (type === "figma") {
@@ -53,17 +52,6 @@ function SlotIcon({
       </span>
     );
   }
-  if (type === "pizza") {
-    return (
-      <Image
-        src="/PIZZA.svg"
-        alt="Pizza"
-        width={40}
-        height={40}
-        className={`${className ?? ""} w-8 h-8 md:w-10 md:h-10`}
-      />
-    );
-  }
   return null;
 }
 
@@ -74,7 +62,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   useEffect(() => {
     const overlay = overlayRef.current;
     const slots = slotsRef.current.filter(Boolean) as HTMLDivElement[];
-    if (!overlay || slots.length !== 4) return;
+    if (!overlay || slots.length !== 3) return;
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out", force3D: true },
@@ -100,7 +88,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     });
 
     // GSAP position parameter: "+=X" = gap, ">-X" = overlap (start before previous ends)
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < 3; i++) {
       const prevWord = slots[i - 1].querySelector("[data-word]") as HTMLElement;
       const prevIcon = slots[i - 1].querySelector("[data-icon]") as HTMLElement;
       const currWord = slots[i].querySelector("[data-word]") as HTMLElement;
@@ -131,17 +119,17 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       );
     }
 
-    // Hold, then replace PIZZA with icon
+    // Hold, then replace last word with icon
     tl.addLabel("replaceLast", "+=0.2");
 
     tl.to(
-      slots[3].querySelector("[data-word]"),
+      slots[2].querySelector("[data-word]"),
       { opacity: 0, duration: 0.4, ease: "power2.in" },
       "replaceLast",
     );
 
     tl.to(
-      slots[3].querySelector("[data-icon]"),
+      slots[2].querySelector("[data-icon]"),
       { ...toVisible, duration: 0.4, ease: "expo.out" },
       "replaceLast>-0.25",
     );
@@ -198,7 +186,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="absolute inset-0 flex items-center justify-center"
               style={{ opacity: 0 }}
             >
-              <SlotIcon type={icon as "figma" | "code" | "deploy" | "pizza"} />
+              <SlotIcon type={icon as "figma" | "code" | "deploy"} />
             </div>
           </div>
         ))}

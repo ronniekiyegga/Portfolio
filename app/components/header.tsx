@@ -182,7 +182,7 @@ export default function Header({
                           <NavigationMenuTrigger className="bg-transparent text-neutral-600 hover:bg-transparent hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
                             More
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent className="left-auto right-0 min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg border border-white dark:border-neutral-800">
+                          <NavigationMenuContent className="left-auto right-0 min-w-[180px] bg-white dark:bg-neutral-900 shadow-[0_4px_14px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_14px_rgba(0,0,0,0.3)] rounded-lg">
                             <ul className="grid gap-0 py-2">
                               {coursesLinks.map((link, i) => (
                                 <li key={i}>
@@ -256,7 +256,7 @@ export default function Header({
                       }}
                     >
                       <Link
-                        href="mailto:ronniekiyegga@dmi.com"
+                        href="mailto:ronniekiyegga@hotmail.com"
                         className={cn(
                           "flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
                           styleScript.className,
@@ -513,10 +513,10 @@ function MobileMenu({
                     </Link>
                   </div>
                   <Link
-                    href="mailto:ronniekiyegga@dmi.com"
+                    href="mailto:ronniekiyegga@hotmail.com"
                     onClick={onClose}
                     className={cn(
-                      "flex items-center justify-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-medium text-white",
+                      "flex items-center justify-center gap-2 rounded-full  px-4 py-2.5 text-xs font-medium text-white",
                       styleScript.className,
                     )}
                     style={{
