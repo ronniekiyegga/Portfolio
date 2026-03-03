@@ -37,10 +37,12 @@ export type FeatureBackground = ReactNode | string | BackgroundKey;
 export type Feature = {
   title: string;
   description: string;
-  /** Foreground image shown in the card (from /public) */
+  /** Foreground image shown in the card (from /public). Not used when href is set. */
   image: string;
-  /** Background: image path (string), gradient key (lightPillar | prism | lightRays | floatingLines), or ReactNode */
+  /** Background: image path (string), gradient key (lightPillar | prism | lightRays | floatingLines), or ReactNode. Not used when href is set. */
   background: FeatureBackground;
+  /** When set, renders as an external link instead of a tab */
+  href?: string;
 };
 
 const DEFAULT_FEATURES: Feature[] = [
@@ -120,7 +122,7 @@ const Y_OFFSET = 32;
 const X_OFFSET = 48;
 
 const PROJECT_LINK_BASE_CLASSES =
-  "inline-flex h-8 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
+  "inline-flex h-8 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-0";
 
 export default function ExpandableFeatures4({
   badge = BADGE,
@@ -132,6 +134,8 @@ export default function ExpandableFeatures4({
   links,
 }: ExpandableFeatures4Props) {
   const featuresList = featuresProp ?? DEFAULT_FEATURES;
+  const tabFeatures = featuresList.filter((f) => !f.href);
+  const linkFeatures = featuresList.filter((f) => !!f.href);
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
@@ -163,9 +167,9 @@ export default function ExpandableFeatures4({
   const resetTimer = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setExpandedIndex((current) => (current + 1) % featuresList.length);
+      setExpandedIndex((current) => (current + 1) % tabFeatures.length);
     }, AUTOPLAY_DURATION);
-  }, [featuresList.length]);
+  }, [tabFeatures.length]);
 
   useEffect(() => {
     resetTimer();
@@ -374,7 +378,7 @@ export default function ExpandableFeatures4({
             </div>
 
             <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col">
-              {featuresList.map((feature, index) => (
+              {tabFeatures.map((feature, index) => (
                 <button
                   key={feature.title}
                   onClick={() => handleSelect(index)}
@@ -396,6 +400,19 @@ export default function ExpandableFeatures4({
                   {feature.title}
                 </button>
               ))}
+              {linkFeatures.map((feature) => (
+                <a
+                  key={feature.title}
+                  href={feature.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium text-gray-500 duration-200 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90"
+                >
+                  <div className="flex size-4 shrink-0 items-center justify-center" />
+                  {feature.title}
+                  <MoveUpRight className="size-3.5 opacity-70" />
+                </a>
+              ))}
             </div>
           </div>
           <div
@@ -414,7 +431,7 @@ export default function ExpandableFeatures4({
               className="mask-y-from-75% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-12 border-x"
             />
 
-            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
+            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden border border-tracing-gradient">
               {/* Shared background - cycles with AUTOPLAY_DURATION */}
               <div
                 className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
@@ -439,8 +456,8 @@ export default function ExpandableFeatures4({
                 >
                   <div className="relative max-h-full min-w-0 scale-90 sm:scale-[1] aspect-square w-full max-w-[450px]">
                     <Image
-                      src={featuresList[expandedIndex].image}
-                      alt={featuresList[expandedIndex].title}
+                      src={tabFeatures[expandedIndex].image}
+                      alt={tabFeatures[expandedIndex].title}
                       fill
                       className="object-contain"
                       sizes="(max-width: 640px) 240px, 340px"

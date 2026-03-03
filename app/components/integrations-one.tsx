@@ -21,6 +21,7 @@ export const TECH_ICONS = [
   { src: "/Github_Actions_Icon.svg", alt: "GitHub Actions" },
   { src: "/Nginx_Icon.svg", alt: "Nginx" },
   { src: "/Nodejs_Icon.svg", alt: "Nodejs" },
+  { src: "/TensorFlow_Icon.svg", alt: "TensorFlow" },
 ] as const;
 
 export type TechIconKey = (typeof TECH_ICONS)[number]["alt"];

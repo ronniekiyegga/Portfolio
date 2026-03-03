@@ -344,11 +344,11 @@ body {
 .corner-cut-tr-bl {
   clip-path: polygon(
     0 0,
-    calc(100% - 5rem) 0,
-    100% 5rem,
+    calc(100% - 2.5rem) 0,
+    100% 2.5rem,
     100% 100%,
-    5rem 100%,
-    0 calc(100% - 5rem)
+    2.5rem 100%,
+    0 calc(100% - 2.5rem)
   );
 }
 ::view-transition-old(root), ::view-transition-new(root) {

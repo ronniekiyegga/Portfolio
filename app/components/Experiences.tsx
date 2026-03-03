@@ -38,6 +38,7 @@ const experiences: {
       "Docker",
       "Redis",
       "Nginx",
+      "TensorFlow",
     ],
   },
   {

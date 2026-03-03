@@ -107,7 +107,10 @@ export default function FeaturesSliderSection({
   backgroundColor = "bg-transparent",
 }: FeaturesSliderSectionProps) {
   return (
-    <section className="bg-transparent w-full min-w-0 overflow-x-hidden @container py-24 max-lg:px-1 dark:bg-neutral-950">
+    <section
+      id="design"
+      className="bg-transparent w-full min-w-0 overflow-x-hidden @container py-24 max-lg:px-1 dark:bg-neutral-950"
+    >
       <Carousel
         opts={{
           align: "start",
