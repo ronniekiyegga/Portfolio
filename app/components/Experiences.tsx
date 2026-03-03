@@ -26,10 +26,10 @@ const experiences: {
   {
     id: "SRS",
     organisation: "The School Of Research Science",
-    role: "Design Engineer / CS Teacher",
+    role: "Frontend Developer / Design Engineer",
     dates: "2023 - 2026",
     responsibilities:
-      "Built and deployed internal analytics and ML platforms used by 1200+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
+      "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard - all tested to 95%+ coverage with zero critical regressions over 12 months.",
     techStack: [
       "Figma",
       "Nextjs",
@@ -43,10 +43,10 @@ const experiences: {
   {
     id: "Freelance",
     organisation: "Freelance Consultant",
-    role: "Design Engineer / CS Tutor",
+    role: "Design Engineer / Full Stack ",
     dates: "2020 - 2023",
     responsibilities:
-      "Built and deployed internal analytics and ML platforms used by 300+ users with React, Next.js, and TypeScript. Architected full-stack systems and optimised data pipelines, reducing query costs by 95% and achieving sub-50ms load times.",
+      "Designed and built production-grade web products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video processing pipeline that cut media delivery costs by 40%.",
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
   },
   {

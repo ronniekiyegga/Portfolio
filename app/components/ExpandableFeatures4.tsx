@@ -18,6 +18,7 @@ import LightPillarComponent from "./ui/gradients/LightPillarComponent";
 import PrismComponent from "./ui/gradients/PrismComponent";
 import LightRaysComponent from "./ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
+import { MoveUpRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,6 +91,11 @@ const DARK_BACKGROUNDS = [
 const getCardBackgrounds = (isDark: boolean) =>
   isDark ? LIGHT_BACKGROUNDS : DARK_BACKGROUNDS;
 
+export type ProjectLinks = {
+  liveWebsite?: string;
+  designFile?: string;
+};
+
 interface ExpandableFeatures4Props {
   badge: string;
   title: string;
@@ -100,6 +106,8 @@ interface ExpandableFeatures4Props {
   detailsImage?: string;
   /** Per-card features (image + background). When provided, overrides the default. */
   features?: Feature[];
+  /** Optional project links: liveWebsite → "Live Website"/"Live Demo" button, designFile → "Design File" button */
+  links?: ProjectLinks;
 }
 
 const BADGE: string = "Platform Features";
@@ -111,6 +119,9 @@ const SMOOTH_EASE = "power3.out" as const;
 const Y_OFFSET = 32;
 const X_OFFSET = 48;
 
+const PROJECT_LINK_BASE_CLASSES =
+  "inline-flex h-8 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
+
 export default function ExpandableFeatures4({
   badge = BADGE,
   title = TITLE,
@@ -118,6 +129,7 @@ export default function ExpandableFeatures4({
   imageOnLeft = false,
   detailsImage,
   features: featuresProp,
+  links,
 }: ExpandableFeatures4Props) {
   const featuresList = featuresProp ?? DEFAULT_FEATURES;
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
@@ -283,15 +295,52 @@ export default function ExpandableFeatures4({
                 {description}
               </div>
             </div>
-            <div ref={ctaRef} data-project-cta className="opacity-0">
-              <NativeStartNow
-                variant="gradient"
-                size="xs"
-                onStart={() => {
-                  setDetailsOpen(true);
-                  return Promise.resolve();
-                }}
-              />
+            <div
+              ref={ctaRef}
+              data-project-cta
+              className="opacity-0 flex flex-wrap items-center gap-2"
+            >
+              {links?.designFile || links?.liveWebsite ? (
+                <>
+                  {links.designFile && (
+                    <a
+                      href={links.designFile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        PROJECT_LINK_BASE_CLASSES,
+                        "!bg-gradient-to-r !from-black !via-neutral-900 !to-black text-white hover:shadow-black/50",
+                      )}
+                    >
+                      Figma File <MoveUpRight className="size-3.5" />
+                    </a>
+                  )}
+                  {links.liveWebsite && (
+                    <a
+                      href={links.liveWebsite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        PROJECT_LINK_BASE_CLASSES,
+                        "!bg-gradient-to-r !from-black !via-neutral-900 !to-black text-white hover:shadow-black/50",
+                      )}
+                    >
+                      {links.designFile ? "Live Demo" : "Live Website"}{" "}
+                      <MoveUpRight className="size-3.5" />
+                    </a>
+                  )}
+                </>
+              ) : (
+                <NativeStartNow
+                  variant="gradient"
+                  size="xs"
+                  label="Live Website"
+                  onStart={() => {
+                    setDetailsOpen(true);
+                    return Promise.resolve();
+                  }}
+                />
+              )}
               <StickyFooterDialog
                 open={detailsOpen}
                 onOpenChange={setDetailsOpen}

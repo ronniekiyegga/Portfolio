@@ -6,7 +6,6 @@ import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
 import ExpandableFeatures4, { type Feature } from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
-import { LiquidChrome } from "./LiquidChrome";
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +94,7 @@ export default function ProjectSection() {
                   imageOnLeft={index % 2 === 1}
                   detailsImage={item.image}
                   features={item.features}
+                  links={item.links}
                 />
               </div>
             ))}
@@ -159,6 +159,8 @@ const projectContent: Array<{
   statistics?: Array<Record<string, number>>;
   TechStack?: string[];
   features?: Feature[];
+  /** Live site URL → "Live Website" or "Live Demo" button. designFile → "Design File" button (e.g. Figma). */
+  links?: { liveWebsite?: string; designFile?: string };
 }> = [
   // EduFeedbPro
   {
@@ -214,6 +216,11 @@ const projectContent: Array<{
   // Ms Maryam's Maths
   {
     title: "Mathematics Tutoring",
+    links: {
+      designFile:
+        "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
+      liveWebsite: "https://www.msmaryamsmaths.com/",
+    },
     description: (
       <>
         <p>
