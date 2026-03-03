@@ -15,6 +15,7 @@ export interface DesignItem {
   accentColor: string
   label: string
   sublabel: string
+  extras?: 'buttons' | 'logo-circle' | 'code' | 'dots' | 'search'
 }
 
 export interface ExperienceItem {
@@ -69,7 +70,7 @@ export const designItems: DesignItem[] = [
   {
     type: 'Analytics UI',
     name: 'EduFeedbackPro',
-    gradient: 'linear-gradient(135deg, #0d0d1f, #1a0d2e)',
+    gradient: 'linear-gradient(160deg, #08081a 0%, #1a0d40 50%, #0d0820 100%)',
     accentColor: '#d4ff47',
     label: 'EFP',
     sublabel: 'ANALYTICS PLATFORM',
@@ -77,42 +78,47 @@ export const designItems: DesignItem[] = [
   {
     type: 'SaaS Platform',
     name: "Ms. Maryam's Maths",
-    gradient: 'linear-gradient(135deg, #0a1628, #0d2244)',
-    accentColor: '#47c8ff',
-    label: '',
+    gradient: 'linear-gradient(160deg, #060e20 0%, #0a1e44 50%, #060e28 100%)',
+    accentColor: '#47a8ff',
+    label: '∫',
     sublabel: 'TUTORING PLATFORM',
+    extras: 'buttons',
   },
   {
     type: 'Brand Identity',
     name: 'True Founders',
-    gradient: 'linear-gradient(135deg, #1a1400, #2e2400)',
+    gradient: 'linear-gradient(160deg, #100e00 0%, #2a2200 50%, #181400 100%)',
     accentColor: '#ffd147',
     label: 'TF',
     sublabel: 'COACHING BRAND',
+    extras: 'logo-circle',
   },
   {
     type: 'Developer Tool',
     name: 'PseudoLab IDE',
-    gradient: 'linear-gradient(135deg, #0a1a1a, #0d2e2e)',
+    gradient: 'linear-gradient(160deg, #040e0e 0%, #0a2424 50%, #041414 100%)',
     accentColor: '#44ffcc',
-    label: 'IDE',
-    sublabel: 'PSEUDOCODE EDITOR',
+    label: 'PSEUDOLAB',
+    sublabel: '',
+    extras: 'code',
   },
   {
     type: 'AI Product UI',
     name: 'Numerix AI',
-    gradient: 'linear-gradient(135deg, #1a0a10, #2e0f1a)',
+    gradient: 'linear-gradient(160deg, #180010 0%, #320020 50%, #200018 100%)',
     accentColor: '#ff4777',
     label: 'Nx',
     sublabel: 'AI PLATFORM',
+    extras: 'dots',
   },
   {
     type: 'Profile UI',
     name: 'Github Finder',
-    gradient: 'linear-gradient(135deg, #0a0a1a, #15152e)',
+    gradient: 'linear-gradient(160deg, #080818 0%, #120e30 50%, #0a0820 100%)',
     accentColor: '#a78bfa',
     label: 'Gh',
     sublabel: 'GITHUB FINDER',
+    extras: 'search',
   },
 ]
 
