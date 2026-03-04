@@ -6,6 +6,10 @@ export interface WorkItem {
   metric: string;
   href: string;
   gradient: string;
+  /** Preview variant: inline HTML/CSS mockup (analytics | maths | knn | pseudolab) */
+  preview: 'analytics' | 'maths' | 'knn' | 'pseudolab';
+  /** HERO SVG from public folder for preview image */
+  heroImage: string;
 }
 
 export interface DesignItem {
@@ -38,7 +42,9 @@ export const workItems: WorkItem[] = [
     tags: ["Next.js", "BigQuery", "MongoDB", "Docker"],
     metric: "sub-50ms P95 response",
     href: "#",
-    gradient: "linear-gradient(160deg, #1a0840 0%, #2d0f5c 60%, #15062e 100%)",
+    gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
+    preview: "analytics",
+    heroImage: "/DMI_HERO.svg",
   },
   {
     type: "B2C SaaS · Tutoring Platform",
@@ -47,7 +53,9 @@ export const workItems: WorkItem[] = [
     tags: ["TypeScript", "PostgreSQL", "GitHub Actions"],
     metric: "3 min deploy vs 20+ min",
     href: "https://www.msmaryamsmaths.com",
-    gradient: "linear-gradient(160deg, #051a45 0%, #0c2e7a 60%, #041224 100%)",
+    gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
+    preview: "maths",
+    heroImage: "/MATHS_TUTORING_HERO.svg",
   },
   {
     type: "Educational Tool · ML Classifier",
@@ -56,7 +64,9 @@ export const workItems: WorkItem[] = [
     tags: ["TensorFlow.js", "React", "On-device AI"],
     metric: "400+ students, zero infra cost",
     href: "#",
-    gradient: "linear-gradient(160deg, #062010 0%, #0d3c1a 60%, #04120a 100%)",
+    gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
+    preview: "knn",
+    heroImage: "/BG_HERO1.svg",
   },
   {
     type: "Developer Tool · Open Source",
@@ -65,7 +75,9 @@ export const workItems: WorkItem[] = [
     tags: ["Next.js", "TypeScript", "Open Source"],
     metric: "Exam-spec compliant",
     href: "#",
-    gradient: "linear-gradient(160deg, #061e22 0%, #0d3840 60%, #041215 100%)",
+    gradient: "linear-gradient(160deg, #0a1a1a 0%, #0d2e2e 50%, #081818 100%)",
+    preview: "pseudolab",
+    heroImage: "/PSEUDOLAB_HERO.svg",
   },
 ];
 

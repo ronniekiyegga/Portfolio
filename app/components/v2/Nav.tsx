@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
+import { cn } from '@/lib/utils'
 
 const navLinks = [
   { label: 'Work',       href: '#work' },
@@ -15,9 +16,11 @@ const navLinks = [
 interface NavProps {
   splashEnabled?: boolean
   onToggleSplash?: () => void
+  /** When true, nav is hidden (bottom DynamicIsland is showing) */
+  hideWhenBottomNav?: boolean
 }
 
-export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
+export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = false }: NavProps) {
   const [mounted,      setMounted]      = useState(false)
   const [scrolled,     setScrolled]     = useState(false)
   const [mobileOpen,   setMobileOpen]   = useState(false)
@@ -55,7 +58,10 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          hideWhenBottomNav && "pointer-events-none opacity-0 -translate-y-full",
+        )}
         style={{
           background: 'var(--nav-bg)',
           backdropFilter: 'blur(20px)',
