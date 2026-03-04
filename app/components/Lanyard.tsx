@@ -19,6 +19,7 @@ import {
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
+import { cn } from "@/lib/utils";
 
 import lanyard from "./lanyard/lanyard.png";
 
@@ -32,6 +33,12 @@ interface LanyardProps {
   gravity?: [number, number, number];
   fov?: number;
   transparent?: boolean;
+  /** When false, component is hidden (for V1). When true, visible (for V2 hero). */
+  visible?: boolean;
+  /** Optional className for the wrapper (e.g. for positioning). */
+  className?: string;
+  /** Scale of the lanyard model (default 1). Use 0.5–0.7 for smaller. */
+  scale?: number;
 }
 
 export default function Lanyard({
@@ -39,6 +46,9 @@ export default function Lanyard({
   gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
+  visible = false,
+  className = "",
+  scale = 1,
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -51,7 +61,13 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-[15] w-full h-full flex justify-center items-center translate-x-12 md:translate-x-[-90px]">
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-[15] w-full h-full flex justify-center items-center",
+        !visible && "hidden",
+        className,
+      )}
+    >
       <Canvas
         camera={{ position, fov }}
         dpr={[1, isMobile ? 1 : 1.5]}
@@ -63,7 +79,7 @@ export default function Lanyard({
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
           <Physics gravity={gravity} timeStep={isMobile ? 1 / 45 : 1 / 50}>
-            <Band isMobile={isMobile} />
+            <Band isMobile={isMobile} scale={scale} />
           </Physics>
         </Suspense>
         <Environment blur={0.75}>
@@ -105,9 +121,15 @@ interface BandProps {
   maxSpeed?: number;
   minSpeed?: number;
   isMobile?: boolean;
+  scale?: number;
 }
 
-function Band({ maxSpeed = 180, minSpeed = 20, isMobile = false }: BandProps) {
+function Band({
+  maxSpeed = 180,
+  minSpeed = 20,
+  isMobile = false,
+  scale = 1,
+}: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
   const j1 = useRef<any>(null);
@@ -204,7 +226,7 @@ function Band({ maxSpeed = 180, minSpeed = 20, isMobile = false }: BandProps) {
 
   return (
     <>
-      <group position={[0, 1.5, 0]}>
+      <group position={[0, 1.5, 0]} scale={scale}>
         <group position={[0, 4.2, 0]}>
           <RigidBody
             ref={fixed}

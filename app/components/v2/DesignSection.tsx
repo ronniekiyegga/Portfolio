@@ -1,9 +1,12 @@
 import { DesignCarousel } from './DesignCarousel'
 
+const textContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24'
+
 export function DesignSection() {
   return (
     <section id="design" className="py-24">
-      <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
+      {/* Text container — original position */}
+      <div className={textContainerClass}>
         <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
           Design Work
         </p>
@@ -15,8 +18,10 @@ export function DesignSection() {
           <br />
           <em className="italic" style={{ color: 'var(--accent)' }}>then code</em>
         </h2>
-        <DesignCarousel />
       </div>
+
+      {/* Carousel — full width, bigger cards */}
+      <DesignCarousel controlsContainerClass={textContainerClass} />
     </section>
   )
 }

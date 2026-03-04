@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { LayoutTextFlip } from '@/app/components/ui/layout-text-flip'
+import { BackgroundBeams } from '@/components/ui/background-beams'
 
 const Lanyard = dynamic(() => import('../Lanyard'), { ssr: false })
 
@@ -21,17 +22,8 @@ export function Hero() {
       id="hero-section"
       className="min-h-screen relative overflow-hidden"
     >
-      {/* Subtle grid background — stays full-width */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-          maskImage:
-            'radial-gradient(ellipse 80% 80% at 50% 0%, black 40%, transparent 100%)',
-        }}
-      />
+      {/* Background beams — at most 2–3, subtle flow */}
+      <BackgroundBeams className="pointer-events-none inset-0 min-h-full" beamCount={2} />
 
       {/* Constrained 3-col grid */}
       <div className="max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0 items-center pt-28 pb-12 md:pt-0 md:pb-0">
@@ -135,8 +127,15 @@ export function Hero() {
       </div>
       </div>{/* end max-width grid wrapper */}
 
-      {/* Lanyard 3D overlay — rendered after content so it appears on top */}
-      <Lanyard />
+      {/* Lanyard 3D overlay — centered in hero */}
+      <Lanyard
+        visible
+        position={[0, 0, 28]}
+        gravity={[0, -40, 0]}
+        fov={22}
+        scale={0.75}
+        className="md:translate-x-0"
+      />
     </section>
   )
 }
