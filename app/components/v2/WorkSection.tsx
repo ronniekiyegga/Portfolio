@@ -1,8 +1,19 @@
-import Link from 'next/link'
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
 import { workItems } from '@/lib/v2-data'
+import { ProjectModal } from './ProjectModal'
 
 export function WorkSection() {
+  const [selectedItem, setSelectedItem] = useState<typeof workItems[0] | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const openModal = (item: typeof workItems[0]) => {
+    setSelectedItem(item)
+    setModalOpen(true)
+  }
+
   return (
     <section id="work" className="py-24 section-cream-bg">
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
@@ -23,10 +34,11 @@ export function WorkSection() {
         style={{ background: 'var(--gap)' }}
       >
         {workItems.map((item, i) => (
-          <Link
+          <button
             key={item.title}
-            href={item.href}
-            className="work-card-v2 block no-underline transition-all duration-300"
+            type="button"
+            onClick={() => openModal(item)}
+            className="work-card-v2 block w-full text-left no-underline transition-all duration-300 cursor-pointer border-0"
             style={{
               background: 'var(--surface)',
               color: 'var(--text)',
@@ -90,9 +102,15 @@ export function WorkSection() {
                 </div>
               </div>
             </div>
-          </Link>
+          </button>
         ))}
       </div>
+
+      <ProjectModal
+        item={selectedItem}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
       </div>
     </section>
   )

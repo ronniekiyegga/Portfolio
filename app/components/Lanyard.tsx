@@ -21,7 +21,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
-import lanyard from "./lanyard/lanyard.png";
+import lanyardSymbol from "./lanyard/symbol.png";
 
 const CARD_GLB = "/lanyard/card.glb";
 
@@ -63,7 +63,7 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-[15] w-full h-full flex justify-center items-center",
+        "pointer-events-none absolute inset-0 z-[15] w-full h-full flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
@@ -152,7 +152,7 @@ function Band({
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
   const texture = useTexture(
-    typeof lanyard === "string" ? lanyard : lanyard.src,
+    typeof lanyardSymbol === "string" ? lanyardSymbol : lanyardSymbol.src,
   );
   const [curve] = useState(
     () =>
@@ -166,9 +166,9 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.25]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.25]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.25]);
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.6]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.6]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.6]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0],
@@ -271,7 +271,7 @@ function Band({
           <CuboidCollider args={[0.8, 1.111, 0.01]} />
           <group
             scale={3.25}
-            position={[0, -1.2, -0.05]}
+            position={[0, -2.3, 0.02]}
             rotation={[0.15, -0.7, 0.01]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
@@ -311,12 +311,12 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={1.5}
+          lineWidth={1.1}
         />
       </mesh>
     </>

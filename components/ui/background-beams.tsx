@@ -12,14 +12,15 @@ interface BackgroundBeamsProps {
   opacity?: number;
 }
 
-const LIGHT_COLORS = { start: "#0ea5e9", mid: "#6366f1", end: "#8b5cf6" };
-// Original Aceternity: light cyan → pale purple on dark bg
-const DARK_COLORS = { start: "#7dd3fc", mid: "#a5b4fc", end: "#c4b5fd" };
+const LIGHT_COLORS = { start: "#AE48FF", mid: "#6344F5", end: "#18CCFC" };
+const DARK_COLORS = { start: "#AE48FF", mid: "#6344F5", end: "#18CCFC" };
 
 export const BackgroundBeams = React.memo(
   ({ className, beamCount = 50, opacity = 0.4 }: BackgroundBeamsProps) => {
     const { resolvedTheme } = useTheme();
-    const isLight = resolvedTheme === "light";
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => setMounted(true), []);
+    const isLight = mounted && resolvedTheme === "light";
     const colors = isLight ? LIGHT_COLORS : DARK_COLORS;
     const effectiveOpacity = isLight ? Math.max(opacity, 0.55) : Math.max(opacity, 0.4);
     const paths = [
@@ -134,19 +135,21 @@ export const BackgroundBeams = React.memo(
                   x1: ["0%", "100%"],
                   x2: ["0%", "95%"],
                   y1: ["0%", "100%"],
-                  y2: ["0%", `${93 + Math.random() * 8}%`],
+                  y2: ["0%", "96%"],
                 }}
                 transition={{
-                  duration: Math.random() * 10 + 10,
-                  ease: "easeInOut",
+                  duration: 4,
+                  ease: "linear",
                   repeat: Infinity,
-                  delay: Math.random() * 10,
+                  delay: index * 0.8,
                 }}
               >
                 <stop stopColor={colors.start} stopOpacity="0"></stop>
-                <stop stopColor={colors.start}></stop>
-                <stop offset="32.5%" stopColor={colors.mid}></stop>
-                <stop offset="100%" stopColor={colors.end} stopOpacity="0"></stop>
+                <stop offset="47%" stopColor={colors.start} stopOpacity="0"></stop>
+                <stop offset="50%" stopColor={colors.start}></stop>
+                <stop offset="53%" stopColor={colors.mid}></stop>
+                <stop offset="56%" stopColor={colors.end}></stop>
+                <stop offset="59%" stopColor={colors.end} stopOpacity="0"></stop>
               </motion.linearGradient>
             ))}
 
