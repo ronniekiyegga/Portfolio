@@ -27,6 +27,9 @@ const CustomCursor = dynamic(() => import('./components/CustomCursor'), {
 const LoadingScreenGate = dynamic(() => import('./components/LoadingScreenGate'), {
   ssr: false,
 })
+const Marquee = dynamic(() => import('./components/Marquee'), {
+  loading: () => <section className="min-h-[200px]" aria-hidden />,
+})
 // TracingBeam is a client component — static import so children render immediately
 import { TracingBeam } from './components/ui/tracing-beam'
 
@@ -77,6 +80,8 @@ export default function Home() {
           <ExperienceSection />
           <Divider />
           <SkillsSection />
+          <Divider />
+          <Marquee />
           <Divider />
           <CTASection />
           <Footer />
