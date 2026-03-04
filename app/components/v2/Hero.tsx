@@ -1,6 +1,10 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { LayoutTextFlip } from '@/app/components/ui/layout-text-flip'
+
+const Lanyard = dynamic(() => import('../Lanyard'), { ssr: false })
 
 const stats = [
   { number: '1.2', suffix: 'k', label: 'Students Reached' },
@@ -39,7 +43,7 @@ export function Hero() {
           className="inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-[0.1em] uppercase mb-8 self-start"
           style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--muted)' }}
         >
-          <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: '#44dd88' }} />
+          <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: 'linear-gradient(144deg, #00CFDE 3.63%, #05A660 94.05%)' }} />
           Available for roles · London, UK
         </div>
 
@@ -54,18 +58,8 @@ export function Hero() {
         </h1>
 
         {/* Animated role cycle */}
-        <div
-          className="font-jetbrains text-[12px] tracking-[0.1em] uppercase mb-8 flex items-center gap-3"
-          style={{ color: 'var(--muted)' }}
-        >
-          <span>{"I'm a"}</span>
-          <span className="overflow-hidden inline-block" style={{ height: '14px' }}>
-            <span className="flex flex-col role-words" style={{ color: 'var(--text)', lineHeight: '14px' }}>
-              <span>Design Engineer</span>
-              <span>Full-Stack Dev</span>
-              <span>UI Architect</span>
-            </span>
-          </span>
+        <div className="mb-8">
+          <LayoutTextFlip text="I'M A " words={["UI DESIGNER", "SOFTWARE ENGINEER", "FULL STACK DEV"]} />
         </div>
 
         <p className="text-[15px] leading-[1.7] max-w-[400px] mb-10" style={{ color: 'var(--muted)' }}>
@@ -140,6 +134,9 @@ export function Hero() {
         </div>
       </div>
       </div>{/* end max-width grid wrapper */}
+
+      {/* Lanyard 3D overlay — rendered after content so it appears on top */}
+      <Lanyard />
     </section>
   )
 }

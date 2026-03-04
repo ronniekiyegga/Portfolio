@@ -8,6 +8,8 @@ html {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: none;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 :root {
@@ -153,6 +155,15 @@ html {
     0 1px 0 0 rgba(255, 255, 255, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.4);
   border: none;
+}
+
+/* Let's Chat button inner - dark gradient (indigo to black) */
+.lets-chat-inner {
+  background: linear-gradient(90deg, #1A0D6B 0%, #0a0518 50%, #000000 100%) !important;
+  border-radius: calc(1.89169rem - 2px);
+  box-shadow:
+    0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Right pill inner content - dark mode gradient background */
@@ -389,6 +400,9 @@ body {
   --process-bg: #111111;
   --cta-glow: rgba(212,255,71,0.06);
   --dropdown-bg: #1a1a1a;
+  --accent-solid: #d4ff47;
+  --available-dot: #44dd88;
+  --accent-border: #d4ff47;
 }
 
 /* Dark mode (default) */
@@ -412,29 +426,84 @@ html.dark {
   --process-bg: #111111;
   --cta-glow: rgba(212,255,71,0.06);
   --dropdown-bg: #1a1a1a;
+  --accent-solid: #d4ff47;
+  --available-dot: #44dd88;
+  --accent-border: #d4ff47;
 }
 
-/* Light mode */
+/* Light mode — accent uses gradient-blue (purple→teal) */
 html.light {
-  --bg: #F0EDE8;
-  --surface: #E8E4DD;
-  --surface2: #DDD9D1;
-  --border: rgba(15,20,50,0.08);
+  --bg: #efefea;
+  --surface: #f3f3f1;
+  --surface2: #f0ede8;
+  --border: rgba(15, 20, 50, 0.04);
   --text: #0F1432;
   --muted: #8A8EA8;
-  --nav-bg: rgba(240,237,232,0.9);
+  --nav-bg: rgba(255, 255, 255, 0.9);
   --pill-bg: rgba(15,20,50,0.05);
-  --accent: #0F1432;
+  --accent: var(--gradient-blue);
   --accent-text: #F0EDE8;
   --gap: rgba(15,20,50,0.08);
   --grid-line: rgba(15,20,50,0.04);
-  --tag-bg: rgba(15,20,50,0.07);
-  --tag-color: #0F1432;
-  --stat-suffix: #C8A84B;
-  --metric-color: #0F1432;
-  --process-bg: #E8E4DD;
-  --cta-glow: rgba(200,168,75,0.08);
+  --tag-bg: rgba(58,7,242,0.08);
+  --tag-color: var(--gradient-blue);
+  --stat-suffix: var(--gradient-blue);
+  --metric-color: var(--gradient-blue);
+  --process-bg: #e9e7e3;
+  --cta-glow: rgba(58,7,242,0.08);
   --dropdown-bg: #DDD9D1;
+  --accent-solid: #3a07f2;
+  --available-dot: #3a07f2;
+  --accent-border: rgba(15, 20, 50, 0.12);
+}
+
+/* Cream background sections: light mode only (Work, Experience, Skills) */
+.section-cream-bg {
+  background: var(--bg);
+}
+html.light .section-cream-bg {
+  background: #FDFBF7;
+}
+
+/* Alias for Skills (kept for backwards compatibility) */
+.skills-cream-bg {
+  background: var(--bg);
+}
+html.light .skills-cream-bg {
+  background: #FDFBF7;
+}
+
+/* Light mode: borders keep original dark color (no gradient) */
+html.light [style*="border"][style*="var(--accent)"],
+html.light [class*="border-[var(--accent)]"],
+html.light [style*="borderBottom"][style*="var(--accent)"] {
+  border-color: var(--accent-border) !important;
+}
+html.light [style*="borderBottom"][style*="var(--accent)"] {
+  border-bottom-color: var(--accent-border) !important;
+}
+
+/* Light mode: gradient text for elements using accent/tag/stat/metric as color */
+html.light [style*="color: var(--accent)"]:not(:has(svg)),
+html.light [style*="color:var(--accent)"]:not(:has(svg)),
+html.light [style*="color: var(--tag-color)"],
+html.light [style*="color:var(--tag-color)"],
+html.light [style*="color: var(--stat-suffix)"],
+html.light [style*="color:var(--stat-suffix)"],
+html.light [style*="color: var(--metric-color)"],
+html.light [style*="color:var(--metric-color)"] {
+  background: var(--gradient-blue) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Light mode: icons (elements with SVG) use solid accent — gradient doesn't work for SVG fill */
+html.light [style*="color: var(--accent)"]:has(svg),
+html.light [style*="color:var(--accent)"]:has(svg) {
+  color: var(--accent-solid) !important;
+  background: none !important;
+  background-clip: unset !important;
 }
 
 /* ================================================================
@@ -448,6 +517,13 @@ html.light {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ================================================================
@@ -521,4 +597,35 @@ html.light {
 .v2-tracing-beam > div {
   max-width: 100% !important;
   padding-left: 0 !important;
+}
+
+/* ================================================================
+   CUSTOM CURSOR (dot + ring)
+   ================================================================ */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transition: opacity 0.15s ease;
+}
+
+.custom-cursor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-solid, #d4ff47);
+}
+
+.custom-cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-solid, #d4ff47);
+  background: transparent;
 }

@@ -2,7 +2,7 @@ import { skillGroups } from '@/lib/v2-data'
 
 export function SkillsSection() {
   return (
-    <section className="py-24">
+    <section className="py-24 skills-cream-bg">
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
       <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
         Capabilities

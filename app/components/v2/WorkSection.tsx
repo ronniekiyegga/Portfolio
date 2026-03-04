@@ -3,7 +3,7 @@ import { workItems } from '@/lib/v2-data'
 
 export function WorkSection() {
   return (
-    <section id="work" className="py-24">
+    <section id="work" className="py-24 section-cream-bg">
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
       <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
         Selected Work

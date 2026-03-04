@@ -12,7 +12,7 @@ export function Footer() {
       className="py-7 font-jetbrains text-[10px]"
       style={{ borderTop: '1px solid var(--border)', color: 'var(--muted)' }}
     >
-      <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+      <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 reveal">
         <span>&#169; 2026 Ronnie Kiyegga</span>
         <div className="flex gap-6 flex-wrap justify-center">
           {links.map((l) => (

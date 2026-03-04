@@ -43,6 +43,15 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
 
   const closeMobile = () => setMobileOpen(false)
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const el = document.querySelector(href)
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      closeMobile()
+    }
+  }
+
   return (
     <>
       <nav
@@ -138,6 +147,7 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
             <li key={link.label}>
               <Link
                 href={link.href}
+                onClick={(e) => link.href.startsWith('#') && handleNavClick(e, link.href)}
                 className="font-outfit text-[13px] no-underline transition-colors duration-200 relative group"
                 style={{ color: 'var(--muted)' }}
               >
@@ -177,13 +187,16 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
               duration={500}
             />
           )}
-          <Link
-            href="mailto:contact@ronniekiyegga.com"
-            className="hidden md:flex items-center px-5 py-2 rounded-full font-jetbrains text-[12px] font-semibold no-underline transition-all duration-200 hover:opacity-85 hover:scale-[0.98]"
-            style={{ background: 'var(--accent)', color: 'var(--accent-text)' }}
-          >
-            {"Let's chat →"}
-          </Link>
+          <div className="hidden md:block p-[2px] pill-outer-cream">
+            <Link
+              href="mailto:contact@ronniekiyegga.com"
+              className="lets-chat-inner flex items-center gap-2 px-5 py-2 rounded-full no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
+              style={{ fontFamily: 'var(--font-style-script), cursive' }}
+            >
+              <span className="text-white text-[15px]">Let&apos;s chat</span>
+              <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
+            </Link>
+          </div>
           {/* Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -257,7 +270,10 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
             <Link
               key={link.label}
               href={link.href}
-              onClick={closeMobile}
+              onClick={(e) => {
+                if (link.href.startsWith('#')) handleNavClick(e, link.href)
+                else closeMobile()
+              }}
               className="font-outfit text-[17px] no-underline py-3 border-b transition-colors duration-200 hover:opacity-100"
               style={{
                 color: 'var(--muted)',
@@ -272,14 +288,17 @@ export function Nav({ splashEnabled = true, onToggleSplash }: NavProps) {
 
         {/* CTA at bottom */}
         <div className="px-6 pb-8">
-          <Link
-            href="mailto:contact@ronniekiyegga.com"
-            onClick={closeMobile}
-            className="flex items-center justify-center w-full px-5 py-3 rounded-full font-jetbrains text-[12px] font-semibold no-underline transition-all duration-200 hover:opacity-85"
-            style={{ background: 'var(--accent)', color: 'var(--accent-text)' }}
-          >
-            {"Let's chat →"}
-          </Link>
+          <div className="p-[2px] pill-outer-cream rounded-full">
+            <Link
+              href="mailto:contact@ronniekiyegga.com"
+              onClick={closeMobile}
+              className="lets-chat-inner flex items-center justify-center gap-2 w-full px-5 py-3 rounded-full no-underline transition-all duration-200 hover:opacity-90"
+              style={{ fontFamily: 'var(--font-style-script), cursive' }}
+            >
+              <span className="text-white text-[15px]">Let&apos;s chat</span>
+              <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
+            </Link>
+          </div>
         </div>
       </div>
     </>
