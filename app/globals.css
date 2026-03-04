@@ -643,6 +643,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .work-card-v2:hover { background: #131313 !important; }
+html.light .work-card-v2:hover { background: var(--surface2) !important; }
 
 .wc-text {
   padding: 40px 36px;
@@ -677,6 +678,17 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   z-index: 3;
   pointer-events: none;
 }
+html.light .wc-image::before {
+  background: linear-gradient(to right, var(--surface2), transparent);
+}
+html.light .wc-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(253,251,247,0.92) 0%, rgba(243,241,235,0.88) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
 
 .wc-image-inner {
   position: absolute;
@@ -687,6 +699,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   padding: 24px 20px 24px 32px;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
   opacity: 0;
+  z-index: 2;
 }
 .work-card-v2:hover .wc-image-inner {
   opacity: 1;
@@ -720,6 +733,14 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   color: rgba(255,255,255,0.55) !important;
 }
 .work-card-v2:hover .wc-metric { color: rgba(255,255,255,0.9) !important; }
+html.light .work-card-v2:hover .wc-title { color: var(--text) !important; }
+html.light .work-card-v2:hover .wc-desc  { color: var(--muted) !important; }
+html.light .work-card-v2:hover .wc-type  { color: var(--muted) !important; }
+html.light .work-card-v2:hover .wc-tag {
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+html.light .work-card-v2:hover .wc-metric { color: var(--metric-color) !important; }
 
 .wc-arrow {
   position: absolute;
@@ -742,6 +763,11 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   border-color: var(--accent-solid, #d4ff47);
   color: #080808;
   transform: rotate(45deg);
+}
+html.light .work-card-v2:hover .wc-arrow {
+  background: var(--accent-solid) !important;
+  border-color: var(--accent-solid) !important;
+  color: var(--accent-text) !important;
 }
 
 @media (max-width: 768px) {
