@@ -50,8 +50,8 @@ export default function Home() {
       className="min-h-screen w-full overflow-x-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
-      {/* Loading intro (V1) */}
-      <LoadingScreenGate />
+      {/* Loading intro (V1) — disabled for now, set disabled={false} to re-enable */}
+      <LoadingScreenGate disabled />
       <ScrollReveal />
 
       {/* Custom cursor (dot + ring) — desktop only, hidden when fluid cursor is on */}
