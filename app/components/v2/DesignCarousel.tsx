@@ -95,9 +95,15 @@ function CardCenter({ item }: { item: DesignItem }) {
   )
 }
 
-const SLIDE_WIDTH = 262 // 260px card + 2px gap
+const CARD_WIDTH = 320
+const CARD_HEIGHT = 420
+const SLIDE_WIDTH = CARD_WIDTH + 2 // card + gap
 
-export function DesignCarousel() {
+interface DesignCarouselProps {
+  controlsContainerClass?: string
+}
+
+export function DesignCarousel({ controlsContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24' }: DesignCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [offset, setOffset] = useState(0)
   const [current, setCurrent] = useState(0)
@@ -152,9 +158,9 @@ export function DesignCarousel() {
 
   return (
     <div className="reveal">
-      {/* Track */}
+      {/* Track — full width */}
       <div
-        className="overflow-hidden rounded-xl"
+        className="w-full px-4 md:px-6 lg:px-8 overflow-hidden"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -174,7 +180,7 @@ export function DesignCarousel() {
             <div
               key={`${item.name}-${i}`}
               className="design-slide flex-shrink-0 relative overflow-hidden flex flex-col justify-end"
-              style={{ width: '260px', minWidth: '260px', height: '360px', background: item.gradient }}
+              style={{ width: CARD_WIDTH, minWidth: CARD_WIDTH, height: CARD_HEIGHT, background: item.gradient }}
             >
               {/* Center content */}
               <div className="absolute inset-0 flex items-center justify-center">
@@ -183,12 +189,12 @@ export function DesignCarousel() {
 
               {/* Bottom fade */}
               <div
-                className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 h-36 pointer-events-none"
                 style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)' }}
               />
 
               {/* Bottom text */}
-              <div className="relative z-10 p-5">
+              <div className="relative z-10 p-6">
                 <p className="font-jetbrains text-[9px] tracking-[0.14em] uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
                   {item.type}
                 </p>
@@ -201,8 +207,8 @@ export function DesignCarousel() {
         </div>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center justify-between mt-5">
+      {/* Controls — original position (same as text container) */}
+      <div className={`${controlsContainerClass} flex items-center justify-between mt-5`}>
         {/* Progress indicators */}
         <div className="flex gap-1.5 items-center">
           {designItems.map((_, i) => (

@@ -38,10 +38,10 @@ export default function CustomCursor() {
 
     const animate = () => {
       const { x: tx, y: ty } = targetRef.current;
-      dotX += (tx - dotX) * 0.12;
-      dotY += (ty - dotY) * 0.12;
-      ringX += (tx - ringX) * 0.06;
-      ringY += (ty - ringY) * 0.06;
+      dotX += (tx - dotX) * 0.22;
+      dotY += (ty - dotY) * 0.22;
+      ringX += (tx - ringX) * 0.12;
+      ringY += (ty - ringY) * 0.12;
       setPos({ x: dotX, y: dotY });
       setRingPos({ x: ringX, y: ringY });
       raf = requestAnimationFrame(animate);

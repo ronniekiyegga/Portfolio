@@ -2,187 +2,263 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { User, Mail } from "lucide-react";
-import { GoLink } from "react-icons/go";
-import { BsStars } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { BsStars } from "react-icons/bs";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useSplash } from "@/app/contexts/SplashContext";
+import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibility";
+import { useActiveSection } from "@/app/hooks/useActiveSection";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
-const HERO_SECTION_ID = "hero-section";
+
+const navLinks = [
+  { label: "Work", href: "#work", sectionId: "work" as const },
+  { label: "Design", href: "#design", sectionId: "design" as const },
+  { label: "Process", href: "#process", sectionId: "process" as const },
+  {
+    label: "Experience",
+    href: "#experience",
+    sectionId: "experience" as const,
+  },
+  { label: "Blog", href: "/blog", sectionId: null },
+];
 
 export default function DynamicIsland() {
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = useDynamicIslandVisibility();
+  const activeSection = useActiveSection();
   const { splashActive, setSplashActive } = useSplash();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const heroSection = document.getElementById(HERO_SECTION_ID);
-    if (!heroSection) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(!entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        // Trigger when hero has scrolled ~40% out of view (earlier, before lamp)
-        rootMargin: "0px 0px -40% 0px",
-      },
-    );
-
-    observer.observe(heroSection);
-    return () => observer.disconnect();
+    const onClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  const showPills = isVisible;
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      document
+        .querySelector(href)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <AnimatePresence>
-      {showPills && (
+      {isVisible && (
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-4 px-2"
+          className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 px-2"
           exit={{ opacity: 0, y: 20 }}
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          {/* Left pill - Avatar + Name */}
+          {/* Left pill — Avatar + Ronnie + V1 dropdown (solid cream/dark) */}
           <div
             className={cn(
               "flex items-center gap-0.5 rounded-full p-2",
-              "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
-              "dark:pill-inner-dark",
+              "shadow-[0_0_20px_rgba(59,7,242,0.1)]",
+              "bg-[linear-gradient(135deg,rgba(255,255,255,0.95)_4.86%,rgba(251,233,217,0.9)_35.05%,rgba(222,168,255,0.75)_44.56%,rgba(255,255,255,0.9)_85.1%)]",
+              "dark:!bg-[#0f0f18] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]",
             )}
-            style={{
-              borderRadius: "var(--Corner-radius-32, 2rem)",
-              background:
-                "linear-gradient(135deg, rgba(255, 255, 255, 0.55) 4.86%, rgba(255, 241, 254, 0.08) 22.6%, rgba(251, 233, 217, 0.29) 35.05%, rgba(222, 168, 255, 0.13) 44.56%, rgba(251, 233, 217, 0.07) 57.23%, rgba(255, 255, 255, 0.42) 85.1%)",
-            }}
+            style={{ borderRadius: "2rem" }}
           >
-            <div
-              className="flex h-[45px] self-stretch items-center gap-[9.65px] dark:border-linear-gradient(144deg, rgba(62, 123, 250, 0.74) 3.63%, rgba(102, 0, 204, 0.74) 94.05%); rounded-[172.11px] bg-linear-to-b from-[#050519] via-[#334254] to-[#020209]"
-              style={{
-                borderRadius: "9.093rem",
-                background:
-                  "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.26) 97.21%)",
-              }}
-            >
-              {/* ... image container ... */}
-              <div className="flex items-center gap-[4.2px] rounded-[145.49px] bg-white dark:bg-[url('/BG_1.png')]  border border-solid border-white/20 pl-1 pr-2 pt-0.5 pb-0.5 dark:border-0 dark:bg-[#fcfcfc]  dark:text-white">
-                <div
-                  className={cn(
-                    "flex h-[42.96px] w-[42.96px] shrink-0 items-center justify-center overflow-hidden rounded-full",
-                    "border-[1.698px] border-solid border-white/90",
-                    "[background:linear-gradient(180deg,#FBFBFB_68.72%,#E1E7FB_130.66%)]",
-                    "dark:border-0 dark:p-[1.698px] dark:[background:linear-gradient(144deg,rgba(62,123,250,0.74)_3.63%,rgba(102,0,204,0.74)_94.05%)]",
-                  )}
-                >
-                  <div className="size-full overflow-hidden rounded-full bg-inherit dark:bg-[#0a0a12]">
-                    <Image
-                      src="/Avatar.svg"
-                      alt="Ronnie"
-                      width={47}
-                      height={47}
-                      className="size-full object-cover"
-                    />
-                  </div>
-                </div>
-                <span className="font-(family-name:--font-style-script) px-1 text-center text-[14.69px] leading-[28.33px] font-normal text-[#212225] dark:text-white">
-                  Ronniè
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Middle pill - Email, hidden on mobile */}
-          <div
-            className={cn(
-              "items-center gap-0.5 rounded-full p-2 hidden md:flex",
-              "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
-              "dark:pill-inner-dark",
-            )}
-            style={{
-              borderRadius: "var(--Corner-radius-32, 2rem)",
-              background:
-                "linear-gradient(135deg, rgba(255, 255, 255, 0.55) 4.86%, rgba(255, 241, 254, 0.08) 22.6%, rgba(251, 233, 217, 0.29) 35.05%, rgba(222, 168, 255, 0.13) 44.56%, rgba(251, 233, 217, 0.07) 57.23%, rgba(255, 255, 255, 0.42) 85.1%)",
-            }}
-          >
-            <div
-              className="flex py-4.5 min-w-0 flex-1 items-center justify-between gap-4 rounded-[46px] bg-white px-8  dark:bg-[#0d0d1a]  "
-              style={{
-                border:
-                  "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
-              }}
-            >
-              <span className="min-w-0 flex-1 font-(family-name:--font-source-serif) text-xs leading-[13.32px] text-[#212225] dark:text-white">
-                Ronniekiyegga@hotmail.com
-              </span>
-              <div className="flex shrink-0 items-center gap-1 text-[#8d8fae] dark:text-white/70">
-                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
-                <User className="h-3.5 w-3.5" />
-                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
-                <GoLink className="h-3.5 w-3.5" />
-                <div className="h-3.5 w-px shrink-0 bg-transparent dark:bg-white/20" />
-                <Mail className="h-3.5 w-3.5" />
-              </div>
-            </div>
-          </div>
-
-          {/* Right pill - Let's chat + Theme (matches header button) */}
-          <div className="p-2 pill-outer-cream">
             <div
               className={cn(
-                "flex items-center gap-0.5 rounded-full px-1.5 py-1 ",
-                "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.2) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.2) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.1)]",
-                "dark:pill-inner-dark",
+                "flex items-center gap-2 pl-1 pr-2 py-1 rounded-full",
+                "bg-white dark:bg-[#0d0d1a]",
+                "border border-white/20 dark:border-0",
               )}
-              style={{
-                backgroundImage: "url(/BG_1.png)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
+              style={{ borderRadius: "9rem" }}
+            >
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/90 bg-gradient-to-b from-[#FBFBFB] to-[#E1E7FB] dark:border-0 dark:bg-[#0a0a12]">
+                <Image
+                  src="/Avatar.svg"
+                  alt="Ronnie"
+                  width={36}
+                  height={36}
+                  className="size-full object-cover"
+                />
+              </div>
+              <span
+                className={cn("text-[14px] font-normal", styleScript.className)}
+                style={{ color: "var(--text)" }}
+              >
+                Ronnie
+              </span>
+              <span className="h-1 w-1 shrink-0 rounded-full bg-[var(--muted)]" />
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-1 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-2 py-1 rounded-full border transition-colors"
+                  style={{
+                    color: "var(--muted)",
+                    background: "var(--pill-bg)",
+                    borderColor: "var(--border)",
+                  }}
+                >
+                  V1
+                  <svg
+                    width="6"
+                    height="4"
+                    viewBox="0 0 10 6"
+                    fill="currentColor"
+                    className={cn(
+                      "transition-transform",
+                      dropdownOpen && "rotate-180",
+                    )}
+                  >
+                    <path d="M0 0l5 6 5-6z" />
+                  </svg>
+                </button>
+                {dropdownOpen && (
+                  <div
+                    className="absolute bottom-full left-0 mb-2 min-w-[160px] rounded-xl border overflow-hidden shadow-xl z-50 py-1"
+                    style={{
+                      background: "var(--dropdown-bg)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
+                    <Link
+                      href="https://www.ronniekiyegga.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex justify-between px-3 py-2 text-[10px] no-underline transition-colors hover:bg-white/5"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      <span style={{ color: "var(--text)" }}>Version 1</span>
+                      <span
+                        className="text-[8px] px-1.5 py-0.5 rounded"
+                        style={{
+                          background: "var(--tag-bg)",
+                          color: "var(--tag-color)",
+                        }}
+                      >
+                        Live
+                      </span>
+                    </Link>
+                    <div
+                      style={{ height: "1px", background: "var(--border)" }}
+                    />
+                    <div
+                      className="px-3 py-2 text-[10px]"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      <span style={{ color: "var(--text)" }}>Version 2</span>
+                      <span
+                        className="ml-1 text-[8px] px-1.5 py-0.5 rounded"
+                        style={{
+                          background: "var(--tag-bg)",
+                          color: "var(--tag-color)",
+                        }}
+                      >
+                        New
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Middle pill — Nav links + active dot (solid cream/dark) */}
+          <div
+            className={cn(
+              "hidden sm:flex items-center gap-0.5 rounded-full p-2",
+              "shadow-[0_0_20px_rgba(59,7,242,0.1)]",
+              "bg-[linear-gradient(135deg,rgba(255,255,255,0.15)_4.86%,rgba(251,233,217,0.3)_35.05%,rgba(222,168,255,0.75)_44.56%,rgba(255,255,255,0.1)_85.1%)]",
+              "dark:bg-[#0f0f186d]! dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]",
+            )}
+            style={{ borderRadius: "2rem" }}
+          >
+            <div
+              className={cn(
+                "flex items-center gap-6 rounded-full px-6 py-2.5",
+                "bg-white dark:bg-[#0d0d1a]",
+                "border border-white/20 dark:border-0",
+              )}
+              style={{ borderRadius: "2rem" }}
+            >
+              {navLinks.map((link) => {
+                const isActive = link.sectionId === activeSection;
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="relative flex flex-col items-center gap-1 py-0.5 transition-colors hover:opacity-100"
+                    style={{ color: isActive ? "var(--text)" : "var(--muted)" }}
+                  >
+                    <span className="font-outfit text-[13px]">
+                      {link.label}
+                    </span>
+                    {link.sectionId && (
+                      <span
+                        className={cn(
+                          "h-1.5 w-1.5 rounded-full transition-opacity",
+                          isActive ? "opacity-100" : "opacity-0",
+                        )}
+                        style={{ background: "var(--text)" }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right pill — Dark gradient: Let's chat | star | moon (solid) */}
+          <div className="p-[2px] rounded-full pill-outer-cream">
+            <div
+              className={cn(
+                "flex items-center gap-0 rounded-full px-2 py-1.5",
+                "lets-chat-inner",
+              )}
             >
               <Link
-                href="mailto:ronniekiyegga@hotmail.com"
+                href="mailto:contact@ronniekiyegga.com"
                 className={cn(
-                  "flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm text-nowrap font-medium text-white transition-opacity hover:opacity-90",
+                  "flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
                   styleScript.className,
                 )}
               >
-                {/* <span className="size-1.5 shrink-0 rounded-full bg-teal-400 text-nowrap animate-ping" /> */}
-                <span className="relative flex size-3">
-                  <span className="absolute -top-0.5 -left-0.5 inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
-                </span>
                 Let&apos;s chat
               </Link>
-              <div className="h-3.5 w-px shrink-0 bg-white/20" />
+              <div className="h-4 w-px shrink-0 bg-white/30" />
               <button
                 type="button"
                 onClick={() => setSplashActive((prev) => !prev)}
-                className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
+                className="rounded-full p-2 text-white/90 transition-colors hover:bg-white/10"
                 aria-label={
-                  splashActive
-                    ? "Disable fluid cursor"
-                    : "Enable fluid cursor"
+                  splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
                 }
               >
                 <BsStars
                   className={cn(
-                    "size-3.5 shrink-0 transition-colors",
+                    "size-4 shrink-0",
                     splashActive && "text-cyan-400",
                   )}
                 />
               </button>
-              <div className="h-3.5 w-px shrink-0 bg-white/20" />
-              <div className="theme-toggle-outer shrink-0 pr-1.5">
+              <div className="h-4 w-px shrink-0 bg-white/30" />
+              <div className="theme-toggle-outer shrink-0 pr-2">
                 <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
-                  <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-400 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                  <AnimatedThemeToggler className="size-4 shrink-0 text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
                 </div>
               </div>
             </div>
