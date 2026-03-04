@@ -1,9 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import ContactInfo from "@/app/components/patterns/ContactInfo";
 
 const Lanyard = dynamic(() => import("../Lanyard"), { ssr: false });
 
@@ -39,7 +39,7 @@ export function Hero() {
       {/* Constrained 3-col grid */}
       <div className="max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0 items-center pt-28 pb-12 md:pt-0 md:pb-0">
         {/* ── LEFT: text content ───────────────────────────── */}
-        <div className="relative z-10 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-20">
+        <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-20">
           {/* Available badge */}
           <div
             className="inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-[0.1em] uppercase mb-8 self-start"
@@ -98,31 +98,12 @@ export function Hero() {
             containerised systems, I own the full stack.
           </p>
 
-          <div className="flex gap-4 flex-wrap">
-            <Link
-              href="#work"
-              className="px-7 py-3.5 text-[13px] font-semibold rounded-lg no-underline transition-all duration-200 hover:-translate-y-0.5"
-              style={{
-                background: "var(--accent)",
-                color: "var(--accent-text)",
-              }}
-            >
-              View Work
-            </Link>
-            <Link
-              href="/Ronnie-Kiyegga-SWE.pdf"
-              target="_blank"
-              className="px-7 py-3.5 text-[13px] rounded-lg no-underline border transition-all duration-200 hover:opacity-80"
-              style={{ borderColor: "var(--border)", color: "var(--text)" }}
-            >
-              Resume ↗
-            </Link>
-          </div>
+          <ContactInfo />
         </div>
 
         {/* ── RIGHT: stats grid ────────────────────────────── */}
         <div
-          className="relative z-10 flex flex-col justify-center px-8 md:px-10 lg:px-16 py-20"
+          className="relative z-20 flex flex-col justify-center px-8 md:px-10 lg:px-16 py-20"
           style={{ transitionDelay: "0.15s" }}
         >
           <div
