@@ -138,18 +138,18 @@ export const BackgroundBeams = React.memo(
                   y2: ["0%", "96%"],
                 }}
                 transition={{
-                  duration: 4,
+                  duration: 7,
                   ease: "linear",
                   repeat: Infinity,
                   delay: index * 0.8,
                 }}
               >
                 <stop stopColor={colors.start} stopOpacity="0"></stop>
-                <stop offset="47%" stopColor={colors.start} stopOpacity="0"></stop>
-                <stop offset="50%" stopColor={colors.start}></stop>
-                <stop offset="53%" stopColor={colors.mid}></stop>
+                <stop offset="44%" stopColor={colors.start} stopOpacity="0"></stop>
+                <stop offset="48%" stopColor={colors.start}></stop>
+                <stop offset="52%" stopColor={colors.mid}></stop>
                 <stop offset="56%" stopColor={colors.end}></stop>
-                <stop offset="59%" stopColor={colors.end} stopOpacity="0"></stop>
+                <stop offset="60%" stopColor={colors.end} stopOpacity="0"></stop>
               </motion.linearGradient>
             ))}
 

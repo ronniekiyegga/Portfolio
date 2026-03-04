@@ -111,20 +111,33 @@ export function DesignCarousel({ controlsContainerClass = 'max-w-[1440px] mx-aut
   const touchStart = useRef(0)
   const lastTime = useRef(0)
   const rafRef = useRef<number>(0)
+  const offsetRef = useRef(0)
+  const currentIdxRef = useRef(0)
 
   const loopItems = [...designItems, ...designItems]
   const setWidth = designItems.length * SLIDE_WIDTH
 
+  // Sync ref when offset is set externally (e.g. goTo)
+  offsetRef.current = offset
+
   useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
     const animate = (time: number) => {
       const dt = lastTime.current ? (time - lastTime.current) / 1000 : 0
       lastTime.current = time
       if (!paused) {
-        setOffset((prev) => {
-          let next = prev + AUTO_SPEED * dt
-          if (next >= setWidth) next -= setWidth
-          return next
-        })
+        let next = offsetRef.current + AUTO_SPEED * dt
+        if (next >= setWidth) next -= setWidth
+        offsetRef.current = next
+        track.style.transform = `translateX(-${next}px)`
+
+        const idx = Math.floor(next / SLIDE_WIDTH) % designItems.length
+        if (idx !== currentIdxRef.current) {
+          currentIdxRef.current = idx
+          setCurrent(idx)
+        }
       }
       rafRef.current = requestAnimationFrame(animate)
     }
@@ -132,16 +145,17 @@ export function DesignCarousel({ controlsContainerClass = 'max-w-[1440px] mx-aut
     return () => cancelAnimationFrame(rafRef.current)
   }, [setWidth, paused])
 
-  useEffect(() => {
-    const idx = Math.floor(offset / SLIDE_WIDTH) % designItems.length
-    setCurrent(idx)
-  }, [offset])
-
   const goTo = useCallback((n: number) => {
     const clamped = Math.max(0, Math.min(n, designItems.length - 1))
-    setOffset(clamped * SLIDE_WIDTH)
+    const newOffset = clamped * SLIDE_WIDTH
+    offsetRef.current = newOffset
+    currentIdxRef.current = clamped
+    setOffset(newOffset)
     setCurrent(clamped)
     setPaused(true)
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(-${newOffset}px)`
+    }
     setTimeout(() => setPaused(false), 3000)
   }, [])
 
