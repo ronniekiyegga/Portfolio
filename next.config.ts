@@ -1,10 +1,6 @@
-import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: path.resolve(process.cwd()),
-  },
   async rewrites() {
     return [
       // Fix mistaken /public/* requests: public folder is served at root
