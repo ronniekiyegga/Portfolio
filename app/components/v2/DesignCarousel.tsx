@@ -1,9 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { designItems, type DesignItem } from '@/lib/v2-data'
-
-const AUTO_SPEED = 40 // px per second
 
 function CardExtras({ item }: { item: DesignItem }) {
   switch (item.extras) {
@@ -97,167 +94,64 @@ function CardCenter({ item }: { item: DesignItem }) {
 
 const CARD_WIDTH = 320
 const CARD_HEIGHT = 420
-const SLIDE_WIDTH = CARD_WIDTH + 2 // card + gap
 
 interface DesignCarouselProps {
   controlsContainerClass?: string
 }
 
-export function DesignCarousel({ controlsContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24' }: DesignCarouselProps) {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const [offset, setOffset] = useState(0)
-  const [current, setCurrent] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const touchStart = useRef(0)
-  const lastTime = useRef(0)
-  const rafRef = useRef<number>(0)
-  const offsetRef = useRef(0)
-  const currentIdxRef = useRef(0)
-
+export function DesignCarousel({
+  controlsContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24',
+}: DesignCarouselProps) {
+  // Duplicate items - when first set scrolls off left, second set appears from right (seamless loop)
   const loopItems = [...designItems, ...designItems]
-  const setWidth = designItems.length * SLIDE_WIDTH
-
-  // Sync ref when offset is set externally (e.g. goTo)
-  offsetRef.current = offset
-
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-
-    const animate = (time: number) => {
-      const dt = lastTime.current ? (time - lastTime.current) / 1000 : 0
-      lastTime.current = time
-      if (!paused) {
-        let next = offsetRef.current + AUTO_SPEED * dt
-        if (next >= setWidth) next -= setWidth
-        offsetRef.current = next
-        track.style.transform = `translateX(-${next}px)`
-
-        const idx = Math.floor(next / SLIDE_WIDTH) % designItems.length
-        if (idx !== currentIdxRef.current) {
-          currentIdxRef.current = idx
-          setCurrent(idx)
-        }
-      }
-      rafRef.current = requestAnimationFrame(animate)
-    }
-    rafRef.current = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [setWidth, paused])
-
-  const goTo = useCallback((n: number) => {
-    const clamped = Math.max(0, Math.min(n, designItems.length - 1))
-    const newOffset = clamped * SLIDE_WIDTH
-    offsetRef.current = newOffset
-    currentIdxRef.current = clamped
-    setOffset(newOffset)
-    setCurrent(clamped)
-    setPaused(true)
-    if (trackRef.current) {
-      trackRef.current.style.transform = `translateX(-${newOffset}px)`
-    }
-    setTimeout(() => setPaused(false), 3000)
-  }, [])
-
-  const handleDotClick = (i: number) => goTo(i)
-  const handleArrowClick = (dir: number) => goTo(current + dir)
-
-  const move = (dir: number) => goTo(current + dir)
-
-  const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = touchStart.current - e.changedTouches[0].clientX
-    if (Math.abs(dx) > 50) move(dx > 0 ? 1 : -1)
-  }
 
   return (
     <div className="reveal">
-      {/* Track — full width */}
       <div
-        className="w-full px-4 md:px-6 lg:px-8 overflow-hidden"
+        className="w-full overflow-hidden px-4 md:px-6 lg:px-8 group"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
-        <div
-          ref={trackRef}
-          className="flex gap-[2px]"
-          style={{
-            willChange: 'transform',
-            transform: `translateX(-${offset}px)`,
-            transition: 'none',
-          }}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          {loopItems.map((item, i) => (
-            <div
-              key={`${item.name}-${i}`}
-              className="design-slide flex-shrink-0 relative overflow-hidden flex flex-col justify-end"
-              style={{ width: CARD_WIDTH, minWidth: CARD_WIDTH, height: CARD_HEIGHT, background: item.gradient }}
-            >
-              {/* Center content */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <CardCenter item={item} />
-              </div>
-
-              {/* Bottom fade */}
+        {/* Mask for fade edges - optional, can remove if you want sharp edges */}
+        <div className="relative">
+          <div
+            className="flex w-max gap-[2px] animate-design-scroll"
+            style={{
+              willChange: 'transform',
+              animation: 'design-scroll 35s linear infinite',
+            }}
+          >
+            {loopItems.map((item, i) => (
               <div
-                className="absolute bottom-0 left-0 right-0 h-36 pointer-events-none"
-                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)' }}
-              />
-
-              {/* Bottom text */}
-              <div className="relative z-10 p-6">
-                <p className="font-jetbrains text-[9px] tracking-[0.14em] uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  {item.type}
-                </p>
-                <p className="font-cormorant text-[17px] font-normal" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                  {item.name}
-                </p>
+                key={`${item.name}-${i}`}
+                className="design-slide shrink-0 relative overflow-hidden flex flex-col justify-end"
+                style={{ width: CARD_WIDTH, minWidth: CARD_WIDTH, height: CARD_HEIGHT, background: item.gradient }}
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <CardCenter item={item} />
+                </div>
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-36 pointer-events-none"
+                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)' }}
+                />
+                <div className="relative z-10 p-6">
+                  <p className="font-jetbrains text-[9px] tracking-[0.14em] uppercase mb-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    {item.type}
+                  </p>
+                  <p className="font-cormorant text-[17px] font-normal" style={{ color: 'rgba(255,255,255,0.9)' }}>
+                    {item.name}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Controls — original position (same as text container) */}
+      {/* Controls row */}
       <div className={`${controlsContainerClass} flex items-center justify-between mt-5`}>
-        {/* Progress indicators */}
-        <div className="flex gap-1.5 items-center">
-          {designItems.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => handleDotClick(i)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width:  i === current ? '20px' : '6px',
-                height: '4px',
-                background: i === current ? 'var(--accent)' : 'var(--border)',
-                borderRadius: '2px',
-              }}
-            />
-          ))}
-        </div>
-        {/* Arrows */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => handleArrowClick(-1)}
-            disabled={current <= 0}
-            className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
-            style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
-          >
-            ←
-          </button>
-          <button
-            onClick={() => handleArrowClick(1)}
-            disabled={current >= designItems.length - 1}
-            className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
-            style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
-          >
-            →
-          </button>
-        </div>
+        <p className="font-jetbrains text-[9px] tracking-[0.12em] uppercase" style={{ color: 'var(--muted)' }}>
+          {designItems.length} projects · Pause on hover
+        </p>
       </div>
     </div>
   )

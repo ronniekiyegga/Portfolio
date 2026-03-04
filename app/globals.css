@@ -298,6 +298,7 @@ html.dark .version-icon-v2-ring {
   /* Accordion animations */
   --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.87, 0, 0.13, 1);
   --animate-accordion-up: accordion-up 0.3s cubic-bezier(0.87, 0, 0.13, 1);
+
 }
 
 @keyframes accordion-down {
@@ -395,6 +396,9 @@ body {
   background-clip: text;
   color: transparent;
 }
+html.light .text-gradient-blue {
+  background: #A3D500;
+}
 
 /* WandSparkles icon - same shape, only colour changes (gradient when active, gray when inactive) */
 .icon-wand-sparkles {
@@ -406,6 +410,9 @@ body {
 
 .icon-gradient-blue {
   background: var(--gradient-blue);
+}
+html.light .icon-gradient-blue {
+  background: #A3D500;
 }
 
 /* Tracing beam gradient border - matches tracing-beam.tsx stroke colors */
@@ -489,8 +496,9 @@ html.dark {
   --accent-border: #d4ff47;
 }
 
-/* Light mode — accent uses gradient-blue (purple→teal) */
+/* Light mode — accent uses #A3D500 (replaces gradient-blue) */
 html.light {
+  --gradient-blue: #A3D500;
   --bg: #ffffff;
   --surface: #f3f3f1;
   --surface2: #f0ede8;
@@ -499,19 +507,19 @@ html.light {
   --muted: #8A8EA8;
   --nav-bg: rgba(255, 255, 255, 0.9);
   --pill-bg: rgba(15,20,50,0.05);
-  --accent: var(--gradient-blue);
-  --accent-text: #F0EDE8;
+  --accent: #A3D500;
+  --accent-text: #0F1432;
   --gap: rgba(15,20,50,0.08);
   --grid-line: rgba(15,20,50,0.04);
-  --tag-bg: rgba(58,7,242,0.08);
-  --tag-color: var(--gradient-blue);
-  --stat-suffix: var(--gradient-blue);
-  --metric-color: var(--gradient-blue);
+  --tag-bg: rgba(163, 213, 0, 0.08);
+  --tag-color: #A3D500;
+  --stat-suffix: #A3D500;
+  --metric-color: #A3D500;
   --process-bg: #e9e7e3;
-  --cta-glow: rgba(58,7,242,0.08);
+  --cta-glow: rgba(163, 213, 0, 0.08);
   --dropdown-bg: #DDD9D1;
-  --accent-solid: #3a07f2;
-  --available-dot: #3a07f2;
+  --accent-solid: #A3D500;
+  --available-dot: #A3D500;
   --accent-border: rgba(15, 20, 50, 0.12);
 }
 
@@ -541,7 +549,7 @@ html.light [style*="borderBottom"][style*="var(--accent)"] {
   border-bottom-color: var(--accent-border) !important;
 }
 
-/* Light mode: gradient text for elements using accent/tag/stat/metric as color */
+/* Light mode: accent color for elements using accent/tag/stat/metric as color */
 html.light [style*="color: var(--accent)"]:not(:has(svg)),
 html.light [style*="color:var(--accent)"]:not(:has(svg)),
 html.light [style*="color: var(--tag-color)"],
@@ -550,7 +558,7 @@ html.light [style*="color: var(--stat-suffix)"],
 html.light [style*="color:var(--stat-suffix)"],
 html.light [style*="color: var(--metric-color)"],
 html.light [style*="color:var(--metric-color)"] {
-  background: var(--gradient-blue) !important;
+  background: #A3D500 !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
@@ -594,6 +602,28 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   100% { transform: translateY(0px); }
 }
 .role-words { animation: cycleWords 6s steps(1) infinite; }
+
+/* Design carousel infinite scroll - 50% = one duplicate set for seamless loop */
+@keyframes design-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-design-scroll {
+  animation: design-scroll 35s linear infinite;
+}
+.animate-design-scroll:hover,
+.group:hover .animate-design-scroll {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-design-scroll {
+    animation-duration: 120s;
+  }
+}
 
 @keyframes pulse-dot-anim {
   0%, 100% { opacity: 1; transform: scale(1); }
