@@ -49,6 +49,7 @@ export default function Home() {
 
   return (
     <div
+      data-version="v2"
       className="min-h-screen w-full overflow-x-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >

@@ -42,7 +42,7 @@ export function ProcessSection() {
         <em className="italic" style={{ color: 'var(--accent)' }}>to Production</em>
       </h2>
       <p className="text-[14px] leading-[1.7] max-w-[480px] mb-12 reveal" style={{ color: 'var(--muted)' }}>
-        Most engineers cannot design. Most designers cannot ship. I do both — here is how every project moves from concept to deployed product.
+        I&apos;m passionate about bridging the gap between design and code. Here&apos;s how every project moves from concept to deployed product.
       </p>
 
       <div
