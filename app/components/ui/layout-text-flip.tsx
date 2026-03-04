@@ -26,7 +26,7 @@ export const LayoutTextFlip = ({
     <div className="flex items-center gap-1.5 ">
       <motion.span
         layoutId="subtext"
-        className="text-xs font-medium tracking-tight drop-shadow-lg md:text-sm text-gradient-blue"
+        className="text-xs font-medium tracking-tight drop-shadow-lg md:text-sm text-white"
       >
         {text}
       </motion.span>
@@ -47,7 +47,7 @@ export const LayoutTextFlip = ({
             transition={{
               duration: 0.5,
             }}
-            className={cn("inline-block whitespace-nowrap text-gradient-blue")}
+            className={cn("inline-block whitespace-nowrap text-white")}
           >
             {words[currentIndex]}
           </motion.span>

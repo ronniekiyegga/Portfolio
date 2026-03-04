@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
+import { VersionDropdown } from './VersionDropdown'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
@@ -100,49 +101,10 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
             </button>
 
             {dropdownOpen && (
-              <div
-                className="absolute top-[calc(100%+8px)] left-0 min-w-[180px] rounded-xl border overflow-hidden shadow-2xl z-50"
-                style={{ background: 'var(--dropdown-bg)', borderColor: 'var(--border)' }}
-              >
-                <Link
-                  href="/v1"
-                  onClick={() => setDropdownOpen(false)}
-                  className="flex items-center justify-between px-4 py-3 no-underline transition-colors duration-150 hover:opacity-80"
-                  style={{ color: 'var(--muted)' }}
-                >
-                  <div>
-                    <div className="font-jetbrains text-[10px] font-medium" style={{ color: 'var(--text)' }}>
-                      Version 1
-                    </div>
-                    <div className="font-jetbrains text-[9px] mt-0.5">Classic design</div>
-                  </div>
-                  <span
-                    className="font-jetbrains text-[8px] px-1.5 py-0.5 rounded"
-                    style={{ background: 'var(--tag-bg)', color: 'var(--tag-color)' }}
-                  >
-                    Live
-                  </span>
-                </Link>
-                <div style={{ height: '1px', background: 'var(--border)' }} />
-                <button
-                  onClick={() => setDropdownOpen(false)}
-                  className="w-full flex items-center justify-between px-4 py-3 transition-colors duration-150 hover:opacity-80"
-                  style={{ color: 'var(--muted)' }}
-                >
-                  <div>
-                    <div className="font-jetbrains text-[10px] font-medium" style={{ color: 'var(--text)' }}>
-                      Version 2
-                    </div>
-                    <div className="font-jetbrains text-[9px] mt-0.5">This design</div>
-                  </div>
-                  <span
-                    className="font-jetbrains text-[8px] px-1.5 py-0.5 rounded"
-                    style={{ background: 'var(--tag-bg)', color: 'var(--tag-color)' }}
-                  >
-                    New
-                  </span>
-                </button>
-              </div>
+              <VersionDropdown
+                placement="top"
+                onClose={() => setDropdownOpen(false)}
+              />
             )}
           </div>
         </div>

@@ -5,7 +5,7 @@ export function SkillsSection() {
     <section className="py-24 skills-cream-bg">
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
       <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
-        Capabilities
+        SPECIALTIES
       </p>
       <h2
         className="font-cormorant font-light leading-[1.05] tracking-tight mb-14 reveal"

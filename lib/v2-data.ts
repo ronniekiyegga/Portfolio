@@ -7,7 +7,7 @@ export interface WorkItem {
   href: string;
   gradient: string;
   /** Preview variant: inline HTML/CSS mockup (analytics | maths | knn | pseudolab) */
-  preview: 'analytics' | 'maths' | 'knn' | 'pseudolab';
+  preview: "analytics" | "maths" | "knn" | "pseudolab";
   /** HERO SVG from public folder for preview image */
   heroImage: string;
 }
@@ -66,7 +66,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
-    heroImage: "/BG_HERO1.svg",
+    heroImage: "/GOOGLE_TEACHABLE.svg",
   },
   {
     type: "Developer Tool · Open Source",
@@ -141,7 +141,7 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "S",
     company: "The School of Research Science",
-    role: "Design Engineer · Next.js, TypeScript, TensorFlow.js",
+    role: "Design Engineer",
     desc: "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard — all tested to 95%+ coverage with zero critical regressions over 12 months.",
     tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],
     techStack: [
@@ -159,7 +159,7 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "F",
     company: "Freelance Consultant",
-    role: "Design Engineer · React, Node.js, AWS",
+    role: "Design Engineer",
     desc: "Designed and built production-grade products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video pipeline that cut media costs by 40%.",
     tags: ["React", "Node.js", "AWS S3", "Stripe", "Figma"],
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
@@ -168,11 +168,11 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "A",
     company: "Adaptive Financial Consulting",
-    role: "Software Engineer Intern · React, TypeScript",
+    role: "Software Engineer Intern",
     desc: "Built project timeline visualisations for senior management across 3 product teams. Collaborated with data analysts and the UX team on internal dashboards for financial workflows.",
     tags: ["React", "TypeScript", "Data Viz"],
     techStack: ["React", "TypeScript", "Figma", "Slack", "Nodejs"],
-    dates: "2015 - 2019",
+    dates: "2019 - 2019",
   },
   {
     initial: "D",

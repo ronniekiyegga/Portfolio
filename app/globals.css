@@ -298,6 +298,7 @@ html.dark .version-icon-v2-ring {
   /* Accordion animations */
   --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.87, 0, 0.13, 1);
   --animate-accordion-up: accordion-up 0.3s cubic-bezier(0.87, 0, 0.13, 1);
+
 }
 
 @keyframes accordion-down {
@@ -395,6 +396,20 @@ body {
   background-clip: text;
   color: transparent;
 }
+html.light .text-gradient-blue {
+  background: #A3D500;
+}
+html.light [data-version="v2"] .text-gradient-blue {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+}
+
+/* Gradient blue text — always purple-to-cyan (no light-mode green override) */
+.text-gradient-blue-static {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* WandSparkles icon - same shape, only colour changes (gradient when active, gray when inactive) */
 .icon-wand-sparkles {
@@ -406,6 +421,12 @@ body {
 
 .icon-gradient-blue {
   background: var(--gradient-blue);
+}
+html.light .icon-gradient-blue {
+  background: #A3D500;
+}
+html.light [data-version="v2"] .icon-gradient-blue {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
 /* Tracing beam gradient border - matches tracing-beam.tsx stroke colors */
@@ -489,8 +510,9 @@ html.dark {
   --accent-border: #d4ff47;
 }
 
-/* Light mode — accent uses gradient-blue (purple→teal) */
+/* Light mode — accent uses #A3D500 (V1) */
 html.light {
+  --gradient-blue: #A3D500;
   --bg: #ffffff;
   --surface: #f3f3f1;
   --surface2: #f0ede8;
@@ -499,20 +521,33 @@ html.light {
   --muted: #8A8EA8;
   --nav-bg: rgba(255, 255, 255, 0.9);
   --pill-bg: rgba(15,20,50,0.05);
-  --accent: var(--gradient-blue);
-  --accent-text: #F0EDE8;
+  --accent: #A3D500;
+  --accent-text: #0F1432;
   --gap: rgba(15,20,50,0.08);
   --grid-line: rgba(15,20,50,0.04);
-  --tag-bg: rgba(58,7,242,0.08);
-  --tag-color: var(--gradient-blue);
-  --stat-suffix: var(--gradient-blue);
-  --metric-color: var(--gradient-blue);
+  --tag-bg: rgba(163, 213, 0, 0.08);
+  --tag-color: #A3D500;
+  --stat-suffix: #A3D500;
+  --metric-color: #A3D500;
   --process-bg: #e9e7e3;
-  --cta-glow: rgba(58,7,242,0.08);
+  --cta-glow: rgba(163, 213, 0, 0.08);
   --dropdown-bg: #DDD9D1;
-  --accent-solid: #3a07f2;
-  --available-dot: #3a07f2;
+  --accent-solid: #A3D500;
+  --available-dot: #A3D500;
   --accent-border: rgba(15, 20, 50, 0.12);
+}
+
+/* Light mode — V2 only: gradient-blue (purple to cyan) */
+html.light [data-version="v2"] {
+  --gradient-blue: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+  --accent: #6344F5;
+  --tag-bg: rgba(99, 68, 245, 0.08);
+  --tag-color: #6344F5;
+  --stat-suffix: #6344F5;
+  --metric-color: #6344F5;
+  --cta-glow: rgba(99, 68, 245, 0.08);
+  --accent-solid: #6344F5;
+  --available-dot: #6344F5;
 }
 
 /* Cream background sections: light mode only (Work, Experience, Skills) */
@@ -541,7 +576,7 @@ html.light [style*="borderBottom"][style*="var(--accent)"] {
   border-bottom-color: var(--accent-border) !important;
 }
 
-/* Light mode: gradient text for elements using accent/tag/stat/metric as color */
+/* Light mode: accent color for elements using accent/tag/stat/metric as color (V1: green) */
 html.light [style*="color: var(--accent)"]:not(:has(svg)),
 html.light [style*="color:var(--accent)"]:not(:has(svg)),
 html.light [style*="color: var(--tag-color)"],
@@ -550,7 +585,22 @@ html.light [style*="color: var(--stat-suffix)"],
 html.light [style*="color:var(--stat-suffix)"],
 html.light [style*="color: var(--metric-color)"],
 html.light [style*="color:var(--metric-color)"] {
-  background: var(--gradient-blue) !important;
+  background: #A3D500 !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Light mode V2 only: gradient-blue for accent text */
+html.light [data-version="v2"] [style*="color: var(--accent)"]:not(:has(svg)),
+html.light [data-version="v2"] [style*="color:var(--accent)"]:not(:has(svg)),
+html.light [data-version="v2"] [style*="color: var(--tag-color)"],
+html.light [data-version="v2"] [style*="color:var(--tag-color)"],
+html.light [data-version="v2"] [style*="color: var(--stat-suffix)"],
+html.light [data-version="v2"] [style*="color:var(--stat-suffix)"],
+html.light [data-version="v2"] [style*="color: var(--metric-color)"],
+html.light [data-version="v2"] [style*="color:var(--metric-color)"] {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
@@ -595,6 +645,28 @@ html.light [style*="color:var(--accent)"]:has(svg) {
 }
 .role-words { animation: cycleWords 6s steps(1) infinite; }
 
+/* Design carousel infinite scroll - 50% = one duplicate set for seamless loop */
+@keyframes design-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-design-scroll {
+  animation: design-scroll 35s linear infinite;
+}
+.animate-design-scroll:hover,
+.group:hover .animate-design-scroll {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-design-scroll {
+    animation-duration: 120s;
+  }
+}
+
 @keyframes pulse-dot-anim {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.5; transform: scale(0.8); }
@@ -613,6 +685,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .work-card-v2:hover { background: #131313 !important; }
+html.light .work-card-v2:hover { background: var(--surface2) !important; }
 
 .wc-text {
   padding: 40px 36px;
@@ -647,6 +720,17 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   z-index: 3;
   pointer-events: none;
 }
+html.light .wc-image::before {
+  background: linear-gradient(to right, var(--surface2), transparent);
+}
+
+/* Light theme: remove dark overlay on work card preview — light background + softer shadow */
+html.light [data-version="v2"] .wc-image-bg {
+  background: linear-gradient(160deg, #f5f5f3 0%, #f0ede8 50%, #fafbf9 100%) !important;
+}
+html.light [data-version="v2"] .wc-image-inner .screen {
+  box-shadow: 0 20px 56px rgba(0,0,0,0.08) !important;
+}
 
 .wc-image-inner {
   position: absolute;
@@ -657,6 +741,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   padding: 24px 20px 24px 32px;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
   opacity: 0;
+  z-index: 2;
 }
 .work-card-v2:hover .wc-image-inner {
   opacity: 1;
@@ -690,6 +775,14 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   color: rgba(255,255,255,0.55) !important;
 }
 .work-card-v2:hover .wc-metric { color: rgba(255,255,255,0.9) !important; }
+html.light .work-card-v2:hover .wc-title { color: var(--text) !important; }
+html.light .work-card-v2:hover .wc-desc  { color: var(--muted) !important; }
+html.light .work-card-v2:hover .wc-type  { color: var(--muted) !important; }
+html.light .work-card-v2:hover .wc-tag {
+  border-color: var(--border) !important;
+  color: var(--muted) !important;
+}
+html.light .work-card-v2:hover .wc-metric { color: var(--metric-color) !important; }
 
 .wc-arrow {
   position: absolute;
@@ -712,6 +805,11 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   border-color: var(--accent-solid, #d4ff47);
   color: #080808;
   transform: rotate(45deg);
+}
+html.light .work-card-v2:hover .wc-arrow {
+  background: var(--accent-solid) !important;
+  border-color: var(--accent-solid) !important;
+  color: var(--accent-text) !important;
 }
 
 @media (max-width: 768px) {
