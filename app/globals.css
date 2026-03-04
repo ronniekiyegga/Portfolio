@@ -399,6 +399,17 @@ body {
 html.light .text-gradient-blue {
   background: #A3D500;
 }
+html.light [data-version="v2"] .text-gradient-blue {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+}
+
+/* Gradient blue text — always purple-to-cyan (no light-mode green override) */
+.text-gradient-blue-static {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* WandSparkles icon - same shape, only colour changes (gradient when active, gray when inactive) */
 .icon-wand-sparkles {
@@ -413,6 +424,9 @@ html.light .text-gradient-blue {
 }
 html.light .icon-gradient-blue {
   background: #A3D500;
+}
+html.light [data-version="v2"] .icon-gradient-blue {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
 /* Tracing beam gradient border - matches tracing-beam.tsx stroke colors */
@@ -496,7 +510,7 @@ html.dark {
   --accent-border: #d4ff47;
 }
 
-/* Light mode — accent uses #A3D500 (replaces gradient-blue) */
+/* Light mode — accent uses #A3D500 (V1) */
 html.light {
   --gradient-blue: #A3D500;
   --bg: #ffffff;
@@ -521,6 +535,19 @@ html.light {
   --accent-solid: #A3D500;
   --available-dot: #A3D500;
   --accent-border: rgba(15, 20, 50, 0.12);
+}
+
+/* Light mode — V2 only: gradient-blue (purple to cyan) */
+html.light [data-version="v2"] {
+  --gradient-blue: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+  --accent: #6344F5;
+  --tag-bg: rgba(99, 68, 245, 0.08);
+  --tag-color: #6344F5;
+  --stat-suffix: #6344F5;
+  --metric-color: #6344F5;
+  --cta-glow: rgba(99, 68, 245, 0.08);
+  --accent-solid: #6344F5;
+  --available-dot: #6344F5;
 }
 
 /* Cream background sections: light mode only (Work, Experience, Skills) */
@@ -549,7 +576,7 @@ html.light [style*="borderBottom"][style*="var(--accent)"] {
   border-bottom-color: var(--accent-border) !important;
 }
 
-/* Light mode: accent color for elements using accent/tag/stat/metric as color */
+/* Light mode: accent color for elements using accent/tag/stat/metric as color (V1: green) */
 html.light [style*="color: var(--accent)"]:not(:has(svg)),
 html.light [style*="color:var(--accent)"]:not(:has(svg)),
 html.light [style*="color: var(--tag-color)"],
@@ -559,6 +586,21 @@ html.light [style*="color:var(--stat-suffix)"],
 html.light [style*="color: var(--metric-color)"],
 html.light [style*="color:var(--metric-color)"] {
   background: #A3D500 !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Light mode V2 only: gradient-blue for accent text */
+html.light [data-version="v2"] [style*="color: var(--accent)"]:not(:has(svg)),
+html.light [data-version="v2"] [style*="color:var(--accent)"]:not(:has(svg)),
+html.light [data-version="v2"] [style*="color: var(--tag-color)"],
+html.light [data-version="v2"] [style*="color:var(--tag-color)"],
+html.light [data-version="v2"] [style*="color: var(--stat-suffix)"],
+html.light [data-version="v2"] [style*="color:var(--stat-suffix)"],
+html.light [data-version="v2"] [style*="color: var(--metric-color)"],
+html.light [data-version="v2"] [style*="color:var(--metric-color)"] {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
@@ -681,13 +723,13 @@ html.light .work-card-v2:hover { background: var(--surface2) !important; }
 html.light .wc-image::before {
   background: linear-gradient(to right, var(--surface2), transparent);
 }
-html.light .wc-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(253,251,247,0.92) 0%, rgba(243,241,235,0.88) 100%);
-  z-index: 1;
-  pointer-events: none;
+
+/* Light theme: remove dark overlay on work card preview — light background + softer shadow */
+html.light [data-version="v2"] .wc-image-bg {
+  background: linear-gradient(160deg, #f5f5f3 0%, #f0ede8 50%, #fafbf9 100%) !important;
+}
+html.light [data-version="v2"] .wc-image-inner .screen {
+  box-shadow: 0 20px 56px rgba(0,0,0,0.08) !important;
 }
 
 .wc-image-inner {

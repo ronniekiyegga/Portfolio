@@ -5,12 +5,12 @@ const ContactInfo = () => {
   return (
     <div className="w-full text-sm font-medium  rounded-tl-2xl rounded-tr-2xl">
       <div className="flex max-w-sm bg-gray-150 shadow-lg h-14 pb-0.5 dark:bg-gray-900/50 items-center justify-between overflow-hidden rounded-tl-2xl rounded-tr-2xl">
-        {/* Active: Github — left-rounded background + gradient text */}
+        {/* Github — gradient blue text + subtle active background */}
         <Link
           href="https://github.com/BlissfulCoda"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center h-full rounded-tl-2xl px-12 py-3 "
+          className="flex items-center h-full rounded-tl-2xl px-12 py-3"
           style={{
             background:
               "var(--gradient-BGlight, linear-gradient(114deg, rgba(62, 123, 250, 0.02) 20.34%, rgba(102, 0, 204, 0.04) 36.8%, rgba(102, 0, 204, 0) 56.12%, rgba(62, 123, 250, 0.02) 76.52%))",
@@ -18,13 +18,13 @@ const ContactInfo = () => {
               "0 8px 8px -4px rgba(0, 0, 0, 0.04), 0 20px 24px -4px rgba(0, 0, 0, 0.08)",
           }}
         >
-          <span className="text-xs text-gradient-blue lg:text-sm">Github</span>
+          <span className="text-xs lg:text-sm font-semibold text-gradient-blue-static">Github</span>
           {/* <Github className="sm:hidden " size={20} /> */}
         </Link>
 
         {/* Inactive: LinkedIn */}
         <Link
-          href="https://linkedin.com"
+          href="https://linkedin.com/in/ronniekiyegga"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center px-5 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"

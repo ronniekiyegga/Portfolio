@@ -63,19 +63,20 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-[15] w-full h-full flex justify-center md:justify-start md:pl-12 items-center",
+        "pointer-events-none absolute inset-0 z-[15] w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
     >
-      <Canvas
-        camera={{ position, fov }}
-        dpr={[1, isMobile ? 1 : 1.5]}
-        gl={{ alpha: transparent }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
-      >
+      <div className="pointer-events-none size-full [&>*]:pointer-events-none">
+        <Canvas
+          camera={{ position, fov }}
+          dpr={[1, isMobile ? 1 : 1.5]}
+          gl={{ alpha: transparent }}
+          onCreated={({ gl }) =>
+            gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
+          }
+        >
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
           <Physics gravity={gravity} timeStep={isMobile ? 1 / 45 : 1 / 50}>
@@ -113,6 +114,7 @@ export default function Lanyard({
           />
         </Environment>
       </Canvas>
+      </div>
     </div>
   );
 }

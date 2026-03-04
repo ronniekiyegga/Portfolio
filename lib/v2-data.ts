@@ -66,7 +66,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
-    heroImage: "/BG_HERO1.svg",
+    heroImage: "/GOOGLE_TEACHABLE.svg",
   },
   {
     type: "Developer Tool · Open Source",
