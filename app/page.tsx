@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { ScrollReveal } from './components/ScrollReveal'
 
 /* ── V2 sections ─────────────────────────────────────────── */
 import { Nav }              from './components/v2/Nav'
@@ -21,6 +21,9 @@ import DynamicIsland        from './components/DynamicIsland'
 const SplashCursor = dynamic(() => import('./components/SplashCursor'), {
   ssr: false,
 })
+const CustomCursor = dynamic(() => import('./components/CustomCursor'), {
+  ssr: false,
+})
 const LoadingScreenGate = dynamic(() => import('./components/LoadingScreenGate'), {
   ssr: false,
 })
@@ -37,7 +40,6 @@ function Divider() {
 }
 
 export default function Home() {
-  useScrollReveal()
   const [splashEnabled, setSplashEnabled] = useState(false)
 
   return (
@@ -47,6 +49,10 @@ export default function Home() {
     >
       {/* Loading intro (V1) */}
       <LoadingScreenGate />
+      <ScrollReveal />
+
+      {/* Custom cursor (dot + ring) — desktop only, hidden when fluid cursor is on */}
+      {!splashEnabled && <CustomCursor />}
 
       {/* WebGL fluid cursor (V1) — togglable */}
       {splashEnabled && <SplashCursor TRANSPARENT={true} />}

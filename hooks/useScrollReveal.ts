@@ -4,6 +4,13 @@ import { useEffect } from 'react'
 
 export function useScrollReveal() {
   useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (prefersReducedMotion) {
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'))
+      return
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -13,7 +20,10 @@ export function useScrollReveal() {
           }
         })
       },
-      { threshold: 0.06 }
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px',
+      }
     )
 
     const observe = (el: Element) => {
@@ -35,12 +45,12 @@ export function useScrollReveal() {
     })
     mo.observe(document.body, { childList: true, subtree: true })
 
-    // Failsafe: after 800 ms make any still-hidden .reveal elements visible
+    // Failsafe: after 2.5s make any still-hidden .reveal elements visible (handles edge cases)
     const failsafe = setTimeout(() => {
       document.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
         el.classList.add('visible')
       })
-    }, 800)
+    }, 2500)
 
     return () => {
       io.disconnect()

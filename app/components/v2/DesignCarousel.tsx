@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { designItems, type DesignItem } from '@/lib/v2-data'
 
+const AUTO_SPEED = 40 // px per second
+
 function CardExtras({ item }: { item: DesignItem }) {
   switch (item.extras) {
     case 'buttons':
@@ -93,46 +95,57 @@ function CardCenter({ item }: { item: DesignItem }) {
   )
 }
 
+const SLIDE_WIDTH = 262 // 260px card + 2px gap
+
 export function DesignCarousel() {
-  const trackRef    = useRef<HTMLDivElement>(null)
-  const [current,   setCurrent]   = useState(0)
-  const [itemWidth, setItemWidth] = useState(0)
-  const [visible,   setVisible]   = useState(4)
-  const touchStart  = useRef(0)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState(0)
+  const [current, setCurrent] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const touchStart = useRef(0)
+  const lastTime = useRef(0)
+  const rafRef = useRef<number>(0)
 
-  const totalItems = designItems.length
-  const pages = Math.max(1, totalItems - visible + 1)
-
-  const calcDimensions = useCallback(() => {
-    if (!trackRef.current) return
-    const containerW = trackRef.current.parentElement?.offsetWidth ?? 0
-    let vis = 4
-    if (containerW < 480) vis = 1
-    else if (containerW < 640) vis = 2
-    else if (containerW < 900) vis = 3
-    setVisible(vis)
-    const items = trackRef.current.querySelectorAll<HTMLElement>('.design-slide')
-    if (items.length > 0) setItemWidth(items[0].offsetWidth + 2)
-  }, [])
+  const loopItems = [...designItems, ...designItems]
+  const setWidth = designItems.length * SLIDE_WIDTH
 
   useEffect(() => {
-    calcDimensions()
-    window.addEventListener('resize', calcDimensions)
-    return () => window.removeEventListener('resize', calcDimensions)
-  }, [calcDimensions])
+    const animate = (time: number) => {
+      const dt = lastTime.current ? (time - lastTime.current) / 1000 : 0
+      lastTime.current = time
+      if (!paused) {
+        setOffset((prev) => {
+          let next = prev + AUTO_SPEED * dt
+          if (next >= setWidth) next -= setWidth
+          return next
+        })
+      }
+      rafRef.current = requestAnimationFrame(animate)
+    }
+    rafRef.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [setWidth, paused])
+
+  useEffect(() => {
+    const idx = Math.floor(offset / SLIDE_WIDTH) % designItems.length
+    setCurrent(idx)
+  }, [offset])
 
   const goTo = useCallback((n: number) => {
-    const clamped = Math.max(0, Math.min(n, pages - 1))
+    const clamped = Math.max(0, Math.min(n, designItems.length - 1))
+    setOffset(clamped * SLIDE_WIDTH)
     setCurrent(clamped)
-    if (trackRef.current) {
-      trackRef.current.style.transform = `translateX(-${clamped * itemWidth}px)`
-    }
-  }, [pages, itemWidth])
+    setPaused(true)
+    setTimeout(() => setPaused(false), 3000)
+  }, [])
+
+  const handleDotClick = (i: number) => goTo(i)
+  const handleArrowClick = (dir: number) => goTo(current + dir)
 
   const move = (dir: number) => goTo(current + dir)
 
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX }
-  const onTouchEnd   = (e: React.TouchEvent) => {
+  const onTouchEnd = (e: React.TouchEvent) => {
     const dx = touchStart.current - e.changedTouches[0].clientX
     if (Math.abs(dx) > 50) move(dx > 0 ? 1 : -1)
   }
@@ -140,19 +153,28 @@ export function DesignCarousel() {
   return (
     <div className="reveal">
       {/* Track */}
-      <div className="overflow-hidden rounded-xl" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div
+        className="overflow-hidden rounded-xl"
+        style={{ border: '1px solid rgba(255,255,255,0.06)' }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
         <div
           ref={trackRef}
-          className="flex gap-[2px] transition-transform duration-500 ease-out"
-          style={{ willChange: 'transform' }}
+          className="flex gap-[2px]"
+          style={{
+            willChange: 'transform',
+            transform: `translateX(-${offset}px)`,
+            transition: 'none',
+          }}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {designItems.map((item) => (
+          {loopItems.map((item, i) => (
             <div
-              key={item.name}
+              key={`${item.name}-${i}`}
               className="design-slide flex-shrink-0 relative overflow-hidden flex flex-col justify-end"
-              style={{ minWidth: '260px', height: '360px', background: item.gradient }}
+              style={{ width: '260px', minWidth: '260px', height: '360px', background: item.gradient }}
             >
               {/* Center content */}
               <div className="absolute inset-0 flex items-center justify-center">
@@ -183,10 +205,10 @@ export function DesignCarousel() {
       <div className="flex items-center justify-between mt-5">
         {/* Progress indicators */}
         <div className="flex gap-1.5 items-center">
-          {Array.from({ length: pages }).map((_, i) => (
+          {designItems.map((_, i) => (
             <button
               key={i}
-              onClick={() => goTo(i)}
+              onClick={() => handleDotClick(i)}
               className="rounded-full transition-all duration-300"
               style={{
                 width:  i === current ? '20px' : '6px',
@@ -200,16 +222,16 @@ export function DesignCarousel() {
         {/* Arrows */}
         <div className="flex gap-2">
           <button
-            onClick={() => move(-1)}
-            disabled={current === 0}
+            onClick={() => handleArrowClick(-1)}
+            disabled={current <= 0}
             className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
             style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
           >
             ←
           </button>
           <button
-            onClick={() => move(1)}
-            disabled={current >= pages - 1}
+            onClick={() => handleArrowClick(1)}
+            disabled={current >= designItems.length - 1}
             className="w-9 h-9 rounded-full border flex items-center justify-center text-sm transition-colors duration-200 disabled:opacity-30 hover:border-[var(--accent)]"
             style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' }}
           >
