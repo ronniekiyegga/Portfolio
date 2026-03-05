@@ -26,8 +26,7 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="py-24"
-      style={{ background: 'var(--process-bg)' }}
+      className="py-24 section-process-bg"
     >
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
       <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>

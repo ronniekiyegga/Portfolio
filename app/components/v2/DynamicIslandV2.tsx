@@ -99,7 +99,7 @@ export function DynamicIslandV2({
             >
               <div
                 className={cn(
-                  "flex items-center gap-2 pl-1.5 pr-2 py-1 rounded-full",
+                  "flex items-center gap-1.5 pl-1.5 pr-1.5 py-1 rounded-full",
                   "bg-linear-to-b from-[#f9f9f9] to-[#f6f6f6]",
                   "dark:from-[#0d0d1a] dark:to-[#0a0a12]",
                 )}
@@ -128,12 +128,12 @@ export function DynamicIslandV2({
                 >
                   Ronniè
                 </span>
-                <div className="flex items-center  shrink-0">
+                <div className="flex items-center gap-1 shrink-0 -ml-0.5" ref={dropdownRef}>
                   <div
                     className="h-[2.73px] w-[2.73px] shrink-0 rounded-full"
                     style={{ background: "#000d4d" }}
                   />
-                  <div className="relative flex items-center" ref={dropdownRef}>
+                  <div className="relative flex items-center">
                     <button
                       onClick={() => setDropdownOpen(!dropdownOpen)}
                       className={cn(
@@ -235,7 +235,7 @@ export function DynamicIslandV2({
               <Link
                 href="mailto:contact@ronniekiyegga.com"
                 className={cn(
-                  "flex items-center gap-2 text-nowrap rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
+                  "flex items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
                   styleScript.className,
                 )}
               >

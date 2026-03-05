@@ -107,16 +107,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                                 <div
                                     key={index}
                                     className="grid grid-cols-[auto_1fr] items-center gap-2">
-                                    <div className="ring-border-illustration bg-card aspect-square size-6 overflow-hidden rounded-md border border-transparent shadow-md shadow-black/15 ring-1">
-                                        <Image
-                                            src={author.image}
-                                            alt={author.name}
-                                            width={460}
-                                            height={460}
-                                            className="size-full object-cover"
-                                        />
+                                    <div
+                                        className="shrink-0 rounded-full p-[2px]"
+                                        style={{
+                                            background: "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
+                                        }}
+                                    >
+                                        <div className="aspect-square size-6 overflow-hidden rounded-full bg-card">
+                                            <Image
+                                                src="/Avatar.svg"
+                                                alt="Ronnie"
+                                                width={24}
+                                                height={24}
+                                                className="size-full object-cover"
+                                            />
+                                        </div>
                                     </div>
-                                    <span className="text-foreground line-clamp-1 text-sm">{author.name}</span>
+                                    <span className="text-foreground line-clamp-1 text-sm">Ronnie</span>
                                 </div>
                             ))}
                         </div>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { workItems } from '@/lib/v2-data'
 import { ProjectModal } from './ProjectModal'
 
@@ -45,61 +44,80 @@ export function WorkSection() {
               transitionDelay: `${i * 0.07}s`,
             }}
           >
-            {/* Text panel (left) */}
-            <div className="wc-text">
-              <div className="wc-arrow">
-                &#8599;
-              </div>
-              <p
-                className="wc-type font-jetbrains text-[9px] tracking-[0.15em] uppercase mb-4"
-                style={{ color: 'var(--muted)' }}
-              >
-                {item.type}
-              </p>
-              <h3
-                className="wc-title font-cormorant text-[30px] font-normal leading-[1.1] mb-2.5"
-                style={{ color: 'var(--text)' }}
-              >
-                {item.title}
-              </h3>
-              <p
-                className="wc-desc text-[13px] leading-[1.65] max-w-[320px] mb-5"
-                style={{ color: 'var(--muted)' }}
-              >
-                {item.desc}
-              </p>
-              <div className="flex gap-1.5 flex-wrap mb-5">
-                {item.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="wc-tag px-2.5 py-1 border rounded font-jetbrains text-[9px] tracking-[0.06em] uppercase"
-                    style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <p className="wc-metric font-cormorant text-[19px] italic" style={{ color: 'var(--metric-color)' }}>
-                {item.metric}
-              </p>
-            </div>
-
-            {/* Image panel (right) — expands on hover */}
+            {/* Image panel (right) — default visible with label+title, shrinks right on hover */}
             <div className="wc-image">
               <div
                 className="wc-image-bg absolute inset-0"
                 style={{ background: item.gradient }}
               />
               <div className="wc-image-inner">
-                <div className="screen w-full max-w-[320px] flex items-center justify-center">
-                  <Image
+                <div className="screen w-full max-w-[420px] min-h-[240px] flex items-center justify-center bg-transparent">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={item.heroImage}
                     alt={item.title}
-                    width={320}
-                    height={200}
-                    className="w-full h-auto object-contain"
+                    className="w-full h-auto max-h-[290px] object-contain block work-card-img"
+                    loading="eager"
                   />
                 </div>
+              </div>
+              {/* Label + title overlay — inside image so it anchors to bottom on mobile */}
+              <div className="wc-image-label">
+              <p
+                className="wc-type font-jetbrains text-[8px] tracking-[0.12em] uppercase mb-1"
+                style={{ color: 'var(--muted)' }}
+              >
+                {item.type}
+              </p>
+              <h3
+                className="wc-title font-cormorant text-[20px] font-normal leading-[1.1]"
+                style={{ color: 'var(--text)' }}
+              >
+                {item.title}
+              </h3>
+            </div>
+            </div>
+
+            {/* Text panel (left) — slides in from left on hover, matches reference layout */}
+            <div className="wc-text">
+              <div className="wc-text-inner">
+                <div className="wc-text-header flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <p
+                      className="wc-text-type font-jetbrains text-[8px] tracking-[0.12em] uppercase mb-1"
+                      style={{ color: 'var(--muted)' }}
+                    >
+                      {item.type}
+                    </p>
+                    <h3
+                      className="wc-text-title font-cormorant text-[20px] font-normal leading-[1.1]"
+                      style={{ color: 'var(--text)' }}
+                    >
+                      {item.title}
+                    </h3>
+                  </div>
+                  <div className="wc-arrow shrink-0">&#8599;</div>
+                </div>
+                <p
+                  className="wc-desc text-[13px] leading-[1.65] max-w-[320px] mb-5"
+                  style={{ color: 'var(--muted)' }}
+                >
+                  {item.desc}
+                </p>
+                <div className="flex gap-1.5 flex-wrap mb-5">
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="wc-tag px-2.5 py-1 border rounded font-jetbrains text-[9px] tracking-[0.06em] uppercase"
+                      style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="wc-metric font-cormorant text-[19px] italic" style={{ color: 'var(--metric-color)' }}>
+                  {item.metric}
+                </p>
               </div>
             </div>
           </button>
