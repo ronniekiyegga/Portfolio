@@ -60,7 +60,7 @@ export default function Marquee() {
   ];
   return (
     <div
-      className="relative w-full min-w-0 overflow-x-hidden p-1"
+      className="relative w-full min-w-0 overflow-x-hidden p-1 section-white-bg"
       style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',

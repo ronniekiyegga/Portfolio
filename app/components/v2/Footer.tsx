@@ -9,7 +9,7 @@ const links = [
 export function Footer() {
   return (
     <footer
-      className="py-7 font-jetbrains text-[10px]"
+      className="py-7 font-jetbrains text-[10px] section-white-bg"
       style={{ borderTop: '1px solid var(--border)', color: 'var(--muted)' }}
     >
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 reveal">

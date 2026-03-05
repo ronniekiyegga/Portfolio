@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { RiMenu4Line } from "react-icons/ri";
@@ -25,6 +25,7 @@ import {
 } from "@/app/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import MobileHeaderPill from "./MobileHeaderPill";
+import { VersionDropdown } from "./v2/VersionDropdown";
 import { motion, AnimatePresence } from "motion/react";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
@@ -61,6 +62,9 @@ export default function Header({
   const showHeader = isHeaderVisible;
   const pathname = usePathname();
   const [hash, setHash] = React.useState("");
+  const [versionDropdownOpen, setVersionDropdownOpen] = React.useState(false);
+  const versionDropdownRef = useRef<HTMLDivElement>(null);
+  const isV1 = pathname?.startsWith("/v1");
   React.useEffect(() => {
     setHash(typeof window !== "undefined" ? window.location.hash.slice(1) : "");
     const onHashChange = () => setHash(window.location.hash.slice(1));
@@ -82,6 +86,16 @@ export default function Header({
       document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (versionDropdownRef.current && !versionDropdownRef.current.contains(e.target as Node)) {
+        setVersionDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -116,6 +130,32 @@ export default function Header({
                       priority
                     />
                   </Link>
+                  {isV1 && (
+                    <div className="relative shrink-0" ref={versionDropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
+                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-[var(--accent)]"
+                        style={{
+                          color: "var(--muted)",
+                          background: "var(--pill-bg)",
+                          borderColor: "var(--border)",
+                        }}
+                      >
+                        V1
+                        <svg width="8" height="6" viewBox="0 0 10 6" fill="currentColor" className={`transition-transform duration-200 ${versionDropdownOpen ? "rotate-180" : ""}`}>
+                          <path d="M0 0l5 6 5-6z" />
+                        </svg>
+                      </button>
+                      {versionDropdownOpen && (
+                        <VersionDropdown
+                          placement="top"
+                          currentVersion="v1"
+                          onClose={() => setVersionDropdownOpen(false)}
+                        />
+                      )}
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <MobileHeaderPill
                       splashActive={splashActive}
@@ -159,6 +199,39 @@ export default function Header({
                       priority
                     />
                   </Link>
+
+                  {isV1 && (
+                    <div className="relative shrink-0" ref={versionDropdownRef}>
+                      <button
+                        type="button"
+                        onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
+                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-[var(--accent)]"
+                        style={{
+                          color: "var(--muted)",
+                          background: "var(--pill-bg)",
+                          borderColor: "var(--border)",
+                        }}
+                      >
+                        V1
+                        <svg
+                          width="8"
+                          height="6"
+                          viewBox="0 0 10 6"
+                          fill="currentColor"
+                          className={`transition-transform duration-200 ${versionDropdownOpen ? "rotate-180" : ""}`}
+                        >
+                          <path d="M0 0l5 6 5-6z" />
+                        </svg>
+                      </button>
+                      {versionDropdownOpen && (
+                        <VersionDropdown
+                          placement="top"
+                          currentVersion="v1"
+                          onClose={() => setVersionDropdownOpen(false)}
+                        />
+                      )}
+                    </div>
+                  )}
 
                   <nav className="flex items-center gap-0.5">
                     <NavigationMenu viewport={false}>
@@ -295,7 +368,7 @@ export default function Header({
                       <Link
                         href="mailto:ronniekiyegga@hotmail.com"
                         className={cn(
-                          "flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
+                          "flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
                           styleScript.className,
                         )}
                       >
@@ -553,7 +626,7 @@ function MobileMenu({
                     href="mailto:ronniekiyegga@hotmail.com"
                     onClick={onClose}
                     className={cn(
-                      "flex items-center justify-center gap-2 rounded-full  px-4 py-2.5 text-xs font-medium text-white",
+                      "flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-medium text-white",
                       styleScript.className,
                     )}
                     style={{

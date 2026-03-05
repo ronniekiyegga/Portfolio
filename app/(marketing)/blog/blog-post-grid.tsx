@@ -66,17 +66,24 @@ export function BlogPostGrid({ posts }: { posts: Post[] }) {
                 <div className="flex items-center justify-between gap-3 pt-2">
                   {author ? (
                     <div className="flex min-w-0 items-center gap-2">
-                      <div className="relative size-8 shrink-0 overflow-hidden rounded-full bg-muted ring-1 ring-border/50">
-                        <Image
-                          src={author.image}
-                          alt={author.name}
-                          width={32}
-                          height={32}
-                          className="size-full object-cover"
-                        />
+                      <div
+                        className="relative shrink-0 rounded-full p-[2px]"
+                        style={{
+                          background: "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
+                        }}
+                      >
+                        <div className="relative size-8 overflow-hidden rounded-full bg-card">
+                          <Image
+                            src="/Avatar.svg"
+                            alt="Ronnie"
+                            width={32}
+                            height={32}
+                            className="size-full object-cover"
+                          />
+                        </div>
                       </div>
                       <span className="truncate text-sm text-muted-foreground">
-                        {author.name}
+                        Ronnie
                       </span>
                     </div>
                   ) : (

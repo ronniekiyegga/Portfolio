@@ -11,6 +11,7 @@ import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibili
 import { useActiveSection } from "@/app/hooks/useActiveSection";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
+import { VersionDropdown } from "./v2/VersionDropdown";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
@@ -127,50 +128,11 @@ export default function DynamicIsland() {
                   </svg>
                 </button>
                 {dropdownOpen && (
-                  <div
-                    className="absolute bottom-full left-0 mb-2 min-w-[160px] rounded-xl border overflow-hidden shadow-xl z-50 py-1"
-                    style={{
-                      background: "var(--dropdown-bg)",
-                      borderColor: "var(--border)",
-                    }}
-                  >
-                    <Link
-                      href="https://www.ronniekiyegga.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex justify-between px-3 py-2 text-[10px] no-underline transition-colors hover:bg-white/5"
-                      style={{ color: "var(--muted)" }}
-                    >
-                      <span style={{ color: "var(--text)" }}>Version 1</span>
-                      <span
-                        className="text-[8px] px-1.5 py-0.5 rounded"
-                        style={{
-                          background: "var(--tag-bg)",
-                          color: "var(--tag-color)",
-                        }}
-                      >
-                        Live
-                      </span>
-                    </Link>
-                    <div
-                      style={{ height: "1px", background: "var(--border)" }}
-                    />
-                    <div
-                      className="px-3 py-2 text-[10px]"
-                      style={{ color: "var(--muted)" }}
-                    >
-                      <span style={{ color: "var(--text)" }}>Version 2</span>
-                      <span
-                        className="ml-1 text-[8px] px-1.5 py-0.5 rounded"
-                        style={{
-                          background: "var(--tag-bg)",
-                          color: "var(--tag-color)",
-                        }}
-                      >
-                        New
-                      </span>
-                    </div>
-                  </div>
+                  <VersionDropdown
+                    placement="bottom"
+                    currentVersion="v1"
+                    onClose={() => setDropdownOpen(false)}
+                  />
                 )}
               </div>
             </div>
@@ -233,7 +195,7 @@ export default function DynamicIsland() {
               <Link
                 href="mailto:contact@ronniekiyegga.com"
                 className={cn(
-                  "flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
+                  "flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
                   styleScript.className,
                 )}
               >

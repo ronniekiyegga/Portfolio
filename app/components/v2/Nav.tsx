@@ -158,7 +158,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="hidden md:block p-[2px] pill-outer-cream">
             <Link
               href="mailto:contact@ronniekiyegga.com"
-              className="lets-chat-inner flex items-center gap-2 px-5 py-2 rounded-full no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
+              className="lets-chat-inner flex items-center gap-2 whitespace-nowrap px-5 py-2 rounded-full no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
               style={{ fontFamily: 'var(--font-style-script), cursive' }}
             >
               <span className="text-white text-[15px]">Let&apos;s chat</span>
@@ -260,7 +260,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
             <Link
               href="mailto:contact@ronniekiyegga.com"
               onClick={closeMobile}
-              className="lets-chat-inner flex items-center justify-center gap-2 w-full px-5 py-3 rounded-full no-underline transition-all duration-200 hover:opacity-90"
+              className="lets-chat-inner flex items-center justify-center gap-2 w-full whitespace-nowrap px-5 py-3 rounded-full no-underline transition-all duration-200 hover:opacity-90"
               style={{ fontFamily: 'var(--font-style-script), cursive' }}
             >
               <span className="text-white text-[15px]">Let&apos;s chat</span>

@@ -1,5 +1,6 @@
 'use client'
 
+import { ChevronRight } from 'lucide-react'
 import { designItems, type DesignItem } from '@/lib/v2-data'
 
 function CardExtras({ item }: { item: DesignItem }) {
@@ -147,11 +148,13 @@ export function DesignCarousel({
         </div>
       </div>
 
-      {/* Controls row */}
-      <div className={`${controlsContainerClass} flex items-center justify-between mt-5`}>
-        <p className="font-jetbrains text-[9px] tracking-[0.12em] uppercase" style={{ color: 'var(--muted)' }}>
-          {designItems.length} projects · Pause on hover
-        </p>
+      {/* Controls row — arrow on right */}
+      <div className={`${controlsContainerClass} flex items-center justify-end mt-5`}>
+        <ChevronRight
+          className="size-6 shrink-0"
+          style={{ color: 'var(--muted)' }}
+          aria-hidden
+        />
       </div>
     </div>
   )

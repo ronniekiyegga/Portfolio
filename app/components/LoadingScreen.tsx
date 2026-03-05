@@ -36,7 +36,7 @@ function SlotIcon({
   if (type === "code") {
     return (
       <Code2
-        className={`${className ?? ""} w-8 h-8 md:w-10 md:h-10 text-[#6B46C1] dark:text-violet-400`}
+        className={`${className ?? ""} w-8 h-8 md:w-10 md:h-10 text-[#4a2d8a] dark:text-violet-400`}
         strokeWidth={2}
       />
     );
@@ -176,8 +176,15 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           >
             <span
               data-word
-              className="absolute inset-0 flex items-center justify-center text-xl font-semibold tracking-tight text-gradient-blue md:text-2xl"
-              style={{ opacity: 0 }}
+              className="absolute inset-0 flex items-center justify-center text-xl font-semibold tracking-tight md:text-2xl"
+              style={{
+                opacity: 0,
+                background: "linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "transparent",
+              }}
             >
               {text}
             </span>
