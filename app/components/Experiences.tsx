@@ -92,26 +92,27 @@ export default function Experiences() {
     const heading = content.querySelector("h2");
     const items = content.querySelectorAll("[data-experience-item]");
 
-    gsap.set([heading, ...items], { opacity: 0, y: 24, force3D: true });
+    gsap.set([heading, ...items], { opacity: 0, y: 16, force3D: true });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 80%",
-        toggleActions: "play none none none",
+        start: "top 88%",
+        end: "top 45%",
+        scrub: true,
       },
     });
 
-    tl.to(heading, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }).to(
+    tl.to(heading, { opacity: 1, y: 0, duration: 1, ease: "none" }).to(
       items,
       {
         opacity: 1,
         y: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
+        duration: 1,
+        stagger: 0.08,
+        ease: "none",
       },
-      "-=0.2",
+      "-=0.7",
     );
 
     return () => {

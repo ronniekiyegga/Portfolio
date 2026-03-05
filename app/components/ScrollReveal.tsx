@@ -24,21 +24,21 @@ export function ScrollReveal() {
     const els = document.querySelectorAll<HTMLElement>('.reveal')
     if (els.length === 0) return
 
-    gsap.set(els, { opacity: 0, y: 20, force3D: true })
+    gsap.set(els, { opacity: 0, y: 16, force3D: true })
 
     const tweens: gsap.core.Tween[] = []
     els.forEach((el) => {
       const t = gsap.to(el, {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
+        duration: 1,
+        ease: 'none',
         scrollTrigger: {
           trigger: el,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
+          start: 'top 92%',
+          end: 'top 55%',
+          scrub: true,
         },
-        onComplete: () => el.classList.add('visible'),
       })
       tweens.push(t)
     })

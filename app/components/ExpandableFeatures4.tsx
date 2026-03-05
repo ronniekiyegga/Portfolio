@@ -215,33 +215,33 @@ export default function ExpandableFeatures4({
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: "top 82%",
-        end: "top 30%",
-        toggleActions: "play none none none",
+        start: "top 88%",
+        end: "top 35%",
+        scrub: true,
       },
     });
 
     tl.to(badgeEl, {
       y: 0,
       opacity: 1,
-      duration: 0.6,
-      ease: SMOOTH_EASE,
+      duration: 1,
+      ease: "none",
     })
       .to(
         titleEl,
-        { x: 0, opacity: 1, duration: 0.55, ease: SMOOTH_EASE },
-        "-=0.4",
+        { x: 0, opacity: 1, duration: 1, ease: "none" },
+        "-=0.85",
       )
       .to(
         descEl,
-        { y: 0, opacity: 1, duration: 0.5, ease: SMOOTH_EASE },
-        "-=0.35",
+        { y: 0, opacity: 1, duration: 1, ease: "none" },
+        "-=0.8",
       )
-      .to(ctaEl, { opacity: 1, duration: 0.4, ease: SMOOTH_EASE }, "-=0.3")
+      .to(ctaEl, { opacity: 1, duration: 1, ease: "none" }, "-=0.75")
       .to(
         imageCol,
-        { x: 0, opacity: 1, duration: 0.7, ease: SMOOTH_EASE },
-        "-=0.8",
+        { x: 0, opacity: 1, duration: 1, ease: "none" },
+        "-=0.9",
       );
 
     if (buttons?.length) {
@@ -250,11 +250,11 @@ export default function ExpandableFeatures4({
         {
           y: 0,
           opacity: 1,
-          duration: 0.4,
-          stagger: 0.06,
-          ease: SMOOTH_EASE,
+          duration: 1,
+          stagger: 0.08,
+          ease: "none",
         },
-        "-=0.6",
+        "-=0.7",
       );
     }
 

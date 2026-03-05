@@ -110,6 +110,15 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* SVG gradient for pill icons (light mode) */}
+        <svg width="0" height="0" aria-hidden>
+          <defs>
+            <linearGradient id="pillIconGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="10.26%" stopColor="#3A07F2" />
+              <stop offset="98.05%" stopColor="#0CD1CF" />
+            </linearGradient>
+          </defs>
+        </svg>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <LoadingProvider>
             <SplashProvider>

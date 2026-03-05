@@ -40,6 +40,8 @@ interface LanyardProps {
   className?: string;
   /** Scale of the lanyard model (default 1). Use 0.5–0.7 for smaller. */
   scale?: number;
+  /** When set, lanyard starts at this Y height and physics drops it from above. */
+  initialDropHeight?: number;
 }
 
 export default function Lanyard({
@@ -50,6 +52,7 @@ export default function Lanyard({
   visible = false,
   className = "",
   scale = 1,
+  initialDropHeight,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -87,7 +90,13 @@ export default function Lanyard({
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
           <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 60}>
-            <Band isMobile={isMobile} scale={scale} stringColor={stringColor} stringLineWidth={stringLineWidth} />
+            <Band
+              isMobile={isMobile}
+              scale={scale}
+              stringColor={stringColor}
+              stringLineWidth={stringLineWidth}
+              initialDropHeight={initialDropHeight}
+            />
           </Physics>
         </Suspense>
         <Environment blur={0.75}>
@@ -133,6 +142,7 @@ interface BandProps {
   scale?: number;
   stringColor?: string;
   stringLineWidth?: number;
+  initialDropHeight?: number;
 }
 
 function Band({
@@ -142,6 +152,7 @@ function Band({
   scale = 1,
   stringColor = "#e2e8f0",
   stringLineWidth = 1,
+  initialDropHeight,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -258,9 +269,11 @@ function Band({
   curve.curveType = "chordal";
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
+  const groupY = initialDropHeight ?? 1.5;
+
   return (
     <>
-      <group position={[0, 1.5, 0]} scale={scale}>
+      <group position={[0, groupY, 0]} scale={scale}>
         <group position={[0, 4.2, 0]}>
           <RigidBody
             ref={fixed}
