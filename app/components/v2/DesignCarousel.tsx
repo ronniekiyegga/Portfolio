@@ -1,6 +1,5 @@
 'use client'
 
-import { ChevronRight } from 'lucide-react'
 import { designItems, type DesignItem } from '@/lib/v2-data'
 
 function CardExtras({ item }: { item: DesignItem }) {
@@ -100,9 +99,7 @@ interface DesignCarouselProps {
   controlsContainerClass?: string
 }
 
-export function DesignCarousel({
-  controlsContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24',
-}: DesignCarouselProps) {
+export function DesignCarousel({}: DesignCarouselProps) {
   // Duplicate items - when first set scrolls off left, second set appears from right (seamless loop)
   const loopItems = [...designItems, ...designItems]
 
@@ -146,15 +143,6 @@ export function DesignCarousel({
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Controls row — arrow on right */}
-      <div className={`${controlsContainerClass} flex items-center justify-end mt-5`}>
-        <ChevronRight
-          className="size-6 shrink-0"
-          style={{ color: 'var(--muted)' }}
-          aria-hidden
-        />
       </div>
     </div>
   )

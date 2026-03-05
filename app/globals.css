@@ -94,7 +94,7 @@ html {
 
 /* DynamicIsland / Pill styles */
 :root {
-  --Corner-radius-32: 2.26806rem;
+  --Corner-radius-32: 2rem;
   --Gradients-Cream-Buttons: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.55) 4.86%,
@@ -107,13 +107,15 @@ html {
   --Gradients-Cream: #fff;
   --Gradients-White-1: linear-gradient(180deg, #fbfbfb 38.73%, #f7f7f9 100%);
   --BG-Black-2: #1a1a1a;
-  --Gradients-Button-Outer: linear-gradient(
+  /* Let's chat cream gradient (light mode) */
+  --Gradients-Cream-Chat: linear-gradient(
     135deg,
     #fff 54.8%,
     rgba(251, 233, 217, 0.59) 69.69%,
     #dedaf9 86.6%,
     rgba(240, 172, 247, 0.76) 97.21%
   );
+  --Pill-Icon-Gradient: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
 /* Middle pill (email) - cream gradient border/glow */
@@ -144,14 +146,12 @@ html {
     0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Right pill "Let's chat" outer wrapper - cream gradient in light mode only (V1) */
+/* Right pill outer - frosted cream gradient (light), solid dark (dark mode). Padding matches left pill (p-1.5). */
 .pill-outer-cream {
-  border-radius: 1.89169rem;
-  background: var(--Gradients-Button-Outer);
-  box-shadow:
-    0 0 1.357px 0 rgba(0, 0, 0, 0.08) inset,
-    0 1.018px 0 0 rgba(255, 255, 255, 0.1),
-    0 4px 14px rgba(0, 0, 0, 0.06);
+  border-radius: var(--Corner-radius-32, 2rem);
+  background: var(--Gradients-Cream-Buttons);
+  padding: 0.375rem; /* 6px - matches left pill p-1.5 */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 .dark .pill-outer-cream {
   background: #252530;
@@ -160,6 +160,79 @@ html {
     0 1px 0 0 rgba(255, 255, 255, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.4);
   border: none;
+}
+
+/* Let's chat wrapper (light mode) - white background, cream gradient border around dark pill */
+.lets-chat-cream-wrapper {
+  border-radius: 1.22406rem;
+  padding: 2px;
+  background: #fff;
+  box-shadow:
+    0 0 0.878px 0 rgba(0, 0, 0, 0.08) inset,
+    0 0.659px 0 0 rgba(255, 255, 255, 0.1);
+}
+.dark .lets-chat-cream-wrapper {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Let's chat inner - dark pill with depth (light mode), gradient (dark mode) */
+.lets-chat-inner {
+  border-radius: calc(1.22406rem - 2px);
+  background: var(--BG-Black-2);
+  box-shadow:
+    0 1.215px 0.972px 0 rgba(0, 0, 0, 0.12),
+    0 1.317px 1.317px 0 rgba(0, 0, 0, 0.14),
+    0 9.808px 7.846px 0 rgba(0, 0, 0, 0.14),
+    0 5.498px 4.398px 0 rgba(0, 0, 0, 0.14),
+    0 1.215px 0.972px 0 rgba(0, 0, 0, 0.12),
+    0 0.439px 0 0 rgba(255, 255, 255, 0.3) inset;
+}
+.dark .lets-chat-inner {
+  background: linear-gradient(
+    90deg,
+    #1a0d6b 0%,
+    #0a0518 50%,
+    #000000 100%
+  ) !important;
+  border-radius: calc(1.89169rem - 2px);
+  box-shadow:
+    0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Right pill inner - unified white bg for Let's chat + icons (light mode), full pill roundness */
+.pill-right-inner {
+  background: #fff;
+  border-radius: 9999px;
+  padding-left: 0.3rem;
+}
+.dark .pill-right-inner {
+  background: transparent;
+}
+
+/* Right pill icons section - white bg in light mode, full pill roundness */
+.pill-icons-white {
+  background: #fff;
+  border-radius: 9999px;
+}
+.dark .pill-icons-white {
+  background: transparent;
+}
+
+/* Icons with blue-to-cyan gradient (light mode) - use fill/stroke on SVG */
+.pill-icon-gradient svg,
+.pill-icon-gradient svg path,
+.pill-icon-gradient svg circle {
+  fill: url(#pillIconGradient);
+  stroke: url(#pillIconGradient);
+}
+.dark .pill-icon-gradient svg,
+.dark .pill-icon-gradient svg path,
+.dark .pill-icon-gradient svg circle {
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 /* DynamicIsland V2 - dark mode (solid pills, no gradient on outer borders) */
@@ -186,6 +259,34 @@ html {
       )
       border-box !important;
   border: 2px solid transparent !important;
+}
+
+/* "then code" gradient text - light mode only (Design section) */
+.text-gradient-design {
+  background: linear-gradient(136deg, #52d17c 11.31%, #22918b 81.69%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-gradient-design {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: var(--accent);
+}
+
+/* "in production" gradient text - light mode only */
+.text-gradient-production {
+  background: linear-gradient(144deg, #ff3b3b 3.63%, #60c 94.05%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-gradient-production {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: var(--accent);
 }
 
 /* Version dropdown - light mode (white outer, gradient inner) */
@@ -596,6 +697,10 @@ html.light [data-version="v2"] {
 html.light .section-cream-bg {
   background: #fdfbf7;
 }
+/* Projects/Work section: black background in dark mode */
+.dark #work.section-cream-bg {
+  background: #000000;
+}
 
 /* Process section: original dark mode (process-bg), cream in light to match Selected Work */
 .section-process-bg {
@@ -674,10 +779,10 @@ html.light [style*="color:var(--accent)"]:has(svg) {
    ================================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(16px);
   transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+    opacity 0.5s ease,
+    transform 0.5s ease;
 }
 .reveal.visible {
   opacity: 1;

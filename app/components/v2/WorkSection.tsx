@@ -25,7 +25,7 @@ export function WorkSection() {
       >
         Things shipped
         <br />
-        <em className="italic" style={{ color: 'var(--accent)' }}>in production</em>
+        <em className="italic text-gradient-production">in production</em>
       </h2>
 
       <div

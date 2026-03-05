@@ -2,9 +2,11 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import gsap from 'gsap'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
 import { VersionDropdown } from './VersionDropdown'
 import { cn } from '@/lib/utils'
+import { useLoading } from '@/app/contexts/LoadingContext'
 
 const navLinks = [
   { label: 'Work',       href: '#work' },
@@ -22,11 +24,30 @@ interface NavProps {
 }
 
 export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = false }: NavProps) {
+  const { isAppReady } = useLoading()
   const [mounted,      setMounted]      = useState(false)
   const [scrolled,     setScrolled]     = useState(false)
   const [mobileOpen,   setMobileOpen]   = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  const hasAnimated = useRef(false)
+
+  useEffect(() => {
+    if (!isAppReady || hasAnimated.current) return
+    const nav = navRef.current
+    if (!nav) return
+    hasAnimated.current = true
+    gsap.set(nav, { opacity: 0, y: -20, force3D: true })
+    gsap.to(nav, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      delay: 0.35, // Matches hero ENTRANCE_DELAY — nav fades in with hero content
+      force3D: true,
+    })
+  }, [isAppReady])
 
   useEffect(() => {
     setMounted(true)
@@ -59,9 +80,10 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
   return (
     <>
       <nav
+        ref={navRef}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          hideWhenBottomNav && "pointer-events-none opacity-0 -translate-y-full",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 opacity-0",
+          hideWhenBottomNav && "pointer-events-none invisible -translate-y-full",
         )}
         style={{
           background: 'var(--nav-bg)',
@@ -155,15 +177,17 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
               duration={500}
             />
           )}
-          <div className="hidden md:block p-[2px] pill-outer-cream">
-            <Link
-              href="mailto:contact@ronniekiyegga.com"
-              className="lets-chat-inner flex items-center gap-2 whitespace-nowrap px-5 py-2 rounded-full no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
-              style={{ fontFamily: 'var(--font-style-script), cursive' }}
-            >
-              <span className="text-white text-[15px]">Let&apos;s chat</span>
-              <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
-            </Link>
+          <div className="hidden md:block rounded-full pill-outer-cream">
+            <div className="lets-chat-cream-wrapper">
+              <Link
+                href="mailto:contact@ronniekiyegga.com"
+                className="lets-chat-inner flex items-center gap-2 whitespace-nowrap px-5 py-2 no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
+                style={{ fontFamily: 'var(--font-style-script), cursive' }}
+              >
+                <span className="text-white text-[15px]">Let&apos;s chat</span>
+                <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
+              </Link>
+            </div>
           </div>
           {/* Hamburger */}
           <button
@@ -256,16 +280,18 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
 
         {/* CTA at bottom */}
         <div className="px-6 pb-8">
-          <div className="p-[2px] pill-outer-cream rounded-full">
-            <Link
-              href="mailto:contact@ronniekiyegga.com"
-              onClick={closeMobile}
-              className="lets-chat-inner flex items-center justify-center gap-2 w-full whitespace-nowrap px-5 py-3 rounded-full no-underline transition-all duration-200 hover:opacity-90"
-              style={{ fontFamily: 'var(--font-style-script), cursive' }}
-            >
-              <span className="text-white text-[15px]">Let&apos;s chat</span>
-              <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
-            </Link>
+          <div className="rounded-full pill-outer-cream">
+            <div className="lets-chat-cream-wrapper">
+              <Link
+                href="mailto:contact@ronniekiyegga.com"
+                onClick={closeMobile}
+                className="lets-chat-inner flex items-center justify-center gap-2 w-full whitespace-nowrap px-5 py-3 no-underline transition-all duration-200 hover:opacity-90"
+                style={{ fontFamily: 'var(--font-style-script), cursive' }}
+              >
+                <span className="text-white text-[15px]">Let&apos;s chat</span>
+                <span style={{ color: '#00CFDE', fontSize: '14px' }}>→</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -32,9 +32,9 @@ export default function ScrollAnimations({
           gsap.to(section, {
             opacity: 1,
             visibility: "visible",
-            duration: 0.6,
+            duration: 0.5,
             ease: "power2.out",
-            delay: 0.05,
+            delay: 0.02,
             force3D: true,
             overwrite: "auto",
           });
