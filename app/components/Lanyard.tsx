@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 "use client";
 import { Suspense, useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
   useGLTF,
@@ -21,7 +22,7 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
-import lanyardSymbol from "./lanyard/symbol.png";
+import lanyardTexture from "./lanyard/lanyard.png";
 
 const CARD_GLB = "/lanyard/card.glb";
 
@@ -50,6 +51,12 @@ export default function Lanyard({
   className = "",
   scale = 1,
 }: LanyardProps) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isLight = mounted && resolvedTheme === "light";
+  const stringColor = isLight ? "#ffffff" : "#e2e8f0";
+  const stringLineWidth = isLight ? 1.3 : 1;
   const [isMobile, setIsMobile] = useState<boolean>(
     () => typeof window !== "undefined" && window.innerWidth < 768,
   );
@@ -63,7 +70,7 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-[15] w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
+        "pointer-events-none absolute inset-0 z-[25] w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
@@ -79,8 +86,8 @@ export default function Lanyard({
         >
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 45 : 1 / 50}>
-            <Band isMobile={isMobile} scale={scale} />
+          <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 60}>
+            <Band isMobile={isMobile} scale={scale} stringColor={stringColor} stringLineWidth={stringLineWidth} />
           </Physics>
         </Suspense>
         <Environment blur={0.75}>
@@ -124,13 +131,17 @@ interface BandProps {
   minSpeed?: number;
   isMobile?: boolean;
   scale?: number;
+  stringColor?: string;
+  stringLineWidth?: number;
 }
 
 function Band({
-  maxSpeed = 180,
-  minSpeed = 20,
+  maxSpeed = 50,
+  minSpeed = 0,
   isMobile = false,
   scale = 1,
+  stringColor = "#e2e8f0",
+  stringLineWidth = 1,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -138,6 +149,8 @@ function Band({
   const j2 = useRef<any>(null);
   const j3 = useRef<any>(null);
   const card = useRef<any>(null);
+  const frameCount = useRef(0);
+  const [stringReady, setStringReady] = useState(false);
 
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
@@ -154,7 +167,7 @@ function Band({
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
   const texture = useTexture(
-    typeof lanyardSymbol === "string" ? lanyardSymbol : lanyardSymbol.src,
+    typeof lanyardTexture === "string" ? lanyardTexture : lanyardTexture.src,
   );
   const [curve] = useState(
     () =>
@@ -186,6 +199,9 @@ function Band({
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
+    frameCount.current += 1;
+    if (frameCount.current === 50) setStringReady(true);
+
     if (dragged && typeof dragged !== "boolean") {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
@@ -197,12 +213,14 @@ function Band({
         z: vec.z - dragged.z,
       });
     }
-    if (fixed.current) {
+    if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
       [j1, j2].forEach((ref) => {
         if (!ref.current.lerped)
           ref.current.lerped = new THREE.Vector3().copy(
             ref.current.translation(),
           );
+      });
+      [j1, j2].forEach((ref) => {
         const clampedDistance = Math.max(
           0.1,
           Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())),
@@ -216,7 +234,21 @@ function Band({
       curve.points[1].copy(j2.current.lerped);
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      const valid = curve.points.every(
+        (p) =>
+          Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z),
+      );
+      const pts = valid
+        ? curve.getPoints(isMobile ? 16 : 32)
+        : [
+            new THREE.Vector3(1.5, 1.5, 0),
+            new THREE.Vector3(1, 3.2, 0),
+            new THREE.Vector3(0.5, 4.5, 0),
+            new THREE.Vector3(0, 5.7, 0),
+          ];
+      if (pts.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z))) {
+        band.current.geometry.setPoints(pts);
+      }
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
@@ -309,16 +341,17 @@ function Band({
           </group>
         </RigidBody>
       </group>
-      <mesh ref={band}>
+      <mesh ref={band} visible={stringReady} renderOrder={1000}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="white"
-          depthTest
+          color={stringColor}
+          depthTest={false}
+          depthWrite={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={1.1}
+          lineWidth={stringLineWidth}
         />
       </mesh>
     </>
