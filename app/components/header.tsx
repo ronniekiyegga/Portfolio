@@ -350,53 +350,45 @@ export default function Header({
                     aria-hidden
                   />
 
-                  {/* Let's chat + SplashCursor + theme toggle (cream outer in light mode, dark pill in dark mode) */}
-                  <div className="p-2 pill-outer-cream">
-                    <div
-                      className={cn(
-                        "flex items-center gap-0.5 rounded-full px-1.5 py-0.5",
-                        "bg-linear-(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%) shadow-[0_0_20px_rgba(59,7,242,0.3)]",
-                        "dark:pill-inner-dark",
-                      )}
-                      style={{
-                        backgroundImage: "url(/BG_1.png)",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                      }}
-                    >
-                      <Link
-                        href="mailto:ronniekiyegga@hotmail.com"
-                        className={cn(
-                          "flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
-                          styleScript.className,
-                        )}
-                      >
-                        <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
-                        Let&apos;s chat
-                      </Link>
-                      <div className="h-3.5 w-px shrink-0 bg-white/20" />
-                      <button
-                        type="button"
-                        onClick={() => setSplashActive((prev) => !prev)}
-                        className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
-                        aria-label={
-                          splashActive
-                            ? "Disable fluid cursor"
-                            : "Enable fluid cursor"
-                        }
-                      >
-                        <BsStars
+                  {/* Let's chat + SplashCursor + theme toggle (cream outer, white inner, Let's chat + icons) */}
+                  <div className="rounded-full pill-outer-cream">
+                    <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden">
+                      <div className="lets-chat-cream-wrapper shrink-0">
+                        <Link
+                          href="mailto:ronniekiyegga@hotmail.com"
                           className={cn(
-                            "size-3 shrink-0 transition-colors",
-                            splashActive && "text-cyan-400",
+                            "lets-chat-inner flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90",
+                            styleScript.className,
                           )}
-                        />
-                      </button>
-                      <div className="h-3.5 w-px shrink-0 bg-white/20" />
-                      <div className="theme-toggle-outer shrink-0 pr-1.5">
-                        <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
-                          <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-400 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                        >
+                          <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                          Let&apos;s chat
+                        </Link>
+                      </div>
+                      <div className="pill-icons-white flex items-center gap-0 pl-1.5 pr-1.5 py-2.5">
+                        <div className="h-3.5 w-px shrink-0 bg-black/10 dark:bg-white/20" />
+                        <button
+                          type="button"
+                          onClick={() => setSplashActive((prev) => !prev)}
+                          className="rounded-full p-1.5 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                          aria-label={
+                            splashActive
+                              ? "Disable fluid cursor"
+                              : "Enable fluid cursor"
+                          }
+                        >
+                          <BsStars
+                            className={cn(
+                              "size-3 shrink-0 pill-icon-gradient",
+                              splashActive && "dark:text-cyan-400",
+                            )}
+                          />
+                        </button>
+                        <div className="h-3.5 w-px shrink-0 bg-black/10 dark:bg-white/20" />
+                        <div className="theme-toggle-outer shrink-0 pr-1.5">
+                          <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
+                            <AnimatedThemeToggler className="size-3.5 shrink-0 overflow-hidden text-neutral-400 dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                          </div>
                         </div>
                       </div>
                     </div>

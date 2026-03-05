@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import gsap from "gsap";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import ContactInfo from "@/app/components/patterns/ContactInfo";
+import { useLoading } from "@/app/contexts/LoadingContext";
 
 const Lanyard = dynamic(() => import("../Lanyard"), { ssr: false });
 
@@ -24,25 +27,113 @@ const stack = [
   "Figma",
 ];
 
+const Y_OFFSET = 32;
+const DURATION = 0.7;
+const STAGGER = 0.08;
+/** Delay after loading screen disappears before hero content animates in */
+const ENTRANCE_DELAY = 0.35;
+const LANYARD_DROP_HEIGHT = 2.2;
+
 export function Hero() {
+  const { isAppReady } = useLoading();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+  const [lanyardDrop, setLanyardDrop] = useState(false);
+
+  useEffect(() => {
+    if (!isAppReady || hasAnimated.current) return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const badge = container.querySelector("[data-hero-badge]");
+    const name = container.querySelector("[data-hero-name]");
+    const role = container.querySelector("[data-hero-role]");
+    const bio = container.querySelector("[data-hero-bio]");
+    const contact = container.querySelector("[data-hero-contact]");
+    const statsGrid = container.querySelector("[data-hero-stats]");
+    const statCells = container.querySelectorAll("[data-hero-stat]");
+    const stackRow = container.querySelector("[data-hero-stack]");
+    const lanyard = container.closest("section")?.querySelector("[data-hero-lanyard]");
+
+    const leftEls = [badge, name, role, bio, contact].filter(Boolean);
+    if (leftEls.length === 0) return;
+
+    hasAnimated.current = true;
+
+    gsap.set(leftEls, { opacity: 0, y: Y_OFFSET, force3D: true });
+    gsap.set(statsGrid, { opacity: 0, y: Y_OFFSET * 0.8, force3D: true });
+    gsap.set(statCells, { opacity: 0, y: 12, force3D: true });
+    gsap.set(stackRow, { opacity: 0, y: Y_OFFSET * 0.5, force3D: true });
+    if (lanyard) gsap.set(lanyard, { opacity: 0, force3D: true });
+
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out", force3D: true },
+      delay: ENTRANCE_DELAY,
+    });
+
+    tl.to(badge, { opacity: 1, y: 0, duration: DURATION }, 0.1);
+    tl.to(name, { opacity: 1, y: 0, duration: DURATION }, 0.1 + STAGGER);
+    tl.to(role, { opacity: 1, y: 0, duration: DURATION }, 0.1 + STAGGER * 2);
+    tl.to(bio, { opacity: 1, y: 0, duration: DURATION }, 0.1 + STAGGER * 3);
+    tl.to(contact, { opacity: 1, y: 0, duration: DURATION }, 0.1 + STAGGER * 4);
+
+    tl.to(
+      statsGrid,
+      { opacity: 1, y: 0, duration: DURATION * 0.9 },
+      0.3 + STAGGER * 2
+    );
+    tl.to(
+      statCells,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: "power2.out",
+      },
+      0.35 + STAGGER * 3
+    );
+    tl.to(
+      stackRow,
+      { opacity: 1, y: 0, duration: DURATION * 0.8 },
+      0.45 + STAGGER * 4
+    );
+
+    if (lanyard) {
+      tl.call(() => setLanyardDrop(true), undefined, 1.0);
+      tl.to(lanyard, { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true }, 1.0);
+    }
+
+    return () => {
+      tl.kill();
+    };
+  }, [isAppReady]);
+
   return (
     <section
       id="hero-section"
       className="min-h-screen relative overflow-hidden section-white-bg"
     >
-      {/* Background beams — more beams, tighter spacing */}
-      <BackgroundBeams
-        className="pointer-events-none inset-0 min-h-full"
-        beamCount={20}
-      />
+      {/* Background beams — always visible */}
+      <div className="absolute inset-0">
+        <BackgroundBeams
+          className="pointer-events-none inset-0 min-h-full"
+          beamCount={20}
+        />
+      </div>
 
       {/* Constrained 3-col grid */}
-      <div className="max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0 items-center pt-28 pb-12 md:pt-0 md:pb-0">
+      <div
+        ref={containerRef}
+        className="max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0 items-center pt-28 pb-12 md:pt-0 md:pb-0"
+      >
         {/* ── LEFT: text content ───────────────────────────── */}
         <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-20">
           {/* Available badge */}
           <div
-            className="inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-[0.1em] uppercase mb-8 self-start"
+            data-hero-badge
+            className="opacity-0 inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-[0.1em] uppercase mb-8 self-start"
             style={{
               borderColor: "var(--border)",
               background: "var(--pill-bg)",
@@ -61,7 +152,8 @@ export function Hero() {
 
           {/* Name */}
           <h1
-            className="font-cormorant font-light leading-[0.9] tracking-tight mb-6"
+            data-hero-name
+            className="opacity-0 font-cormorant font-light leading-[0.9] tracking-tight mb-6"
             style={{
               fontSize: "clamp(52px, 6vw, 100px)",
               color: "var(--text)",
@@ -75,7 +167,7 @@ export function Hero() {
           </h1>
 
           {/* Animated role cycle */}
-          <div className="mb-8">
+          <div data-hero-role className="opacity-0 mb-8">
             <LayoutTextFlip
               text="I'M A "
               words={["UI DESIGNER", "SOFTWARE ENGINEER", "FULL STACK DEV"]}
@@ -83,7 +175,8 @@ export function Hero() {
           </div>
 
           <p
-            className="text-[15px] leading-[1.7] max-w-[400px] mb-10"
+            data-hero-bio
+            className="opacity-0 text-[15px] leading-[1.7] max-w-[400px] mb-10"
             style={{ color: "var(--muted)" }}
           >
             I{" "}
@@ -98,22 +191,23 @@ export function Hero() {
             containerised systems, I own the full stack.
           </p>
 
-          <ContactInfo />
+          <div data-hero-contact className="opacity-0">
+            <ContactInfo />
+          </div>
         </div>
 
         {/* ── RIGHT: stats grid ────────────────────────────── */}
-        <div
-          className="relative z-20 flex flex-col justify-center px-8 md:px-10 lg:px-16 py-20"
-          style={{ transitionDelay: "0.15s" }}
-        >
+        <div className="relative z-20 flex flex-col justify-center px-8 md:px-10 lg:px-16 py-20">
           <div
-            className="grid grid-cols-2 gap-[2px] rounded-2xl overflow-hidden mb-[2px]"
+            data-hero-stats
+            className="opacity-0 grid grid-cols-2 gap-[2px] rounded-2xl overflow-hidden mb-[2px]"
             style={{ background: "var(--gap)" }}
           >
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="p-6 transition-colors duration-200"
+                data-hero-stat
+                className="opacity-0 p-6 transition-colors duration-200"
                 style={{ background: "var(--surface)" }}
               >
                 <div
@@ -139,7 +233,8 @@ export function Hero() {
           </div>
           {/* Stack row */}
           <div
-            className="rounded-xl px-5 py-4 flex gap-2 flex-wrap items-center"
+            data-hero-stack
+            className="opacity-0 rounded-xl px-5 py-4 flex gap-2 flex-wrap items-center"
             style={{ background: "var(--surface)" }}
           >
             <span
@@ -165,15 +260,19 @@ export function Hero() {
       </div>
       {/* end max-width grid wrapper */}
 
-      {/* Lanyard 3D overlay — centered in hero */}
-      <Lanyard
-        visible
-        position={[0, 0, 24]}
-        gravity={[0, -40, 0]}
-        fov={22}
-        scale={1}
-        className="md:-translate-x-24"
-      />
+      {/* Lanyard 3D overlay — preloads hidden, then drops from top at 1.0s */}
+      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-[25]">
+        <Lanyard
+          key={lanyardDrop ? "drop" : "preload"}
+          visible
+          position={[0, 0, 24]}
+          gravity={[0, -40, 0]}
+          fov={22}
+          scale={1}
+          initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
+          className="md:-translate-x-24"
+        />
+      </div>
     </section>
   );
 }

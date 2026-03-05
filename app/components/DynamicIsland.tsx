@@ -184,43 +184,43 @@ export default function DynamicIsland() {
             </div>
           </div>
 
-          {/* Right pill — Dark gradient: Let's chat | star | moon (solid) */}
-          <div className="p-[2px] rounded-full pill-outer-cream">
-            <div
-              className={cn(
-                "flex items-center gap-0 rounded-full px-2 py-1.5",
-                "lets-chat-inner",
-              )}
-            >
-              <Link
-                href="mailto:contact@ronniekiyegga.com"
-                className={cn(
-                  "flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
-                  styleScript.className,
-                )}
-              >
-                Let&apos;s chat
-              </Link>
-              <div className="h-4 w-px shrink-0 bg-white/30" />
-              <button
-                type="button"
-                onClick={() => setSplashActive((prev) => !prev)}
-                className="rounded-full p-2 text-white/90 transition-colors hover:bg-white/10"
-                aria-label={
-                  splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
-                }
-              >
-                <BsStars
+          {/* Right pill — cream outer (padding matches left), white inner, Let's chat + icons */}
+          <div className="rounded-full pill-outer-cream">
+            <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden">
+              <div className="lets-chat-cream-wrapper shrink-0">
+                <Link
+                  href="mailto:contact@ronniekiyegga.com"
                   className={cn(
-                    "size-4 shrink-0",
-                    splashActive && "text-cyan-400",
+                    "lets-chat-inner flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
+                    styleScript.className,
                   )}
-                />
-              </button>
-              <div className="h-4 w-px shrink-0 bg-white/30" />
-              <div className="theme-toggle-outer shrink-0 pr-2">
-                <div className="theme-toggle-inner overflow-hidden flex items-center justify-center">
-                  <AnimatedThemeToggler className="size-4 shrink-0 text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                >
+                  <span>Let&apos;s chat</span>
+                  <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
+                </Link>
+              </div>
+              <div className="pill-icons-white flex items-center gap-0 pl-2 pr-2 py-3">
+                <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
+                <button
+                  type="button"
+                  onClick={() => setSplashActive((prev) => !prev)}
+                  className="rounded-full p-2 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                  aria-label={
+                    splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
+                  }
+                >
+                  <BsStars
+                    className={cn(
+                      "size-4 shrink-0 pill-icon-gradient",
+                      splashActive && "dark:text-cyan-400",
+                    )}
+                  />
+                </button>
+                <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
+                <div className="theme-toggle-outer shrink-0 pr-2">
+                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
+                    <AnimatedThemeToggler className="size-4 shrink-0 text-black dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                  </div>
                 </div>
               </div>
             </div>

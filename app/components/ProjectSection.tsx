@@ -43,9 +43,9 @@ export default function ProjectSection() {
 
           gsap.to(els, {
             autoAlpha: 1,
-            duration: 1,
-            stagger: 0.12,
-            ease: "sine.out",
+            duration: 0.5,
+            stagger: 0.06,
+            ease: "power2.out",
             overwrite: "auto",
             force3D: true,
           });
