@@ -16,7 +16,7 @@ export function DesignSection() {
         >
           Figma first,
           <br />
-          <em className="italic" style={{ color: 'var(--accent)' }}>then code</em>
+          <em className="italic text-gradient-design">then code</em>
         </h2>
       </div>
 

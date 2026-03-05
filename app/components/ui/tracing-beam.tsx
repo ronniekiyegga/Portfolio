@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useTransform, useScroll, useSpring } from "motion/react";
+import { motion, useTransform, useScroll } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export const TracingBeam = ({
@@ -31,10 +31,8 @@ export const TracingBeam = ({
     return () => resizeObserver.disconnect();
   }, []);
 
-  const y1Raw = useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]);
-  const y2Raw = useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]);
-  const y1 = useSpring(y1Raw, { stiffness: 2000, damping: 120 });
-  const y2 = useSpring(y2Raw, { stiffness: 2000, damping: 120 });
+  const y1 = useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]);
 
   return (
     <motion.div
