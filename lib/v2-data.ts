@@ -44,7 +44,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
-    heroImage: "/DMI_HERO.svg",
+    heroImage: "/EFP_PNG.png",
   },
   {
     type: "B2C SaaS · Tutoring Platform",
@@ -55,7 +55,7 @@ export const workItems: WorkItem[] = [
     href: "https://www.msmaryamsmaths.com",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
     preview: "maths",
-    heroImage: "/MATHS_TUTORING_HERO.svg",
+    heroImage: "/TUTORING_PNG.png",
   },
   {
     type: "Educational Tool · ML Classifier",
@@ -66,7 +66,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
-    heroImage: "/GOOGLE_TEACHABLE.svg",
+    heroImage: "/KNN_CLASSIFIER.png",
   },
   {
     type: "Developer Tool · Open Source",
@@ -77,7 +77,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0a1a1a 0%, #0d2e2e 50%, #081818 100%)",
     preview: "pseudolab",
-    heroImage: "/PSEUDOLAB_HERO.svg",
+    heroImage: "/PSEUDOLAB_PNG.png",
   },
 ];
 

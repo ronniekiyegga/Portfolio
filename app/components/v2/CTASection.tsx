@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function CTASection() {
   return (
-    <section className="relative overflow-hidden py-28 md:py-36">
+    <section className="relative overflow-hidden py-28 md:py-36 section-white-bg">
       {/* Glow — stays full-width */}
       <div
         className="absolute inset-0 pointer-events-none"

@@ -4,7 +4,7 @@ const textContainerClass = 'max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24'
 
 export function DesignSection() {
   return (
-    <section id="design" className="py-24">
+    <section id="design" className="py-24 section-white-bg">
       {/* Text container — original position */}
       <div className={textContainerClass}>
         <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
