@@ -28,7 +28,7 @@ export function Hero() {
   return (
     <section
       id="hero-section"
-      className="min-h-screen relative overflow-hidden"
+      className="min-h-screen relative overflow-hidden section-white-bg"
     >
       {/* Background beams — more beams, tighter spacing */}
       <BackgroundBeams
