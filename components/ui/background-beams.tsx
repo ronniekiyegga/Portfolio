@@ -22,7 +22,9 @@ export const BackgroundBeams = React.memo(
     React.useEffect(() => setMounted(true), []);
     const isLight = mounted && resolvedTheme === "light";
     const colors = isLight ? LIGHT_COLORS : DARK_COLORS;
-    const effectiveOpacity = isLight ? Math.max(opacity, 0.55) : Math.max(opacity, 0.4);
+    const effectiveOpacity = isLight
+      ? Math.max(opacity, 0.72)
+      : Math.max(opacity, 0.4);
     const paths = [
       "M-380 -189C-380 -189 -312 216 152 343C616 470 684 875 684 875",
       "M-373 -197C-373 -197 -305 208 159 335C623 462 691 867 691 867",
@@ -75,13 +77,36 @@ export const BackgroundBeams = React.memo(
       "M-44 -573C-44 -573 24 -168 488 -41C952 86 1020 491 1020 491",
       "M-37 -581C-37 -581 31 -176 495 -49C959 78 1027 483 1027 483",
     ];
-    const visiblePaths = beamCount >= paths.length
-      ? paths
-      : paths.filter((_, i) => i % Math.ceil(paths.length / beamCount) === 0).slice(0, beamCount);
+    const visiblePaths =
+      beamCount >= paths.length
+        ? paths
+        : paths
+            .filter((_, i) => i % Math.ceil(paths.length / beamCount) === 0)
+            .slice(0, beamCount);
+
+    /* Random-ish durations per beam: some fast (2.5–3.5s), medium-fast (4–5s), original (7s), slow (10–11s) */
+    const beamDurations = React.useMemo(
+      () =>
+        visiblePaths.map((_, i) => {
+          const t = Math.sin(i * 12.9898) * 10000;
+          const r = t - Math.floor(t);
+          if (r < 0.2) return 2.5 + r * 5; // fast: 2.5–3.5s
+          if (r < 0.4) return 4 + r * 2.5; // medium-fast: 4–5s
+          if (r < 0.65) return 7; // original
+          return 10 + r * 2; // slow: 10–11s
+        }),
+      [visiblePaths.length],
+    );
+
     const showBasePaths = true;
-    const basePathOpacity = beamCount >= paths.length
-      ? (isLight ? 0.1 : 0.03)
-      : (isLight ? 0.03 : 0.04);
+    const basePathOpacity =
+      beamCount >= paths.length
+        ? isLight
+          ? 0.1
+          : 0.03
+        : isLight
+          ? 0.03
+          : 0.04;
     return (
       <div
         className={cn(
@@ -89,15 +114,17 @@ export const BackgroundBeams = React.memo(
           className,
         )}
         style={{
-          maskImage: "linear-gradient(to bottom, black 0%, black 35%, transparent 75%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 35%, transparent 75%)",
+          maskImage:
+            "linear-gradient(to bottom, black 0%, black 35%, transparent 75%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, black 0%, black 35%, transparent 75%)",
         }}
       >
         <svg
           className="pointer-events-none absolute z-0 h-full w-full"
           width="100%"
           height="100%"
-          viewBox="-400 -200 1400 420"
+          viewBox="-200 -200 1200 720"
           preserveAspectRatio="xMidYMid slice"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -138,18 +165,26 @@ export const BackgroundBeams = React.memo(
                   y2: ["0%", "96%"],
                 }}
                 transition={{
-                  duration: 7,
+                  duration: beamDurations[index],
                   ease: "linear",
                   repeat: Infinity,
                   delay: index * 0.8,
                 }}
               >
                 <stop stopColor={colors.start} stopOpacity="0"></stop>
-                <stop offset="44%" stopColor={colors.start} stopOpacity="0"></stop>
-                <stop offset="48%" stopColor={colors.start}></stop>
+                <stop
+                  offset="43%"
+                  stopColor={colors.start}
+                  stopOpacity="0"
+                ></stop>
+                <stop offset="47%" stopColor={colors.start}></stop>
                 <stop offset="52%" stopColor={colors.mid}></stop>
-                <stop offset="56%" stopColor={colors.end}></stop>
-                <stop offset="60%" stopColor={colors.end} stopOpacity="0"></stop>
+                <stop offset="57%" stopColor={colors.end}></stop>
+                <stop
+                  offset="61%"
+                  stopColor={colors.end}
+                  stopOpacity="0"
+                ></stop>
               </motion.linearGradient>
             ))}
 
