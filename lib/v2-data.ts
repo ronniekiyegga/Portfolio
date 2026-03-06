@@ -10,6 +10,10 @@ export interface WorkItem {
   preview: "analytics" | "maths" | "knn" | "pseudolab";
   /** HERO SVG from public folder for preview image */
   heroImage: string;
+  /** Optional blog URL for project modal header */
+  blogHref?: string;
+  /** Optional GitHub URL for project modal header */
+  githubHref?: string;
 }
 
 export interface DesignItem {
@@ -52,7 +56,7 @@ export const workItems: WorkItem[] = [
     desc: "Production tutoring platform with role-based access, JWT auth, and CI/CD pipeline. Zero unauthorised access incidents post-launch.",
     tags: ["TypeScript", "PostgreSQL", "GitHub Actions"],
     metric: "3 min deploy vs 20+ min",
-    href: "https://www.msmaryamsmaths.com",
+    href: "https://www.msmaryamsmaths.com/",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
     preview: "maths",
     heroImage: "/TUTORING_PNG.png",
@@ -63,10 +67,11 @@ export const workItems: WorkItem[] = [
     desc: "Browser-based ML classifier replacing Google Teachable Machine for iPad classrooms. Real-time client-side inference with TensorFlow.js.",
     tags: ["TensorFlow.js", "React", "On-device AI"],
     metric: "400+ students, zero infra cost",
-    href: "#",
+    href: "https://blissfulcoda.github.io/teachablemachine/",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
     heroImage: "/KNN_CLASSIFIER.png",
+    githubHref: "https://github.com/BlissfulCoda/teachablemachine",
   },
   {
     type: "Developer Tool · Open Source",
@@ -74,10 +79,12 @@ export const workItems: WorkItem[] = [
     desc: "Browser-based IDE for Cambridge IGCSE pseudocode. Real-time execution engine for 400+ students preparing for A-Level exams.",
     tags: ["Next.js", "TypeScript", "Open Source"],
     metric: "Exam-spec compliant",
-    href: "#",
+    href: "https://www.algo-pseudo.com/",
     gradient: "linear-gradient(160deg, #0a1a1a 0%, #0d2e2e 50%, #081818 100%)",
     preview: "pseudolab",
     heroImage: "/PSEUDOLAB_PNG.png",
+    blogHref: "#",
+    githubHref: "https://github.com/BlissfulCoda/pseudolab",
   },
 ];
 
@@ -141,7 +148,7 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "S",
     company: "The School of Research Science",
-    role: "Design Engineer",
+    role: "Frontend Engineer",
     desc: "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard — all tested to 95%+ coverage with zero critical regressions over 12 months.",
     tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],
     techStack: [

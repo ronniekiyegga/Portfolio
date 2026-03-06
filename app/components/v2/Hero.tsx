@@ -54,7 +54,9 @@ export function Hero() {
     const statsGrid = container.querySelector("[data-hero-stats]");
     const statCells = container.querySelectorAll("[data-hero-stat]");
     const stackRow = container.querySelector("[data-hero-stack]");
-    const lanyard = container.closest("section")?.querySelector("[data-hero-lanyard]");
+    const lanyard = container
+      .closest("section")
+      ?.querySelector("[data-hero-lanyard]");
 
     const leftEls = [badge, name, role, bio, contact].filter(Boolean);
     if (leftEls.length === 0) return;
@@ -81,7 +83,7 @@ export function Hero() {
     tl.to(
       statsGrid,
       { opacity: 1, y: 0, duration: DURATION * 0.9 },
-      0.3 + STAGGER * 2
+      0.3 + STAGGER * 2,
     );
     tl.to(
       statCells,
@@ -92,17 +94,21 @@ export function Hero() {
         stagger: 0.05,
         ease: "power2.out",
       },
-      0.35 + STAGGER * 3
+      0.35 + STAGGER * 3,
     );
     tl.to(
       stackRow,
       { opacity: 1, y: 0, duration: DURATION * 0.8 },
-      0.45 + STAGGER * 4
+      0.45 + STAGGER * 4,
     );
 
     if (lanyard) {
       tl.call(() => setLanyardDrop(true), undefined, 1.0);
-      tl.to(lanyard, { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true }, 1.0);
+      tl.to(
+        lanyard,
+        { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
+        1.0,
+      );
     }
 
     return () => {
@@ -133,7 +139,7 @@ export function Hero() {
           {/* Available badge */}
           <div
             data-hero-badge
-            className="opacity-0 inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-[0.1em] uppercase mb-8 self-start"
+            className="opacity-0 inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-widest uppercase mb-8 self-start"
             style={{
               borderColor: "var(--border)",
               background: "var(--pill-bg)",
@@ -261,7 +267,7 @@ export function Hero() {
       {/* end max-width grid wrapper */}
 
       {/* Lanyard 3D overlay — preloads hidden, then drops from top at 1.0s */}
-      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-[25]">
+      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25">
         <Lanyard
           key={lanyardDrop ? "drop" : "preload"}
           visible
