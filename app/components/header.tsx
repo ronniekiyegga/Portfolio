@@ -135,7 +135,7 @@ export default function Header({
                       <button
                         type="button"
                         onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
-                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-[var(--accent)]"
+                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-(--accent)"
                         style={{
                           color: "var(--muted)",
                           background: "var(--pill-bg)",
@@ -205,7 +205,7 @@ export default function Header({
                       <button
                         type="button"
                         onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
-                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-[var(--accent)]"
+                        className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-(--accent)"
                         style={{
                           color: "var(--muted)",
                           background: "var(--pill-bg)",
@@ -426,7 +426,7 @@ function MobileMenu({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[9999] flex flex-col"
+          className="fixed inset-0 z-9999 flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile menu"

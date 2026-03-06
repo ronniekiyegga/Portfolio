@@ -10,6 +10,7 @@ import {
   Cormorant_Garamond,
   JetBrains_Mono,
   Outfit,
+  David_Libre,
 } from "next/font/google";
 import "./globals.css";
 import { SplashProvider } from "./contexts/SplashContext";
@@ -62,6 +63,11 @@ const outfit = Outfit({
   weight: ["300", "400", "500", "600"],
   variable: "--font-outfit",
 });
+const davidLibre = David_Libre({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-david-libre",
+});
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga — Design Engineer",
@@ -82,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} antialiased overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden`}
         suppressHydrationWarning
       >
         <Script

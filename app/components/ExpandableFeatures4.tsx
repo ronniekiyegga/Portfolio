@@ -313,7 +313,7 @@ export default function ExpandableFeatures4({
                       rel="noopener noreferrer"
                       className={cn(
                         PROJECT_LINK_BASE_CLASSES,
-                        "!bg-gradient-to-r !from-black !via-neutral-900 !to-black text-white hover:shadow-black/50",
+                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
                       )}
                     >
                       Figma File <MoveUpRight className="size-3.5" />
@@ -326,7 +326,7 @@ export default function ExpandableFeatures4({
                       rel="noopener noreferrer"
                       className={cn(
                         PROJECT_LINK_BASE_CLASSES,
-                        "!bg-gradient-to-r !from-black !via-neutral-900 !to-black text-white hover:shadow-black/50",
+                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
                       )}
                     >
                       {links.designFile ? "Live Demo" : "Live Website"}{" "}
