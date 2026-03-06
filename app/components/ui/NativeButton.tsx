@@ -114,7 +114,7 @@ export default function NativeStartNow({
       case "gradient":
         return cn(
           baseStyles,
-          "!bg-gradient-to-r !from-black !via-neutral-900 !to-black text-white",
+          "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white",
           "hover:shadow-lg hover:shadow-black/50",
           "border-0",
         );

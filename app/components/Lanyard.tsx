@@ -73,12 +73,12 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-[25] w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
+        "pointer-events-none absolute inset-0 z-25 w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
     >
-      <div className="pointer-events-none size-full [&>*]:pointer-events-none">
+      <div className="pointer-events-none size-full *:pointer-events-none">
         <Canvas
           camera={{ position, fov }}
           dpr={[1, isMobile ? 1 : 1.5]}
@@ -87,49 +87,49 @@ export default function Lanyard({
             gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
           }
         >
-        <ambientLight intensity={Math.PI} />
-        <Suspense fallback={null}>
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 60}>
-            <Band
-              isMobile={isMobile}
-              scale={scale}
-              stringColor={stringColor}
-              stringLineWidth={stringLineWidth}
-              initialDropHeight={initialDropHeight}
+          <ambientLight intensity={Math.PI} />
+          <Suspense fallback={null}>
+            <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 60}>
+              <Band
+                isMobile={isMobile}
+                scale={scale}
+                stringColor={stringColor}
+                stringLineWidth={stringLineWidth}
+                initialDropHeight={initialDropHeight}
+              />
+            </Physics>
+          </Suspense>
+          <Environment blur={0.75}>
+            <Lightformer
+              intensity={2}
+              color="white"
+              position={[0, -1, 5]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
             />
-          </Physics>
-        </Suspense>
-        <Environment blur={0.75}>
-          <Lightformer
-            intensity={2}
-            color="white"
-            position={[0, -1, 5]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[-1, -1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={3}
-            color="white"
-            position={[1, 1, 1]}
-            rotation={[0, 0, Math.PI / 3]}
-            scale={[100, 0.1, 1]}
-          />
-          <Lightformer
-            intensity={10}
-            color="white"
-            position={[-10, 0, 14]}
-            rotation={[0, Math.PI / 2, Math.PI / 3]}
-            scale={[100, 10, 1]}
-          />
-        </Environment>
-      </Canvas>
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[-1, -1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={3}
+              color="white"
+              position={[1, 1, 1]}
+              rotation={[0, 0, Math.PI / 3]}
+              scale={[100, 0.1, 1]}
+            />
+            <Lightformer
+              intensity={10}
+              color="white"
+              position={[-10, 0, 14]}
+              rotation={[0, Math.PI / 2, Math.PI / 3]}
+              scale={[100, 10, 1]}
+            />
+          </Environment>
+        </Canvas>
       </div>
     </div>
   );
@@ -224,7 +224,14 @@ function Band({
         z: vec.z - dragged.z,
       });
     }
-    if (fixed.current && j1.current && j2.current && j3.current && card.current && band.current) {
+    if (
+      fixed.current &&
+      j1.current &&
+      j2.current &&
+      j3.current &&
+      card.current &&
+      band.current
+    ) {
       [j1, j2].forEach((ref) => {
         if (!ref.current.lerped)
           ref.current.lerped = new THREE.Vector3().copy(
@@ -257,7 +264,14 @@ function Band({
             new THREE.Vector3(0.5, 4.5, 0),
             new THREE.Vector3(0, 5.7, 0),
           ];
-      if (pts.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z))) {
+      if (
+        pts.every(
+          (p) =>
+            Number.isFinite(p.x) &&
+            Number.isFinite(p.y) &&
+            Number.isFinite(p.z),
+        )
+      ) {
         band.current.geometry.setPoints(pts);
       }
       ang.copy(card.current.angvel());

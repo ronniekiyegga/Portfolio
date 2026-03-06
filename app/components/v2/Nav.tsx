@@ -106,7 +106,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-[var(--accent)]"
+              className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-(--accent)"
               style={{
                 color: 'var(--muted)',
                 background: 'var(--pill-bg)',
@@ -158,7 +158,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
             <button
               onClick={onToggleSplash}
               title={splashEnabled ? 'Disable fluid cursor' : 'Enable fluid cursor'}
-              className="w-8 h-8 rounded-full border flex items-center justify-center text-sm transition-all duration-200 hover:border-[var(--accent)]"
+              className="w-8 h-8 rounded-full border flex items-center justify-center text-sm transition-all duration-200 hover:border-(--accent)"
               style={{
                 borderColor: splashEnabled ? 'var(--accent)' : 'var(--border)',
                 background: splashEnabled ? 'var(--tag-bg)' : 'var(--pill-bg)',
@@ -172,7 +172,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           {/* Theme toggle — animated circular ripple from V1 */}
           {mounted && (
             <AnimatedThemeToggler
-              className="w-8 h-8 rounded-full border flex items-center justify-center transition-colors hover:border-[var(--accent)] [&_svg]:w-4 [&_svg]:h-4"
+              className="w-8 h-8 rounded-full border flex items-center justify-center transition-colors hover:border-(--accent) [&_svg]:w-4 [&_svg]:h-4"
               style={{ borderColor: 'var(--border)', background: 'var(--pill-bg)', color: 'var(--text)' } as React.CSSProperties}
               duration={500}
             />
