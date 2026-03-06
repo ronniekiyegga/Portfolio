@@ -75,7 +75,7 @@ export default function DynamicIsland() {
               "flex items-center gap-0.5 rounded-full p-2",
               "shadow-[0_0_20px_rgba(59,7,242,0.1)]",
               "bg-[linear-gradient(135deg,rgba(255,255,255,0.95)_4.86%,rgba(251,233,217,0.9)_35.05%,rgba(222,168,255,0.75)_44.56%,rgba(255,255,255,0.9)_85.1%)]",
-              "dark:!bg-[#0f0f18] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]",
+              "dark:bg-[#0f0f18]! dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]",
             )}
             style={{ borderRadius: "2rem" }}
           >
@@ -87,7 +87,7 @@ export default function DynamicIsland() {
               )}
               style={{ borderRadius: "9rem" }}
             >
-              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/90 bg-gradient-to-b from-[#FBFBFB] to-[#E1E7FB] dark:border-0 dark:bg-[#0a0a12]">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/90 bg-linear-to-b from-[#FBFBFB] to-[#E1E7FB] dark:border-0 dark:bg-[#0a0a12]">
                 <Image
                   src="/Avatar.svg"
                   alt="Ronnie"
@@ -102,11 +102,11 @@ export default function DynamicIsland() {
               >
                 Ronnie
               </span>
-              <span className="h-1 w-1 shrink-0 rounded-full bg-[var(--muted)]" />
+              <span className="h-1 w-1 shrink-0 rounded-full bg-(--muted)" />
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-1 font-jetbrains text-[10px] tracking-[0.1em] uppercase px-2 py-1 rounded-full border transition-colors"
+                  className="flex items-center gap-1 font-jetbrains text-[10px] tracking-widest uppercase px-2 py-1 rounded-full border transition-colors"
                   style={{
                     color: "var(--muted)",
                     background: "var(--pill-bg)",
@@ -206,7 +206,9 @@ export default function DynamicIsland() {
                   onClick={() => setSplashActive((prev) => !prev)}
                   className="rounded-full p-2 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
                   aria-label={
-                    splashActive ? "Disable fluid cursor" : "Enable fluid cursor"
+                    splashActive
+                      ? "Disable fluid cursor"
+                      : "Enable fluid cursor"
                   }
                 >
                   <BsStars
