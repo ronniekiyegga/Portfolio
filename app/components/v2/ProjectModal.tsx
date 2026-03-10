@@ -292,10 +292,10 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                           </div>
                           {item.insights.map((insight, i) => (
                             <div key={i} className="pb-8">
-                              <h4 className="font-semibold text-lg text-foreground mb-3">
+                              <h4 className="font-semibold text-base text-foreground mb-3">
                                 {insight.title}
                               </h4>
-                              <p className="text-muted-foreground text-[15px] leading-relaxed">
+                              <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
                                 {insight.content}
                               </p>
                             </div>
