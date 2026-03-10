@@ -1,3 +1,8 @@
+export interface WorkItemInsight {
+  title: string;
+  content: string;
+}
+
 export interface WorkItem {
   type: string;
   title: string;
@@ -14,6 +19,8 @@ export interface WorkItem {
   blogHref?: string;
   /** Optional GitHub URL for project modal header */
   githubHref?: string;
+  /** Optional insights for tracing beam in project modal */
+  insights?: WorkItemInsight[];
 }
 
 export interface DesignItem {
@@ -49,6 +56,13 @@ export const workItems: WorkItem[] = [
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
     heroImage: "/EFP_PNG.png",
+    insights: [
+      {
+        title: "The Problem",
+        content:
+          "Assessment feedback in schools faces a critical timing challenge. The gap between when students complete an assessment and when they receive actionable feedback directly impacts learning outcomes. Teachers face a fragmented data landscape when preparing student feedback. Assessment results often reside across multiple disconnected systems—exam board portals, spreadsheets, student information systems, and paper-based records. Consolidating this data and generating meaningful, individualised feedback requires significant manual effort. The consequence: feedback reaches students days or weeks after the assessment, by which point they've progressed to new topics.",
+      },
+    ],
   },
   {
     type: "B2C SaaS · Tutoring Platform",
@@ -60,6 +74,13 @@ export const workItems: WorkItem[] = [
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
     preview: "maths",
     heroImage: "/TUTORING_PNG.png",
+    insights: [
+      {
+        title: "The Challenge",
+        content:
+          "Building a tutoring platform that scales securely required rethinking authentication and deployment. Role-based access with JWT needed to handle multiple user types—students, tutors, and admins—while maintaining zero unauthorised access. The CI/CD pipeline reduced manual deployment from 20+ minutes to under 3 minutes, enabling faster iteration and more reliable releases.",
+      },
+    ],
   },
   {
     type: "Educational Tool · ML Classifier",
@@ -72,11 +93,18 @@ export const workItems: WorkItem[] = [
     preview: "knn",
     heroImage: "/KNN_CLASSIFIER.png",
     githubHref: "https://github.com/BlissfulCoda/teachablemachine",
+    insights: [
+      {
+        title: "The Problem",
+        content:
+          "iPad classrooms couldn't use Google Teachable Machine due to browser restrictions and network requirements. Students needed a way to train and run ML classifiers entirely in the browser, with no server infrastructure. The solution: real-time client-side inference with TensorFlow.js, enabling 400+ students to use the tool with zero infrastructure cost.",
+      },
+    ],
   },
   {
     type: "Developer Tool · Open Source",
     title: "PseudoLab IDE",
-    desc: "Browser-based IDE for Cambridge IGCSE pseudocode. Real-time execution engine for 400+ students preparing for A-Level exams.",
+    desc: "Browser-based Cambridge Pseudocode IDE with real-time execution, AI-powered code review (BYOK pattern), and Stripe credit system. Adopted by 400+ students, including GCSE/A-Level students.",
     tags: ["Next.js", "TypeScript", "Open Source"],
     metric: "Exam-spec compliant",
     href: "https://www.algo-pseudo.com/",
@@ -85,6 +113,13 @@ export const workItems: WorkItem[] = [
     heroImage: "/PSEUDOLAB_PNG.png",
     blogHref: "#",
     githubHref: "https://github.com/BlissfulCoda/pseudolab",
+    insights: [
+      {
+        title: "The Problem",
+        content:
+          "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference—enabling 400+ students to practice exam-style pseudocode with instant feedback.",
+      },
+    ],
   },
 ];
 
@@ -148,7 +183,7 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "S",
     company: "The School of Research Science",
-    role: "Frontend Engineer",
+    role: "Software Engineer",
     desc: "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard — all tested to 95%+ coverage with zero critical regressions over 12 months.",
     tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],
     techStack: [
@@ -165,8 +200,8 @@ export const experienceItems: ExperienceItem[] = [
   },
   {
     initial: "F",
-    company: "Freelance Consultant",
-    role: "Design Engineer",
+    company: "Freelance ",
+    role: "Full-Stack Software Engineer",
     desc: "Designed and built production-grade products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video pipeline that cut media costs by 40%.",
     tags: ["React", "Node.js", "AWS S3", "Stripe", "Figma"],
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
@@ -174,7 +209,7 @@ export const experienceItems: ExperienceItem[] = [
   },
   {
     initial: "A",
-    company: "Adaptive Financial Consulting",
+    company: "Adaptive",
     role: "Software Engineer Intern",
     desc: "Built project timeline visualisations for senior management across 3 product teams. Collaborated with data analysts and the UX team on internal dashboards for financial workflows.",
     tags: ["React", "TypeScript", "Data Viz"],
