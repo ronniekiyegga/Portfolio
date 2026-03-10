@@ -134,7 +134,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-5xl w-[95vw] max-h-[90vh] p-0 gap-0 flex flex-col border border-gray-900 bg-background [&>button]:hidden"
+        className="max-w-5xl w-[95vw] max-h-[90vh] p-0 gap-0 flex flex-col border border-gray-900 bg-background dark:bg-[#111111] [&>button]:hidden"
         aria-describedby={undefined}
       >
         <VisuallyHidden.Root>
@@ -292,10 +292,10 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                           </div>
                           {item.insights.map((insight, i) => (
                             <div key={i} className="pb-8">
-                              <h4 className="font-semibold text-lg text-foreground mb-3">
+                              <h4 className="font-semibold text-base text-foreground mb-3">
                                 {insight.title}
                               </h4>
-                              <p className="text-muted-foreground text-[15px] leading-relaxed">
+                              <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
                                 {insight.content}
                               </p>
                             </div>
