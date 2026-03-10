@@ -22,7 +22,7 @@ const experiences: {
   {
     id: "SRS",
     organisation: "The School Of Research Science",
-    role: "Frontend Developer / Design Engineer",
+    role: "Software Engineer",
     dates: "2023 - 2026",
     responsibilities:
       "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard - all tested to 95%+ coverage with zero critical regressions over 12 months.",

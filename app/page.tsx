@@ -89,7 +89,7 @@ export default function Home() {
           <Divider />
           <ExperienceSection />
           <Divider />
-          <SkillsSection />
+          {/* <SkillsSection /> */}
           <Divider />
           <Marquee />
           <Divider />
