@@ -103,7 +103,7 @@ export const workItems: WorkItem[] = [
   },
   {
     type: "Developer Tool · Open Source",
-    title: "PseudoLab IDE",
+    title: "Algo-pseudo IDE",
     desc: "Browser-based Cambridge Pseudocode IDE with real-time execution, AI-powered code review (BYOK pattern), and Stripe credit system. Adopted by 400+ students, including GCSE/A-Level students.",
     tags: ["Next.js", "TypeScript", "Open Source"],
     metric: "Exam-spec compliant",

@@ -134,7 +134,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-5xl w-[95vw] max-h-[90vh] p-0 gap-0 flex flex-col border border-gray-900 bg-background [&>button]:hidden"
+        className="max-w-5xl w-[95vw] max-h-[90vh] p-0 gap-0 flex flex-col border border-gray-900 bg-background dark:bg-[#111111] [&>button]:hidden"
         aria-describedby={undefined}
       >
         <VisuallyHidden.Root>
