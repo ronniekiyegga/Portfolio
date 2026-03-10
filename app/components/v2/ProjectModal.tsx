@@ -8,7 +8,10 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/app/components/ui/dialog";
+import Image from "next/image";
 import { ImageIllustration } from "@/app/components/ui/illustrations/image-illustration";
+import { TracingBeam } from "@/app/components/ui/tracing-beam";
+import GradualBlur from "@/app/components/GradualBlur";
 import { ArrowUpRight, Bell, X } from "lucide-react";
 import type { WorkItem } from "@/lib/v2-data";
 
@@ -220,42 +223,112 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
           </div>
         </div>
 
-        <div
-          ref={setScrollRef}
-          onScroll={handleScroll}
-          className="overflow-y-auto flex-1 min-h-0"
-        >
-          <section>
-            <div className="pb-56 pt-56 lg:pt-150">
-              <ImageIllustration
-                containerRef={scrollRef}
-                src={item?.heroImage}
-                alt={item?.title ?? "Project"}
-              />
-              <div className="mx-auto mt-8 max-w-6xl px-6 lg:mt-12 lg:px-12">
-                <div className="grid gap-6 md:grid-cols-2 md:gap-12">
-                  <p className="text-muted-foreground">
-                    Our advanced visual processing system can{" "}
-                    <strong className="text-foreground font-semibold">
-                      analyze and interpret complex images
-                    </strong>
-                    , enabling applications from medical diagnostics to
-                    autonomous navigation and content moderation.
-                  </p>
+        <div className="relative flex-1 min-h-0 overflow-hidden flex flex-col">
+          <div
+            ref={setScrollRef}
+            onScroll={handleScroll}
+            className="flex-1 min-h-0 overflow-y-auto"
+          >
+            <section>
+              <div className="pb-56 pt-56 lg:pt-150">
+                <ImageIllustration
+                  containerRef={scrollRef}
+                  src={item?.heroImage}
+                  alt={item?.title ?? "Project"}
+                />
+                <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
+                  <div className="grid gap-6 md:grid-cols-[1fr_1.5fr] md:gap-12 lg:gap-2">
+                    {/* Left: project metadata (hover content from work card) */}
+                    <div className="flex flex-col gap-4 max-w-xs">
+                      <p
+                        className="font-jetbrains text-[10px] tracking-widest uppercase"
+                        style={{ color: "var(--muted)" }}
+                      >
+                        {item?.type}
+                      </p>
+                      <h3 className="font-cormorant text-2xl font-normal leading-tight text-foreground">
+                        {item?.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {item?.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {item?.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 border rounded font-jetbrains text-[9px] tracking-widest uppercase"
+                            style={{
+                              borderColor: "var(--border)",
+                              color: "var(--muted)",
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <p
+                        className="font-cormorant text-2xl italic"
+                        style={{ color: "var(--metric-color)" }}
+                      >
+                        {item?.metric}
+                      </p>
+                    </div>
 
-                  <p className="text-muted-foreground">
-                    Our platform{" "}
-                    <strong className="text-foreground font-semibold">
-                      integrates text, image, and audio processing
-                    </strong>{" "}
-                    into a unified framework, creating more intuitive and
-                    powerful AI systems that understand the world more like
-                    humans do.
-                  </p>
+                    {/* Right: tracing beam starting at image, with image + insights */}
+                    {item?.insights && item.insights.length > 0 ? (
+                      <TracingBeam
+                        containerRef={scrollRef}
+                        className="w-full max-w-none pl-20 "
+                      >
+                        <div className="space-y-8">
+                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
+                            <Image
+                              src={item?.heroImage ?? ""}
+                              alt={item?.title ?? "Project"}
+                              width={600}
+                              height={400}
+                              className="w-full h-auto object-contain rounded-lg"
+                            />
+                          </div>
+                          {item.insights.map((insight, i) => (
+                            <div key={i} className="pb-8">
+                              <h4 className="font-semibold text-lg text-foreground mb-3">
+                                {insight.title}
+                              </h4>
+                              <p className="text-muted-foreground text-[15px] leading-relaxed">
+                                {insight.content}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </TracingBeam>
+                    ) : (
+                      <div className="relative overflow-hidden rounded-xl bg-muted/30 p-4">
+                        <Image
+                          src={item?.heroImage ?? ""}
+                          alt={item?.title ?? "Project"}
+                          width={600}
+                          height={400}
+                          className="w-full h-auto object-contain rounded-lg"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
+
+          <GradualBlur
+            target="parent"
+            position="bottom"
+            height="4rem"
+            strength={2}
+            divCount={5}
+            curve="bezier"
+            exponential
+            opacity={1}
+          />
         </div>
       </DialogContent>
     </Dialog>
