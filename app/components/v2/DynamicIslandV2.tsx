@@ -226,7 +226,7 @@ export function DynamicIslandV2({
             <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden">
               <div className="lets-chat-cream-wrapper shrink-0 rounded-full">
                 <Link
-                  href="mailto:contact@ronniekiyegga.com"
+                  href="mailto:ronniekiyegga@hotmail.com"
                   className={cn(
                     "lets-chat-inner flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
                     styleScript.className,

@@ -11,6 +11,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
+const LANYARD_DROP_HEIGHT = 2.2;
+
 const experiences: {
   id: string;
   organisation: string;
@@ -68,31 +71,22 @@ const experiences: {
 
 export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [lanyardDrop, setLanyardDrop] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const st = ScrollTrigger.create({
-      trigger: section,
-      start: "top 80%",
-      onEnter: () => {},
-    });
-
-    return () => st.kill();
-  }, []);
+  const lanyardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const content = contentRef.current;
+    const lanyardEl = lanyardRef.current;
     if (!section || !content) return;
 
     const heading = content.querySelector("h2");
     const items = content.querySelectorAll("[data-experience-item]");
 
     gsap.set([heading, ...items], { opacity: 0, y: 16, force3D: true });
+    if (lanyardEl) gsap.set(lanyardEl, { opacity: 0, force3D: true });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -103,6 +97,10 @@ export default function Experiences() {
       },
     });
 
+    tl.call(() => setLanyardDrop(true), undefined, 0);
+    if (lanyardEl) {
+      tl.to(lanyardEl, { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true }, 0);
+    }
     tl.to(heading, { opacity: 1, y: 0, duration: 1, ease: "none" }).to(
       items,
       {
@@ -124,7 +122,7 @@ export default function Experiences() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-neutral-950"
+      className="relative w-full min-w-0 min-h-screen overflow-visible py-16 md:py-32 dark:bg-neutral-950"
     >
       <div
         ref={contentRef}
@@ -201,6 +199,26 @@ export default function Experiences() {
             );
           })}
         </div>
+      </div>
+
+      {/* Lanyard 3D overlay — drops when section enters viewport (ScrollTrigger) */}
+      <div
+        ref={lanyardRef}
+        data-experiences-lanyard
+        className="opacity-0 absolute inset-0 z-25 pointer-events-none"
+      >
+        <Lanyard
+          key={lanyardDrop ? "drop" : "preload"}
+          visible
+          position={[0, 0, 24]}
+          gravity={[0, -40, 0]}
+          fov={22}
+          scale={0.85}
+          stringLineWidth={0.75}
+          ropeLength={1.0}
+          initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
+          className="md:translate-x-12 md:-translate-y-1"
+        />
       </div>
     </section>
   );
