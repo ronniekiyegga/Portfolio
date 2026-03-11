@@ -19,6 +19,7 @@ import PrismComponent from "./ui/gradients/PrismComponent";
 import LightRaysComponent from "./ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 import { MoveUpRight } from "lucide-react";
+import type { WorkItem } from "@/lib/v2-data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -110,6 +111,10 @@ interface ExpandableFeatures4Props {
   features?: Feature[];
   /** Optional project links: liveWebsite → "Live Website"/"Live Demo" button, designFile → "Design File" button */
   links?: ProjectLinks;
+  /** WorkItem for ProjectModal. When provided with onOpenProjectModal, Live Website opens modal instead of link/dialog. */
+  workItem?: WorkItem;
+  /** Callback to open ProjectModal with the given workItem. */
+  onOpenProjectModal?: (workItem: WorkItem) => void;
 }
 
 const BADGE: string = "Platform Features";
@@ -132,6 +137,8 @@ export default function ExpandableFeatures4({
   detailsImage,
   features: featuresProp,
   links,
+  workItem,
+  onOpenProjectModal,
 }: ExpandableFeatures4Props) {
   const featuresList = featuresProp ?? DEFAULT_FEATURES;
   const tabFeatures = featuresList.filter((f) => !f.href);
@@ -275,20 +282,20 @@ export default function ExpandableFeatures4({
           <div
             ref={textColRef}
             className={cn(
-              "flex min-w-0 flex-col gap-6 pb-4 sm:col-span-3 md:py-6",
+              "flex min-w-0 flex-col gap-6 pb-4 sm:col-span-3 md:py-6 overflow-visible",
               imageOnLeft && "sm:order-2",
             )}
           >
-            <div className="min-w-0 text-balance">
+            <div className="min-w-0 text-balance overflow-visible">
               <h4
                 ref={badgeRef}
-                className="mb-2 w-fit rounded-full text-[11px] font-bold uppercase tracking-wide text-gradient-blue"
+                className="mb-2 w-fit rounded-full text-[11px] font-bold uppercase tracking-wide text-gradient-blue-static"
               >
                 {badge}
               </h4>
               <h2
                 ref={titleRef}
-                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white "
+                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white break-words min-w-0 overflow-visible"
               >
                 {title}
               </h2>
@@ -304,7 +311,33 @@ export default function ExpandableFeatures4({
               data-project-cta
               className="opacity-0 flex flex-wrap items-center gap-2"
             >
-              {links?.designFile || links?.liveWebsite ? (
+              {workItem && onOpenProjectModal ? (
+                <>
+                  {links?.designFile && (
+                    <a
+                      href={links.designFile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        PROJECT_LINK_BASE_CLASSES,
+                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
+                      )}
+                    >
+                      Figma File <MoveUpRight className="size-3.5" />
+                    </a>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => onOpenProjectModal(workItem)}
+                    className={cn(
+                      PROJECT_LINK_BASE_CLASSES,
+                      "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
+                    )}
+                  >
+                    Project Details <MoveUpRight className="size-3.5" />
+                  </button>
+                </>
+              ) : links?.designFile || links?.liveWebsite ? (
                 <>
                   {links.designFile && (
                     <a
@@ -422,15 +455,6 @@ export default function ExpandableFeatures4({
               imageOnLeft && "sm:order-1",
             )}
           >
-            <div
-              aria-hidden
-              className="mask-x-from-45% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-6 rotate-45 border-y"
-            />
-            <div
-              aria-hidden
-              className="mask-y-from-75% border-tracing-gradient pointer-events-none absolute -inset-x-1 -inset-y-12 border-x"
-            />
-
             <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
               {/* Shared background - cycles with AUTOPLAY_DURATION */}
               <div

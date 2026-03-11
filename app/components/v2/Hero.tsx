@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 import { BackgroundBeams } from "@/components/ui/background-beams";
@@ -35,13 +36,19 @@ const ENTRANCE_DELAY = 0.35;
 const LANYARD_DROP_HEIGHT = 2.2;
 
 export function Hero() {
+  const pathname = usePathname();
   const { isAppReady } = useLoading();
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
 
+  // Reset animation state when returning to home so hero re-animates after V1→V2 switch
   useEffect(() => {
-    if (!isAppReady || hasAnimated.current) return;
+    if (pathname === "/") hasAnimated.current = false;
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isAppReady || hasAnimated.current || pathname !== "/") return;
 
     const container = containerRef.current;
     if (!container) return;
@@ -114,7 +121,7 @@ export function Hero() {
     return () => {
       tl.kill();
     };
-  }, [isAppReady]);
+  }, [isAppReady, pathname]);
 
   return (
     <section

@@ -180,7 +180,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="hidden md:block rounded-full pill-outer-cream">
             <div className="lets-chat-cream-wrapper">
               <Link
-                href="mailto:contact@ronniekiyegga.com"
+                href="mailto:ronniekiyegga@hotmail.com"
                 className="lets-chat-inner flex items-center gap-2 whitespace-nowrap px-5 py-2 no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
                 style={{ fontFamily: 'var(--font-style-script), cursive' }}
               >
@@ -283,7 +283,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="rounded-full pill-outer-cream">
             <div className="lets-chat-cream-wrapper">
               <Link
-                href="mailto:contact@ronniekiyegga.com"
+                href="mailto:ronniekiyegga@hotmail.com"
                 onClick={closeMobile}
                 className="lets-chat-inner flex items-center justify-center gap-2 w-full whitespace-nowrap px-5 py-3 no-underline transition-all duration-200 hover:opacity-90"
                 style={{ fontFamily: 'var(--font-style-script), cursive' }}

@@ -42,6 +42,10 @@ interface LanyardProps {
   scale?: number;
   /** When set, lanyard starts at this Y height and physics drops it from above. */
   initialDropHeight?: number;
+  /** Width of the string (default: theme-based). Use smaller value for thinner string. */
+  stringLineWidth?: number;
+  /** Length of each rope segment (default 1.6). Smaller = shorter string. */
+  ropeLength?: number;
 }
 
 export default function Lanyard({
@@ -53,13 +57,15 @@ export default function Lanyard({
   className = "",
   scale = 1,
   initialDropHeight,
+  stringLineWidth: stringLineWidthProp,
+  ropeLength = 1.6,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isLight = mounted && resolvedTheme === "light";
   const stringColor = isLight ? "#ffffff" : "#e2e8f0";
-  const stringLineWidth = isLight ? 1.3 : 1;
+  const stringLineWidth = stringLineWidthProp ?? (isLight ? 1.3 : 1);
   const [isMobile, setIsMobile] = useState<boolean>(
     () => typeof window !== "undefined" && window.innerWidth < 768,
   );
@@ -96,6 +102,7 @@ export default function Lanyard({
                 stringColor={stringColor}
                 stringLineWidth={stringLineWidth}
                 initialDropHeight={initialDropHeight}
+                ropeLength={ropeLength}
               />
             </Physics>
           </Suspense>
@@ -143,6 +150,7 @@ interface BandProps {
   stringColor?: string;
   stringLineWidth?: number;
   initialDropHeight?: number;
+  ropeLength?: number;
 }
 
 function Band({
@@ -153,6 +161,7 @@ function Band({
   stringColor = "#e2e8f0",
   stringLineWidth = 1,
   initialDropHeight,
+  ropeLength = 1.6,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -180,6 +189,7 @@ function Band({
   const texture = useTexture(
     typeof lanyardTexture === "string" ? lanyardTexture : lanyardTexture.src,
   );
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -192,9 +202,9 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.6]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.6]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.6]);
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0],

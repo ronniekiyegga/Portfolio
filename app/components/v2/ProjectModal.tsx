@@ -10,7 +10,6 @@ import {
 } from "@/app/components/ui/dialog";
 import Image from "next/image";
 import { ImageIllustration } from "@/app/components/ui/illustrations/image-illustration";
-import { TracingBeam } from "@/app/components/ui/tracing-beam";
 import GradualBlur from "@/app/components/GradualBlur";
 import { ArrowUpRight, Bell, X } from "lucide-react";
 import type { WorkItem } from "@/lib/v2-data";
@@ -274,34 +273,29 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       </p>
                     </div>
 
-                    {/* Right: tracing beam starting at image, with image + insights */}
+                    {/* Right: image + insights */}
                     {item?.insights && item.insights.length > 0 ? (
-                      <TracingBeam
-                        containerRef={scrollRef}
-                        className="w-full max-w-none pl-20 "
-                      >
-                        <div className="space-y-8">
-                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
-                            <Image
-                              src={item?.heroImage ?? ""}
-                              alt={item?.title ?? "Project"}
-                              width={600}
-                              height={400}
-                              className="w-full h-auto object-contain rounded-lg"
-                            />
-                          </div>
-                          {item.insights.map((insight, i) => (
-                            <div key={i} className="pb-8">
-                              <h4 className="font-semibold text-base text-foreground mb-3">
-                                {insight.title}
-                              </h4>
-                              <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
-                                {insight.content}
-                              </p>
-                            </div>
-                          ))}
+                      <div className="space-y-8">
+                        <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
+                          <Image
+                            src={item?.heroImage ?? ""}
+                            alt={item?.title ?? "Project"}
+                            width={600}
+                            height={400}
+                            className="w-full h-auto object-contain rounded-lg"
+                          />
                         </div>
-                      </TracingBeam>
+                        {item.insights.map((insight, i) => (
+                          <div key={i} className="pb-8">
+                            <h4 className="font-semibold text-base text-foreground mb-3">
+                              {insight.title}
+                            </h4>
+                            <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
+                              {insight.content}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     ) : (
                       <div className="relative overflow-hidden rounded-xl bg-muted/30 p-4">
                         <Image
