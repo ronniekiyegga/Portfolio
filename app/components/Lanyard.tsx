@@ -52,6 +52,10 @@ interface LanyardProps {
   stringColor?: string;
   /** String opacity 0–1 for glass effect (default 1). */
   stringOpacity?: number;
+  /** Scale of the card only (default 3.25). Use smaller value for thinner/smaller card. */
+  cardScale?: number;
+  /** Y-scale multiplier for card (default 1). Use <1 to make card shorter/less tall. */
+  cardScaleY?: number;
 }
 
 export default function Lanyard({
@@ -68,6 +72,8 @@ export default function Lanyard({
   cardAttachmentY = 1.45,
   stringColor: stringColorProp,
   stringOpacity = 1,
+  cardScale: cardScaleProp,
+  cardScaleY = 1,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -108,6 +114,8 @@ export default function Lanyard({
               <Band
                 isMobile={isMobile}
                 scale={scale}
+                cardScale={cardScaleProp}
+                cardScaleY={cardScaleY}
                 stringColor={stringColor}
                 stringLineWidth={stringLineWidth}
                 stringOpacity={stringOpacity}
@@ -158,6 +166,8 @@ interface BandProps {
   minSpeed?: number;
   isMobile?: boolean;
   scale?: number;
+  cardScale?: number;
+  cardScaleY?: number;
   stringColor?: string;
   stringLineWidth?: number;
   stringOpacity?: number;
@@ -171,6 +181,8 @@ function Band({
   minSpeed = 0,
   isMobile = false,
   scale = 1,
+  cardScale = 3.25,
+  cardScaleY = 1,
   stringColor = "#e2e8f0",
   stringLineWidth = 1,
   stringOpacity = 1,
@@ -356,7 +368,7 @@ function Band({
         >
           <CuboidCollider args={[0.8, 1.111, 0.01]} />
           <group
-            scale={3.25}
+            scale={[cardScale, cardScale * cardScaleY, cardScale]}
             position={[0, -2.3, 0.02]}
             rotation={[0.15, -0.7, 0.01]}
             onPointerOver={() => hover(true)}

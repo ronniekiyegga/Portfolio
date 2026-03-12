@@ -190,10 +190,11 @@ export default function HeroSection() {
           position={[0, 0, 24]}
           gravity={[0, -40, 0]}
           fov={22}
-          scale={0.60}
-          ropeLength={0.95}
+          scale={0.85}
+          stringLineWidth={0.75}
+          ropeLength={1.35}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
-          className="md:-translate-x-24"
+          className="md:translate-x-12 md:-translate-y-1"
         />
       </div>
     </section>
