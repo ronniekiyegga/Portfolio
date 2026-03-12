@@ -112,14 +112,14 @@ export default function HeroSection() {
         {/* Name — Ronnie Kiyegga (single line, matches portfolio_redesign_2) */}
         <h1
           data-hero-name
-          className="font-cormorant font-light leading-[0.95] tracking-[-0.02em] text-center mb-5 whitespace-nowrap"
+          className="font-cormorant leading-[0.95] tracking-[-0.02em] text-center mb-5 whitespace-nowrap font-medium hero-name"
           style={{
             fontSize: "clamp(4rem, 9vw, 8.5rem)",
             color: "var(--text)",
           }}
         >
           Ronnie{" "}
-          <em className="italic text-blue-600 dark:text-blue-400 font-light">
+          <em className="italic text-gradient-blue-static font-light">
             Kiyegga
           </em>
         </h1>
@@ -143,16 +143,16 @@ export default function HeroSection() {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`flex-1 py-3.5 px-4 text-center ${
+              className={`flex-1 py-4 px-4 text-center ${
                 i < stats.length - 1
                   ? "border-r border-neutral-200 dark:border-neutral-700"
                   : ""
               }`}
             >
-              <div className="font-cormorant font-semibold text-2xl md:text-3xl leading-none text-neutral-900 dark:text-neutral-100">
+              <div className="font-cormorant font-semibold text-base md:text-2xl leading-none text-neutral-900 dark:text-neutral-100">
                 {s.num}
               </div>
-              <div className="text-[10px] tracking-[0.1em] uppercase text-neutral-500 dark:text-neutral-400 mt-1">
+              <div className="text-[8px] md:text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 mt-1 text-nowrap">
                 {s.label}
               </div>
             </div>
