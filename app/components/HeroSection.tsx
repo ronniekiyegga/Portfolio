@@ -47,6 +47,7 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
 
   useEffect(() => {
     if (!isAppReady || hasAnimated.current) return;
@@ -64,13 +65,13 @@ export default function HeroSection() {
       ?.querySelector("[data-hero-lanyard]");
 
     hasAnimated.current = true;
-    // fadeUp: opacity 0→1, y 20→0 (portfolio_redesign_2)
+    // Set initial state before revealing — prevents flash
     gsap.set(els, { opacity: 0, y: 20, force3D: true });
     if (lanyard) gsap.set(lanyard, { opacity: 0, force3D: true });
+    setHeroReady(true);
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out", force3D: true },
-      delay: 0.3,
     });
 
     // availability: fadeUp 0.6s @ 0
@@ -121,7 +122,7 @@ export default function HeroSection() {
 
       <div
         ref={containerRef}
-        className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto"
+        className={`relative z-10 flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto transition-opacity duration-0 ${!heroReady ? "opacity-0" : ""}`}
       >
         {/* Availability badge */}
         <div
