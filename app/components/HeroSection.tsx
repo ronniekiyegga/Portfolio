@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useLoading } from "@/app/contexts/LoadingContext";
 import IntroductionText from "@/app/components/IntroductionText";
 import ContactInfo from "./patterns/ContactInfo";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import Image from "next/image";
+import { LogoLoop, type LogoItem } from "./LogoLoop";
+import { FaAws } from "react-icons/fa";
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
 /** Match V2 Hero exactly */
@@ -20,14 +23,23 @@ const stats = [
   { num: "3+", label: "Years Shipped" },
 ];
 
-const stack = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node",
-  "AWS",
-  "Docker",
-  "Figma",
+const LOGO_SIZE = 28;
+const stackLogos: LogoItem[] = [
+  { src: "/Typescript_Icon.svg", alt: "TypeScript" },
+  { src: "/React_Icon.svg", alt: "React" },
+  { src: "/Nextjs_Icon.svg", alt: "Next.js" },
+  { src: "/Nodejs_Icon.svg", alt: "Node" },
+  {
+    node: (
+      <FaAws
+        className="shrink-0"
+        style={{ width: LOGO_SIZE, height: LOGO_SIZE }}
+      />
+    ),
+    ariaLabel: "AWS",
+  },
+  { src: "/Docker_Icon.svg", alt: "Docker" },
+  { src: "/Figma_Icon.svg", alt: "Figma" },
 ];
 
 export default function HeroSection() {
@@ -43,11 +55,13 @@ export default function HeroSection() {
     if (!container) return;
 
     const els = container.querySelectorAll(
-      "[data-hero-availability], [data-hero-name], [data-hero-intro], [data-hero-stats], [data-hero-stack], [data-hero-contact]"
+      "[data-hero-availability], [data-hero-name], [data-hero-intro], [data-hero-stats], [data-hero-stack], [data-hero-contact]",
     );
     if (!els.length) return;
 
-    const lanyard = container.closest("section")?.querySelector("[data-hero-lanyard]");
+    const lanyard = container
+      .closest("section")
+      ?.querySelector("[data-hero-lanyard]");
 
     hasAnimated.current = true;
     // fadeUp: opacity 0→1, y 20→0 (portfolio_redesign_2)
@@ -127,13 +141,16 @@ export default function HeroSection() {
             color: "var(--text)",
           }}
         >
-          Ronnie <em className="italic text-blue-600 dark:text-blue-400 font-light">Kiyegga</em>
+          Ronnie{" "}
+          <em className="italic text-blue-600 dark:text-blue-400 font-light">
+            Kiyegga
+          </em>
         </h1>
 
         {/* V1 text — IntroductionText (job title + bio with crafting) */}
         <div
           data-hero-intro
-          className="mb-14 w-full flex flex-col items-center justify-center text-center [&_.flex]:!justify-center [&_.text-left]:!text-center [&_.text-left]:!mx-auto [&_.text-left]:max-w-[38ch]"
+          className="mb-14 w-full flex flex-col items-center justify-center text-center [&_.flex]:justify-center! [&_.text-left]:text-center! [&_.text-left]:mx-auto! [&_.text-left]:max-w-[38ch]"
         >
           <IntroductionText />
         </div>
@@ -165,23 +182,47 @@ export default function HeroSection() {
           ))}
         </div>
 
-        {/* Stack pills — full width */}
+        {/* Stack logos — LogoLoop (matches stats width) */}
         <div
           data-hero-stack
-          className="w-full flex flex-wrap gap-2 justify-center mb-10"
+          className="w-full max-w-2xl mx-auto mb-10 overflow-hidden [&_.flex]:justify-center!"
         >
-          {stack.map((s, i) => (
-            <span
-              key={s}
-              className={`text-[11.5px] font-medium px-3.5 py-1.5 rounded-full border ${
-                ["TypeScript", "React", "Next.js", "Figma"].includes(s)
-                  ? "border-blue-500/50 text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-500/20"
-                  : "border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 bg-white/50 dark:bg-white/5"
-              }`}
-            >
-              {s}
-            </span>
-          ))}
+          <LogoLoop
+            logos={stackLogos}
+            speed={40}
+            direction="left"
+            width="100%"
+            logoHeight={LOGO_SIZE}
+            gap={48}
+            pauseOnHover
+            fadeOut
+            renderItem={(item) => {
+              const isNode = "node" in item;
+              return (
+                <span
+                  className="flex shrink-0 items-center justify-center"
+                  style={{
+                    width: LOGO_SIZE,
+                    height: LOGO_SIZE,
+                  }}
+                >
+                  {isNode ? (
+                    (item as { node: ReactNode }).node
+                  ) : (
+                    <Image
+                      src={(item as { src: string }).src}
+                      alt={(item as { alt?: string }).alt ?? ""}
+                      width={LOGO_SIZE}
+                      height={LOGO_SIZE}
+                      className="h-full w-full object-contain"
+                    />
+                  )}
+                </span>
+              );
+            }}
+            ariaLabel="Technology stack"
+            className="mx-auto [--logoloop-fadeColor:#F4EFE6] dark:[--logoloop-fadeColor:#0a0a0a]"
+          />
         </div>
 
         {/* V1 contact card — centered */}
