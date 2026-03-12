@@ -12,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
+/** Match V2 Hero exactly */
 const LANYARD_DROP_HEIGHT = 2.2;
 
 const experiences: {
@@ -88,6 +89,26 @@ export default function Experiences() {
     gsap.set([heading, ...items], { opacity: 0, y: 16, force3D: true });
     if (lanyardEl) gsap.set(lanyardEl, { opacity: 0, force3D: true });
 
+    // Lanyard: play drop + fade when section enters (real-time, not scrubbed)
+    let lanyardST: ScrollTrigger | null = null;
+    if (lanyardEl) {
+      lanyardST = ScrollTrigger.create({
+        trigger: section,
+        start: "top 88%",
+        once: true,
+        onEnter: () => {
+          setLanyardDrop(true);
+          gsap.to(lanyardEl, {
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            force3D: true,
+          });
+        },
+      });
+    }
+
+    // Content: scrubbed fade for heading + items
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -97,10 +118,6 @@ export default function Experiences() {
       },
     });
 
-    tl.call(() => setLanyardDrop(true), undefined, 0);
-    if (lanyardEl) {
-      tl.to(lanyardEl, { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true }, 0);
-    }
     tl.to(heading, { opacity: 1, y: 0, duration: 1, ease: "none" }).to(
       items,
       {
@@ -114,6 +131,7 @@ export default function Experiences() {
     );
 
     return () => {
+      lanyardST?.kill();
       tl.scrollTrigger?.kill();
       tl.kill();
     };
@@ -216,7 +234,7 @@ export default function Experiences() {
           fov={22}
           scale={0.85}
           stringLineWidth={0.75}
-          ropeLength={1.35}
+          ropeLength={1.40}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
           className="md:translate-x-12 md:-translate-y-1"
         />
