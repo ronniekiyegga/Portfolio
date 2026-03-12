@@ -184,27 +184,26 @@ export default function DynamicIsland() {
             </div>
           </div>
 
-          {/* Right pill — cream outer (padding matches left), white inner, Let's chat + icons */}
+          {/* Right pill — cream outer, dark inner with Let's chat + icons inside */}
           <div className="rounded-full pill-outer-cream">
-            <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden !pl-0">
-              <div className="lets-chat-cream-wrapper shrink-0">
+            <div className="lets-chat-cream-wrapper">
+              <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
                 <Link
                   href="mailto:ronniekiyegga@hotmail.com"
                   className={cn(
-                    "lets-chat-inner flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
+                    "flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
                     styleScript.className,
                   )}
                 >
+                  <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                   <span>Let&apos;s chat</span>
                   <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
                 </Link>
-              </div>
-              <div className="pill-icons-white flex items-center pl-0 pr-0 py-2 -ml-2 gap-0">
-                <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
+                <div className="h-4 w-px shrink-0 bg-white/20" />
                 <button
                   type="button"
                   onClick={() => setSplashActive((prev) => !prev)}
-                  className="rounded-full p-1.5 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10 -mr-2"
+                  className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
                   aria-label={
                     splashActive
                       ? "Disable fluid cursor"
@@ -214,13 +213,13 @@ export default function DynamicIsland() {
                   <BsStars
                     className={cn(
                       "size-4 shrink-0 pill-icon-gradient",
-                      splashActive && "dark:text-cyan-400",
+                      splashActive && "text-cyan-400",
                     )}
                   />
                 </button>
                 <div className="theme-toggle-outer shrink-0 pr-0.5 -ml-2">
                   <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
-                    <AnimatedThemeToggler className="size-4 shrink-0 text-black dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                    <AnimatedThemeToggler className="size-4 shrink-0 text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
                   </div>
                 </div>
               </div>

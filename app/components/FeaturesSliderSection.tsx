@@ -1,11 +1,7 @@
+"use client";
+
 import { Card } from "@/app/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/app/components/ui/carousel";
+import { DesignCardMarquee, DesignMarqueeSection } from "./DesignCardMarquee";
 import Image from "next/image";
 
 const projectCard = [
@@ -107,67 +103,38 @@ export default function FeaturesSliderSection({
   backgroundColor = "bg-transparent",
 }: FeaturesSliderSectionProps) {
   return (
-    <section
+    <DesignMarqueeSection
       id="design"
-      className="bg-transparent w-full min-w-0 overflow-x-hidden @container py-24 max-lg:px-1 dark:bg-neutral-950"
+      itemCount={projectCard.length}
+      className="bg-transparent @container"
     >
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-          breakpoints: {
-            "(max-width: 768px)": {
-              slidesToScroll: 1,
-            },
-            "(min-width: 768px)": {
-              slidesToScroll: 2,
-            },
-          },
-        }}
-        className="mx-auto max-w-5xl"
-      >
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-4 px-6 lg:mb-10">
-          <h5 className="text-left text-xs tracking-widest text-foreground">
-            UX/UI DESIGNS
-          </h5>
-
-          <div className="flex items-center gap-2">
-            <CarouselPrevious />
-            <CarouselNext />
-          </div>
+      {projectCard.map((content, index) => (
+        <div
+          key={`${content.title}-${index}`}
+          className="flex w-[min(480px,50vw)] min-w-[280px] max-w-[500px] shrink-0 flex-col gap-4"
+        >
+          <Card
+            className={`ring-indigo-600 bg-${backgroundColor} border-white shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-md ring-0`}
+            style={{
+              backgroundImage: `url(${backgroundImage.startsWith("/") ? backgroundImage : `/${backgroundImage}`})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <Image
+              src={content.src}
+              alt={content.title}
+              width={400}
+              height={400}
+              sizes="(max-width: 640px) 280px, 480px"
+              className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
+            />
+          </Card>
+          {content.description}
         </div>
-
-        {/* ...Carouself ... */}
-        <CarouselContent className="gap-1 pt-6">
-          {projectCard.map((content, index) => (
-            <CarouselItem
-              key={`${content.title}-${index}`}
-              className="space-y-4 md:basis-1/2"
-            >
-              <Card
-                className={`ring-indigo-600 bg-${backgroundColor}  border-white shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-md ring-0`}
-                style={{
-                  backgroundImage: `url(${backgroundImage.startsWith("/") ? backgroundImage : `/${backgroundImage}`})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <Image
-                  src={content.src}
-                  alt={content.title}
-                  width={400}
-                  height={400}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="absolute inset-0 size-full opacity-95 hover:opacity-100 transition-opacity duration-500 object-cover"
-                />
-              </Card>
-              {content.description}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </section>
+      ))}
+    </DesignMarqueeSection>
   );
 }
 

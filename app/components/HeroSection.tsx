@@ -10,43 +10,30 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import Image from "next/image";
 import { LogoLoop, type LogoItem } from "./LogoLoop";
 import { FaAws } from "react-icons/fa";
+import LogoLoopSection from "@/widgets/LogoLoop";
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
 /** Match V2 Hero exactly */
 const LANYARD_DROP_HEIGHT = 2.2;
-const LANYARD_DROP_TIME = 1.0;
+/** Delay after loading screen disappears before hero animates (match V2) */
+const ENTRANCE_DELAY = 0.28;
+/** Lanyard drops last, slightly sooner (contact ends ~1.3s) */
+const LANYARD_DROP_TIME = 1.1;
 
 const stats = [
-  { num: "1.2k", label: "Students" },
-  { num: "95%", label: "Test Coverage" },
+  { num: "<50ms", label: "P95 Latency" },
+  { num: "90%", label: "Faster QA" },
   { num: "40%", label: "Cost Reduction" },
-  { num: "3+", label: "Years Shipped" },
-];
-
-const LOGO_SIZE = 28;
-const stackLogos: LogoItem[] = [
-  { src: "/Typescript_Icon.svg", alt: "TypeScript" },
-  { src: "/React_Icon.svg", alt: "React" },
-  { src: "/Nextjs_Icon.svg", alt: "Next.js" },
-  { src: "/Nodejs_Icon.svg", alt: "Node" },
-  {
-    node: (
-      <FaAws
-        className="shrink-0"
-        style={{ width: LOGO_SIZE, height: LOGO_SIZE }}
-      />
-    ),
-    ariaLabel: "AWS",
-  },
-  { src: "/Docker_Icon.svg", alt: "Docker" },
-  { src: "/Figma_Icon.svg", alt: "Figma" },
+  { num: "4+", label: "Years " },
 ];
 
 export default function HeroSection() {
   const { isAppReady } = useLoading();
   const containerRef = useRef<HTMLDivElement>(null);
+  const lanyardRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
 
   useEffect(() => {
     if (!isAppReady || hasAnimated.current) return;
@@ -59,18 +46,14 @@ export default function HeroSection() {
     );
     if (!els.length) return;
 
-    const lanyard = container
-      .closest("section")
-      ?.querySelector("[data-hero-lanyard]");
-
     hasAnimated.current = true;
-    // fadeUp: opacity 0→1, y 20→0 (portfolio_redesign_2)
+    // Set initial state before revealing — prevents flash
     gsap.set(els, { opacity: 0, y: 20, force3D: true });
-    if (lanyard) gsap.set(lanyard, { opacity: 0, force3D: true });
+    queueMicrotask(() => setHeroReady(true));
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out", force3D: true },
-      delay: 0.3,
+      delay: ENTRANCE_DELAY,
     });
 
     // availability: fadeUp 0.6s @ 0
@@ -79,15 +62,8 @@ export default function HeroSection() {
     tl.to(els[1], { opacity: 1, y: 0, duration: 0.6 }, 0.1);
     // intro: fadeUp 0.6s @ 0.2s
     tl.to(els[2], { opacity: 1, y: 0, duration: 0.6 }, 0.2);
-    // lanyard: trigger drop + fade in at 1.0s (match V2 exactly)
-    if (lanyard) {
-      tl.call(() => setLanyardDrop(true), undefined, LANYARD_DROP_TIME);
-      tl.to(
-        lanyard,
-        { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
-        LANYARD_DROP_TIME,
-      );
-    }
+    // lanyard: trigger drop at LANYARD_DROP_TIME — state controls visibility (no GSAP, no transition)
+    tl.call(() => setLanyardDrop(true), undefined, LANYARD_DROP_TIME);
     // stats: fadeUp 0.6s @ 0.5s
     tl.to(els[3], { opacity: 1, y: 0, duration: 0.6 }, 0.5);
     // stack: fadeUp 0.6s @ 0.6s
@@ -100,11 +76,12 @@ export default function HeroSection() {
     };
   }, [isAppReady]);
 
-  // Fallback: show lanyard after delay if animation didn't run (e.g. isAppReady was already true)
+  // Fallback: only if timeline never ran (e.g. isAppReady was already true) — run well after timeline would have
   useEffect(() => {
-    const t = setTimeout(() => setLanyardDrop(true), 2000);
+    if (!isAppReady) return; // wait for loading
+    const t = setTimeout(() => setLanyardDrop(true), 4000);
     return () => clearTimeout(t);
-  }, []);
+  }, [isAppReady]);
 
   return (
     <section
@@ -121,7 +98,7 @@ export default function HeroSection() {
 
       <div
         ref={containerRef}
-        className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto"
+        className={`relative z-10 flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto transition-opacity duration-0 ${!heroReady ? "opacity-0" : ""}`}
       >
         {/* Availability badge */}
         <div
@@ -135,14 +112,14 @@ export default function HeroSection() {
         {/* Name — Ronnie Kiyegga (single line, matches portfolio_redesign_2) */}
         <h1
           data-hero-name
-          className="font-cormorant font-light leading-[0.95] tracking-[-0.02em] text-center mb-5 whitespace-nowrap"
+          className="font-cormorant leading-[0.95] tracking-[-0.02em] text-center mb-5 whitespace-nowrap font-medium hero-name"
           style={{
             fontSize: "clamp(4rem, 9vw, 8.5rem)",
             color: "var(--text)",
           }}
         >
           Ronnie{" "}
-          <em className="italic text-blue-600 dark:text-blue-400 font-light">
+          <em className="italic text-gradient-blue-static font-light">
             Kiyegga
           </em>
         </h1>
@@ -166,16 +143,16 @@ export default function HeroSection() {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`flex-1 py-3.5 px-4 text-center ${
+              className={`flex-1 py-4 px-4 text-center ${
                 i < stats.length - 1
                   ? "border-r border-neutral-200 dark:border-neutral-700"
                   : ""
               }`}
             >
-              <div className="font-cormorant font-semibold text-2xl md:text-3xl leading-none text-neutral-900 dark:text-neutral-100">
+              <div className="font-cormorant font-semibold text-base md:text-2xl leading-none text-neutral-900 dark:text-neutral-100">
                 {s.num}
               </div>
-              <div className="text-[10px] tracking-[0.1em] uppercase text-neutral-500 dark:text-neutral-400 mt-1">
+              <div className="text-[8px] md:text-[10px] tracking-widest uppercase text-neutral-500 dark:text-neutral-400 mt-1 text-nowrap">
                 {s.label}
               </div>
             </div>
@@ -183,47 +160,8 @@ export default function HeroSection() {
         </div>
 
         {/* Stack logos — LogoLoop (matches stats width) */}
-        <div
-          data-hero-stack
-          className="w-full max-w-2xl mx-auto mb-10 overflow-hidden [&_.flex]:justify-center!"
-        >
-          <LogoLoop
-            logos={stackLogos}
-            speed={40}
-            direction="left"
-            width="100%"
-            logoHeight={LOGO_SIZE}
-            gap={48}
-            pauseOnHover
-            fadeOut
-            renderItem={(item) => {
-              const isNode = "node" in item;
-              return (
-                <span
-                  className="flex shrink-0 items-center justify-center"
-                  style={{
-                    width: LOGO_SIZE,
-                    height: LOGO_SIZE,
-                  }}
-                >
-                  {isNode ? (
-                    (item as { node: ReactNode }).node
-                  ) : (
-                    <Image
-                      src={(item as { src: string }).src}
-                      alt={(item as { alt?: string }).alt ?? ""}
-                      width={LOGO_SIZE}
-                      height={LOGO_SIZE}
-                      className="h-full w-full object-contain"
-                    />
-                  )}
-                </span>
-              );
-            }}
-            ariaLabel="Technology stack"
-            className="mx-auto [--logoloop-fadeColor:#F4EFE6] dark:[--logoloop-fadeColor:#0a0a0a]"
-          />
-        </div>
+
+        <LogoLoopSection />
 
         {/* V1 contact card — centered */}
         <div data-hero-contact className="flex justify-center w-full">
@@ -233,22 +171,34 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Lanyard overlay — hidden until 1.0s, then GSAP fades in and drops (like V2) */}
-      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25">
-        <Lanyard
-          key={lanyardDrop ? "drop" : "preload"}
-          visible
-          position={[0, 0, 24]}
-          gravity={[0, -40, 0]}
-          fov={22}
-          scale={0.85}
-          stringLineWidth={0.75}
-          ropeLength={1.6}
-          cardAttachmentY={0.85}
-          cardScale={2.8}
-          initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
-          className="md:translate-x-12 md:-translate-y-1"
-        />
+      {/* Lanyard overlay — only mount when dropping (last item), starts high and drops */}
+      <div
+        ref={lanyardRef}
+        data-hero-lanyard
+        className="absolute inset-0 z-25"
+        style={{
+          opacity: lanyardDrop ? 1 : 0,
+          visibility: lanyardDrop ? "visible" : "hidden",
+          transition: "none",
+        }}
+      >
+        {lanyardDrop && (
+          <Lanyard
+            key="drop"
+            visible
+            position={[0, 0, 24]}
+            gravity={[0, -40, 0]}
+            fov={22}
+            scale={0.85}
+            stringLineWidth={0.75}
+            cardAttachmentY={0.85}
+            cardScale={2.8}
+            initialDropHeight={LANYARD_DROP_HEIGHT}
+            angularDamping={8}
+            linearDamping={6}
+            className="md:translate-x-12 md:-translate-y-1"
+          />
+        )}
       </div>
     </section>
   );

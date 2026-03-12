@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useId } from "react";
+import { useLayoutEffect, useId, useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 
 interface VersionDropdownProps {
@@ -12,9 +13,11 @@ interface VersionDropdownProps {
   className?: string;
   /** When "v1", show V1 as current and V2 as link to /. When "v2" (default), V2 is current and V1 links to /v1. */
   currentVersion?: "v1" | "v2";
+  /** When provided with placement="top", renders dropdown in a portal to avoid z-index/overflow issues */
+  anchorRef?: React.RefObject<HTMLElement | null>;
 }
 
-export function VersionDropdown({ placement, onClose, className, currentVersion = "v2" }: VersionDropdownProps) {
+export function VersionDropdown({ placement, onClose, className, currentVersion = "v2", anchorRef }: VersionDropdownProps) {
   const id = useId().replace(/:/g, "");
   const v1Fill = `paint0_linear_v1_${id}`;
   const v1Check = `paint1_linear_v1_${id}`;
@@ -23,14 +26,42 @@ export function VersionDropdown({ placement, onClose, className, currentVersion 
   const v2CheckFill = `paint2_linear_v2_${id}`;
   const v2CheckStroke = `paint3_linear_v2_${id}`;
 
-  return (
+  const [portalStyle, setPortalStyle] = useState<React.CSSProperties>({ position: "fixed", zIndex: 99999 });
+
+  useLayoutEffect(() => {
+    if (placement !== "top" || !anchorRef?.current || typeof document === "undefined") return;
+    const updatePosition = () => {
+      const rect = anchorRef.current?.getBoundingClientRect();
+      if (rect) {
+        setPortalStyle({
+          position: "fixed",
+          top: rect.bottom + 8,
+          left: rect.left,
+          zIndex: 99999,
+        });
+      }
+    };
+    updatePosition();
+    window.addEventListener("scroll", updatePosition, true);
+    window.addEventListener("resize", updatePosition);
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [placement, anchorRef]);
+
+  const usePortal = placement === "top" && anchorRef != null && typeof document !== "undefined";
+
+  const dropdownContent = (
     <div
       className={cn(
-        "min-w-[260px] rounded-xl border overflow-hidden shadow-xl z-50 version-dropdown",
-        placement === "top" && "absolute top-[calc(100%+8px)] left-0",
-        placement === "bottom" && "absolute bottom-full left-0 mb-2",
+        "min-w-[260px] rounded-xl border overflow-hidden shadow-xl version-dropdown",
+        !usePortal && "z-9999",
+        !usePortal && placement === "top" && "absolute top-[calc(100%+8px)] left-0",
+        !usePortal && placement === "bottom" && "absolute bottom-full left-0 mb-2",
         className,
       )}
+      style={usePortal ? portalStyle : undefined}
     >
       <div className="version-dropdown-inner py-1">
         {currentVersion === "v2" ? (
@@ -335,4 +366,9 @@ export function VersionDropdown({ placement, onClose, className, currentVersion 
       </div>
     </div>
   );
+
+  if (usePortal && typeof document !== "undefined") {
+    return createPortal(dropdownContent, document.body);
+  }
+  return dropdownContent;
 }

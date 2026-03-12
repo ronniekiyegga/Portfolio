@@ -507,16 +507,16 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Hero name "Ronnie Kiyegga" - subtle text shadow for depth */
+/* Hero name "Ronnie Kiyegga" - soft diffused shadow for depth (floating/raised effect) */
 .hero-name {
   text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.22),
-    0 1px 2px rgba(0, 0, 0, 0.18);
+    2px 4px 20px rgba(0, 0, 0, 0.12),
+    1px 2px 12px rgba(0, 0, 0, 0.08);
 }
 .dark .hero-name {
   text-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.5),
-    0 0 12px rgba(255, 255, 255, 0.12);
+    2px 4px 24px rgba(0, 0, 0, 0.4),
+    1px 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* Loading screen text — gradient blue in both themes */
@@ -533,12 +533,10 @@ body {
   background: var(--gradient-blue);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 html.light .text-gradient-blue {
-  background: #a3d500;
-}
-html.light [data-version="v2"] .text-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
@@ -563,9 +561,6 @@ html.light [data-version="v2"] .text-gradient-blue {
   background: var(--gradient-blue);
 }
 html.light .icon-gradient-blue {
-  background: #a3d500;
-}
-html.light [data-version="v2"] .icon-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
