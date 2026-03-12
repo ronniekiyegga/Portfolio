@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
 import { VersionDropdown } from './VersionDropdown'
@@ -24,7 +25,9 @@ interface NavProps {
 }
 
 export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = false }: NavProps) {
+  const pathname = usePathname()
   const { isAppReady } = useLoading()
+  const logoHref = pathname?.startsWith('/v2') ? '/v2' : '/'
   const [mounted,      setMounted]      = useState(false)
   const [scrolled,     setScrolled]     = useState(false)
   const [mobileOpen,   setMobileOpen]   = useState(false)
@@ -95,7 +98,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
         {/* LEFT — logo + version */}
         <div className="flex items-center gap-4">
           <Link
-            href="/"
+            href={logoHref}
             className="font-jetbrains text-[11px] tracking-[0.15em] uppercase no-underline opacity-70 hover:opacity-100 transition-opacity"
             style={{ color: 'var(--text)' }}
           >
