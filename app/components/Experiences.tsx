@@ -216,7 +216,7 @@ export default function Experiences() {
           fov={22}
           scale={0.85}
           stringLineWidth={0.75}
-          ropeLength={1.0}
+          ropeLength={1.35}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
           className="md:translate-x-12 md:-translate-y-1"
         />
