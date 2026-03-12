@@ -202,7 +202,9 @@ export default function HeroSection() {
           fov={22}
           scale={0.85}
           stringLineWidth={0.75}
-          ropeLength={1.35}
+          ropeLength={1.6}
+          cardAttachmentY={0.85}
+          cardScale={2.8}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
           className="md:translate-x-12 md:-translate-y-1"
         />
