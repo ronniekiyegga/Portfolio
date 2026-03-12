@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: "/", destination: "/v1", permanent: false },
+    ];
+  },
   async rewrites() {
     return [
       // Fix mistaken /public/* requests: public folder is served at root

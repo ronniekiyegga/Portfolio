@@ -121,6 +121,7 @@ export default function Experiences() {
 
   return (
     <section
+      id="experience"
       ref={sectionRef}
       className="relative w-full min-w-0 min-h-screen overflow-visible py-16 md:py-32 dark:bg-neutral-950"
     >

@@ -46,6 +46,12 @@ interface LanyardProps {
   stringLineWidth?: number;
   /** Length of each rope segment (default 1.6). Smaller = shorter string. */
   ropeLength?: number;
+  /** Y offset for card attachment (default 1.45). Smaller = less gap between string and card. */
+  cardAttachmentY?: number;
+  /** Custom string color (e.g. "#F4EFE6" for cream). Default: theme-based. */
+  stringColor?: string;
+  /** String opacity 0–1 for glass effect (default 1). */
+  stringOpacity?: number;
 }
 
 export default function Lanyard({
@@ -59,12 +65,15 @@ export default function Lanyard({
   initialDropHeight,
   stringLineWidth: stringLineWidthProp,
   ropeLength = 1.6,
+  cardAttachmentY = 1.45,
+  stringColor: stringColorProp,
+  stringOpacity = 1,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isLight = mounted && resolvedTheme === "light";
-  const stringColor = isLight ? "#ffffff" : "#e2e8f0";
+  const stringColor = stringColorProp ?? (isLight ? "#ffffff" : "#e2e8f0");
   const stringLineWidth = stringLineWidthProp ?? (isLight ? 1.3 : 1);
   const [isMobile, setIsMobile] = useState<boolean>(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -79,7 +88,7 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-25 w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
+        "pointer-events-none absolute inset-0 z-25 w-full h-full flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
@@ -101,8 +110,10 @@ export default function Lanyard({
                 scale={scale}
                 stringColor={stringColor}
                 stringLineWidth={stringLineWidth}
+                stringOpacity={stringOpacity}
                 initialDropHeight={initialDropHeight}
                 ropeLength={ropeLength}
+                cardAttachmentY={cardAttachmentY}
               />
             </Physics>
           </Suspense>
@@ -149,8 +160,10 @@ interface BandProps {
   scale?: number;
   stringColor?: string;
   stringLineWidth?: number;
+  stringOpacity?: number;
   initialDropHeight?: number;
   ropeLength?: number;
+  cardAttachmentY?: number;
 }
 
 function Band({
@@ -160,8 +173,10 @@ function Band({
   scale = 1,
   stringColor = "#e2e8f0",
   stringLineWidth = 1,
+  stringOpacity = 1,
   initialDropHeight,
   ropeLength = 1.6,
+  cardAttachmentY = 1.45,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -207,7 +222,7 @@ function Band({
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.45, 0],
+    [0, cardAttachmentY, 0],
   ]);
 
   useEffect(() => {
@@ -382,6 +397,8 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color={stringColor}
+          opacity={stringOpacity}
+          transparent={stringOpacity < 1}
           depthTest={false}
           depthWrite={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
