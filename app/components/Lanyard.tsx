@@ -99,14 +99,22 @@ export default function Lanyard({
         className,
       )}
     >
-      <div className="pointer-events-none size-full *:pointer-events-none">
+      <div
+        className="pointer-events-none size-full *:pointer-events-none [&_canvas]:bg-transparent!"
+        style={{ background: "transparent" }}
+      >
         <Canvas
           camera={{ position, fov }}
           dpr={[1, isMobile ? 1 : 1.5]}
-          gl={{ alpha: transparent }}
-          onCreated={({ gl }) =>
-            gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-          }
+          gl={{
+            alpha: transparent,
+            antialias: true,
+            powerPreference: "high-performance",
+          }}
+          style={{ background: "transparent" }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          }}
         >
           <ambientLight intensity={Math.PI} />
           <Suspense fallback={null}>
