@@ -1,4 +1,5 @@
-import HeaderWithFloatingControls from "@/app/components/HeaderWithFloatingControls";
+import NavV1Wrapper from "@/app/components/NavV1Wrapper";
+import V1Cursors from "@/app/components/V1Cursors";
 import FooterSection from "@/app/components/footer";
 import LoadingScreenGate from "@/app/components/LoadingScreenGate";
 import ScrollTriggerReset from "@/app/components/ScrollTriggerReset";
@@ -11,7 +12,8 @@ export default function V1Layout({
   return (
     <>
       <ScrollTriggerReset />
-      <HeaderWithFloatingControls />
+      <NavV1Wrapper />
+      <V1Cursors />
       {children}
       <FooterSection />
       <LoadingScreenGate />

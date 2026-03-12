@@ -860,7 +860,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
    ================================================================ */
 .work-card-v2 {
   display: block;
-  min-height: 340px;
+  min-height: 300px;
   overflow: hidden;
   position: relative;
   transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -884,7 +884,7 @@ html.light .work-card-v2:hover {
   transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .work-card-v2:hover .wc-image {
-  width: 48%;
+  width: 46%;
 }
 
 /* Gradient from text panel into image (left edge of image) */
@@ -1002,15 +1002,15 @@ html.light .wc-image-label {
   opacity: 0;
   visibility: hidden;
   z-index: 3;
-  min-height: 340px;
+  min-height: 300px;
   transition:
     width 0.7s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.4s ease 0.2s,
     visibility 0s linear 0.7s;
 }
 .work-card-v2:hover .wc-text {
-  width: 52%;
-  min-width: 240px;
+  width: 54%;
+  min-width: 280px;
   opacity: 1;
   visibility: visible;
   transition:
@@ -1022,7 +1022,7 @@ html.light .wc-image-label {
   min-width: 0;
 }
 .work-card-v2:hover .wc-text-inner {
-  min-width: 280px;
+  min-width: 300px;
 }
 
 .wc-title,
@@ -1100,13 +1100,13 @@ html.light .work-card-v2:hover .wc-arrow {
 /* Touch devices: always show text panel (hover doesn't work) — desktop/tablet only */
 @media (hover: none) and (min-width: 769px) {
   .work-card-v2 .wc-text {
-    width: 52%;
-    min-width: 240px;
+    width: 54%;
+    min-width: 280px;
     opacity: 1;
     visibility: visible;
   }
   .work-card-v2 .wc-image {
-    width: 48%;
+    width: 46%;
   }
   .work-card-v2 .wc-image-label {
     opacity: 0;
@@ -1123,14 +1123,14 @@ html.light .work-card-v2:hover .wc-arrow {
   .wc-image {
     position: relative;
     width: 100% !important;
-    min-height: 280px;
+    min-height: 240px;
     display: flex;
     flex-direction: column;
   }
   .wc-image-inner {
     position: relative;
     flex: 1;
-    min-height: 260px;
+    min-height: 220px;
     padding: 12px;
   }
   .wc-image .wc-image-label {
@@ -1158,7 +1158,7 @@ html.light .work-card-v2:hover .wc-arrow {
 
 /* Screen mockups (from work-cards-hover-right.html) */
 .wc-image-inner .screen {
-  max-width: 420px;
+  max-width: 520px;
 }
 .screen {
   width: 100%;

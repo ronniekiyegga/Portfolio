@@ -116,7 +116,7 @@ export function VersionDropdown({ placement, onClose, className, currentVersion 
         </Link>
         ) : (
           <Link
-            href="/"
+            href="/v2"
             onClick={onClose}
             className="flex items-center justify-between gap-2.5 px-4 py-3 text-[10px] no-underline transition-colors hover:bg-white/5 dark:hover:bg-white/5 w-full"
             style={{ color: "var(--muted)" }}

@@ -26,7 +26,7 @@ export function CTASection() {
         Based in London &middot; Available immediately &middot; Open to hybrid and remote
       </p>
       <Link
-        href="mailto:contact@ronniekiyegga.com"
+        href="mailto:ronniekiyegga@hotmail.com"
         className="font-jetbrains text-[13px] no-underline reveal inline-block"
         style={{
           color: 'var(--accent)',
@@ -34,7 +34,7 @@ export function CTASection() {
           paddingBottom: '2px',
         }}
       >
-        contact@ronniekiyegga.com
+        ronniekiyegga@hotmail.com
       </Link>
       </div>
     </section>
