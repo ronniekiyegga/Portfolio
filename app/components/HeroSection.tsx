@@ -82,7 +82,7 @@ export default function HeroSection() {
     tl.to(els[5], { opacity: 1, y: 0, duration: 0.6 }, 0.7);
 
     return () => {
-      tl.kill();
+      void tl.kill();
     };
   }, [isAppReady]);
 

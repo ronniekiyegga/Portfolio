@@ -234,7 +234,7 @@ export default function Experiences() {
           fov={22}
           scale={0.85}
           stringLineWidth={0.65}
-          ropeLength={1.45}
+          ropeLength={1.55}
           cardAttachmentY={1.15}
           cardScale={2.8}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}

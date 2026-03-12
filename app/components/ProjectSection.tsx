@@ -93,10 +93,10 @@ export default function ProjectSection() {
         <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-12 md:py-2">
           <div
             ref={containerRef}
-            className="mx-auto w-full max-w-4xl lg:max-w-5xl antialiased relative"
+            className="mx-auto w-full max-w-5xl lg:max-w-6xl antialiased relative"
           >
             {projectContent.map((item, index) => (
-              <div key={`content-${index}`} data-project-card className="mb-32">
+              <div key={`content-${index}`} data-project-card className="mb-16 md:mb-20 lg:mb-16">
                 <ExpandableFeatures4
                   badge={item.badge}
                   title={item.title}
@@ -351,10 +351,13 @@ const projectContent: Array<{
       },
     ],
   },
-  // TrueFounders
+  // PSEUDOLAB IDE
   {
     title: "PSEUDOLAB IDE",
     workItem: workItems[3],
+    links: {
+      liveWebsite: "https://www.algo-pseudo.com/",
+    },
     description: (
       <>
         <p>

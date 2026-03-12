@@ -11,7 +11,6 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import NativeStartNow from "./ui/NativeButton";
-import { StickyFooterDialog } from "./ui/sticky-footer-dialog";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LightPillarComponent from "./ui/gradients/LightPillarComponent";
@@ -19,6 +18,9 @@ import PrismComponent from "./ui/gradients/PrismComponent";
 import LightRaysComponent from "./ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 import { MoveUpRight } from "lucide-react";
+import { FaFigma } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 import type { WorkItem } from "@/lib/v2-data";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -97,6 +99,7 @@ const getCardBackgrounds = (isDark: boolean) =>
 export type ProjectLinks = {
   liveWebsite?: string;
   designFile?: string;
+  githubHref?: string;
 };
 
 interface ExpandableFeatures4Props {
@@ -111,9 +114,9 @@ interface ExpandableFeatures4Props {
   features?: Feature[];
   /** Optional project links: liveWebsite → "Live Website"/"Live Demo" button, designFile → "Design File" button */
   links?: ProjectLinks;
-  /** WorkItem for ProjectModal. When provided with onOpenProjectModal, Live Website opens modal instead of link/dialog. */
+  /** WorkItem for ProjectModal (V2-style modal when clicking Live Website) */
   workItem?: WorkItem;
-  /** Callback to open ProjectModal with the given workItem. */
+  /** Callback to open project modal with work item */
   onOpenProjectModal?: (workItem: WorkItem) => void;
 }
 
@@ -126,15 +129,11 @@ const SMOOTH_EASE = "power3.out" as const;
 const Y_OFFSET = 32;
 const X_OFFSET = 48;
 
-const PROJECT_LINK_BASE_CLASSES =
-  "inline-flex h-8 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-0";
-
 export default function ExpandableFeatures4({
   badge = BADGE,
   title = TITLE,
   description = DESC,
   imageOnLeft = false,
-  detailsImage,
   features: featuresProp,
   links,
   workItem,
@@ -144,7 +143,6 @@ export default function ExpandableFeatures4({
   const tabFeatures = featuresList.filter((f) => !f.href);
   const linkFeatures = featuresList.filter((f) => !!f.href);
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
-  const [detailsOpen, setDetailsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -234,22 +232,10 @@ export default function ExpandableFeatures4({
       duration: 1,
       ease: "none",
     })
-      .to(
-        titleEl,
-        { x: 0, opacity: 1, duration: 1, ease: "none" },
-        "-=0.85",
-      )
-      .to(
-        descEl,
-        { y: 0, opacity: 1, duration: 1, ease: "none" },
-        "-=0.8",
-      )
+      .to(titleEl, { x: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.85")
+      .to(descEl, { y: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.8")
       .to(ctaEl, { opacity: 1, duration: 1, ease: "none" }, "-=0.75")
-      .to(
-        imageCol,
-        { x: 0, opacity: 1, duration: 1, ease: "none" },
-        "-=0.9",
-      );
+      .to(imageCol, { x: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.9");
 
     if (buttons?.length) {
       tl.to(
@@ -282,11 +268,11 @@ export default function ExpandableFeatures4({
           <div
             ref={textColRef}
             className={cn(
-              "flex min-w-0 flex-col gap-6 pb-4 sm:col-span-3 md:py-6 overflow-visible",
+              "flex min-w-0 flex-col gap-6 pb-4 sm:col-span-3 md:py-6",
               imageOnLeft && "sm:order-2",
             )}
           >
-            <div className="min-w-0 text-balance overflow-visible">
+            <div className="min-w-0 text-balance">
               <h4
                 ref={badgeRef}
                 className="mb-2 w-fit rounded-full text-[11px] font-bold uppercase tracking-wide text-gradient-blue-static"
@@ -295,7 +281,7 @@ export default function ExpandableFeatures4({
               </h4>
               <h2
                 ref={titleRef}
-                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white break-words min-w-0 overflow-visible"
+                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white "
               >
                 {title}
               </h2>
@@ -309,108 +295,59 @@ export default function ExpandableFeatures4({
             <div
               ref={ctaRef}
               data-project-cta
-              className="opacity-0 flex flex-wrap items-center gap-2"
+              className="opacity-0 flex flex-wrap items-center gap-3"
             >
-              {workItem && onOpenProjectModal ? (
-                <>
-                  {links?.designFile && (
-                    <a
-                      href={links.designFile}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        PROJECT_LINK_BASE_CLASSES,
-                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
-                      )}
-                    >
-                      Figma File <MoveUpRight className="size-3.5" />
-                    </a>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => onOpenProjectModal(workItem)}
-                    className={cn(
-                      PROJECT_LINK_BASE_CLASSES,
-                      "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
-                    )}
-                  >
-                    Project Details <MoveUpRight className="size-3.5" />
-                  </button>
-                </>
-              ) : links?.designFile || links?.liveWebsite ? (
-                <>
-                  {links.designFile && (
-                    <a
-                      href={links.designFile}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        PROJECT_LINK_BASE_CLASSES,
-                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
-                      )}
-                    >
-                      Figma File <MoveUpRight className="size-3.5" />
-                    </a>
-                  )}
-                  {links.liveWebsite && (
-                    <a
-                      href={links.liveWebsite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        PROJECT_LINK_BASE_CLASSES,
-                        "bg-linear-to-r! from-black! via-neutral-900! to-black! text-white hover:shadow-black/50",
-                      )}
-                    >
-                      {links.designFile ? "Live Demo" : "Live Website"}{" "}
-                      <MoveUpRight className="size-3.5" />
-                    </a>
-                  )}
-                </>
-              ) : (
+              {workItem && onOpenProjectModal && (
                 <NativeStartNow
                   variant="gradient"
                   size="xs"
-                  label="Live Website"
+                  label="View Details"
                   onStart={() => {
-                    setDetailsOpen(true);
+                    onOpenProjectModal(workItem);
                     return Promise.resolve();
                   }}
                 />
               )}
-              <StickyFooterDialog
-                open={detailsOpen}
-                onOpenChange={setDetailsOpen}
-                title={title}
-                description="Project details and overview."
-                badge="Project"
-                image={detailsImage}
-              >
-                <div className="space-y-4 text-sm text-muted-foreground">
-                  {description}
-                  <p className="mt-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                  <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </p>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem
-                    aperiam, eaque ipsa quae ab illo inventore veritatis et
-                    quasi architecto beatae vitae dicta sunt explicabo.
-                  </p>
-                </div>
-              </StickyFooterDialog>
+
+
+              {links?.designFile && (
+                <a
+                  href={links.designFile}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                  aria-label="Open Figma file"
+                >
+                  <FaFigma className="size-4" />
+                </a>
+              )}
+              {(links?.liveWebsite ??
+                (workItem?.href && workItem.href !== "#")) && (
+                <a
+                  href={links?.liveWebsite ?? workItem?.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                  aria-label="Open live website"
+                >
+                  <BsBoxArrowUpRight className="size-4" />
+                </a>
+              )}
+              {(links?.githubHref ?? workItem?.githubHref) && (
+                <a
+                  href={links?.githubHref ?? workItem?.githubHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                  aria-label="Open GitHub repository"
+                >
+                  <FaGithub className="size-5" />
+                </a>
+              )}
             </div>
 
-            <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col">
+            
+            <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col ">
               {tabFeatures.map((feature, index) => (
                 <button
                   key={feature.title}
@@ -453,27 +390,25 @@ export default function ExpandableFeatures4({
             className={cn(
               "relative min-w-0 overflow-hidden sm:col-span-4",
               imageOnLeft && "sm:order-1",
-              workItem && onOpenProjectModal && "cursor-pointer",
             )}
-            onClick={
-              workItem && onOpenProjectModal
-                ? () => onOpenProjectModal(workItem)
-                : undefined
-            }
-            onKeyDown={
-              workItem && onOpenProjectModal
-                ? (e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      onOpenProjectModal(workItem);
-                    }
-                  }
-                : undefined
-            }
-            role={workItem && onOpenProjectModal ? "button" : undefined}
-            tabIndex={workItem && onOpenProjectModal ? 0 : undefined}
           >
-            <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
+            <div
+              role={workItem && onOpenProjectModal ? "button" : undefined}
+              tabIndex={workItem && onOpenProjectModal ? 0 : undefined}
+              onClick={() =>
+                workItem && onOpenProjectModal && onOpenProjectModal(workItem)
+              }
+              onKeyDown={(e) =>
+                workItem &&
+                onOpenProjectModal &&
+                (e.key === "Enter" || e.key === " ") &&
+                onOpenProjectModal(workItem)
+              }
+              className={cn(
+                "corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden",
+                workItem && onOpenProjectModal && "cursor-pointer",
+              )}
+            >
               {/* Shared background - cycles with AUTOPLAY_DURATION */}
               <div
                 className="absolute inset-0 z-0 size-full bg-cover bg-center bg-no-repeat"
