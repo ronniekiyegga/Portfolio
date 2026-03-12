@@ -56,6 +56,12 @@ interface LanyardProps {
   cardScale?: number;
   /** Y-scale multiplier for card (default 1). Use <1 to make card shorter/less tall. */
   cardScaleY?: number;
+  /** Higher = less swing when dropping (default 4). Use 8–10 for hero drop. */
+  angularDamping?: number;
+  /** Higher = faster settling (default 4). Use 6–8 for hero drop. */
+  linearDamping?: number;
+  /** When true with initialDropHeight, start with vertical chain (reduces swing). */
+  verticalDropStart?: boolean;
 }
 
 export default function Lanyard({
@@ -74,6 +80,9 @@ export default function Lanyard({
   stringOpacity = 1,
   cardScale: cardScaleProp,
   cardScaleY = 1,
+  angularDamping: angularDampingProp,
+  linearDamping: linearDampingProp,
+  verticalDropStart = false,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -130,6 +139,9 @@ export default function Lanyard({
                 initialDropHeight={initialDropHeight}
                 ropeLength={ropeLength}
                 cardAttachmentY={cardAttachmentY}
+                angularDamping={angularDampingProp}
+                linearDamping={linearDampingProp}
+                verticalDropStart={verticalDropStart}
               />
             </Physics>
           </Suspense>
@@ -182,6 +194,9 @@ interface BandProps {
   initialDropHeight?: number;
   ropeLength?: number;
   cardAttachmentY?: number;
+  angularDamping?: number;
+  linearDamping?: number;
+  verticalDropStart?: boolean;
 }
 
 function Band({
@@ -197,6 +212,9 @@ function Band({
   initialDropHeight,
   ropeLength = 1.6,
   cardAttachmentY = 1.45,
+  angularDamping: angularDampingProp,
+  linearDamping: linearDampingProp,
+  verticalDropStart = false,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -205,7 +223,8 @@ function Band({
   const j3 = useRef<any>(null);
   const card = useRef<any>(null);
   const frameCount = useRef(0);
-  const [stringReady, setStringReady] = useState(false);
+  // When dropping, show string immediately so the drop is visible (no fade-in)
+  const [stringReady, setStringReady] = useState(!!initialDropHeight);
 
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
@@ -216,8 +235,8 @@ function Band({
     type: "dynamic" as RigidBodyProps["type"],
     canSleep: true,
     colliders: false,
-    angularDamping: 4,
-    linearDamping: 4,
+    angularDamping: angularDampingProp ?? 4,
+    linearDamping: linearDampingProp ?? 4,
   };
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
@@ -256,7 +275,7 @@ function Band({
 
   useFrame((state, delta) => {
     frameCount.current += 1;
-    if (frameCount.current === 50) setStringReady(true);
+    if (!initialDropHeight && frameCount.current === 1) setStringReady(true);
 
     if (dragged && typeof dragged !== "boolean") {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
@@ -330,6 +349,13 @@ function Band({
 
   const groupY = initialDropHeight ?? 1.5;
 
+  // Vertical start: fixed at (0,4.2), rope segments stack below — reduces swing
+  const useVerticalStart = verticalDropStart && initialDropHeight != null;
+  const j1Pos: [number, number, number] = useVerticalStart ? [0, 2.6, 0] : [0.5, 0, 0];
+  const j2Pos: [number, number, number] = useVerticalStart ? [0, 1, 0] : [1, 0, 0];
+  const j3Pos: [number, number, number] = useVerticalStart ? [0, -0.6, 0] : [1.5, 0, 0];
+  const cardPos: [number, number, number] = useVerticalStart ? [0, -1.45, 0] : [2, 0, 0];
+
   return (
     <>
       <group position={[0, groupY, 0]} scale={scale}>
@@ -341,7 +367,7 @@ function Band({
           />
         </group>
         <RigidBody
-          position={[0.5, 0, 0]}
+          position={j1Pos}
           ref={j1}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -349,7 +375,7 @@ function Band({
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[1, 0, 0]}
+          position={j2Pos}
           ref={j2}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -357,7 +383,7 @@ function Band({
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[1.5, 0, 0]}
+          position={j3Pos}
           ref={j3}
           {...segmentProps}
           type={"dynamic" as RigidBodyProps["type"]}
@@ -365,7 +391,7 @@ function Band({
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[2, 0, 0]}
+          position={cardPos}
           ref={card}
           {...segmentProps}
           type={
