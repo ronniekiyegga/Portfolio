@@ -533,12 +533,10 @@ body {
   background: var(--gradient-blue);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 html.light .text-gradient-blue {
-  background: #a3d500;
-}
-html.light [data-version="v2"] .text-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
@@ -563,9 +561,6 @@ html.light [data-version="v2"] .text-gradient-blue {
   background: var(--gradient-blue);
 }
 html.light .icon-gradient-blue {
-  background: #a3d500;
-}
-html.light [data-version="v2"] .icon-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 

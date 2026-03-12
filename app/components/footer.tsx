@@ -19,22 +19,14 @@ export default function FooterSection() {
       <div className="relative flex flex-col items-center justify-between px-6 py-16 md:px-12 lg:py-12 lg:px-16">
         {/* CTA block - centered */}
         <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.15rem] text-gradient-blue">
+          <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.15rem] text-gradient-blue-static">
             Let&apos;s connect
           </p>
           <h2 className="footer-cta-heading mb-3 max-w-4xl text-2xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[40px] dark:text-white">
             <span className="font-(family-name:--font-source-serif) font-semibold">
               Let&apos;s create something{" "}
             </span>
-            <span
-              className="font-(family-name:--font-style-script) text-gradient-blue pr-2"
-              style={{
-                fontStyle: "regular",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
+            <span className="font-(family-name:--font-style-script) text-gradient-blue-static pr-2">
               meaningful
             </span>
           </h2>
@@ -83,7 +75,9 @@ export default function FooterSection() {
       <div className="border-t border-indigo-100/80 px-6 py-8  dark:border-indigo-800 md:px-12 lg:px-16">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row sm:gap-0">
           <span className="text-[11px] text-neutral-500 dark:text-neutral-400 sm:text-xs">
-            ©2026 Ronnie Kiyegga. All rights reserved.
+            ©2026 Ronnie{" "}
+            <span className="text-gradient-blue-static">Kiyegga</span>. All
+            rights reserved.
           </span>
           <div className="flex gap-8">
             {footerLinks.map(({ title, href }) => (
