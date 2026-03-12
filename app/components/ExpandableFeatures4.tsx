@@ -453,7 +453,25 @@ export default function ExpandableFeatures4({
             className={cn(
               "relative min-w-0 overflow-hidden sm:col-span-4",
               imageOnLeft && "sm:order-1",
+              workItem && onOpenProjectModal && "cursor-pointer",
             )}
+            onClick={
+              workItem && onOpenProjectModal
+                ? () => onOpenProjectModal(workItem)
+                : undefined
+            }
+            onKeyDown={
+              workItem && onOpenProjectModal
+                ? (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onOpenProjectModal(workItem);
+                    }
+                  }
+                : undefined
+            }
+            role={workItem && onOpenProjectModal ? "button" : undefined}
+            tabIndex={workItem && onOpenProjectModal ? 0 : undefined}
           >
             <div className="corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden">
               {/* Shared background - cycles with AUTOPLAY_DURATION */}
