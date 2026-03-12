@@ -221,27 +221,26 @@ export function DynamicIslandV2({
             </div>
           </div>
 
-          {/* Right pill — cream outer (padding matches left), white inner, Let's chat + icons */}
+          {/* Right pill — cream outer, dark inner with Let's chat + icons inside */}
           <div className="rounded-full pill-outer-cream">
-            <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden">
-              <div className="lets-chat-cream-wrapper shrink-0 rounded-full">
+            <div className="lets-chat-cream-wrapper">
+              <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
                 <Link
                   href="mailto:ronniekiyegga@hotmail.com"
                   className={cn(
-                    "lets-chat-inner flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
+                    "flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
                     styleScript.className,
                   )}
                 >
+                  <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                   <span>Let&apos;s chat</span>
                   <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
                 </Link>
-              </div>
-              <div className="pill-icons-white flex items-center gap-0 pl-2 pr-1.5 py-2.5">
-                <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
+                <div className="h-4 w-px shrink-0 bg-white/20" />
                 <button
                   type="button"
                   onClick={() => onToggleSplash?.()}
-                  className="rounded-full p-1.5 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                  className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
                   aria-label={
                     splashEnabled
                       ? "Disable fluid cursor"
@@ -251,14 +250,14 @@ export function DynamicIslandV2({
                   <BsStars
                     className={cn(
                       "size-3 shrink-0 pill-icon-gradient",
-                      splashEnabled && "dark:text-cyan-400",
+                      splashEnabled && "text-cyan-400",
                     )}
                   />
                 </button>
-                <div className="h-3 w-px shrink-0 bg-black/10 dark:bg-white/30" />
+                <div className="h-3 w-px shrink-0 bg-white/20" />
                 <div className="theme-toggle-outer shrink-0 pr-1.5">
                   <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
-                    <AnimatedThemeToggler className="size-3 shrink-0 text-black dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
+                    <AnimatedThemeToggler className="size-3 shrink-0 text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
                   </div>
                 </div>
               </div>
