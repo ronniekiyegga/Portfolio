@@ -9,7 +9,9 @@ import ContactInfo from "./patterns/ContactInfo";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
-const LANYARD_DROP_HEIGHT = 2.3;
+/** Match V2 Hero exactly */
+const LANYARD_DROP_HEIGHT = 2.2;
+const LANYARD_DROP_TIME = 1.0;
 
 const stats = [
   { num: "1.2k", label: "Students" },
@@ -45,9 +47,12 @@ export default function HeroSection() {
     );
     if (!els.length) return;
 
+    const lanyard = container.closest("section")?.querySelector("[data-hero-lanyard]");
+
     hasAnimated.current = true;
     // fadeUp: opacity 0→1, y 20→0 (portfolio_redesign_2)
     gsap.set(els, { opacity: 0, y: 20, force3D: true });
+    if (lanyard) gsap.set(lanyard, { opacity: 0, force3D: true });
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out", force3D: true },
@@ -60,8 +65,15 @@ export default function HeroSection() {
     tl.to(els[1], { opacity: 1, y: 0, duration: 0.6 }, 0.1);
     // intro: fadeUp 0.6s @ 0.2s
     tl.to(els[2], { opacity: 1, y: 0, duration: 0.6 }, 0.2);
-    // lanyard: trigger drop (visibility controlled by React state)
-    tl.call(() => setLanyardDrop(true), undefined, 0.3);
+    // lanyard: trigger drop + fade in at 1.0s (match V2 exactly)
+    if (lanyard) {
+      tl.call(() => setLanyardDrop(true), undefined, LANYARD_DROP_TIME);
+      tl.to(
+        lanyard,
+        { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
+        LANYARD_DROP_TIME,
+      );
+    }
     // stats: fadeUp 0.6s @ 0.5s
     tl.to(els[3], { opacity: 1, y: 0, duration: 0.6 }, 0.5);
     // stack: fadeUp 0.6s @ 0.6s
@@ -69,12 +81,14 @@ export default function HeroSection() {
     // contact: fadeUp 0.6s @ 0.7s
     tl.to(els[5], { opacity: 1, y: 0, duration: 0.6 }, 0.7);
 
-    return () => tl.kill();
+    return () => {
+      void tl.kill();
+    };
   }, [isAppReady]);
 
   // Fallback: show lanyard after delay if animation didn't run (e.g. isAppReady was already true)
   useEffect(() => {
-    const t = setTimeout(() => setLanyardDrop(true), 1500);
+    const t = setTimeout(() => setLanyardDrop(true), 2000);
     return () => clearTimeout(t);
   }, []);
 
@@ -178,12 +192,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Lanyard overlay — full section, same size/position as V2 Hero */}
-      <div
-        data-hero-lanyard
-        className="absolute inset-0 z-25 transition-opacity duration-500"
-        style={{ opacity: lanyardDrop ? 1 : 0 }}
-      >
+      {/* Lanyard overlay — hidden until 1.0s, then GSAP fades in and drops (like V2) */}
+      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25">
         <Lanyard
           key={lanyardDrop ? "drop" : "preload"}
           visible
@@ -192,7 +202,9 @@ export default function HeroSection() {
           fov={22}
           scale={0.85}
           stringLineWidth={0.75}
-          ropeLength={1.35}
+          ropeLength={1.6}
+          cardAttachmentY={0.85}
+          cardScale={2.8}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
           className="md:translate-x-12 md:-translate-y-1"
         />
