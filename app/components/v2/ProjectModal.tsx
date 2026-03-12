@@ -275,15 +275,30 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
 
                     {/* Right: image + insights */}
                     {item?.insights && item.insights.length > 0 ? (
-                      <div className="space-y-8">
-                        <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
-                          <Image
-                            src={item?.heroImage ?? ""}
-                            alt={item?.title ?? "Project"}
-                            width={600}
-                            height={400}
-                            className="w-full h-auto object-contain rounded-lg"
-                          />
+                      <TracingBeam
+                        containerRef={scrollRef}
+                        className="w-full max-w-none pl-20 "
+                      >
+                        <div className="space-y-8">
+                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
+                            <Image
+                              src={item?.heroImage ?? ""}
+                              alt={item?.title ?? "Project"}
+                              width={600}
+                              height={400}
+                              className="w-full h-auto object-contain rounded-lg"
+                            />
+                          </div>
+                          {item.insights.map((insight, i) => (
+                            <div key={i} className="pb-8">
+                              <h4 className="font-semibold text-base text-foreground mb-3">
+                                {insight.title}
+                              </h4>
+                              <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
+                                {insight.content}
+                              </p>
+                            </div>
+                          ))}
                         </div>
                         {item.insights.map((insight, i) => (
                           <div key={i} className="pb-8">
