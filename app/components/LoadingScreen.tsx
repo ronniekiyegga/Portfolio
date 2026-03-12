@@ -64,88 +64,81 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const slots = slotsRef.current.filter(Boolean) as HTMLDivElement[];
     if (!overlay || slots.length !== 3) return;
 
+    // Custom eases: expo.out = fast start, gentle landing (premium feel)
+    const easeIn = "expo.out";
+    const easeOut = "expo.in"; // gentle start, accelerates away
+    const easeSoft = "power2.inOut"; // for overlay handoff
+
     const tl = gsap.timeline({
-      defaults: { ease: "power2.out", force3D: true },
+      defaults: { force3D: true, overwrite: "auto" },
       onComplete: onComplete,
     });
 
-    const fromLeft = { opacity: 0, x: -24, y: 0 };
-    const toVisible = { opacity: 1, x: 0, y: 0 };
+    const fromLeft = { opacity: 0, x: -12, y: 0, scale: 0.98 };
+    const toVisible = { opacity: 1, x: 0, y: 0, scale: 1 };
 
     slots.forEach((slot) => {
       const word = slot.querySelector("[data-word]") as HTMLElement;
       const icon = slot.querySelector("[data-icon]") as HTMLElement;
       if (!word || !icon) return;
       gsap.set(word, fromLeft);
-      gsap.set(icon, fromLeft);
+      gsap.set(icon, { opacity: 0, y: 6, scale: 0.97 });
     });
 
-    // DESIGN in
-    tl.to(slots[0].querySelector("[data-word]"), {
-      ...toVisible,
-      duration: 0.45,
-      ease: "expo.out",
+    // Words: left-to-right with staggered entrance (expo.out = snappy landing)
+    const wordStagger = 0.038;
+    slots.forEach((slot, i) => {
+      const word = slot.querySelector("[data-word]") as HTMLElement;
+      tl.to(word, {
+        ...toVisible,
+        duration: 0.4,
+        ease: easeIn,
+      }, i * wordStagger);
     });
 
-    // GSAP position parameter: "+=X" = gap, ">-X" = overlap (start before previous ends)
-    for (let i = 1; i < 3; i++) {
-      const prevWord = slots[i - 1].querySelector("[data-word]") as HTMLElement;
-      const prevIcon = slots[i - 1].querySelector("[data-icon]") as HTMLElement;
-      const currWord = slots[i].querySelector("[data-word]") as HTMLElement;
+    // Brief hold at peak, then words fade + subtle scale down (dissolve)
+    tl.addLabel("wordsOut", "+=0.25");
+    slots.forEach((slot, i) => {
+      const word = slot.querySelector("[data-word]") as HTMLElement;
+      tl.to(word, {
+        opacity: 0,
+        scale: 0.98,
+        duration: 0.45,
+        ease: easeOut,
+      }, `wordsOut+=${i * 0.02}`);
+    });
 
-      // Gap between steps - let previous settle
-      tl.addLabel(`step${i}`, "+=0.2");
-
-      // Word fades out
-      tl.to(
-        prevWord,
-        { opacity: 0, duration: 0.2, ease: "power2.in" },
-        `step${i}`,
-      );
-
-      // Icon slides in - overlaps: starts 0.15s before word fully exits (crossfade)
-      tl.to(
-        prevIcon,
-        { ...toVisible, duration: 0.3, ease: "expo.out" },
-        `step${i}>-0.25`,
-      );
-
-      // Next word - overlaps: starts 0.2s before icon lands (fluid handoff)
+    // ~0.5s pause, then icons: subtle float-up + scale (landing feel)
+    const iconStagger = 0.05;
+    tl.addLabel("iconsIn", "wordsOut+=0.95");
+    slots.forEach((slot, i) => {
+      const icon = slot.querySelector("[data-icon]") as HTMLElement;
       tl.fromTo(
-        currWord,
-        fromLeft,
-        { ...toVisible, duration: 0.3, ease: "expo.out" },
-        `step${i}>-0.2`,
+        icon,
+        { opacity: 0, y: 8, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.45,
+          ease: "back.out(1.1)", // micro overshoot = alive, not bouncy
+        },
+        `iconsIn+=${i * iconStagger}`,
       );
-    }
+    });
 
-    // Hold, then replace last word with icon
-    tl.addLabel("replaceLast", "+=0.2");
-
-    tl.to(
-      slots[2].querySelector("[data-word]"),
-      { opacity: 0, duration: 0.4, ease: "power2.in" },
-      "replaceLast",
-    );
-
-    tl.to(
-      slots[2].querySelector("[data-icon]"),
-      { ...toVisible, duration: 0.4, ease: "expo.out" },
-      "replaceLast>-0.25",
-    );
-
-    // Hold with icons, then exit
+    // Overlap: overlay fade starts as last icon lands (smoother handoff)
     tl.to(
       overlay,
       {
         opacity: 0,
         duration: 0.6,
-        ease: "power2.in",
+        ease: easeSoft,
         onStart: () => {
           overlay.style.pointerEvents = "none";
         },
       },
-      "+=0.5",
+      "iconsIn+=1",
     );
 
     return () => {

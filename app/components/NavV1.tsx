@@ -161,8 +161,8 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                     />
                   </button>
                   <div className="h-3 w-px shrink-0 bg-white/20" />
-                  <div className="theme-toggle-outer shrink-0 pr-1.5">
-                    <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
+<div className="theme-toggle-outer shrink-0 pr-1.5">
+                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
                       <AnimatedThemeToggler
                         className="size-3.5 shrink-0 overflow-hidden text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full"
                         duration={500}
@@ -210,8 +210,8 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                   />
                 </button>
                 <div className="h-3 w-px shrink-0 bg-white/20" />
-                <div className="theme-toggle-outer shrink-0 pr-1">
-                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
+<div className="theme-toggle-outer shrink-0 pr-1">
+                <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
                     <AnimatedThemeToggler
                       className="size-3 shrink-0 overflow-hidden text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full"
                       duration={500}

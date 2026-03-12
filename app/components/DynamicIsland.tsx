@@ -218,7 +218,7 @@ export default function DynamicIsland() {
                   />
                 </button>
                 <div className="theme-toggle-outer shrink-0 pr-0.5 -ml-2">
-                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
+                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
                     <AnimatedThemeToggler className="size-4 shrink-0 text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
                   </div>
                 </div>
