@@ -186,10 +186,10 @@ export default function DynamicIsland() {
 
           {/* Right pill — cream outer (padding matches left), white inner, Let's chat + icons */}
           <div className="rounded-full pill-outer-cream">
-            <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden">
+            <div className="pill-right-inner flex items-center gap-0 rounded-full overflow-hidden !pl-0">
               <div className="lets-chat-cream-wrapper shrink-0">
                 <Link
-                  href="mailto:contact@ronniekiyegga.com"
+                  href="mailto:ronniekiyegga@hotmail.com"
                   className={cn(
                     "lets-chat-inner flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90",
                     styleScript.className,
@@ -199,12 +199,12 @@ export default function DynamicIsland() {
                   <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
                 </Link>
               </div>
-              <div className="pill-icons-white flex items-center gap-0 pl-2 pr-2 py-3">
+              <div className="pill-icons-white flex items-center pl-0 pr-0 py-2 -ml-2 gap-0">
                 <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
                 <button
                   type="button"
                   onClick={() => setSplashActive((prev) => !prev)}
-                  className="rounded-full p-2 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                  className="rounded-full p-1.5 text-black/70 dark:text-white/90 transition-colors hover:bg-black/5 dark:hover:bg-white/10 -mr-2"
                   aria-label={
                     splashActive
                       ? "Disable fluid cursor"
@@ -218,8 +218,7 @@ export default function DynamicIsland() {
                     )}
                   />
                 </button>
-                <div className="h-4 w-px shrink-0 bg-black/10 dark:bg-white/30" />
-                <div className="theme-toggle-outer shrink-0 pr-2">
+                <div className="theme-toggle-outer shrink-0 pr-0.5 -ml-2">
                   <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-gradient">
                     <AnimatedThemeToggler className="size-4 shrink-0 text-black dark:text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full" />
                   </div>

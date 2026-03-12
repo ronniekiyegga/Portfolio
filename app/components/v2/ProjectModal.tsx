@@ -10,8 +10,8 @@ import {
 } from "@/app/components/ui/dialog";
 import Image from "next/image";
 import { ImageIllustration } from "@/app/components/ui/illustrations/image-illustration";
-import { TracingBeam } from "@/app/components/ui/tracing-beam";
 import GradualBlur from "@/app/components/GradualBlur";
+import { TracingBeam } from "@/app/components/ui/tracing-beam";
 import { ArrowUpRight, Bell, X } from "lucide-react";
 import type { WorkItem } from "@/lib/v2-data";
 
@@ -237,16 +237,16 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                   alt={item?.title ?? "Project"}
                 />
                 <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
-                  <div className="grid gap-6 md:grid-cols-[1fr_1.5fr] md:gap-12 lg:gap-2">
+                  <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12 lg:gap-2">
                     {/* Left: project metadata (hover content from work card) */}
-                    <div className="flex flex-col gap-4 max-w-xs">
+                    <div className="flex flex-col gap-4 min-w-0">
                       <p
                         className="font-jetbrains text-[10px] tracking-widest uppercase"
                         style={{ color: "var(--muted)" }}
                       >
                         {item?.type}
                       </p>
-                      <h3 className="font-cormorant text-2xl font-normal leading-tight text-foreground">
+                      <h3 className="font-cormorant text-xl md:text-2xl font-normal leading-tight text-foreground break-words">
                         {item?.title}
                       </h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
@@ -274,19 +274,16 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       </p>
                     </div>
 
-                    {/* Right: tracing beam starting at image, with image + insights */}
+                    {/* Right: image + insights */}
                     {item?.insights && item.insights.length > 0 ? (
-                      <TracingBeam
-                        containerRef={scrollRef}
-                        className="w-full max-w-none pl-20 "
-                      >
+                      <TracingBeam className="w-full max-w-none pl-20">
                         <div className="space-y-8">
-                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4">
+                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4 py-6">
                             <Image
                               src={item?.heroImage ?? ""}
                               alt={item?.title ?? "Project"}
-                              width={600}
-                              height={400}
+                              width={800}
+                              height={520}
                               className="w-full h-auto object-contain rounded-lg"
                             />
                           </div>
@@ -303,12 +300,12 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                         </div>
                       </TracingBeam>
                     ) : (
-                      <div className="relative overflow-hidden rounded-xl bg-muted/30 p-4">
+                      <div className="relative overflow-hidden rounded-xl bg-muted/30 p-6">
                         <Image
                           src={item?.heroImage ?? ""}
                           alt={item?.title ?? "Project"}
-                          width={600}
-                          height={400}
+                          width={800}
+                          height={520}
                           className="w-full h-auto object-contain rounded-lg"
                         />
                       </div>

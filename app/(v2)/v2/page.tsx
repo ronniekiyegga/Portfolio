@@ -2,37 +2,36 @@
 
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import { ScrollReveal } from './components/ScrollReveal'
-import { useDynamicIslandVisibility } from './hooks/useDynamicIslandVisibility'
+import { ScrollReveal } from '@/app/components/ScrollReveal'
+import { useDynamicIslandVisibility } from '@/app/hooks/useDynamicIslandVisibility'
 
 /* ── V2 sections ─────────────────────────────────────────── */
-import { Nav }              from './components/v2/Nav'
-import { Hero }             from './components/v2/Hero'
-import { WorkSection }      from './components/v2/WorkSection'
-import { DesignSection }    from './components/v2/DesignSection'
-import { ProcessSection }   from './components/v2/ProcessSection'
-import { ExperienceSection } from './components/v2/ExperienceSection'
-import { SkillsSection }    from './components/v2/SkillsSection'
-import { CTASection }       from './components/v2/CTASection'
-import { Footer }           from './components/v2/Footer'
+import { Nav }              from '@/app/components/v2/Nav'
+import { Hero }             from '@/app/components/v2/Hero'
+import { WorkSection }      from '@/app/components/v2/WorkSection'
+import { DesignSection }    from '@/app/components/v2/DesignSection'
+import { ProcessSection }   from '@/app/components/v2/ProcessSection'
+import { ExperienceSection } from '@/app/components/v2/ExperienceSection'
+import { SkillsSection }    from '@/app/components/v2/SkillsSection'
+import { CTASection }       from '@/app/components/v2/CTASection'
+import { Footer }           from '@/app/components/v2/Footer'
 
 /* ── V2 DynamicIsland (replaces top nav when visible) ───── */
-import { DynamicIslandV2 }   from './components/v2/DynamicIslandV2'
+import { DynamicIslandV2 }   from '@/app/components/v2/DynamicIslandV2'
 
-const SplashCursor = dynamic(() => import('./components/SplashCursor'), {
+const SplashCursor = dynamic(() => import('@/app/components/SplashCursor'), {
   ssr: false,
 })
-const CustomCursor = dynamic(() => import('./components/CustomCursor'), {
+const CustomCursor = dynamic(() => import('@/app/components/CustomCursor'), {
   ssr: false,
 })
-const LoadingScreenGate = dynamic(() => import('./components/LoadingScreenGate'), {
+const LoadingScreenGate = dynamic(() => import('@/app/components/LoadingScreenGate'), {
   ssr: false,
 })
-const Marquee = dynamic(() => import('./components/Marquee'), {
+const Marquee = dynamic(() => import('@/app/components/Marquee'), {
   loading: () => <section className="min-h-[200px]" aria-hidden />,
 })
-// TracingBeam is a client component — static import so children render immediately
-import { TracingBeam } from './components/ui/tracing-beam'
+import { TracingBeam } from '@/app/components/ui/tracing-beam'
 
 /* ── Divider ─────────────────────────────────────────────── */
 function Divider() {
@@ -43,7 +42,7 @@ function Divider() {
   )
 }
 
-export default function Home() {
+export default function V2Page() {
   const [splashEnabled, setSplashEnabled] = useState(false)
   const dynamicIslandVisible = useDynamicIslandVisibility()
 

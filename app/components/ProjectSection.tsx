@@ -1,13 +1,23 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
 import FeaturesSliderSection from "./FeaturesSliderSection";
 import ExpandableFeatures4, { type Feature } from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
+import { ProjectModal } from "./v2/ProjectModal";
+import { workItems, type WorkItem } from "@/lib/v2-data";
+
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedItem, setSelectedItem] = useState<WorkItem | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openProjectModal = (workItem: WorkItem) => {
+    setSelectedItem(workItem);
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -95,9 +105,16 @@ export default function ProjectSection() {
                   detailsImage={item.image}
                   features={item.features}
                   links={item.links}
+                  workItem={item.workItem}
+                  onOpenProjectModal={openProjectModal}
                 />
               </div>
             ))}
+          <ProjectModal
+            item={selectedItem}
+            open={modalOpen}
+            onOpenChange={setModalOpen}
+          />
 
             {/* {projectContent.map((item, index) => (
             <div key={`content-${index}`} data-project-card className="mb-10">
@@ -161,10 +178,13 @@ const projectContent: Array<{
   features?: Feature[];
   /** Live site URL → "Live Website" or "Live Demo" button. designFile → "Design File" button (e.g. Figma). */
   links?: { liveWebsite?: string; designFile?: string };
+  /** WorkItem for ProjectModal (V2-style modal when clicking Live Website). */
+  workItem?: WorkItem;
 }> = [
   // EduFeedbPro
   {
     title: "EduFeedbackPro",
+    workItem: workItems[0],
     description: (
       <>
         <p>
@@ -216,6 +236,7 @@ const projectContent: Array<{
   // Ms Maryam's Maths
   {
     title: "Mathematics Tutoring",
+    workItem: workItems[1],
     links: {
       designFile:
         "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
@@ -290,6 +311,7 @@ const projectContent: Array<{
   // Google Teachable Machine
   {
     title: "Google Teachable Machine",
+    workItem: workItems[2],
     description: (
       <>
         <p>
@@ -332,6 +354,7 @@ const projectContent: Array<{
   // TrueFounders
   {
     title: "PSEUDOLAB IDE",
+    workItem: workItems[3],
     description: (
       <>
         <p>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
 import { VersionDropdown } from './VersionDropdown'
@@ -24,7 +25,9 @@ interface NavProps {
 }
 
 export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = false }: NavProps) {
+  const pathname = usePathname()
   const { isAppReady } = useLoading()
+  const logoHref = pathname?.startsWith('/v2') ? '/v2' : '/'
   const [mounted,      setMounted]      = useState(false)
   const [scrolled,     setScrolled]     = useState(false)
   const [mobileOpen,   setMobileOpen]   = useState(false)
@@ -95,7 +98,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
         {/* LEFT — logo + version */}
         <div className="flex items-center gap-4">
           <Link
-            href="/"
+            href={logoHref}
             className="font-jetbrains text-[11px] tracking-[0.15em] uppercase no-underline opacity-70 hover:opacity-100 transition-opacity"
             style={{ color: 'var(--text)' }}
           >
@@ -180,7 +183,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="hidden md:block rounded-full pill-outer-cream">
             <div className="lets-chat-cream-wrapper">
               <Link
-                href="mailto:contact@ronniekiyegga.com"
+                href="mailto:ronniekiyegga@hotmail.com"
                 className="lets-chat-inner flex items-center gap-2 whitespace-nowrap px-5 py-2 no-underline transition-all duration-200 hover:opacity-90 hover:scale-[0.98]"
                 style={{ fontFamily: 'var(--font-style-script), cursive' }}
               >
@@ -283,7 +286,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
           <div className="rounded-full pill-outer-cream">
             <div className="lets-chat-cream-wrapper">
               <Link
-                href="mailto:contact@ronniekiyegga.com"
+                href="mailto:ronniekiyegga@hotmail.com"
                 onClick={closeMobile}
                 className="lets-chat-inner flex items-center justify-center gap-2 w-full whitespace-nowrap px-5 py-3 no-underline transition-all duration-200 hover:opacity-90"
                 style={{ fontFamily: 'var(--font-style-script), cursive' }}

@@ -42,6 +42,20 @@ interface LanyardProps {
   scale?: number;
   /** When set, lanyard starts at this Y height and physics drops it from above. */
   initialDropHeight?: number;
+  /** Width of the string (default: theme-based). Use smaller value for thinner string. */
+  stringLineWidth?: number;
+  /** Length of each rope segment (default 1.6). Smaller = shorter string. */
+  ropeLength?: number;
+  /** Y offset for card attachment (default 1.45). Smaller = less gap between string and card. */
+  cardAttachmentY?: number;
+  /** Custom string color (e.g. "#F4EFE6" for cream). Default: theme-based. */
+  stringColor?: string;
+  /** String opacity 0–1 for glass effect (default 1). */
+  stringOpacity?: number;
+  /** Scale of the card only (default 3.25). Use smaller value for thinner/smaller card. */
+  cardScale?: number;
+  /** Y-scale multiplier for card (default 1). Use <1 to make card shorter/less tall. */
+  cardScaleY?: number;
 }
 
 export default function Lanyard({
@@ -53,13 +67,20 @@ export default function Lanyard({
   className = "",
   scale = 1,
   initialDropHeight,
+  stringLineWidth: stringLineWidthProp,
+  ropeLength = 1.6,
+  cardAttachmentY = 1.45,
+  stringColor: stringColorProp,
+  stringOpacity = 1,
+  cardScale: cardScaleProp,
+  cardScaleY = 1,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isLight = mounted && resolvedTheme === "light";
-  const stringColor = isLight ? "#ffffff" : "#e2e8f0";
-  const stringLineWidth = isLight ? 1.3 : 1;
+  const stringColor = stringColorProp ?? (isLight ? "#ffffff" : "#e2e8f0");
+  const stringLineWidth = stringLineWidthProp ?? (isLight ? 1.3 : 1);
   const [isMobile, setIsMobile] = useState<boolean>(
     () => typeof window !== "undefined" && window.innerWidth < 768,
   );
@@ -73,7 +94,7 @@ export default function Lanyard({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-25 w-full h-full hidden md:flex justify-center md:justify-start md:pl-12 items-center",
+        "pointer-events-none absolute inset-0 z-25 w-full h-full flex justify-center md:justify-start md:pl-12 items-center",
         !visible && "hidden",
         className,
       )}
@@ -93,9 +114,14 @@ export default function Lanyard({
               <Band
                 isMobile={isMobile}
                 scale={scale}
+                cardScale={cardScaleProp}
+                cardScaleY={cardScaleY}
                 stringColor={stringColor}
                 stringLineWidth={stringLineWidth}
+                stringOpacity={stringOpacity}
                 initialDropHeight={initialDropHeight}
+                ropeLength={ropeLength}
+                cardAttachmentY={cardAttachmentY}
               />
             </Physics>
           </Suspense>
@@ -140,9 +166,14 @@ interface BandProps {
   minSpeed?: number;
   isMobile?: boolean;
   scale?: number;
+  cardScale?: number;
+  cardScaleY?: number;
   stringColor?: string;
   stringLineWidth?: number;
+  stringOpacity?: number;
   initialDropHeight?: number;
+  ropeLength?: number;
+  cardAttachmentY?: number;
 }
 
 function Band({
@@ -150,9 +181,14 @@ function Band({
   minSpeed = 0,
   isMobile = false,
   scale = 1,
+  cardScale = 3.25,
+  cardScaleY = 1,
   stringColor = "#e2e8f0",
   stringLineWidth = 1,
+  stringOpacity = 1,
   initialDropHeight,
+  ropeLength = 1.6,
+  cardAttachmentY = 1.45,
 }: BandProps) {
   const band = useRef<any>(null);
   const fixed = useRef<any>(null);
@@ -180,6 +216,7 @@ function Band({
   const texture = useTexture(
     typeof lanyardTexture === "string" ? lanyardTexture : lanyardTexture.src,
   );
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -192,12 +229,12 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.6]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.6]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.6]);
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.45, 0],
+    [0, cardAttachmentY, 0],
   ]);
 
   useEffect(() => {
@@ -331,7 +368,7 @@ function Band({
         >
           <CuboidCollider args={[0.8, 1.111, 0.01]} />
           <group
-            scale={3.25}
+            scale={[cardScale, cardScale * cardScaleY, cardScale]}
             position={[0, -2.3, 0.02]}
             rotation={[0.15, -0.7, 0.01]}
             onPointerOver={() => hover(true)}
@@ -372,6 +409,8 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color={stringColor}
+          opacity={stringOpacity}
+          transparent={stringOpacity < 1}
           depthTest={false}
           depthWrite={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}

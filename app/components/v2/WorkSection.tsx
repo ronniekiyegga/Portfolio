@@ -14,13 +14,13 @@ export function WorkSection() {
   }
 
   return (
-    <section id="work" className="py-24 section-cream-bg">
+      <section id="work" className="py-16 md:py-20 section-cream-bg">
       <div className="max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24">
       <p className="font-jetbrains text-[10px] tracking-[0.2em] uppercase mb-4 reveal" style={{ color: 'var(--muted)' }}>
         Selected Work
       </p>
       <h2
-        className="font-cormorant font-light leading-[1.05] tracking-tight mb-16 reveal"
+        className="font-cormorant font-light leading-[1.05] tracking-tight mb-10 md:mb-8 reveal"
         style={{ fontSize: 'clamp(36px, 5vw, 64px)', color: 'var(--text)' }}
       >
         Things shipped
@@ -29,7 +29,7 @@ export function WorkSection() {
       </h2>
 
       <div
-        className="grid grid-cols-1 md:grid-cols-2 gap-[2px] rounded-2xl overflow-hidden reveal"
+        className="grid grid-cols-1 md:grid-cols-2 gap-px rounded-2xl overflow-hidden reveal"
         style={{ background: 'var(--gap)' }}
       >
         {workItems.map((item, i) => (
@@ -51,12 +51,12 @@ export function WorkSection() {
                 style={{ background: item.gradient }}
               />
               <div className="wc-image-inner">
-                <div className="screen w-full max-w-[420px] min-h-[240px] flex items-center justify-center bg-transparent">
+                <div className="screen w-full max-w-[520px] min-h-[240px] flex items-center justify-center bg-transparent">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.heroImage}
                     alt={item.title}
-                    className="w-full h-auto max-h-[290px] object-contain block work-card-img"
+                    className="w-full h-auto max-h-[360px] object-contain block work-card-img"
                     loading="eager"
                   />
                 </div>
@@ -70,7 +70,7 @@ export function WorkSection() {
                 {item.type}
               </p>
               <h3
-                className="wc-title font-cormorant text-[20px] font-normal leading-[1.1]"
+                className="wc-title font-cormorant text-[18px] sm:text-[20px] font-normal leading-[1.1]"
                 style={{ color: 'var(--text)' }}
               >
                 {item.title}
@@ -90,7 +90,7 @@ export function WorkSection() {
                       {item.type}
                     </p>
                     <h3
-                      className="wc-text-title font-cormorant text-[20px] font-normal leading-[1.1]"
+                      className="wc-text-title font-cormorant text-[18px] sm:text-[20px] font-normal leading-[1.1] break-words"
                       style={{ color: 'var(--text)' }}
                     >
                       {item.title}
