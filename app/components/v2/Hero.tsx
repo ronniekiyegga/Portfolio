@@ -31,10 +31,8 @@ const stack = [
 const Y_OFFSET = 32;
 const DURATION = 0.7;
 const STAGGER = 0.08;
-/** Delay after loading screen disappears before hero content animates in */
 const ENTRANCE_DELAY = 0.35;
 const LANYARD_DROP_HEIGHT = 2.2;
-/** Delay after drop before string fades to 0 (card physics settled) */
 const STRING_GLASS_DELAY_MS = 10000;
 const STRING_GLASS_OPACITY = 0;
 
@@ -47,7 +45,6 @@ export function Hero() {
   const [animationsSettled, setAnimationsSettled] = useState(false);
   const [cardHovered, setCardHovered] = useState(false);
 
-  // Reset animation state when returning to home so hero re-animates after V1→V2 switch
   useEffect(() => {
     if (pathname === "/" || pathname === "/v2") hasAnimated.current = false;
   }, [pathname]);
@@ -129,7 +126,6 @@ export function Hero() {
     };
   }, [isAppReady, pathname]);
 
-  // After drop, wait for physics to settle before fading string to glass
   useEffect(() => {
     if (!lanyardDrop) return;
     const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
@@ -144,7 +140,6 @@ export function Hero() {
       id="hero-section"
       className="min-h-screen relative overflow-hidden section-white-bg"
     >
-      {/* Background beams — always visible */}
       <div className="absolute inset-0">
         <BackgroundBeams
           className="pointer-events-none inset-0 min-h-full"
@@ -152,14 +147,11 @@ export function Hero() {
         />
       </div>
 
-      {/* Constrained 3-col grid */}
       <div
         ref={containerRef}
         className="max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0 items-center pt-28 pb-12 md:pt-0 md:pb-0"
       >
-        {/* ── LEFT: text content ───────────────────────────── */}
         <div className="relative z-20 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-20">
-          {/* Available badge */}
           <div
             data-hero-badge
             className="opacity-0 inline-flex items-center gap-2 px-3 pr-4 py-1.5 rounded-full border font-jetbrains text-[10px] tracking-widest uppercase mb-8 self-start"
@@ -179,7 +171,6 @@ export function Hero() {
             Available for roles · London, UK
           </div>
 
-          {/* Name */}
           <h1
             data-hero-name
             className="opacity-0 font-cormorant font-light leading-[0.9] tracking-tight mb-6"
@@ -195,7 +186,6 @@ export function Hero() {
             </em>
           </h1>
 
-          {/* Animated role cycle */}
           <div data-hero-role className="opacity-0 mb-8">
             <LayoutTextFlip
               text="I'M A "
@@ -225,7 +215,6 @@ export function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT: stats grid ────────────────────────────── */}
         <div className="relative z-20 flex flex-col justify-center px-8 md:px-10 lg:px-16 py-20">
           <div
             data-hero-stats
@@ -260,7 +249,6 @@ export function Hero() {
               </div>
             ))}
           </div>
-          {/* Stack row */}
           <div
             data-hero-stack
             className="opacity-0 rounded-xl px-5 py-4 flex gap-2 flex-wrap items-center"
@@ -287,9 +275,7 @@ export function Hero() {
           </div>
         </div>
       </div>
-      {/* end max-width grid wrapper */}
 
-      {/* Lanyard 3D overlay — preloads hidden, then drops from top at 1.0s */}
       <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25 pointer-events-none">
         <Lanyard
           key={lanyardDrop ? "drop" : "preload"}

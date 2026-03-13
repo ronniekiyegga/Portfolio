@@ -30,7 +30,6 @@ export function ScrollReveal() {
 
     const tweens: gsap.core.Tween[] = []
 
-    // .reveal — scrubbed, fades in/out with scroll
     els.forEach((el) => {
       const t = gsap.to(el, {
         opacity: 1,
@@ -47,7 +46,6 @@ export function ScrollReveal() {
       tweens.push(t)
     })
 
-    // .reveal-once — plays once when in view, stays visible (no re-reveal on scroll back)
     onceEls.forEach((el) => {
       const t = gsap.to(el, {
         opacity: 1,

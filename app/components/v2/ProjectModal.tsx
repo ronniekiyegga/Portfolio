@@ -141,7 +141,6 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
           <DialogTitle>Project details</DialogTitle>
         </VisuallyHidden.Root>
 
-        {/* Header — matches project preview design with extra space */}
         <div className="flex flex-col gap-2.5 shrink-0 px-6 pt-8 pb-5">
           <div className="flex justify-between items-center w-full">
             <div className="min-h-[30px] flex items-center gap-3">
@@ -238,7 +237,6 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                 />
                 <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
                   <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12 lg:gap-8">
-                    {/* Left: project metadata — pr-24 keeps content clear of TracingBeam (beam extends ~80px left) */}
                     <div className="flex flex-col gap-4 min-w-0 pr-20 md:pr-24">
                       <p
                         className="font-jetbrains text-[10px] tracking-widest uppercase"
@@ -274,7 +272,6 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       </p>
                     </div>
 
-                    {/* Right: image + insights */}
                     {item?.insights && item.insights.length > 0 ? (
                       <TracingBeam className="w-full max-w-none pl-20">
                         <div className="space-y-8">
