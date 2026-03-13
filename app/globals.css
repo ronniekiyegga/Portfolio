@@ -777,9 +777,6 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   background-clip: unset !important;
 }
 
-/* ================================================================
-   V2 SCROLL REVEAL
-   ================================================================ */
 .reveal,
 .reveal-once {
   opacity: 0;
@@ -802,9 +799,6 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   }
 }
 
-/* ================================================================
-   V2 ANIMATIONS
-   ================================================================ */
 @keyframes cycleWords {
   0% {
     transform: translateY(0px);

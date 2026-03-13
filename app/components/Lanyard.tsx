@@ -34,35 +34,20 @@ interface LanyardProps {
   gravity?: [number, number, number];
   fov?: number;
   transparent?: boolean;
-  /** When false, component is hidden (for V1). When true, visible (for V2 hero). */
   visible?: boolean;
-  /** Optional className for the wrapper (e.g. for positioning). */
   className?: string;
-  /** Scale of the lanyard model (default 1). Use 0.5–0.7 for smaller. */
   scale?: number;
-  /** When set, lanyard starts at this Y height and physics drops it from above. */
   initialDropHeight?: number;
-  /** Width of the string (default: theme-based). Use smaller value for thinner string. */
   stringLineWidth?: number;
-  /** Length of each rope segment (default 1.6). Smaller = shorter string. */
   ropeLength?: number;
-  /** Y offset for card attachment (default 1.45). Smaller = less gap between string and card. */
   cardAttachmentY?: number;
-  /** Custom string color (e.g. "#F4EFE6" for cream). Default: theme-based. */
   stringColor?: string;
-  /** String opacity 0–1 for glass effect (default 1). */
   stringOpacity?: number;
-  /** Scale of the card only (default 3.25). Use smaller value for thinner/smaller card. */
   cardScale?: number;
-  /** Y-scale multiplier for card (default 1). Use <1 to make card shorter/less tall. */
   cardScaleY?: number;
-  /** Higher = less swing when dropping (default 4). Use 8–10 for hero drop. */
   angularDamping?: number;
-  /** Higher = faster settling (default 4). Use 6–8 for hero drop. */
   linearDamping?: number;
-  /** When true with initialDropHeight, start with vertical chain (reduces swing). */
   verticalDropStart?: boolean;
-  /** Called when mouse enters/leaves the .glb card — use for string opacity on hover */
   onCardHover?: (hovered: boolean) => void;
 }
 
@@ -233,7 +218,6 @@ function Band({
   const j3 = useRef<any>(null);
   const card = useRef<any>(null);
   const frameCount = useRef(0);
-  // When dropping, show string immediately so the drop is visible (no fade-in)
   const [stringReady, setStringReady] = useState(!!initialDropHeight);
 
   const vec = new THREE.Vector3();
@@ -352,7 +336,6 @@ function Band({
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
     }
-    // Smooth opacity transition for glass effect — update uniform directly
     const mat = band.current?.material as { uniforms?: { opacity?: { value: number } } } | undefined;
     const target = targetOpacityRef.current;
     if (mat?.uniforms?.opacity) {
@@ -366,7 +349,6 @@ function Band({
 
   const groupY = initialDropHeight ?? 1.5;
 
-  // Vertical start: fixed at (0,4.2), rope segments stack below — reduces swing
   const useVerticalStart = verticalDropStart && initialDropHeight != null;
   const j1Pos: [number, number, number] = useVerticalStart ? [0, 2.6, 0] : [0.5, 0, 0];
   const j2Pos: [number, number, number] = useVerticalStart ? [0, 1, 0] : [1, 0, 0];
