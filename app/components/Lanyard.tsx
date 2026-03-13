@@ -62,6 +62,8 @@ interface LanyardProps {
   linearDamping?: number;
   /** When true with initialDropHeight, start with vertical chain (reduces swing). */
   verticalDropStart?: boolean;
+  /** Called when mouse enters/leaves the .glb card — use for string opacity on hover */
+  onCardHover?: (hovered: boolean) => void;
 }
 
 export default function Lanyard({
@@ -83,6 +85,7 @@ export default function Lanyard({
   angularDamping: angularDampingProp,
   linearDamping: linearDampingProp,
   verticalDropStart = false,
+  onCardHover,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -90,14 +93,13 @@ export default function Lanyard({
   const isLight = mounted && resolvedTheme === "light";
   const stringColor = stringColorProp ?? (isLight ? "#ffffff" : "#e2e8f0");
   const stringLineWidth = stringLineWidthProp ?? (isLight ? 1.3 : 1);
-  const [isMobile, setIsMobile] = useState<boolean>(
-    () => typeof window !== "undefined" && window.innerWidth < 768,
-  );
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleResize = (): void => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const check = (): void => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   return (
@@ -109,7 +111,10 @@ export default function Lanyard({
       )}
     >
       <div
-        className="pointer-events-none size-full *:pointer-events-none [&_canvas]:bg-transparent!"
+        className={cn(
+          "pointer-events-none size-full *:pointer-events-none [&_canvas]:bg-transparent!",
+          onCardHover && "[&_canvas]:pointer-events-auto"
+        )}
         style={{ background: "transparent" }}
       >
         <Canvas
@@ -142,6 +147,7 @@ export default function Lanyard({
                 angularDamping={angularDampingProp}
                 linearDamping={linearDampingProp}
                 verticalDropStart={verticalDropStart}
+                onCardHover={onCardHover}
               />
             </Physics>
           </Suspense>
@@ -197,6 +203,7 @@ interface BandProps {
   angularDamping?: number;
   linearDamping?: number;
   verticalDropStart?: boolean;
+  onCardHover?: (hovered: boolean) => void;
 }
 
 function Band({
@@ -215,8 +222,11 @@ function Band({
   angularDamping: angularDampingProp,
   linearDamping: linearDampingProp,
   verticalDropStart = false,
+  onCardHover,
 }: BandProps) {
   const band = useRef<any>(null);
+  const targetOpacityRef = useRef(stringOpacity);
+  targetOpacityRef.current = stringOpacity;
   const fixed = useRef<any>(null);
   const j1 = useRef<any>(null);
   const j2 = useRef<any>(null);
@@ -342,6 +352,13 @@ function Band({
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
     }
+    // Smooth opacity transition for glass effect — update uniform directly
+    const mat = band.current?.material as { uniforms?: { opacity?: { value: number } } } | undefined;
+    const target = targetOpacityRef.current;
+    if (mat?.uniforms?.opacity) {
+      const u = mat.uniforms.opacity;
+      u.value = THREE.MathUtils.lerp(u.value, target, Math.min(1, delta * 6));
+    }
   });
 
   curve.curveType = "chordal";
@@ -405,8 +422,14 @@ function Band({
             scale={[cardScale, cardScale * cardScaleY, cardScale]}
             position={[0, -2.3, 0.02]}
             rotation={[0.15, -0.7, 0.01]}
-            onPointerOver={() => hover(true)}
-            onPointerOut={() => hover(false)}
+            onPointerOver={() => {
+              hover(true);
+              onCardHover?.(true);
+            }}
+            onPointerOut={() => {
+              hover(false);
+              onCardHover?.(false);
+            }}
             onPointerUp={(e: any) => {
               e.target.releasePointerCapture(e.pointerId);
               drag(false);
@@ -443,8 +466,7 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color={stringColor}
-          opacity={stringOpacity}
-          transparent={stringOpacity < 1}
+          transparent
           depthTest={false}
           depthWrite={false}
           resolution={isMobile ? [1000, 2000] : [1000, 1000]}
