@@ -74,6 +74,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       onComplete: onComplete,
     });
 
+    // Words: left-to-right
     const fromLeft = { opacity: 0, x: -12, y: 0, scale: 0.98 };
     const toVisible = { opacity: 1, x: 0, y: 0, scale: 1 };
 
@@ -89,23 +90,31 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const wordStagger = 0.038;
     slots.forEach((slot, i) => {
       const word = slot.querySelector("[data-word]") as HTMLElement;
-      tl.to(word, {
-        ...toVisible,
-        duration: 0.4,
-        ease: easeIn,
-      }, i * wordStagger);
+      tl.to(
+        word,
+        {
+          ...toVisible,
+          duration: 0.4,
+          ease: easeIn,
+        },
+        i * wordStagger,
+      );
     });
 
     // Brief hold at peak, then words fade + subtle scale down (dissolve)
     tl.addLabel("wordsOut", "+=0.25");
     slots.forEach((slot, i) => {
       const word = slot.querySelector("[data-word]") as HTMLElement;
-      tl.to(word, {
-        opacity: 0,
-        scale: 0.98,
-        duration: 0.45,
-        ease: easeOut,
-      }, `wordsOut+=${i * 0.02}`);
+      tl.to(
+        word,
+        {
+          opacity: 0,
+          scale: 0.98,
+          duration: 0.45,
+          ease: easeOut,
+        },
+        `wordsOut+=${i * 0.02}`,
+      );
     });
 
     // ~0.5s pause, then icons: subtle float-up + scale (landing feel)
@@ -127,7 +136,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       );
     });
 
-    // Overlap: overlay fade starts as last icon lands (smoother handoff)
     tl.to(
       overlay,
       {
@@ -138,7 +146,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           overlay.style.pointerEvents = "none";
         },
       },
-      "iconsIn+=1",
+      "iconsIn+=2.2",
     );
 
     return () => {
@@ -149,14 +157,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-100 flex items-center justify-center bg-[#FDFBF7] dark:bg-neutral-950"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-[#FDFBF7] dark:bg-neutral-950 overflow-hidden"
       style={{
         backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px)`,
         backgroundSize: "20px 20px",
       }}
     >
       <div
-        className="flex flex-col items-center justify-center gap-3 px-6 sm:flex-row sm:gap-8 md:gap-10"
+        className="relative z-10 flex flex-col items-center justify-center gap-3 px-6 sm:flex-row sm:gap-8 md:gap-10"
         style={{ minHeight: "100dvh" }}
       >
         {WORDS.map(({ text, icon }, index) => (
@@ -172,7 +180,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="absolute inset-0 flex items-center justify-center text-xl font-semibold tracking-tight md:text-2xl"
               style={{
                 opacity: 0,
-                background: "linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%)",
+                background:
+                  "linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",

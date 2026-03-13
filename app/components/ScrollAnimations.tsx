@@ -18,41 +18,58 @@ export default function ScrollAnimations({
     const container = containerRef.current;
     if (!container) return;
 
-    const sections = Array.from(container.children).filter(
-      (el) => el instanceof HTMLElement
-    ) as HTMLElement[];
+    let io: IntersectionObserver | null = null;
 
-    if (!sections.length) return;
+    const setupObserver = () => {
+      if (io) io.disconnect();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const section = entry.target as HTMLElement;
-          gsap.to(section, {
-            opacity: 1,
-            visibility: "visible",
-            duration: 0.5,
-            ease: "power2.out",
-            delay: 0.02,
-            force3D: true,
-            overwrite: "auto",
+      const sections = Array.from(container.children).filter(
+        (el) => el instanceof HTMLElement
+      ) as HTMLElement[];
+
+      if (!sections.length) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const section = entry.target as HTMLElement;
+            gsap.to(section, {
+              opacity: 1,
+              visibility: "visible",
+              duration: 0.5,
+              ease: "power2.out",
+              delay: 0.02,
+              force3D: true,
+              overwrite: "auto",
+            });
+            observer.unobserve(section);
           });
-          observer.unobserve(section);
-        });
-      },
-      {
-        rootMargin: "0px 0px -10% 0px",
-        threshold: 0,
-      }
-    );
+        },
+        {
+          rootMargin: "0px 0px 100px 0px",
+          threshold: 0,
+        }
+      );
 
-    sections.forEach((section, i) => {
-      if (i === 0) return;
-      observer.observe(section);
+      io = observer;
+      sections.forEach((section, i) => {
+        if (i === 0) return;
+        observer.observe(section);
+      });
+    };
+
+    setupObserver();
+
+    const mo = new MutationObserver(() => {
+      setupObserver();
     });
+    mo.observe(container, { childList: true, subtree: false });
 
-    return () => observer.disconnect();
+    return () => {
+      mo.disconnect();
+      io?.disconnect();
+    };
   }, []);
 
   return (

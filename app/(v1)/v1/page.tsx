@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import HeroSection from "@/app/components/HeroSection";
 import ScrollAnimations from "@/app/components/ScrollAnimations";
 import DynamicIsland from "@/app/components/DynamicIsland";
+import { DesignSection } from "@/app/components/v2/DesignSection";
 
 const ProjectSection = dynamic(
   () => import("@/app/components/ProjectSection"),
@@ -38,6 +39,7 @@ export default function V1Home() {
           <HeroSection />
           <ProjectSection />
           <Experiences />
+          <DesignSection />
           <FeaturesSliderSection />
           <ExpandableFeatures />
           <AnimatedLinks />
