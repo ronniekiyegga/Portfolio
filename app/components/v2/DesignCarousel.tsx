@@ -137,31 +137,34 @@ interface DesignCarouselProps {
 }
 
 export function DesignCarousel({}: DesignCarouselProps) {
-  // Duplicate items - when first set scrolls off left, second set appears from right (seamless loop)
-  const loopItems = [...designItems, ...designItems];
+  // Triple items for seamless loop — eliminates white space at wrap
+  const loopItems = [...designItems, ...designItems, ...designItems];
 
   return (
-    <div className="reveal">
+    <div className="reveal-once">
       <div
-        className="w-full overflow-hidden px-4 md:px-6 lg:px-8 group"
-        style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+        className="w-full overflow-x-hidden group"
+        style={{
+          border: "1px solid rgba(255,255,255,0.06)",
+          background: "var(--bg)",
+        }}
       >
-        {/* Mask for fade edges - optional, can remove if you want sharp edges */}
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div
-            className="flex w-max gap-[2px] animate-design-scroll"
+            className="flex w-max flex-nowrap gap-0 animate-design-scroll"
             style={{
               willChange: "transform",
-              animation: "design-scroll 35s linear infinite",
+              animation: "design-scroll 55s linear infinite",
             }}
           >
             {loopItems.map((item, i) => (
               <div
                 key={`${item.name}-${i}`}
-                className="design-slide shrink-0 relative overflow-hidden flex flex-col justify-end"
+                className="design-slide shrink-0 grow-0 relative overflow-hidden flex flex-col justify-end -ml-px first:ml-0"
                 style={{
                   width: CARD_WIDTH,
                   minWidth: CARD_WIDTH,
+                  maxWidth: CARD_WIDTH,
                   height: CARD_HEIGHT,
                   background: item.gradient,
                 }}
@@ -183,7 +186,10 @@ export function DesignCarousel({}: DesignCarouselProps) {
                   >
                     {item.type}
                   </p>
-                  <p className="font-cormorant text-[17px] font-normal text-gradient-blue">
+                  <p
+                    className="font-cormorant text-[17px] font-normal"
+                    style={{ color: "rgba(255,255,255,0.95)" }}
+                  >
                     {item.name}
                   </p>
                 </div>

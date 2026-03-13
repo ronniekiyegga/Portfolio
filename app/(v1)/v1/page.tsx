@@ -33,9 +33,9 @@ const Marquee = dynamic(() => import("@/app/components/Marquee"), {
 
 export default function V1Home() {
   return (
-    <div className="min-h-screen w-full min-w-0 overflow-x-hidden font-sans bg-background dark:bg-neutral-950">
-      <main className="flex w-full min-w-0 flex-col items-center overflow-x-hidden">
-        <ScrollAnimations className="flex w-full min-w-0 flex-col items-center overflow-x-hidden">
+    <div className="min-h-screen w-full min-w-0 font-sans bg-background dark:bg-neutral-950">
+      <main className="flex w-full min-w-0 flex-col items-center">
+        <ScrollAnimations className="flex w-full min-w-0 flex-col items-center">
           <HeroSection />
           <ProjectSection />
           <Experiences />
