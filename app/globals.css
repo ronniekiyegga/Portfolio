@@ -235,6 +235,14 @@ html {
   stroke: currentColor;
 }
 
+/* Theme toggle icon - plain white (no gradient) */
+.pill-icon-white svg,
+.pill-icon-white svg path,
+.pill-icon-white svg circle {
+  fill: white;
+  stroke: white;
+}
+
 /* DynamicIsland V2 - dark mode (solid pills, no gradient on outer borders) */
 .dark .dynamic-island-left-outer {
   background: #0f0f18 !important;

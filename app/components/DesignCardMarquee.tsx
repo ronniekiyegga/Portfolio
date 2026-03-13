@@ -1,8 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const MARQUEE_SPEED = 40;
@@ -114,8 +112,6 @@ export function DesignMarqueeSection({
   itemCount,
   className,
 }: DesignMarqueeSectionProps) {
-  const [isPaused, setIsPaused] = useState(false);
-
   return (
     <section
       id={id}
@@ -141,30 +137,10 @@ export function DesignMarqueeSection({
               behind the interfaces.
             </p>
           </div>
-          <div className="mt-6 flex justify-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-9 w-9 rounded-full border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900"
-              onClick={() => setIsPaused((p) => !p)}
-              aria-label={isPaused ? "Resume animation" : "Pause animation"}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-9 w-9 rounded-full border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900"
-              onClick={() => setIsPaused((p) => !p)}
-              aria-label={isPaused ? "Resume animation" : "Pause animation"}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
 
         <div className="overflow-hidden pt-6">
-          <DesignCardMarquee itemCount={itemCount} isPaused={isPaused}>
+          <DesignCardMarquee itemCount={itemCount}>
             {children}
           </DesignCardMarquee>
         </div>
