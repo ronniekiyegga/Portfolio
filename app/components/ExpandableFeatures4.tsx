@@ -221,21 +221,20 @@ export default function ExpandableFeatures4({
       scrollTrigger: {
         trigger: section,
         start: "top 88%",
-        end: "top 35%",
-        scrub: true,
+        toggleActions: "play none none none",
       },
     });
 
     tl.to(badgeEl, {
       y: 0,
       opacity: 1,
-      duration: 1,
-      ease: "none",
+      duration: 0.5,
+      ease: "power2.out",
     })
-      .to(titleEl, { x: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.85")
-      .to(descEl, { y: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.8")
-      .to(ctaEl, { opacity: 1, duration: 1, ease: "none" }, "-=0.75")
-      .to(imageCol, { x: 0, opacity: 1, duration: 1, ease: "none" }, "-=0.9");
+      .to(titleEl, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.4")
+      .to(descEl, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.35")
+      .to(ctaEl, { opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.3")
+      .to(imageCol, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.45");
 
     if (buttons?.length) {
       tl.to(
@@ -243,11 +242,11 @@ export default function ExpandableFeatures4({
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.08,
-          ease: "none",
+          duration: 0.4,
+          stagger: 0.06,
+          ease: "power2.out",
         },
-        "-=0.7",
+        "-=0.25",
       );
     }
 
