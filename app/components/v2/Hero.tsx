@@ -34,6 +34,9 @@ const STAGGER = 0.08;
 /** Delay after loading screen disappears before hero content animates in */
 const ENTRANCE_DELAY = 0.35;
 const LANYARD_DROP_HEIGHT = 2.2;
+/** Delay after drop before string fades to 0 (card physics settled) */
+const STRING_GLASS_DELAY_MS = 10000;
+const STRING_GLASS_OPACITY = 0;
 
 export function Hero() {
   const pathname = usePathname();
@@ -41,14 +44,17 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
+  const [animationsSettled, setAnimationsSettled] = useState(false);
+  const [cardHovered, setCardHovered] = useState(false);
 
   // Reset animation state when returning to home so hero re-animates after V1→V2 switch
   useEffect(() => {
-    if (pathname === "/") hasAnimated.current = false;
+    if (pathname === "/" || pathname === "/v2") hasAnimated.current = false;
   }, [pathname]);
 
   useEffect(() => {
-    if (!isAppReady || hasAnimated.current || pathname !== "/") return;
+    const isHome = pathname === "/" || pathname === "/v2";
+    if (!isAppReady || hasAnimated.current || !isHome) return;
 
     const container = containerRef.current;
     if (!container) return;
@@ -122,6 +128,16 @@ export function Hero() {
       tl.kill();
     };
   }, [isAppReady, pathname]);
+
+  // After drop, wait for physics to settle before fading string to glass
+  useEffect(() => {
+    if (!lanyardDrop) return;
+    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [lanyardDrop]);
+
+  const stringOpacity =
+    animationsSettled && !cardHovered ? STRING_GLASS_OPACITY : 1;
 
   return (
     <section
@@ -274,7 +290,7 @@ export function Hero() {
       {/* end max-width grid wrapper */}
 
       {/* Lanyard 3D overlay — preloads hidden, then drops from top at 1.0s */}
-      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25">
+      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25 pointer-events-none">
         <Lanyard
           key={lanyardDrop ? "drop" : "preload"}
           visible
@@ -283,6 +299,8 @@ export function Hero() {
           fov={22}
           scale={1}
           initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
+          stringOpacity={stringOpacity}
+          onCardHover={setCardHovered}
           className="md:-translate-x-24"
         />
       </div>

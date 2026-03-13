@@ -116,30 +116,13 @@ export function DesignMarqueeSection({
     <section
       id={id}
       className={cn(
-        "w-full min-w-0 overflow-x-hidden py-24 max-lg:px-1 dark:bg-neutral-950",
+        "w-full min-w-0 overflow-x-hidden py-24 dark:bg-neutral-950",
         className,
       )}
     >
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-6 px-6 lg:mb-10">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-2 text-xs font-medium uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                DESIGN WORK
-              </p>
-              <h2 className="font-cormorant text-2xl font-normal leading-tight text-foreground md:text-3xl">
-                Figma first,{" "}
-                <em className="italic text-gradient-blue-static">then code</em>
-              </h2>
-            </div>
-            <p className="max-w-md text-right text-sm text-neutral-500 dark:text-neutral-400">
-              Every project starts as a Figma file. Here&apos;s the thinking
-              behind the interfaces.
-            </p>
-          </div>
-        </div>
-
-        <div className="overflow-hidden pt-6">
+      {/* Match DesignCarousel: full-width container, no padding, overflow-hidden for clip */}
+      <div className="w-full overflow-x-hidden">
+        <div className="relative overflow-hidden pt-6">
           <DesignCardMarquee itemCount={itemCount}>
             {children}
           </DesignCardMarquee>
