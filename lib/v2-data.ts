@@ -184,7 +184,7 @@ export const experienceItems: ExperienceItem[] = [
     initial: "S",
     company: "The School of Research Science",
     role: "Software Engineer",
-    desc: "Built and shipped EdTech products used by 400+ students, including a browser-based Cambridge Pseudocode IDE, a KNN image classifier, and a real-time assessment dashboard — all tested to 95%+ coverage with zero critical regressions over 12 months.",
+    desc: "Built multiple internal EdTech platforms used across the school's computer science programme including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
     tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],
     techStack: [
       "Figma",
@@ -201,7 +201,7 @@ export const experienceItems: ExperienceItem[] = [
   {
     initial: "F",
     company: "Freelance ",
-    role: "Full-Stack Software Engineer",
+    role: "Independent Software Engineer",
     desc: "Designed and built production-grade products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video pipeline that cut media costs by 40%.",
     tags: ["React", "Node.js", "AWS S3", "Stripe", "Figma"],
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],

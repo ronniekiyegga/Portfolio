@@ -77,6 +77,7 @@ export default function ProjectSection() {
     <section
       id="projects"
       className="relative w-full min-w-0 overflow-x-hidden py-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      suppressHydrationWarning
     >
       {/* Light mode: LiquidChrome background */}
       <div className="absolute inset-0 z-0 dark:hidden">
