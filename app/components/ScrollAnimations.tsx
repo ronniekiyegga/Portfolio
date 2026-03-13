@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 import gsap from "gsap";
 
 interface ScrollAnimationsProps {
@@ -13,6 +13,9 @@ export default function ScrollAnimations({
   className = "",
 }: ScrollAnimationsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -75,7 +78,8 @@ export default function ScrollAnimations({
   return (
     <div
       ref={containerRef}
-      className={`${className} [&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0`}
+      className={`${className} ${mounted ? "[&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0" : ""}`}
+      suppressHydrationWarning
     >
       {children}
     </div>

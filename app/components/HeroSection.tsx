@@ -19,6 +19,9 @@ const LANYARD_DROP_HEIGHT = 2.2;
 const ENTRANCE_DELAY = 0.28;
 /** Lanyard drops last, slightly sooner (contact ends ~1.3s) */
 const LANYARD_DROP_TIME = 1.1;
+/** Delay after drop before string fades to 0 (card physics settled) */
+const STRING_GLASS_DELAY_MS = 6000;
+const STRING_GLASS_OPACITY = 0;
 
 const stats = [
   { num: "<50ms", label: "P95 Latency" },
@@ -33,6 +36,8 @@ export default function HeroSection() {
   const lanyardRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
+  const [animationsSettled, setAnimationsSettled] = useState(false);
+  const [cardHovered, setCardHovered] = useState(false);
   const [heroReady, setHeroReady] = useState(false);
 
   useEffect(() => {
@@ -83,6 +88,16 @@ export default function HeroSection() {
     return () => clearTimeout(t);
   }, [isAppReady]);
 
+  // After drop, wait for physics to settle before fading string to glass
+  useEffect(() => {
+    if (!lanyardDrop) return;
+    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [lanyardDrop]);
+
+  const stringOpacity =
+    animationsSettled && !cardHovered ? STRING_GLASS_OPACITY : 1;
+
   return (
     <section
       id="hero-section"
@@ -99,6 +114,7 @@ export default function HeroSection() {
       <div
         ref={containerRef}
         className={`relative z-10 flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto transition-opacity duration-0 ${!heroReady ? "opacity-0" : ""}`}
+        suppressHydrationWarning
       >
         {/* Availability badge */}
         <div
@@ -175,7 +191,7 @@ export default function HeroSection() {
       <div
         ref={lanyardRef}
         data-hero-lanyard
-        className="absolute inset-0 z-25"
+        className="absolute inset-0 z-25 pointer-events-none"
         style={{
           opacity: lanyardDrop ? 1 : 0,
           visibility: lanyardDrop ? "visible" : "hidden",
@@ -194,9 +210,11 @@ export default function HeroSection() {
             cardAttachmentY={0.85}
             cardScale={2.8}
             initialDropHeight={LANYARD_DROP_HEIGHT}
+            stringOpacity={stringOpacity}
+            onCardHover={setCardHovered}
             angularDamping={8}
             linearDamping={6}
-            className="md:translate-x-12 md:-translate-y-1"
+            className="md:-translate-x-4 md:-translate-y-1"
           />
         )}
       </div>
