@@ -137,7 +137,6 @@ interface DesignCarouselProps {
 }
 
 export function DesignCarousel({}: DesignCarouselProps) {
-  // Triple items for seamless loop — eliminates white space at wrap
   const loopItems = [...designItems, ...designItems, ...designItems];
 
   return (

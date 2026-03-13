@@ -8,11 +8,8 @@ const SMOOTH_TAU = 0.25;
 
 interface DesignCardMarqueeProps {
   children: React.ReactNode;
-  /** Number of card items (for width calculation) */
   itemCount: number;
-  /** Gap between items in px */
   gap?: number;
-  /** When true, animation pauses */
   isPaused?: boolean;
   className?: string;
 }
@@ -120,7 +117,6 @@ export function DesignMarqueeSection({
         className,
       )}
     >
-      {/* Match DesignCarousel: full-width container, no padding, overflow-hidden for clip */}
       <div className="w-full overflow-x-hidden">
         <div className="relative overflow-hidden pt-6">
           <DesignCardMarquee itemCount={itemCount}>
