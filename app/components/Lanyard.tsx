@@ -25,6 +25,8 @@ import { cn } from "@/lib/utils";
 import lanyardTexture from "./lanyard/lanyard.png";
 
 const CARD_GLB = "/lanyard/card.glb";
+const IDENTITY_ROTATION: [number, number, number] = [0, 0, 0];
+const SLIP_ROTATION: [number, number, number] = [Math.PI * 0.9, 0, 0];
 
 useGLTF.preload(CARD_GLB);
 extend({ MeshLineGeometry, MeshLineMaterial });
@@ -48,6 +50,8 @@ interface LanyardProps {
   angularDamping?: number;
   linearDamping?: number;
   verticalDropStart?: boolean;
+  /** When true with initialDropHeight, rope+card start bunched at top, then slip down into place */
+  slipFromTop?: boolean;
   onCardHover?: (hovered: boolean) => void;
 }
 
@@ -70,6 +74,7 @@ export default function Lanyard({
   angularDamping: angularDampingProp,
   linearDamping: linearDampingProp,
   verticalDropStart = false,
+  slipFromTop = true,
   onCardHover,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
@@ -117,7 +122,7 @@ export default function Lanyard({
         >
           <ambientLight intensity={Math.PI} />
           <Suspense fallback={null}>
-            <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 60}>
+            <Physics gravity={gravity} timeStep={1 / 60}>
               <Band
                 isMobile={isMobile}
                 scale={scale}
@@ -132,6 +137,7 @@ export default function Lanyard({
                 angularDamping={angularDampingProp}
                 linearDamping={linearDampingProp}
                 verticalDropStart={verticalDropStart}
+                slipFromTop={slipFromTop}
                 onCardHover={onCardHover}
               />
             </Physics>
@@ -188,6 +194,7 @@ interface BandProps {
   angularDamping?: number;
   linearDamping?: number;
   verticalDropStart?: boolean;
+  slipFromTop?: boolean;
   onCardHover?: (hovered: boolean) => void;
 }
 
@@ -207,6 +214,7 @@ function Band({
   angularDamping: angularDampingProp,
   linearDamping: linearDampingProp,
   verticalDropStart = false,
+  slipFromTop = true,
   onCardHover,
 }: BandProps) {
   const band = useRef<any>(null);
@@ -225,13 +233,23 @@ function Band({
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
+  // Heavy-card physics: lower damping = more swing/bounce; higher mass = more inertia
+  const HEAVY_CARD_ANGULAR_DAMPING = 1.2;
+  const HEAVY_CARD_LINEAR_DAMPING = 1.6;
   const segmentProps: any = {
     type: "dynamic" as RigidBodyProps["type"],
     canSleep: true,
     colliders: false,
-    angularDamping: angularDampingProp ?? 4,
-    linearDamping: linearDampingProp ?? 4,
+    angularDamping: angularDampingProp ?? HEAVY_CARD_ANGULAR_DAMPING,
+    linearDamping: linearDampingProp ?? HEAVY_CARD_LINEAR_DAMPING,
   };
+
+  // Drag inertia: card lags behind pointer (heavier feel)
+  const dragLerpRef = useRef(new THREE.Vector3());
+  const prevTargetRef = useRef(new THREE.Vector3());
+  const hasPrevTargetRef = useRef(false);
+  const releaseVelocityRef = useRef<THREE.Vector3 | null>(null);
+  const wasDraggingRef = useRef(false);
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
   const texture = useTexture(
@@ -275,12 +293,53 @@ function Band({
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
       vec.add(dir.multiplyScalar(state.camera.position.length()));
+      const targetX = vec.x - dragged.x;
+      const targetY = vec.y - dragged.y;
+      const targetZ = vec.z - dragged.z;
+      dir.set(targetX, targetY, targetZ);
+
+      // Track pointer velocity for release throw (skip first frame to avoid spike)
+      const dt = Math.max(delta, 0.001);
+      if (card.current && hasPrevTargetRef.current) {
+        releaseVelocityRef.current = releaseVelocityRef.current ?? new THREE.Vector3();
+        releaseVelocityRef.current.set(
+          (targetX - prevTargetRef.current.x) / dt,
+          (targetY - prevTargetRef.current.y) / dt,
+          (targetZ - prevTargetRef.current.z) / dt,
+        );
+      }
+      prevTargetRef.current.set(targetX, targetY, targetZ);
+      hasPrevTargetRef.current = true;
+
       [card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp());
+      // Light inertia: card follows pointer quickly (minimal resistance)
+      const lerpFactor = Math.min(1, delta * 14);
+      dragLerpRef.current.lerp(dir, lerpFactor);
       card.current?.setNextKinematicTranslation({
-        x: vec.x - dragged.x,
-        y: vec.y - dragged.y,
-        z: vec.z - dragged.z,
+        x: dragLerpRef.current.x,
+        y: dragLerpRef.current.y,
+        z: dragLerpRef.current.z,
       });
+      wasDraggingRef.current = true;
+    } else {
+      // Apply release velocity when transitioning from drag to free
+      if (wasDraggingRef.current && card.current && releaseVelocityRef.current) {
+        const v = releaseVelocityRef.current;
+        const throwScale = 0.4; // Slight throw in drag direction
+        card.current.setLinvel({
+          x: v.x * throwScale,
+          y: v.y * throwScale,
+          z: v.z * throwScale,
+        });
+        releaseVelocityRef.current = null;
+      }
+      wasDraggingRef.current = false;
+      hasPrevTargetRef.current = false;
+      // Reset lerp when not dragging so next drag starts from current pos
+      if (card.current) {
+        const t = card.current.translation();
+        dragLerpRef.current.set(t.x, t.y, t.z);
+      }
     }
     if (
       fixed.current &&
@@ -350,10 +409,32 @@ function Band({
   const groupY = initialDropHeight ?? 1.5;
 
   const useVerticalStart = verticalDropStart && initialDropHeight != null;
-  const j1Pos: [number, number, number] = useVerticalStart ? [0, 2.6, 0] : [0.5, 0, 0];
-  const j2Pos: [number, number, number] = useVerticalStart ? [0, 1, 0] : [1, 0, 0];
-  const j3Pos: [number, number, number] = useVerticalStart ? [0, -0.6, 0] : [1.5, 0, 0];
-  const cardPos: [number, number, number] = useVerticalStart ? [0, -1.45, 0] : [2, 0, 0];
+  const useSlipFromTop = slipFromTop && initialDropHeight != null && !useVerticalStart;
+  // Slip from top: rope angled left from anchor (hidden at top-left), card swings down in an arc
+  const j1Pos: [number, number, number] = useSlipFromTop
+    ? [-0.9, 3.7, 0]
+    : useVerticalStart
+      ? [0, 2.6, 0]
+      : [0.5, 0, 0];
+  const j2Pos: [number, number, number] = useSlipFromTop
+    ? [-1.4, 3.0, 0]
+    : useVerticalStart
+      ? [0, 1, 0]
+      : [1, 0, 0];
+  const j3Pos: [number, number, number] = useSlipFromTop
+    ? [-1.2, 2.2, 0]
+    : useVerticalStart
+      ? [0, -0.6, 0]
+      : [1.5, 0, 0];
+  const cardPos: [number, number, number] = useSlipFromTop
+    ? [-1.2, 2.2 - cardAttachmentY, 0]
+    : useVerticalStart
+      ? [0, -1.45, 0]
+      : [2, 0, 0];
+
+  const cardRotation: [number, number, number] = useSlipFromTop
+    ? SLIP_ROTATION
+    : IDENTITY_ROTATION;
 
   return (
     <>
@@ -393,13 +474,14 @@ function Band({
           position={cardPos}
           ref={card}
           {...segmentProps}
+          rotation={cardRotation}
           type={
             dragged
               ? ("kinematicPosition" as RigidBodyProps["type"])
               : ("dynamic" as RigidBodyProps["type"])
           }
         >
-          <CuboidCollider args={[0.8, 1.111, 0.01]} />
+          <CuboidCollider args={[0.8, 1.111, 0.01]} density={2.5} restitution={0.35} />
           <group
             scale={[cardScale, cardScale * cardScaleY, cardScale]}
             position={[0, -2.3, 0.02]}

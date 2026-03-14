@@ -30,7 +30,7 @@ const LogoLoopSection = () => {
       {/* Stack logos — LogoLoop (matches stats width) */}
           <div
           data-hero-stack
-          className="w-full max-w-2xl mx-auto mb-10 overflow-hidden [&_.flex]:justify-center!"
+          className="w-full max-w-2xl mx-auto mb-10 overflow-hidden [&_.flex]:justify-center! "
         >
           <LogoLoop
             logos={stackLogos}

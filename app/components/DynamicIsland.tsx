@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { BsStars } from "react-icons/bs";
+import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useSplash } from "@/app/contexts/SplashContext";
 import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibility";
@@ -197,7 +197,7 @@ export default function DynamicIsland() {
                 >
                   <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                   <span>Let&apos;s chat</span>
-                  <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
+                  {/* <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span> */}
                 </Link>
                 <div className="h-4 w-px shrink-0 bg-white/20" />
                 <button
@@ -210,7 +210,7 @@ export default function DynamicIsland() {
                       : "Enable fluid cursor"
                   }
                 >
-                  <BsStars
+                  <WiStars
                     className={cn(
                       "size-4 shrink-0 pill-icon-gradient",
                       splashActive && "text-cyan-400",

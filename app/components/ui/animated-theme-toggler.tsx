@@ -1,10 +1,14 @@
 "use client"
 
 import { useCallback, useRef, useState, useEffect } from "react"
-import { Moon, Sun } from "lucide-react"
+import { Sun } from "lucide-react"
+import { LuSunMoon } from "react-icons/lu"
 import { flushSync } from "react-dom"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
+
+/** Fixed pixel size for both icons */
+const ICON_SIZE = 14
 
 interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
   duration?: number
@@ -64,11 +68,24 @@ export const AnimatedThemeToggler = ({
     })
   }, [isDark, duration, setTheme])
 
+  const icon = isDark ? (
+    <Sun size={ICON_SIZE} strokeWidth={2} className="shrink-0" />
+  ) : (
+    <LuSunMoon size={ICON_SIZE} className="shrink-0" />
+  )
+
   // Render placeholder before mount to avoid layout shift
   if (!mounted) {
     return (
-      <button className={cn(className)} {...props} aria-label="Toggle theme">
-        <Moon />
+      <button
+        className={cn(
+          "flex items-center justify-center p-0 min-w-[18px] min-h-[18px]",
+          className
+        )}
+        {...props}
+        aria-label="Toggle theme"
+      >
+        <LuSunMoon size={ICON_SIZE} className="shrink-0" />
         <span className="sr-only">Toggle theme</span>
       </button>
     )
@@ -78,11 +95,14 @@ export const AnimatedThemeToggler = ({
     <button
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn(className)}
+      className={cn(
+        "flex items-center justify-center p-0 min-w-[18px] min-h-[18px]",
+        className
+      )}
       {...props}
       aria-label="Toggle theme"
     >
-      {isDark ? <Sun /> : <Moon />}
+      {icon}
       <span className="sr-only">Toggle theme</span>
     </button>
   )

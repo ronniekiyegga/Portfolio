@@ -13,7 +13,7 @@ import { ImageIllustration } from "@/app/components/ui/illustrations/image-illus
 import GradualBlur from "@/app/components/GradualBlur";
 import { TracingBeam } from "@/app/components/ui/tracing-beam";
 import { ArrowUpRight, Bell, X } from "lucide-react";
-import type { WorkItem } from "@/lib/v2-data";
+import type { WorkItem } from "@/lib/data";
 
 interface ProjectModalProps {
   item: WorkItem | null;
@@ -284,6 +284,32 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                               className="w-full h-auto object-contain rounded-lg"
                             />
                           </div>
+                          {item?.statistics && item.statistics.length > 0 && (
+                            <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
+                              {item.statistics.map((stat, i) => (
+                                <div
+                                  key={i}
+                                  className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3"
+                                >
+                                  <div
+                                    className="text-base sm:text-lg font-semibold tabular-nums"
+                                    style={{
+                                      background:
+                                        "linear-gradient(135deg, #3e7bfa 0%, #6600cc 100%)",
+                                      WebkitBackgroundClip: "text",
+                                      WebkitTextFillColor: "transparent",
+                                      backgroundClip: "text",
+                                    }}
+                                  >
+                                    {stat.value}
+                                  </div>
+                                  <div className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                                    {stat.label}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                           {item.insights.map((insight, i) => (
                             <div key={i} className="pb-8">
                               <h4 className="font-semibold text-base text-foreground mb-3">
@@ -297,14 +323,42 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                         </div>
                       </TracingBeam>
                     ) : (
-                      <div className="relative overflow-hidden rounded-xl bg-muted/30 p-6">
-                        <Image
-                          src={item?.heroImage ?? ""}
-                          alt={item?.title ?? "Project"}
-                          width={800}
-                          height={520}
-                          className="w-full h-auto object-contain rounded-lg"
-                        />
+                      <div className="space-y-8">
+                        <div className="relative overflow-hidden rounded-xl bg-muted/30 p-6">
+                          <Image
+                            src={item?.heroImage ?? ""}
+                            alt={item?.title ?? "Project"}
+                            width={800}
+                            height={520}
+                            className="w-full h-auto object-contain rounded-lg"
+                          />
+                        </div>
+                        {item?.statistics && item.statistics.length > 0 && (
+                          <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
+                            {item.statistics.map((stat, i) => (
+                              <div
+                                key={i}
+                                className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3"
+                              >
+                                <div
+                                  className="text-base sm:text-lg font-semibold tabular-nums"
+                                  style={{
+                                    background:
+                                      "linear-gradient(135deg, #3e7bfa 0%, #6600cc 100%)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    backgroundClip: "text",
+                                  }}
+                                >
+                                  {stat.value}
+                                </div>
+                                <div className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                                  {stat.label}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

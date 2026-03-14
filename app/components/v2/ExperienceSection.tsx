@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CornerDownRight } from "lucide-react";
 import Integrations from "@/app/components/integrations-one";
-import { experienceItems } from "@/lib/v2-data";
+import { experienceItems } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function ExperienceSection() {

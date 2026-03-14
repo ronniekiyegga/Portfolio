@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
-import FeaturesSliderSection from "./FeaturesSliderSection";
-import ExpandableFeatures4, { type Feature } from "./ExpandableFeatures4";
+import ExpandableFeatures4 from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
 import { ProjectModal } from "./v2/ProjectModal";
-import { workItems, type WorkItem } from "@/lib/v2-data";
+import { projectSectionItems, type WorkItem } from "@/lib/data";
 
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -91,19 +90,23 @@ export default function ProjectSection() {
       </div>
       <div className="relative z-10">
         <LampHeader />
-        <TracingBeam className="w-full px-12 sm:px-20 lg:px-30 py-12 md:py-2">
+        <TracingBeam className="w-full px-12 sm:px-20 lg:px-20 py-12 md:py-2">
           <div
             ref={containerRef}
-            className="mx-auto w-full max-w-5xl lg:max-w-6xl antialiased relative"
+            className="mx-auto w-full antialiased relative"
           >
-            {projectContent.map((item, index) => (
-              <div key={`content-${index}`} data-project-card className="mb-16 md:mb-20 lg:mb-16">
+            {projectSectionItems.map((item, index) => (
+              <div
+                key={`content-${index}`}
+                data-project-card
+                className="mb-16 md:mb-20 lg:mb-16"
+              >
                 <ExpandableFeatures4
                   badge={item.badge}
-                  title={item.title}
-                  description={item.description}
+                  title={item.workItem.title}
+                  description={<p>{item.workItem.desc}</p>}
                   imageOnLeft={index % 2 === 1}
-                  detailsImage={item.image}
+                  detailsImage={item.workItem.heroImage}
                   features={item.features}
                   links={item.links}
                   workItem={item.workItem}
@@ -111,11 +114,11 @@ export default function ProjectSection() {
                 />
               </div>
             ))}
-          <ProjectModal
-            item={selectedItem}
-            open={modalOpen}
-            onOpenChange={setModalOpen}
-          />
+            <ProjectModal
+              item={selectedItem}
+              open={modalOpen}
+              onOpenChange={setModalOpen}
+            />
 
             {/* {projectContent.map((item, index) => (
             <div key={`content-${index}`} data-project-card className="mb-10">
@@ -168,241 +171,3 @@ export default function ProjectSection() {
     </section>
   );
 }
-
-const projectContent: Array<{
-  title: string;
-  description: React.ReactNode;
-  badge: string;
-  image?: string;
-  statistics?: Array<Record<string, number>>;
-  TechStack?: string[];
-  features?: Feature[];
-  /** Live site URL → "Live Website" or "Live Demo" button. designFile → "Design File" button (e.g. Figma). */
-  links?: { liveWebsite?: string; designFile?: string };
-  /** WorkItem for ProjectModal (V2-style modal when clicking Live Website). */
-  workItem?: WorkItem;
-}> = [
-  // EduFeedbPro
-  {
-    title: "EduFeedbackPro",
-    workItem: workItems[0],
-    description: (
-      <>
-        <p>
-          School analytics platform for KHDA compliance and student performance
-          tracking across UAE schools. Reduced manual reporting time from 12
-          hours to 15 minutes per cycle.
-        </p>
-      </>
-    ),
-    badge: "B2B SAAS PLATFORM",
-    statistics: [
-      {
-        ActiveStudents: 1200,
-        schools: 1,
-        timesSaved: 98,
-        costReduction: 2.4,
-      },
-    ],
-    image: "/DMI_HERO.svg",
-    TechStack: [
-      "Next.js",
-      "MongoDB",
-      "BigQuery",
-      "NextAuth",
-      "Vercel",
-      "Github Actions",
-    ],
-    features: [
-      {
-        title: "Design",
-        description: "",
-        image: "/DMI_HERO.svg",
-        background: "lightPillar",
-      },
-      {
-        title: "Engineering",
-        description: "",
-        image: "/EDUFEEDBACKPRO.svg",
-        background: "prism",
-      },
-      {
-        title: "Github",
-        description: "",
-        image: "/NUMERIX_AI.svg",
-        background: "lightRays",
-      },
-    ],
-  },
-  // Ms Maryam's Maths
-  {
-    title: "Mathematics Tutoring",
-    workItem: workItems[1],
-    links: {
-      designFile:
-        "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
-      liveWebsite: "https://www.msmaryamsmaths.com/",
-    },
-    description: (
-      <>
-        <p>
-          Professional tutoring platform for GCSE and A-Level mathematics.
-          Full-stack application with modern design, student engagement
-          features, and production deployment architecture.
-        </p>
-        {/* <p>
-          CHALLEGE: Building a professional tutoring presence with engaging UX
-          while maintaining scalability for future student management features.
-          Needed production-grade infrastructure on a budget, with reliable
-          deployment pipeline and secure SSL configuration.
-        </p>
-        <p>
-          SOLUTION: Designed and developed a full-stack Next.js application with
-          Express backend for API services. Implemented modern UI with Framer
-          Motion animations, Tailwind CSS v4, and responsive design. Deployed on
-          VPS with nginx reverse proxy, PM2 process management, and automated
-          CI/CD via GitHub Actions. Configured SSL certificates through Certbot
-          for secure HTTPS connections.
-        </p>
-        <p>
-          TECHNICAL HIGHLIGHT: Built monorepo architecture separating frontend
-          (Next.js on port 3000) and backend (Express on port 3001) with nginx
-          routing. Implemented design token system for pixel-perfect
-          Figma-to-code translation. Configured production environment with
-          zero-downtime deployments using PM2 and GitHub Actions. Integrated
-          CORS configuration, environment-based routing, and production-ready
-          error handling.
-        </p> */}
-      </>
-    ),
-    badge: "B2C SAAS PLATFORM",
-    image: "/MATHS_TUTORING.svg",
-    TechStack: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Express",
-      "React 19",
-      "Nginx",
-      "PM2",
-      "Certbot",
-      "GitHub Actions",
-    ],
-    features: [
-      {
-        title: "Design",
-        description: "",
-        image: "/MATHS_TUTORING_HERO.svg",
-        background: "floatingLines",
-      },
-      {
-        title: "Engineering",
-        description: "",
-        image: "/MATHS_TUTORING2.svg",
-        background: "prism",
-      },
-      {
-        title: "Github",
-        description: "",
-        image: "/BLOG.svg",
-        background: "lightPillar",
-      },
-    ],
-  },
-  // Google Teachable Machine
-  {
-    title: "Google Teachable Machine",
-    workItem: workItems[2],
-    description: (
-      <>
-        <p>
-          Browser-based machine learning classifier that replaced Google&apos;s
-          Teachable Machine for iPad-only classrooms. Enabled 400+ students to
-          build ML models without desktop access.
-        </p>
-        {/* <p>
-          In dolore veniam excepteur eu est et sunt velit. Ipsum sint esse
-          veniam fugiat esse qui sint ad sunt reprehenderit do qui proident
-          reprehenderit. Laborum exercitation aliqua reprehenderit ea sint
-          cillum ut mollit.
-        </p> */}
-      </>
-    ),
-    badge: "EDUCATIONAL TOOL",
-    image: "/GOOGLE_TEACHABLE.svg",
-    features: [
-      {
-        title: "Design",
-        description: "",
-        image: "/GOOGLE_TEACHABLE.svg",
-        background: "lightRays",
-      },
-      {
-        title: "Engineering",
-        description: "",
-        image: "/AI_PSEUDOCODE.svg",
-        background: "prism",
-      },
-      {
-        title: "Github",
-        description: "",
-        image: "/CODE.svg",
-        background: "lightPillar",
-        href: "https://github.com/BlissfulCoda/teachablemachine",
-      },
-    ],
-  },
-  // PSEUDOLAB IDE
-  {
-    title: "PSEUDOLAB IDE",
-    workItem: workItems[3],
-    links: {
-      liveWebsite: "https://www.algo-pseudo.com/",
-    },
-    description: (
-      <>
-        <p>
-          Web-based IDE for Cambridge IGCSE pseudocode specification. Used by
-          400+ students for exam preparation and coursework development.
-        </p>
-      </>
-    ),
-    badge: "DEVELOPER TOOL",
-    image: "/PSEUDOLAB_HERO.svg",
-    TechStack: ["Next.js", "TypeScript", "Tailwind CSS", "Express", "Figma"],
-    features: [
-      {
-        title: "Design",
-        description: "",
-        image: "/PSEUDOLAB_HERO.svg",
-        background: "prism",
-      },
-      {
-        title: "Engineering",
-        description: "",
-        image: "/AI_PSEUDOCODE.svg",
-        background: "lightPillar",
-      },
-      {
-        title: "Github",
-        description: "",
-        image: "/CODE.svg",
-        background: "floatingLines",
-      },
-    ],
-  },
-];
-
-const PROJECTDISPLAY = [
-  {
-    title: "Code",
-    content: FeaturesSliderSection,
-    backgroundImage: "/BackgroundImage_2.svg",
-    backgroundColor: "black",
-    color: "white",
-  },
-  // {
-  //   title: "Design",
-  //   content: <FeaturesSliderSection />,
-  // },
-];

@@ -147,11 +147,13 @@ html {
 }
 
 /* Right pill outer - frosted cream gradient (light), solid dark (dark mode). Padding matches left pill (p-1.5). */
+/* Layout: padding, border, border-radius must match light/dark to prevent shift on theme toggle */
 .pill-outer-cream {
   border-radius: var(--Corner-radius-32, 2rem);
   background: var(--Gradients-Cream-Buttons);
   padding: 0.375rem; /* 6px - matches left pill p-1.5 */
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 0 solid transparent; /* explicit - matches dark's border: none for layout */
 }
 .dark .pill-outer-cream {
   background: #252530;
@@ -159,10 +161,10 @@ html {
     0 0 1px 0 rgba(255, 255, 255, 0.06) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.4);
-  border: none;
+  border: 0 solid transparent; /* same as light - no layout shift */
 }
 
-/* Let's chat wrapper (light mode) - white background, cream gradient border around dark pill */
+/* Let's chat wrapper - white bg (light), transparent (dark). Layout props must match both modes. */
 .lets-chat-cream-wrapper {
   border-radius: 1.22406rem;
   padding: 2px;
@@ -172,12 +174,13 @@ html {
     0 0.659px 0 0 rgba(255, 255, 255, 0.1);
 }
 .dark .lets-chat-cream-wrapper {
-  padding: 0;
+  padding: 2px;
+  border-radius: 1.22406rem; /* same as light */
   background: transparent;
   box-shadow: none;
 }
 
-/* Let's chat inner - dark pill with depth (light mode), gradient (dark mode) */
+/* Let's chat inner - dark pill. border-radius must match light/dark to prevent layout shift. */
 .lets-chat-inner {
   border-radius: calc(1.22406rem - 2px);
   background: var(--BG-Black-2);
@@ -196,7 +199,7 @@ html {
     #0a0518 50%,
     #000000 100%
   ) !important;
-  border-radius: calc(1.89169rem - 2px);
+  border-radius: calc(1.22406rem - 2px); /* same as light - prevents shift */
   box-shadow:
     0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.05);
@@ -345,6 +348,7 @@ html.dark .version-icon-v2-ring {
 }
 
 /* Let's Chat button inner - dark gradient (indigo to black) (V1) */
+/* border-radius matches first .lets-chat-inner to prevent layout shift on theme toggle */
 .lets-chat-inner {
   background: linear-gradient(
     90deg,
@@ -352,7 +356,7 @@ html.dark .version-icon-v2-ring {
     #0a0518 50%,
     #000000 100%
   ) !important;
-  border-radius: calc(1.89169rem - 2px);
+  border-radius: calc(1.22406rem - 2px);
   box-shadow:
     0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.05);
@@ -387,8 +391,11 @@ html.dark .version-icon-v2-ring {
   align-items: center;
   justify-content: center;
   padding: 0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
   min-width: 1.75rem;
   min-height: 1.75rem;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
@@ -406,8 +413,11 @@ html.dark .version-icon-v2-ring {
   align-items: center;
   justify-content: center;
   padding: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
   min-width: 1.5rem;
   min-height: 1.5rem;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
@@ -703,6 +713,32 @@ html.light .section-cream-bg {
 /* Projects/Work section: black background in dark mode */
 .dark #work.section-cream-bg {
   background: #000000;
+}
+
+/* V1 Project section: serif title, grey description (reference design) */
+#projects [data-project-title] {
+  font-family: var(--font-cormorant), serif !important;
+  font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
+  font-weight: 400 !important;
+}
+.dark #projects [data-project-title] {
+  color: white !important;
+}
+html.light #projects [data-project-title] {
+  color: #333333 !important;
+}
+#projects [data-project-content] {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  margin-top: 1.5rem !important;
+}
+.dark #projects [data-project-content],
+.dark #projects [data-project-content] p {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+html.light #projects [data-project-content],
+html.light #projects [data-project-content] p {
+  color: #777777 !important;
 }
 
 /* Process section: original dark mode (process-bg), cream in light to match Selected Work */

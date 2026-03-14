@@ -21,7 +21,7 @@ import { MoveUpRight } from "lucide-react";
 import { FaFigma } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import type { WorkItem } from "@/lib/v2-data";
+import type { WorkItem } from "@/lib/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -231,10 +231,22 @@ export default function ExpandableFeatures4({
       duration: 0.5,
       ease: "power2.out",
     })
-      .to(titleEl, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.4")
-      .to(descEl, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.35")
+      .to(
+        titleEl,
+        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+        "-=0.4",
+      )
+      .to(
+        descEl,
+        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+        "-=0.35",
+      )
       .to(ctaEl, { opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.3")
-      .to(imageCol, { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.45");
+      .to(
+        imageCol,
+        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+        "-=0.45",
+      );
 
     if (buttons?.length) {
       tl.to(
@@ -280,13 +292,15 @@ export default function ExpandableFeatures4({
               </h4>
               <h2
                 ref={titleRef}
-                className="text-xl font-semibold sm:text-2xl lg:text-3xl text-white "
+                data-project-title
+                className="font-cormorant text-[1.75rem] sm:text-[2rem] lg:text-[2.5rem] font-normal leading-tight text-[#333333] dark:text-white"
               >
                 {title}
               </h2>
               <div
                 ref={descRef}
-                className=" mt-3 text-sm sm:text-md text-gray-500 dark:text-white/50"
+                data-project-content
+                className="mt-6 text-[15px] leading-[1.6] text-[#777777] dark:text-white/60 [&_p]:mb-2 [&_p:last-child]:mb-0"
               >
                 {description}
               </div>
@@ -300,14 +314,13 @@ export default function ExpandableFeatures4({
                 <NativeStartNow
                   variant="gradient"
                   size="xs"
-                  label="View Details"
+                  label="Case Study"
                   onStart={() => {
                     onOpenProjectModal(workItem);
                     return Promise.resolve();
                   }}
                 />
               )}
-
 
               {links?.designFile && (
                 <a
@@ -345,7 +358,6 @@ export default function ExpandableFeatures4({
               )}
             </div>
 
-            
             <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col ">
               {tabFeatures.map((feature, index) => (
                 <button
