@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 "use client";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
@@ -78,8 +78,11 @@ export default function Lanyard({
   onCardHover,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const isLight = mounted && resolvedTheme === "light";
   const stringColor = stringColorProp ?? (isLight ? "#ffffff" : "#e2e8f0");
   const stringLineWidth = stringLineWidthProp ?? (isLight ? 1.3 : 1);

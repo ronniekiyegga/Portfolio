@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
+import LampWidget from "../widgets/LampWidget";
 import ExpandableFeatures4 from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
 import { ProjectModal } from "./v2/ProjectModal";
@@ -75,7 +76,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="relative w-full min-w-0 overflow-x-hidden py-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full min-w-0 overflow-x-hidden -mt-4 pt-4 pb-20 md:-mt-6 md:pt-6 md:pb-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
       suppressHydrationWarning
     >
       {/* Light mode: LiquidChrome background */}
@@ -89,8 +90,9 @@ export default function ProjectSection() {
         /> */}
       </div>
       <div className="relative z-10">
-        <LampHeader />
-        <TracingBeam className="w-full px-12 sm:px-20 lg:px-20 py-12 md:py-2">
+        {/* <LampHeader /> */}
+        <LampWidget />
+        <TracingBeam className="w-full px-12 sm:px-20 lg:px-20 py-6 md:py-2">
           <div
             ref={containerRef}
             className="mx-auto w-full antialiased relative"
