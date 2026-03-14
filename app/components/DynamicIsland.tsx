@@ -122,10 +122,10 @@ export default function DynamicIsland() {
           </ButtonWidget>
 
           {/* Middle pill — Email + icons only (single pill, matches first image) */}
-          <ButtonWidget>
+          <ButtonWidget >
             <div
               className={cn(
-                "flex items-center justify-between rounded-full gap-2 px-4 py-3",
+                "items-center justify-between rounded-full gap-2 px-4 py-3 hidden md:flex",
                 "bg-linear-to-b from-[#fbfbfb] to-[#f7f7f9] dark:from-[#0d0d1a] dark:to-[#0a0a12] rounded-full",
                 "border border-[#e5e7eb] dark:border-white/10 rounded-full",
               )}

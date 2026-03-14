@@ -15,7 +15,7 @@ export default function AnimatedText({
 }: AnimatedTextProps) {
   return (
     <div className="flex justify-center items-start h-40 flex-col px-4">
-      <div className="text-white max-w-xs text-[20px] text-center md:text-3xl md:max-w-4xl">
+      <div className="text-white max-w-xs text-[16px] text-center md:text-xl md:max-w-4xl">
         <span className="font-(family-name:--font-source-serif) font-semibold mr-1">
           Intersection of{" "}
         </span>
@@ -23,7 +23,7 @@ export default function AnimatedText({
           url="https://www.msmaryamsmaths.com"
           imageSrc="/BLOG.svg"
           isStatic
-          className={`${styleScript.className} font-bold text-2xl md:text-4xl`}
+          className={`${styleScript.className} font-bold text-2xl md:text-2xl`}
         >
           {figma}
         </LinkPreview>{" "}
@@ -31,14 +31,14 @@ export default function AnimatedText({
           url="/templates"
           imageSrc="/NUMERIX_AI.svg"
           isStatic
-          className={`${styleScript.className} font-bold text-2xl md:text-4xl `}
+          className={`${styleScript.className} font-bold text-2xl md:text-2xl `}
         >
           {engineering}
         </LinkPreview>{" "}
         <span
           className={`font-(family-name:--font-source-serif) font-semibold `}
         >
-          & ML
+          & AI
         </span>
       </div>
     </div>

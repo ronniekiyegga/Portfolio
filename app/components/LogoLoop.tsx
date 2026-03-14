@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export type LogoItem =
   | {
@@ -311,7 +312,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           return (
             <li
               className={cx(
-                'flex-none text-[length:var(--logoloop-logoHeight)] leading-[1]',
+                'flex-none text-(length:--logoloop-logoHeight) leading-[1]',
                 isVertical ? 'mb-[var(--logoloop-gap)]' : 'mr-[var(--logoloop-gap)]',
                 scaleOnHover && 'overflow-visible group/item'
               )}
@@ -338,7 +339,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
             {(item as any).node}
           </span>
         ) : (
-          <img
+          <Image
             className={cx(
               'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
               '[-webkit-user-drag:none] pointer-events-none',
@@ -347,15 +348,12 @@ export const LogoLoop = React.memo<LogoLoopProps>(
               scaleOnHover &&
                 'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
             )}
-            src={(item as any).src}
-            srcSet={(item as any).srcSet}
-            sizes={(item as any).sizes}
-            width={(item as any).width}
-            height={(item as any).height}
-            alt={(item as any).alt ?? ''}
-            title={(item as any).title}
+            src={(item as { src: string }).src}
+            width={(item as { width?: number }).width ?? logoHeight}
+            height={(item as { height?: number }).height ?? logoHeight}
+            alt={(item as { alt?: string }).alt ?? ''}
+            title={(item as { title?: string }).title}
             loading="lazy"
-            decoding="async"
             draggable={false}
           />
         );
@@ -386,7 +384,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         return (
           <li
             className={cx(
-              'flex-none text-[length:var(--logoloop-logoHeight)] leading-[1]',
+              'flex-none text-(length:--logoloop-logoHeight) leading-[1]',
               isVertical ? 'mb-[var(--logoloop-gap)]' : 'mr-[var(--logoloop-gap)]',
               scaleOnHover && 'overflow-visible group/item'
             )}
@@ -397,7 +395,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           </li>
         );
       },
-      [isVertical, scaleOnHover, renderItem]
+      [isVertical, scaleOnHover, renderItem, logoHeight]
     );
 
     const logoLists = useMemo(

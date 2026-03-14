@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import LampHeader from "./LampHeader";
+import LiquidChrome from "./LiquidChrome";
 import LampWidget from "../widgets/LampWidget";
 import ExpandableFeatures4 from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
@@ -76,7 +77,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="relative w-full min-w-0 overflow-x-hidden -mt-4 pt-4 pb-20 md:-mt-6 md:pt-6 md:pb-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full min-w-0 overflow-x-hidden -mt-4 pt-4 pb-20 md:-mt-6 md:pt-16 md:pb-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
       suppressHydrationWarning
     >
       {/* Light mode: LiquidChrome background */}
