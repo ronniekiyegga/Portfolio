@@ -63,7 +63,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
             "pointer-events-none invisible -translate-y-full",
         )}
       >
-        <div className="flex items-center justify-between gap-4 w-full max-w-6xl">
+        <div className="flex items-center justify-between gap-4 w-full max-w-7xl">
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 shrink">
             <Link
               href="/"
@@ -96,7 +96,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                 </svg>
               </button>
               <Link
-                href="/Ronnie-Kiyegga-SWE.pdf"
+                href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-jetbrains text-[9px] sm:text-[10px] tracking-widest uppercase px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 bg-transparent hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors no-underline"
@@ -288,7 +288,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
               ))}
               <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
                 <Link
-                  href="/Ronnie-Kiyegga-SWE.pdf"
+                  href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}

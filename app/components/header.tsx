@@ -352,7 +352,7 @@ export default function Header({
                   />
                   {/* <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" /> */}
                   <Link
-                    href="/Ronnie-Kiyegga-SWE.pdf"
+                    href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
@@ -423,7 +423,7 @@ const exploreLinks = [
   { name: "About", href: "/#about" },
   { name: "More", href: "#" },
   { name: "Blog", href: "/blog" },
-  { name: "Resume", href: "/Ronnie-Kiyegga-SWE.pdf" },
+  { name: "Resume", href: "/Ronnie%20Kiyegga%20-%20SWE.pdf" },
 ];
 
 function MobileMenu({
@@ -626,7 +626,7 @@ function MobileMenu({
                       aria-hidden
                     />
                     <Link
-                      href="/Ronnie-Kiyegga-SWE.pdf"
+                      href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Lamp.module.css";
 import SectionKicker from "../components/ui/section-kicker";
+import AnimatedText from "../components/AnimatedText";
 
 const BAR_Y = 130;
 const SQ = 422;
@@ -28,7 +29,7 @@ export default function LampWidget() {
       ([entry]) => {
         if (entry.isIntersecting) setInView(true);
       },
-      { rootMargin: "0px 0px -5% 0px", threshold: 0 }
+      { rootMargin: "0px 0px -5% 0px", threshold: 0 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -40,7 +41,7 @@ export default function LampWidget() {
       className={`
         ${styles.hero}
         ${inView ? styles.inView : ""}
-        relative w-full h-[400px] overflow-hidden
+        relative md:w-full h-[400px] overflow-hidden md:mb-20 
       `}
     >
       {/* ── Light group ─────────────────────────────────────── */}
@@ -51,8 +52,8 @@ export default function LampWidget() {
         `}
         style={{
           top: `-${LIFT}px`,
-          width: `${SQ * 2}px`,
-          height: `${SQ + 300}px`,
+          width: `${SQ * 2.1}px`,
+          height: `${SQ + 500}px`,
         }}
       >
         {/* Left cone — rotate(-90deg), right edge slightly past centre to eliminate seam */}
@@ -124,67 +125,11 @@ export default function LampWidget() {
       {/* ── Hero text ────────────────────────────────────────── */}
       <div
         className="
-          absolute bottom-0 left-0 right-0 pb-[100px]
+          absolute bottom-0 left-0 right-0 pb-[50px]
           flex flex-col items-center text-center z-15 gap-5
         "
       >
-        {/* Headline */}
-        {/* <h1
-          className="
-            font-bold text-white leading-[1.12] tracking-[-0.02em]
-            text-[clamp(32px,5vw,64px)] max-w-[900px]
-          "
-          style={{ fontFamily: "'Inter', sans-serif" }}
-        >
-          {HEADLINE_WORDS.map(([text, isScript, delay]) => (
-            <span
-              key={text}
-              className={styles.word}
-              style={{
-                fontFamily: isScript
-                  ? "'Style Script', cursive"
-                  : "'Inter', sans-serif",
-                fontWeight: isScript ? 400 : 700,
-                fontSize: isScript ? "1.1em" : undefined,
-                letterSpacing: isScript ? "0.01em" : undefined,
-                animationDelay: `${delay}s`,
-              }}
-            >
-              {text}
-            </span>
-          ))}
-        </h1> */}
-
-        {/* Subtitle */}
-        {/* <p
-          className={`
-            ${styles.subtitle}
-            font-light text-white/50 leading-[1.7]
-            text-[clamp(14px,1.5vw,18px)] max-w-[580px] tracking-[0.01em]
-          `}
-          style={{ fontFamily: "'Inter', sans-serif" }}
-        >
-          Intersection of{" "}
-          <span
-            style={{
-              fontFamily: "'Style Script', cursive",
-              fontSize: "1.05em",
-            }}
-          >
-            design
-          </span>
-          ,{" "}
-          <span
-            style={{
-              fontFamily: "'Style Script', cursive",
-              fontSize: "1.05em",
-            }}
-          >
-            engineering
-          </span>
-          , and AI applied to products that matter &amp; patterns, and problems
-          I&apos;m currently obsessing over.
-        </p> */}
+        <AnimatedText />
       </div>
     </section>
   );
