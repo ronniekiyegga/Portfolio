@@ -8,10 +8,9 @@ const ProjectSection = dynamic(
   () => import("@/app/components/ProjectSection"),
   { loading: () => <section className="min-h-[400px]" aria-hidden /> },
 );
-const Experiences = dynamic(
-  () => import("@/app/components/Experiences"),
-  { loading: () => <section className="min-h-[400px]" aria-hidden /> },
-);
+const Experiences = dynamic(() => import("@/app/components/Experiences"), {
+  loading: () => <section className="min-h-[400px]" aria-hidden />,
+});
 const FeaturesSliderSection = dynamic(
   () => import("@/app/components/FeaturesSliderSection"),
   { loading: () => <section className="min-h-[300px]" aria-hidden /> },
@@ -35,7 +34,7 @@ export default function V1Home() {
   return (
     <div className="min-h-screen w-full min-w-0 font-sans bg-background dark:bg-neutral-950">
       <main className="flex w-full min-w-0 flex-col items-center">
-        <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-16 md:gap-y-20">
+        <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-4 md:gap-y-6">
           <HeroSection />
           <ProjectSection />
           <Experiences />

@@ -52,6 +52,64 @@ export interface ExperienceItem {
   dates: string;
 }
 
+/** V1 Experiences component (expandable list) */
+export interface ExperienceV1Item {
+  id: string;
+  organisation: string;
+  role: string;
+  dates: string;
+  responsibilities: string;
+  techStack?: TechIconKey[];
+}
+
+export const experiencesV1: ExperienceV1Item[] = [
+  {
+    id: "SRS",
+    organisation: "The School Of Research Science",
+    role: "Software Engineer",
+    dates: "2023 - 2026",
+    responsibilities:
+      "Built multiple internal EdTech platforms used across the school's computer science programme including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
+    techStack: [
+      "Figma",
+      "Nextjs",
+      "Python",
+      "TypeScript",
+      "Docker",
+      "Redis",
+      "Nginx",
+      "TensorFlow",
+    ],
+  },
+  {
+    id: "Freelance",
+    organisation: "Freelance (Contract Work)",
+    role: "Software Engineer ",
+    dates: "2020 - 2023",
+    responsibilities:
+      "Designed and built production-grade web products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video processing pipeline that cut media delivery costs by 40%.",
+    techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
+  },
+  {
+    id: "Internship",
+    organisation: "Adaptive",
+    role: "Software Engineer Intern ",
+    dates: "2019 - 2019",
+    responsibilities:
+      "Built interactive React dashboards with D3.js timeline visualizations for 3 fintech product teams, enabling self-serve reporting for non-technical stakeholders and significantly reducing analyst data retrieval time.",
+    techStack: ["React", "TypeScript", "Figma", "Slack", "Nodejs"],
+  },
+  {
+    id: "Fitness",
+    organisation: "DW Fitness First Baker Street",
+    role: "Senior Strength & Conditioning Consultant",
+    dates: "2015 - 2019",
+    responsibilities:
+      "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
+    techStack: [],
+  },
+];
+
 export const workItems: WorkItem[] = [
   {
     type: "B2B SaaS · Analytics Platform",
@@ -175,16 +233,16 @@ export interface ProjectSectionItem {
 export const projectSectionItems: ProjectSectionItem[] = [
   {
     workItem: workItems[0],
-    badge: "B2B SAAS PLATFORM",
+    badge: "ANALYTICS PLATFORM",
     features: [
       {
-        title: "Design",
+        title: "Design blog",
         description: "",
         image: "/DMI_HERO.svg",
         background: "lightPillar",
       },
       {
-        title: "Engineering",
+        title: "Engineering blog",
         description: "",
         image: "/EDUFEEDBACKPRO.svg",
         background: "prism",
@@ -207,13 +265,13 @@ export const projectSectionItems: ProjectSectionItem[] = [
     },
     features: [
       {
-        title: "Design",
+        title: "Design blog",
         description: "",
         image: "/MATHS_TUTORING_HERO.svg",
         background: "floatingLines",
       },
       {
-        title: "Engineering",
+        title: "Engineering blog",
         description: "",
         image: "/MATHS_TUTORING2.svg",
         background: "prism",
@@ -231,13 +289,13 @@ export const projectSectionItems: ProjectSectionItem[] = [
     badge: "EDUCATIONAL TOOL",
     features: [
       {
-        title: "Design",
+        title: "Design blog",
         description: "",
         image: "/GOOGLE_TEACHABLE.svg",
         background: "lightRays",
       },
       {
-        title: "Engineering",
+        title: "Engineering blog",
         description: "",
         image: "/AI_PSEUDOCODE.svg",
         background: "prism",
@@ -257,13 +315,13 @@ export const projectSectionItems: ProjectSectionItem[] = [
     links: { liveWebsite: "https://www.algo-pseudo.com/" },
     features: [
       {
-        title: "Design",
+        title: "Design blog",
         description: "",
         image: "/PSEUDOLAB_HERO.svg",
         background: "prism",
       },
       {
-        title: "Engineering",
+        title: "Engineering blog",
         description: "",
         image: "/AI_PSEUDOCODE.svg",
         background: "lightPillar",

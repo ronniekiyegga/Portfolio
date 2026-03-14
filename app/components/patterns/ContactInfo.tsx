@@ -4,7 +4,7 @@ import { Github, Linkedin, Mails } from "lucide-react";
 const ContactInfo = () => {
   return (
     <div className="w-full text-sm font-medium  rounded-tl-2xl rounded-tr-2xl">
-      <div className="flex max-w-sm bg-gray-150 shadow-lg h-14 pb-0.5 dark:bg-gray-900/50 items-center justify-between overflow-hidden rounded-tl-2xl rounded-tr-2xl">
+      <div className="flex max-w-sm bg-gray-150 shadow-lg h-14 pb-0.5 bg-white dark:bg-gray-900/50 items-center justify-between overflow-hidden rounded-tl-2xl rounded-tr-2xl">
         {/* Github — gradient blue text + subtle active background */}
         <Link
           href="https://github.com/BlissfulCoda"
@@ -18,7 +18,9 @@ const ContactInfo = () => {
               "0 8px 8px -4px rgba(0, 0, 0, 0.04), 0 20px 24px -4px rgba(0, 0, 0, 0.08)",
           }}
         >
-          <span className="text-xs lg:text-sm font-semibold text-gradient-blue-static">Github</span>
+          <span className="text-xs lg:text-sm font-semibold text-gradient-blue-static">
+            Github
+          </span>
           {/* <Github className="sm:hidden " size={20} /> */}
         </Link>
 

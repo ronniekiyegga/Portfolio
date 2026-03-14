@@ -40,8 +40,8 @@ const coursesLinks = [
   { name: "Tutorials", href: "#" },
 ];
 
-const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left");
-const pillBaseRight = cn("backdrop-blur-sm pill-light pill-dark-right");
+const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left header-pill-bg");
+const pillBaseRight = cn("backdrop-blur-sm pill-light pill-dark-right header-pill-bg");
 
 interface HeaderProps {
   isHeaderVisible: boolean;
@@ -106,7 +106,7 @@ export default function Header({
         <motion.header
           key="header"
           role="banner"
-          className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-8 lg:pt-6"
+          className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-8 lg:pt-6 bg-[#FEFBF1] dark:bg-neutral-950"
           initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}

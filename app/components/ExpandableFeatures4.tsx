@@ -274,12 +274,12 @@ export default function ExpandableFeatures4({
       ref={sectionRef}
       className="w-full min-w-0 bg-transparent @container overflow-hidden py-8 md:py-16"
     >
-      <div className="mx-auto w-full min-w-0 max-w-full px-2 sm:px-4">
-        <div className="grid w-full min-w-0 grid-cols-1 gap-8 sm:grid-cols-7 sm:gap-8 md:gap-12 lg:gap-16">
+      <div className="mx-auto w-full min-w-0 max-w-5xl px-4 sm:px-6">
+        <div className="grid w-full min-w-0 grid-cols-1 gap-8 sm:grid-cols-7 sm:gap-6 md:gap-12">
           <div
             ref={textColRef}
             className={cn(
-              "flex min-w-0 flex-col gap-6 pb-4 sm:col-span-3 md:py-6",
+              "flex min-w-0 flex-col gap-12 pb-6 sm:col-span-3 md:py-12",
               imageOnLeft && "sm:order-2",
             )}
           >
@@ -293,14 +293,19 @@ export default function ExpandableFeatures4({
               <h2
                 ref={titleRef}
                 data-project-title
-                className="font-cormorant text-[1.75rem] sm:text-[2rem] lg:text-[2.5rem] font-normal leading-tight text-[#333333] dark:text-white"
+                className="font-cormorant font-normal leading-tight"
+                style={{
+                  color: "white",
+                  fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+                }}
               >
                 {title}
               </h2>
               <div
                 ref={descRef}
                 data-project-content
-                className="mt-6 text-[15px] leading-[1.6] text-[#777777] dark:text-white/60 [&_p]:mb-2 [&_p:last-child]:mb-0"
+                className="mt-6 leading-[1.6] [&_p]:mb-2 [&_p:last-child]:mb-0"
+                style={{ color: "rgba(255,255,255,0.7)", fontSize: "15px" }}
               >
                 {description}
               </div>
@@ -358,7 +363,7 @@ export default function ExpandableFeatures4({
               )}
             </div>
 
-            <div ref={buttonsRef} className="mt-auto flex min-w-0 flex-col ">
+            <div ref={buttonsRef} className="-ml-6 mt-auto flex min-w-0 flex-col">
               {tabFeatures.map((feature, index) => (
                 <button
                   key={feature.title}
@@ -367,7 +372,7 @@ export default function ExpandableFeatures4({
                     "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
                     expandedIndex === index
                       ? "text-white"
-                      : "  text-gray-500 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90",
+                      : "  text-gray-600 hover:text-gray-300 dark:text-white/70 dark:hover:text-white/90",
                   )}
                 >
                   <div className="flex size-4 shrink-0 items-center justify-center">
@@ -416,7 +421,7 @@ export default function ExpandableFeatures4({
                 onOpenProjectModal(workItem)
               }
               className={cn(
-                "corner-cut-tr-bl rounded-tl-lg rounded-br-lg aspect-4/5 min-h-0 min-w-0 relative overflow-hidden",
+                "corner-cut-tr-bl aspect-4/5 min-h-0 min-w-0 relative overflow-hidden",
                 workItem && onOpenProjectModal && "cursor-pointer",
               )}
             >

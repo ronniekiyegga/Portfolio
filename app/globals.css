@@ -68,6 +68,14 @@ html {
   --Pill-Box-Shadow-Right: 2.353px 11.764px 23.528px 0 rgba(0, 0, 0, 0.3);
 }
 
+/* Header pills: match HeroSection #FEFBF1 in light mode */
+.header-pill-bg {
+  background: #fefbf1 !important;
+}
+.dark .header-pill-bg {
+  background: var(--Gradients-Pill-BG-Dark) !important;
+}
+
 /* Light mode pill styles - header and DynamicIsland */
 .pill-light {
   border-radius: var(--Corner-Full, 62.5rem);
@@ -236,6 +244,14 @@ html {
 .dark .pill-icon-gradient svg circle {
   fill: currentColor;
   stroke: currentColor;
+}
+
+/* Right pill: keep gradient on icons in dark mode (per design) */
+.dark .pill-icon-gradient-keep svg,
+.dark .pill-icon-gradient-keep svg path,
+.dark .pill-icon-gradient-keep svg circle {
+  fill: url(#pillIconGradient);
+  stroke: url(#pillIconGradient);
 }
 
 /* Theme toggle icon - plain white (no gradient) */
@@ -713,32 +729,6 @@ html.light .section-cream-bg {
 /* Projects/Work section: black background in dark mode */
 .dark #work.section-cream-bg {
   background: #000000;
-}
-
-/* V1 Project section: serif title, grey description (reference design) */
-#projects [data-project-title] {
-  font-family: var(--font-cormorant), serif !important;
-  font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
-  font-weight: 400 !important;
-}
-.dark #projects [data-project-title] {
-  color: white !important;
-}
-html.light #projects [data-project-title] {
-  color: #333333 !important;
-}
-#projects [data-project-content] {
-  font-size: 15px !important;
-  line-height: 1.6 !important;
-  margin-top: 1.5rem !important;
-}
-.dark #projects [data-project-content],
-.dark #projects [data-project-content] p {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-html.light #projects [data-project-content],
-html.light #projects [data-project-content] p {
-  color: #777777 !important;
 }
 
 /* Process section: original dark mode (process-bg), cream in light to match Selected Work */

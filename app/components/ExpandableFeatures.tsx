@@ -13,7 +13,7 @@ const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 const features = [
   {
-    title: "Design File",
+    title: "Design blog",
     description:
       "With AI-powered suggestions, templates, and seamless collaboration.",
     ariaLabel: "extend smart email composition feature",
@@ -22,7 +22,7 @@ const features = [
     cardClassName: "h-96",
   },
   {
-    title: "Live Project",
+    title: "Engineering blog",
     description:
       "That learns your writing style and provides context-aware suggestions.",
     ariaLabel: "extend AI autocomplete feature",
@@ -85,7 +85,10 @@ export default function ExpandableFeatures() {
   };
 
   return (
-    <section id="process" className="bg-background @container py-24 w-full max-lg:px-1 dark:bg-neutral-950">
+    <section
+      id="process"
+      className="bg-background @container py-24 w-full max-lg:px-1 dark:bg-neutral-950"
+    >
       <style>{`
                 @keyframes expandProgress {
                     from { transform: scaleX(0); }

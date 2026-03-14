@@ -7,7 +7,7 @@ import { useLoading } from "@/app/contexts/LoadingContext";
 import IntroductionText from "@/app/components/IntroductionText";
 import ContactInfo from "./patterns/ContactInfo";
 import { BackgroundBeams } from "@/components/ui/background-beams";
-import LogoLoopSection from "@/widgets/LogoLoop";
+import LogoLoopSection from "@/app/widgets/LogoLoop";
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
 const LANYARD_DROP_HEIGHT = 2.2;
@@ -16,12 +16,12 @@ const LANYARD_DROP_TIME = 1.1;
 const STRING_GLASS_DELAY_MS = 6000;
 const STRING_GLASS_OPACITY = 0;
 
-const stats = [
-  { num: "<50ms", label: "P95 Latency" },
-  { num: "90%", label: "Faster QA" },
-  { num: "40%", label: "Cost Reduction" },
-  { num: "4+", label: "Years " },
-];
+// const stats = [
+//   { num: "<50ms", label: "P95 Latency" },
+//   { num: "90%", label: "Faster QA" },
+//   { num: "40%", label: "Cost Reduction" },
+//   { num: "4+", label: "Years " },
+// ];
 
 export default function HeroSection() {
   const { isAppReady } = useLoading();
@@ -87,7 +87,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero-section"
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#F4EFE6] dark:bg-neutral-950 relative overflow-hidden"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#FEFBF1] dark:bg-neutral-950 relative overflow-hidden"
     >
       <div className="absolute inset-0">
         <BackgroundBeams
