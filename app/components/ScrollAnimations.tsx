@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useState, ReactNode } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const EASE_SMOOTH = "power2.out";
 
 interface ScrollAnimationsProps {
   children: ReactNode;
@@ -18,13 +23,24 @@ export default function ScrollAnimations({
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    let rafId: number;
+    let cleanup: (() => void) | null = null;
 
-    let io: IntersectionObserver | null = null;
+    rafId = requestAnimationFrame(() => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    const setupObserver = () => {
-      if (io) io.disconnect();
+      const prefersReducedMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReducedMotion) {
+        gsap.set(container.children, {
+          opacity: 1,
+          visibility: "visible",
+          y: 0,
+        });
+        return;
+      }
 
       const sections = Array.from(container.children).filter(
         (el) => el instanceof HTMLElement
@@ -32,53 +48,58 @@ export default function ScrollAnimations({
 
       if (!sections.length) return;
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const section = entry.target as HTMLElement;
-            gsap.to(section, {
-              opacity: 1,
-              visibility: "visible",
-              duration: 0.5,
-              ease: "power2.out",
-              delay: 0.02,
-              force3D: true,
-              overwrite: "auto",
-            });
-            observer.unobserve(section);
-          });
-        },
-        {
-          rootMargin: "0px 0px 100px 0px",
-          threshold: 0,
-        }
-      );
+      ScrollTrigger.config({ limitCallbacks: true });
 
-      io = observer;
+      const triggers: ScrollTrigger[] = [];
+
       sections.forEach((section, i) => {
         if (i === 0) return;
-        observer.observe(section);
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 88%",
+            toggleActions: "play none none none",
+            once: true,
+          },
+        });
+
+        // to() reads initial state from CSS — no inline styles until trigger fires
+        tl.to(section, {
+          opacity: 1,
+          visibility: "visible",
+          y: 0,
+          duration: 0.9,
+          ease: EASE_SMOOTH,
+          force3D: true,
+        });
+
+        if (tl.scrollTrigger) triggers.push(tl.scrollTrigger);
       });
-    };
 
-    setupObserver();
+      const refresh = () =>
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+      refresh();
+      const t = setTimeout(refresh, 600);
 
-    const mo = new MutationObserver(() => {
-      setupObserver();
+      cleanup = () => {
+        clearTimeout(t);
+        triggers.forEach((st) => st.kill());
+      };
     });
-    mo.observe(container, { childList: true, subtree: false });
 
     return () => {
-      mo.disconnect();
-      io?.disconnect();
+      cancelAnimationFrame(rafId);
+      cleanup?.();
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className={`${className} ${mounted ? "[&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0" : ""}`}
+      className={`${className} ${mounted
+          ? "[&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0 [&>*:nth-child(n+2)]:translate-y-3.5"
+          : ""}`}
       suppressHydrationWarning
     >
       {children}

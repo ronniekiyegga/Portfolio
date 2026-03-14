@@ -9,9 +9,9 @@ const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 export default function IntroductionText() {
   return (
     <div className="flex flex-col w-full mb-8">
-      <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
+      {/* <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
         <LayoutTextFlip text="SOFTWARE" words={["DESIGNER", "ENGINEER"]} />
-      </motion.div>
+      </motion.div> */}
       <div className="mt-6 text-sm md:text-base text-left text-neutral-600 dark:text-neutral-400 sm:min-w-[70%] lg:min-w-[50%]">
         I&apos;m a software engineer, passionate about{" "}
         <span className="whitespace-nowrap inline-flex items-baseline gap-1">

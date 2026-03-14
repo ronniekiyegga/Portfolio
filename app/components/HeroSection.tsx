@@ -3,11 +3,13 @@
 import React, { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
+import { motion } from "motion/react";
 import { useLoading } from "@/app/contexts/LoadingContext";
 import IntroductionText from "@/app/components/IntroductionText";
 import ContactInfo from "./patterns/ContactInfo";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import LogoLoopSection from "@/app/widgets/LogoLoop";
+import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
 const LANYARD_DROP_HEIGHT = 2.2;
@@ -103,10 +105,13 @@ export default function HeroSection() {
       >
         <div
           data-hero-availability
-          className="inline-flex items-center gap-2 text-[11.5px] font-medium tracking-[0.1em] uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700 rounded-full py-1.5 px-3.5 mb-8"
+          className="inline-flex items-center gap-2 text-[10px] md:text-[11px] text-nowrap font-medium tracking-widest uppercase text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700 rounded-full py-1.5 px-4 mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          Available for roles · London, UK
+          <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 text-center sm:mx-0 sm:mb-0 sm:flex-row">
+            <LayoutTextFlip text="SOFTWARE" words={["DESIGNER", "ENGINEER"]} />
+          </motion.div>
+          · London, UK
         </div>
 
         <h1

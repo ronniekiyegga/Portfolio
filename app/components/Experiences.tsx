@@ -15,42 +15,58 @@ export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    const content = contentRef.current;
-    if (!section || !content) return;
+    const rafId = requestAnimationFrame(() => {
+      const section = sectionRef.current;
+      const content = contentRef.current;
+      if (!section || !content) return;
 
-    const heading = content.querySelector("h2");
-    const items = content.querySelectorAll("[data-experience-item]");
+      const prefersReducedMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    gsap.set([heading, ...items], { opacity: 0, y: 16, force3D: true });
+      const heading = content.querySelector("h2");
+      const items = content.querySelectorAll("[data-experience-item]");
+      const els = [heading, ...items].filter(Boolean) as HTMLElement[];
 
-    // Content: scrubbed fade for heading + items
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 88%",
-        end: "top 45%",
-        scrub: true,
-      },
+      if (prefersReducedMotion) {
+        gsap.set(els, { opacity: 1, y: 0 });
+        return;
+      }
+
+      gsap.set(els, { opacity: 0, y: 12, force3D: true });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 82%",
+          end: "top 42%",
+          scrub: 0.85,
+        },
+      });
+
+      tl.to(heading, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }).to(
+        items,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.06,
+          ease: "power2.out",
+        },
+        "-=0.5"
+      );
+
+      cleanupRef.current = () => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
     });
 
-    tl.to(heading, { opacity: 1, y: 0, duration: 1, ease: "none" }).to(
-      items,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.08,
-        ease: "none",
-      },
-      "-=0.7",
-    );
-
     return () => {
-      tl.scrollTrigger?.kill();
-      tl.kill();
+      cancelAnimationFrame(rafId);
+      cleanupRef.current?.();
     };
   }, []);
 
@@ -59,10 +75,12 @@ export default function Experiences() {
       id="experience"
       ref={sectionRef}
       className="relative w-full min-w-0 overflow-visible py-12 md:py-40 dark:bg-neutral-950"
+      suppressHydrationWarning
     >
       <div
         ref={contentRef}
         className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0"
+        suppressHydrationWarning
       >
         <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES

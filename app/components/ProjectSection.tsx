@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import LampHeader from "./LampHeader";
-import LiquidChrome from "./LiquidChrome";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LampWidget from "../widgets/LampWidget";
 import ExpandableFeatures4 from "./ExpandableFeatures4";
 import { TracingBeam } from "../components/ui/tracing-beam";
@@ -12,6 +11,7 @@ import { projectSectionItems, type WorkItem } from "@/lib/data";
 
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
   const [selectedItem, setSelectedItem] = useState<WorkItem | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -21,57 +21,76 @@ export default function ProjectSection() {
   };
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const rafId = requestAnimationFrame(() => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    const cards = container.querySelectorAll<HTMLElement>(
-      "[data-project-card]",
-    );
-    if (!cards.length) return;
+      const cards = container.querySelectorAll<HTMLElement>(
+        "[data-project-card]",
+      );
+      if (!cards.length) return;
 
-    cards.forEach((card) => {
-      const els = [
-        card.querySelector("[data-project-badge]"),
-        card.querySelector("[data-project-title]"),
-        card.querySelector("[data-project-content]"),
-        card.querySelector("[data-project-cta]"),
-      ].filter(Boolean) as HTMLElement[];
-      gsap.set(els, { autoAlpha: 0, force3D: true });
+      const prefersReducedMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const cleanup: Array<{ st?: ScrollTrigger; tl: gsap.core.Timeline }> = [];
+
+      cards.forEach((card) => {
+      const badge = card.querySelector<HTMLElement>("[data-project-badge]");
+      const title = card.querySelector<HTMLElement>("[data-project-title]");
+      const content = card.querySelector<HTMLElement>("[data-project-content]");
+      const cta = card.querySelector<HTMLElement>("[data-project-cta]");
+      const els = [badge, title, content, cta].filter(Boolean);
+
+      gsap.set(els, { autoAlpha: 0, y: 10, force3D: true });
+
+      if (prefersReducedMotion) {
+        gsap.set(els, { autoAlpha: 1, y: 0 });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: "top 82%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      tl.to(badge, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.45,
+        ease: "expo.out",
+        force3D: true,
+      })
+        .to(
+          title,
+          { autoAlpha: 1, y: 0, duration: 0.4, ease: "expo.out" },
+          "-=0.3"
+        )
+        .to(
+          content,
+          { autoAlpha: 1, y: 0, duration: 0.4, ease: "expo.out" },
+          "-=0.28"
+        )
+        .to(cta, { autoAlpha: 1, y: 0, duration: 0.35, ease: "expo.out" }, "-=0.25");
+      cleanup.push({ st: tl.scrollTrigger ?? undefined, tl });
+      });
+
+      cleanupRef.current = () =>
+        cleanup.forEach(({ st, tl }) => {
+          st?.kill();
+          tl.kill();
+        });
     });
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const card = entry.target as HTMLElement;
-          const badge = card.querySelector("[data-project-badge]");
-          const title = card.querySelector("[data-project-title]");
-          const content = card.querySelector("[data-project-content]");
-          const cta = card.querySelector("[data-project-cta]");
-          const els = [badge, title, content, cta].filter(
-            Boolean,
-          ) as HTMLElement[];
-
-          gsap.to(els, {
-            autoAlpha: 1,
-            duration: 0.5,
-            stagger: 0.06,
-            ease: "power2.out",
-            overwrite: "auto",
-            force3D: true,
-          });
-          observer.unobserve(card);
-        });
-      },
-      {
-        rootMargin: "0px 0px -20% 0px",
-        threshold: 0,
-      },
-    );
-
-    cards.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(rafId);
+      cleanupRef.current?.();
+    };
   }, []);
 
   return (

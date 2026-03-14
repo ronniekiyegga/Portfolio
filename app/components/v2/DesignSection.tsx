@@ -1,6 +1,7 @@
 import { DesignCarousel } from "./DesignCarousel";
 
-const textContainerClass = "max-w-[1440px] mx-auto px-8 md:px-16 lg:px-24";
+const textContainerClass = "max-w-5xl mx-auto px-4 lg:px-0";
+const contentIndentClass = "pl-4 md:pl-12";
 
 export function DesignSection() {
   return (
@@ -13,7 +14,7 @@ export function DesignSection() {
           Design Work
         </p>
         <h2
-          className="font-cormorant font-light leading-[1.05] tracking-tight mb-10"
+          className={`font-cormorant font-light leading-[1.05] tracking-tight mb-10 ${contentIndentClass}`}
           style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "var(--text)" }}
         >
           Figma first,
