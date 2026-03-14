@@ -131,7 +131,7 @@ export default function ExpandableFeatures() {
                   alt={feature.imageAlt}
                   width={980}
                   height={980}
-                  className="absolute inset-0 size-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 dark:opacity-25"
+                  className="absolute inset-0 size-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 dark:opacity-70 dark:hover:opacity-90"
                 />
               </div>
               <div>

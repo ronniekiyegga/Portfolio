@@ -161,6 +161,7 @@ export default function ExpandableFeatures4({
 
   const cardBackgrounds = getCardBackgrounds(isDark);
   const sectionRef = useRef<HTMLElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
   const textColRef = useRef<HTMLDivElement>(null);
   const imageColRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLHeadingElement>(null);
@@ -190,82 +191,88 @@ export default function ExpandableFeatures4({
   };
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const rafId = requestAnimationFrame(() => {
+      const section = sectionRef.current;
+      if (!section) return;
 
-    const textCol = textColRef.current;
-    const imageCol = imageColRef.current;
-    const badgeEl = badgeRef.current;
-    const titleEl = titleRef.current;
-    const descEl = descRef.current;
-    const ctaEl = ctaRef.current;
-    const buttonsContainer = buttonsRef.current;
-    const buttons = buttonsContainer?.querySelectorAll("button");
+      const imageCol = imageColRef.current;
+      const badgeEl = badgeRef.current;
+      const titleEl = titleRef.current;
+      const descEl = descRef.current;
+      const ctaEl = ctaRef.current;
+      const buttonsContainer = buttonsRef.current;
+      const buttons = buttonsContainer?.querySelectorAll("button");
 
-    const dir = imageOnLeft ? 1 : -1;
+      const dir = imageOnLeft ? 1 : -1;
 
-    gsap.set(
-      [badgeEl, titleEl, descEl, ctaEl, buttons, imageCol].filter(Boolean),
-      { force3D: true },
-    );
-    gsap.set(badgeEl, { y: Y_OFFSET, opacity: 0 });
-    gsap.set(titleEl, { x: dir * X_OFFSET, opacity: 0 });
-    gsap.set(descEl, { y: Y_OFFSET * 0.75, opacity: 0 });
-    gsap.set(ctaEl, { opacity: 0 });
-    if (buttons?.length) {
-      gsap.set(buttons, { y: 12, opacity: 0 });
-    }
-    gsap.set(imageCol, { x: -dir * X_OFFSET * 1.2, opacity: 0 });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 88%",
-        toggleActions: "play none none none",
-      },
-    });
-
-    tl.to(badgeEl, {
-      y: 0,
-      opacity: 1,
-      duration: 0.5,
-      ease: "power2.out",
-    })
-      .to(
-        titleEl,
-        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.4",
-      )
-      .to(
-        descEl,
-        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.35",
-      )
-      .to(ctaEl, { opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.3")
-      .to(
-        imageCol,
-        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-        "-=0.45",
+      gsap.set(
+        [badgeEl, titleEl, descEl, ctaEl, buttons, imageCol].filter(Boolean),
+        { force3D: true },
       );
+      gsap.set(badgeEl, { y: Y_OFFSET * 0.3, opacity: 0 });
+      gsap.set(titleEl, { x: dir * X_OFFSET * 0.38, opacity: 0 });
+      gsap.set(descEl, { y: Y_OFFSET * 0.25, opacity: 0 });
+      gsap.set(ctaEl, { opacity: 0 });
+      if (buttons?.length) {
+        gsap.set(buttons, { y: 8, opacity: 0 });
+      }
+      gsap.set(imageCol, { x: -dir * X_OFFSET * 0.5, opacity: 0 });
 
-    if (buttons?.length) {
-      tl.to(
-        buttons,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-          stagger: 0.06,
-          ease: "power2.out",
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 78%",
+          toggleActions: "play none none none",
         },
-        "-=0.25",
-      );
-    }
+      });
 
-    const st = tl.scrollTrigger;
-    return () => {
+      tl.to(badgeEl, {
+        y: 0,
+        opacity: 1,
+        duration: 0.42,
+        ease: "expo.out",
+      })
+        .to(
+          titleEl,
+          { x: 0, opacity: 1, duration: 0.4, ease: "expo.out" },
+          "-=0.28"
+        )
+        .to(
+          descEl,
+          { y: 0, opacity: 1, duration: 0.38, ease: "expo.out" },
+          "-=0.25"
+        )
+        .to(ctaEl, { opacity: 1, duration: 0.32, ease: "expo.out" }, "-=0.22")
+        .to(
+          imageCol,
+          { x: 0, opacity: 1, duration: 0.48, ease: "expo.out" },
+          "-=0.38"
+        );
+
+      if (buttons?.length) {
+        tl.to(
+          buttons,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.35,
+            stagger: 0.05,
+            ease: "expo.out",
+          },
+          "-=0.28"
+        );
+      }
+
+      const st = tl.scrollTrigger;
+    cleanupRef.current = () => {
       st?.kill();
       tl.kill();
+    };
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      cleanupRef.current?.();
     };
   }, [imageOnLeft]);
 

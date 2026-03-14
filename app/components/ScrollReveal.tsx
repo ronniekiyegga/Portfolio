@@ -35,12 +35,12 @@ export function ScrollReveal() {
         opacity: 1,
         y: 0,
         duration: 1,
-        ease: 'none',
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 92%',
-          end: 'top 55%',
-          scrub: true,
+          start: 'top 85%',
+          end: 'top 50%',
+          scrub: 0.8,
         },
       })
       tweens.push(t)
@@ -50,11 +50,11 @@ export function ScrollReveal() {
       const t = gsap.to(el, {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: 'none',
+        duration: 0.7,
+        ease: 'expo.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 92%',
+          start: 'top 80%',
           toggleActions: 'play none none none',
           once: true,
         },

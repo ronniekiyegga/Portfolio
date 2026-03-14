@@ -29,7 +29,7 @@ export default function LampWidget() {
       ([entry]) => {
         if (entry.isIntersecting) setInView(true);
       },
-      { rootMargin: "0px 0px -5% 0px", threshold: 0 },
+      { rootMargin: "0px 0px -25% 0px", threshold: 0.2 },
     );
     observer.observe(el);
     return () => observer.disconnect();
