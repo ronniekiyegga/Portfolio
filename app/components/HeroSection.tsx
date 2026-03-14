@@ -74,7 +74,10 @@ export default function HeroSection() {
 
   React.useEffect(() => {
     if (!lanyardDrop) return;
-    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
+    const t = setTimeout(
+      () => setAnimationsSettled(true),
+      STRING_GLASS_DELAY_MS,
+    );
     return () => clearTimeout(t);
   }, [lanyardDrop]);
 
@@ -85,7 +88,7 @@ export default function HeroSection() {
     <section
       id="hero-section"
       className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#F4EFE6] dark:bg-neutral-950 relative overflow-hidden"
-      >
+    >
       <div className="absolute inset-0">
         <BackgroundBeams
           className="pointer-events-none inset-0 min-h-full"
@@ -129,7 +132,7 @@ export default function HeroSection() {
 
         <div className="mb-12 min-h-[280px] w-full" aria-hidden />
 
-        <div
+        {/* <div
           data-hero-stats
           className="w-full max-w-2xl mx-auto flex items-stretch border border-neutral-200 dark:border-neutral-700 rounded-2xl overflow-hidden mb-8"
         >
@@ -150,10 +153,9 @@ export default function HeroSection() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <LogoLoopSection />
-
         <div data-hero-contact className="flex justify-center w-full">
           <div className="w-full max-w-sm mx-auto">
             <ContactInfo />
@@ -171,25 +173,23 @@ export default function HeroSection() {
           transition: "none",
         }}
       >
-        {lanyardDrop && (
-          <Lanyard
-            key="drop"
-            visible
-            position={[0, 0, 24]}
-            gravity={[0, -40, 0]}
-            fov={22}
-            scale={0.85}
-            stringLineWidth={0.75}
-            cardAttachmentY={0.85}
-            cardScale={2.8}
-            initialDropHeight={LANYARD_DROP_HEIGHT}
-            stringOpacity={stringOpacity}
-            onCardHover={setCardHovered}
-            angularDamping={8}
-            linearDamping={6}
-            className="md:-translate-x-4 md:-translate-y-1"
-          />
-        )}
+        <Lanyard
+          key={lanyardDrop ? "drop" : "preload"}
+          visible={lanyardDrop}
+          position={[0, 0, 24]}
+          gravity={[0, -40, 0]}
+          fov={22}
+          scale={0.85}
+          stringLineWidth={0.75}
+          cardAttachmentY={0.85}
+          cardScale={2.8}
+          initialDropHeight={lanyardDrop ? LANYARD_DROP_HEIGHT : undefined}
+          stringOpacity={stringOpacity}
+          onCardHover={setCardHovered}
+          angularDamping={8}
+          linearDamping={6}
+          className="md:-translate-x-4 md:-translate-y-1"
+        />
       </div>
     </section>
   );

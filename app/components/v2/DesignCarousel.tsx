@@ -1,6 +1,6 @@
 "use client";
 
-import { designItems, type DesignItem } from "@/lib/v2-data";
+import { designItems, type DesignItem } from "@/lib/data";
 
 function CardExtras({ item }: { item: DesignItem }) {
   switch (item.extras) {
@@ -139,8 +139,11 @@ interface DesignCarouselProps {
 export function DesignCarousel({}: DesignCarouselProps) {
   const loopItems = [...designItems, ...designItems, ...designItems];
 
+  // NOTE: Do NOT add reveal/reveal-once here. ScrollReveal sets opacity:0 on those
+  // and only animates when ScrollTrigger fires. If it doesn't fire, the carousel
+  // stays hidden. Keep this wrapper plain so the carousel always shows.
   return (
-    <div className="reveal-once">
+    <div>
       <div
         className="w-full overflow-x-hidden group"
         style={{

@@ -58,12 +58,13 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-100 flex items-center justify-between gap-2 px-4 sm:px-6 md:px-12 py-4 md:py-5 border-b border-neutral-200/80 dark:border-neutral-700/50 bg-[#F4EFE6]/85 dark:bg-neutral-950/90 backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
+          "fixed top-0 left-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 border-b border-neutral-200/80 dark:border-neutral-700/50 bg-[#F4EFE6]/85 dark:bg-neutral-950/90 backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
           hideWhenBottomNav &&
             "pointer-events-none invisible -translate-y-full",
         )}
       >
-        <div className="flex items-center gap-2 sm:gap-4 md:gap-6 min-w-0 shrink">
+        <div className="flex items-center justify-between gap-4 w-full max-w-6xl">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 shrink">
           <Link
             href="/"
             className="font-jetbrains text-[11px] sm:text-[13px] font-medium tracking-[0.08em] uppercase text-neutral-900 dark:text-neutral-100 no-underline hover:opacity-80 transition-opacity shrink-0"
@@ -113,7 +114,7 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
           </div>
         </div>
 
-        <ul className="hidden md:flex items-center gap-10 list-none">
+        <ul className="hidden md:flex items-center gap-6 list-none shrink-0">
           {navLinks.map((link) => (
             <li key={link.label}>
               <Link
@@ -132,15 +133,15 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                   <Link
                     href="mailto:ronniekiyegga@hotmail.com"
                     className={cn(
-                      "flex items-center gap-1.5 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
+                      "flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
                       styleScript.className,
                     )}
                   >
                     <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                     Let&apos;s chat
-                    <span style={{ color: "#00CFDE", fontSize: "14px" }}>
+                    {/* <span style={{ color: "#00CFDE", fontSize: "14px" }}>
                       →
-                    </span>
+                    </span> */}
                   </Link>
                   <div className="h-4 w-px shrink-0 bg-white/20" />
                   <button
@@ -161,8 +162,8 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                     />
                   </button>
                   <div className="h-3 w-px shrink-0 bg-white/20" />
-<div className="theme-toggle-outer shrink-0 pr-1.5">
-                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
+                  <div className="theme-toggle-outer shrink-0 pr-1.5">
+                    <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
                       <AnimatedThemeToggler
                         className="size-3.5 shrink-0 overflow-hidden text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full"
                         duration={500}
@@ -187,9 +188,9 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                     styleScript.className,
                   )}
                 >
-                  <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
+                  <span className="size-1.5 shrink-0 rounded-full bg-teal-400 text-[14px]" />
                   Let&apos;s chat
-                  <span style={{ color: "#00CFDE", fontSize: "12px" }}>→</span>
+                  {/* <span style={{ color: "#00CFDE", fontSize: "12px" }}>→</span> */}
                 </Link>
                 <div className="h-3.5 w-px shrink-0 bg-white/20" />
                 <button
@@ -210,8 +211,8 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
                   />
                 </button>
                 <div className="h-3 w-px shrink-0 bg-white/20" />
-<div className="theme-toggle-outer shrink-0 pr-1">
-                <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
+                <div className="theme-toggle-outer shrink-0 pr-1">
+                  <div className="theme-toggle-inner overflow-hidden flex items-center justify-center pill-icon-white">
                     <AnimatedThemeToggler
                       className="size-3 shrink-0 overflow-hidden text-white [&>svg]:shrink-0 [&>svg]:max-w-full [&>svg]:max-h-full"
                       duration={500}
@@ -229,6 +230,7 @@ export default function NavV1({ hideWhenBottomNav = false }: NavV1Props) {
           >
             <RiMenu4Fill className="size-5" />
           </button>
+        </div>
         </div>
       </nav>
 

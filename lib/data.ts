@@ -3,6 +3,11 @@ export interface WorkItemInsight {
   content: string;
 }
 
+export interface ProjectSectionStat {
+  value: string;
+  label: string;
+}
+
 export interface WorkItem {
   type: string;
   title: string;
@@ -21,6 +26,8 @@ export interface WorkItem {
   githubHref?: string;
   /** Optional insights for tracing beam in project modal */
   insights?: WorkItemInsight[];
+  /** Optional stats shown in project modal below image, above problem */
+  statistics?: ProjectSectionStat[];
 }
 
 export interface DesignItem {
@@ -49,7 +56,7 @@ export const workItems: WorkItem[] = [
   {
     type: "B2B SaaS · Analytics Platform",
     title: "EduFeedbackPro",
-    desc: "School analytics platform for KHDA compliance and student performance tracking. Reduced reporting from 12 hours to 15 minutes.",
+    desc: "B2B school analytics platform designed to replace spreadsheet reporting with real-time dashboards and performance insights.",
     tags: ["Next.js", "BigQuery", "MongoDB", "Docker"],
     metric: "sub-50ms P95 response",
     href: "#",
@@ -63,11 +70,16 @@ export const workItems: WorkItem[] = [
           "Assessment feedback in schools faces a critical timing challenge. The gap between when students complete an assessment and when they receive actionable feedback directly impacts learning outcomes. Teachers face a fragmented data landscape when preparing student feedback. Assessment results often reside across multiple disconnected systems—exam board portals, spreadsheets, student information systems, and paper-based records. Consolidating this data and generating meaningful, individualised feedback requires significant manual effort. The consequence: feedback reaches students days or weeks after the assessment, by which point they've progressed to new topics.",
       },
     ],
+    statistics: [
+      { value: "95%", label: "Time Saved" },
+      { value: "30+", label: "Teachers" },
+      { value: "50ms", label: "P95 Latency" },
+    ],
   },
   {
     type: "B2C SaaS · Tutoring Platform",
     title: "Ms. Maryam's Maths",
-    desc: "Production tutoring platform with role-based access, JWT auth, and CI/CD pipeline. Zero unauthorised access incidents post-launch.",
+    desc: "End-to-end design and development of a tutoring platform for GCSE and A-Level students from brand and UX in Figma to a production dashboard system.",
     tags: ["TypeScript", "PostgreSQL", "GitHub Actions"],
     metric: "3 min deploy vs 20+ min",
     href: "https://www.msmaryamsmaths.com/",
@@ -81,11 +93,15 @@ export const workItems: WorkItem[] = [
           "Building a tutoring platform that scales securely required rethinking authentication and deployment. Role-based access with JWT needed to handle multiple user types—students, tutors, and admins—while maintaining zero unauthorised access. The CI/CD pipeline reduced manual deployment from 20+ minutes to under 3 minutes, enabling faster iteration and more reliable releases.",
       },
     ],
+    statistics: [
+      { value: "20+", label: "Active Students" },
+      { value: "3min", label: "Deploy Time" },
+    ],
   },
   {
     type: "Educational Tool · ML Classifier",
     title: "KNN Image Classifier",
-    desc: "Browser-based ML classifier replacing Google Teachable Machine for iPad classrooms. Real-time client-side inference with TensorFlow.js.",
+    desc: "On-device ML image classifier built with TensorFlow.js, enabling students to train and run models directly in the browser without server infrastructure.",
     tags: ["TensorFlow.js", "React", "On-device AI"],
     metric: "400+ students, zero infra cost",
     href: "https://blissfulcoda.github.io/teachablemachine/",
@@ -100,11 +116,15 @@ export const workItems: WorkItem[] = [
           "iPad classrooms couldn't use Google Teachable Machine due to browser restrictions and network requirements. Students needed a way to train and run ML classifiers entirely in the browser, with no server infrastructure. The solution: real-time client-side inference with TensorFlow.js, enabling 400+ students to use the tool with zero infrastructure cost.",
       },
     ],
+    statistics: [
+      { value: "400+", label: "Students" },
+      { value: "BYOK", label: "AI Reviewer" },
+    ],
   },
   {
     type: "Developer Tool · Open Source",
     title: "Algo-pseudo IDE",
-    desc: "Browser-based Cambridge Pseudocode IDE with real-time execution, AI-powered code review (BYOK pattern), and Stripe credit system. Adopted by 400+ students, including GCSE/A-Level students.",
+    desc: "Browser-based pseudocode IDE for GCSE and A-Level students with real-time syntax validation and AI-assisted code review.",
     tags: ["Next.js", "TypeScript", "Open Source"],
     metric: "Exam-spec compliant",
     href: "https://www.algo-pseudo.com/",
@@ -118,6 +138,141 @@ export const workItems: WorkItem[] = [
         title: "The Problem",
         content:
           "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference—enabling 400+ students to practice exam-style pseudocode with instant feedback.",
+      },
+    ],
+    statistics: [
+      { value: "400+", label: "Students" },
+      { value: "BYOK", label: "AI Reviewer" },
+    ],
+  },
+];
+
+/** V1 Project section: feature tabs (Design, Engineering, Github) with project-specific images */
+export interface ProjectSectionFeature {
+  title: string;
+  description: string;
+  image: string;
+  background: "lightPillar" | "prism" | "lightRays" | "floatingLines";
+  href?: string;
+}
+
+export interface ProjectSectionItem {
+  /** WorkItem is the single source of truth for title, desc, modal content */
+  workItem: WorkItem;
+  /** Short badge for project section (e.g. "B2C SAAS PLATFORM") */
+  badge: string;
+  /** Feature tabs shown on left - project-specific images */
+  features: ProjectSectionFeature[];
+  /** Optional links for design file, live site (overrides workItem.href if set) */
+  links?: {
+    liveWebsite?: string;
+    designFile?: string;
+    githubHref?: string;
+  };
+}
+
+/** V1 project section items - derived from workItems, single source of truth */
+export const projectSectionItems: ProjectSectionItem[] = [
+  {
+    workItem: workItems[0],
+    badge: "B2B SAAS PLATFORM",
+    features: [
+      {
+        title: "Design",
+        description: "",
+        image: "/DMI_HERO.svg",
+        background: "lightPillar",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/EDUFEEDBACKPRO.svg",
+        background: "prism",
+      },
+      {
+        title: "Github",
+        description: "",
+        image: "/NUMERIX_AI.svg",
+        background: "lightRays",
+      },
+    ],
+  },
+  {
+    workItem: workItems[1],
+    badge: "B2C SAAS PLATFORM",
+    links: {
+      designFile:
+        "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
+      liveWebsite: "https://www.msmaryamsmaths.com/",
+    },
+    features: [
+      {
+        title: "Design",
+        description: "",
+        image: "/MATHS_TUTORING_HERO.svg",
+        background: "floatingLines",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/MATHS_TUTORING2.svg",
+        background: "prism",
+      },
+      {
+        title: "Github",
+        description: "",
+        image: "/BLOG.svg",
+        background: "lightPillar",
+      },
+    ],
+  },
+  {
+    workItem: workItems[2],
+    badge: "EDUCATIONAL TOOL",
+    features: [
+      {
+        title: "Design",
+        description: "",
+        image: "/GOOGLE_TEACHABLE.svg",
+        background: "lightRays",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/AI_PSEUDOCODE.svg",
+        background: "prism",
+      },
+      {
+        title: "Github",
+        description: "",
+        image: "/CODE.svg",
+        background: "lightPillar",
+        href: "https://github.com/BlissfulCoda/teachablemachine",
+      },
+    ],
+  },
+  {
+    workItem: workItems[3],
+    badge: "DEVELOPER TOOL",
+    links: { liveWebsite: "https://www.algo-pseudo.com/" },
+    features: [
+      {
+        title: "Design",
+        description: "",
+        image: "/PSEUDOLAB_HERO.svg",
+        background: "prism",
+      },
+      {
+        title: "Engineering",
+        description: "",
+        image: "/AI_PSEUDOCODE.svg",
+        background: "lightPillar",
+      },
+      {
+        title: "Github",
+        description: "",
+        image: "/CODE.svg",
+        background: "floatingLines",
       },
     ],
   },

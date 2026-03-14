@@ -15,7 +15,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/app/components/ui/navigation-menu";
-import { BsStars } from "react-icons/bs";
+import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import {
   Accordion,
@@ -89,7 +89,10 @@ export default function Header({
 
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
-      if (versionDropdownRef.current && !versionDropdownRef.current.contains(e.target as Node)) {
+      if (
+        versionDropdownRef.current &&
+        !versionDropdownRef.current.contains(e.target as Node)
+      ) {
         setVersionDropdownOpen(false);
       }
     };
@@ -134,7 +137,9 @@ export default function Header({
                     <div className="relative shrink-0" ref={versionDropdownRef}>
                       <button
                         type="button"
-                        onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
+                        onClick={() =>
+                          setVersionDropdownOpen(!versionDropdownOpen)
+                        }
                         className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-(--accent)"
                         style={{
                           color: "var(--muted)",
@@ -143,7 +148,13 @@ export default function Header({
                         }}
                       >
                         V1
-                        <svg width="8" height="6" viewBox="0 0 10 6" fill="currentColor" className={`transition-transform duration-200 ${versionDropdownOpen ? "rotate-180" : ""}`}>
+                        <svg
+                          width="8"
+                          height="6"
+                          viewBox="0 0 10 6"
+                          fill="currentColor"
+                          className={`transition-transform duration-200 ${versionDropdownOpen ? "rotate-180" : ""}`}
+                        >
                           <path d="M0 0l5 6 5-6z" />
                         </svg>
                       </button>
@@ -206,7 +217,9 @@ export default function Header({
                     <div className="relative shrink-0" ref={versionDropdownRef}>
                       <button
                         type="button"
-                        onClick={() => setVersionDropdownOpen(!versionDropdownOpen)}
+                        onClick={() =>
+                          setVersionDropdownOpen(!versionDropdownOpen)
+                        }
                         className="flex items-center gap-1.5 font-jetbrains text-[10px] tracking-widest uppercase px-3 py-1.5 rounded-full border transition-colors duration-200 hover:border-(--accent)"
                         style={{
                           color: "var(--muted)",
@@ -365,7 +378,9 @@ export default function Header({
                         >
                           <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                           Let&apos;s chat
-                          <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
+                          {/* <span style={{ color: "#00CFDE", fontSize: "14px" }}>
+                            →
+                          </span> */}
                         </Link>
                         <div className="h-3.5 w-px shrink-0 bg-white/20" />
                         <button
@@ -378,7 +393,7 @@ export default function Header({
                               : "Enable fluid cursor"
                           }
                         >
-                          <BsStars
+                          <WiStars
                             className={cn(
                               "size-3 shrink-0 pill-icon-gradient",
                               splashActive && "text-cyan-400",
@@ -632,7 +647,9 @@ function MobileMenu({
                         >
                           <span className="size-1.5 shrink-0 rounded-full bg-teal-400" />
                           Let&apos;s chat
-                          <span style={{ color: "#00CFDE", fontSize: "14px" }}>→</span>
+                          {/* <span style={{ color: "#00CFDE", fontSize: "14px" }}>
+                            →
+                          </span> */}
                         </Link>
                         <div className="h-4 w-px shrink-0 bg-white/20" />
                         {setSplashActive && (
@@ -647,7 +664,7 @@ function MobileMenu({
                                   : "Enable fluid cursor"
                               }
                             >
-                              <BsStars
+                              <WiStars
                                 className={cn(
                                   "size-4 shrink-0 pill-icon-gradient",
                                   splashActive && "text-cyan-400",

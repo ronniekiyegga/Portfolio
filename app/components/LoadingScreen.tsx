@@ -60,6 +60,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const slotsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, []);
+
+  useEffect(() => {
     const overlay = overlayRef.current;
     const slots = slotsRef.current.filter(Boolean) as HTMLDivElement[];
     if (!overlay || slots.length !== 3) return;
