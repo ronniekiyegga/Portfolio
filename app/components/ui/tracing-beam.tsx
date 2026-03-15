@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   motion,
   useTransform,
@@ -17,7 +17,11 @@ export const TracingBeam = ({
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const gradientId = useId();
+  // Client-only ID to avoid useId hydration mismatch (React 19 + Next.js 16 inside Suspense)
+  const [gradientId, setGradientId] = useState("");
+  useEffect(() => {
+    setGradientId(`tb-${crypto.randomUUID().replace(/-/g, "")}`);
+  }, []);
   const prefersReducedMotion = useReducedMotion();
   const staticProgress = useMotionValue(1);
   const { scrollYProgress } = useScroll({
@@ -80,29 +84,41 @@ export const TracingBeam = ({
             strokeOpacity="0.16"
             transition={{ duration: 10 }}
           />
-          <motion.path
-            d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
-            fill="none"
-            stroke={`url(#${gradientId})`}
-            strokeWidth="1.25"
-            className="motion-reduce:hidden"
-            transition={{ duration: 10 }}
-          />
-          <defs>
-            <motion.linearGradient
-              id={gradientId}
-              gradientUnits="userSpaceOnUse"
-              x1="0"
-              x2="0"
-              y1={y1}
-              y2={y2}
-            >
-              <stop stopColor="#18CCFC" stopOpacity="0" />
-              <stop stopColor="#18CCFC" />
-              <stop offset="0.325" stopColor="#6344F5" />
-              <stop offset="1" stopColor="#AE48FF" stopOpacity="0" />
-            </motion.linearGradient>
-          </defs>
+          {gradientId ? (
+            <>
+              <motion.path
+                d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
+                fill="none"
+                stroke={`url(#${gradientId})`}
+                strokeWidth="1.25"
+                className="motion-reduce:hidden"
+                transition={{ duration: 10 }}
+              />
+              <defs>
+                <motion.linearGradient
+                  id={gradientId}
+                  gradientUnits="userSpaceOnUse"
+                  x1="0"
+                  x2="0"
+                  y1={y1}
+                  y2={y2}
+                >
+                  <stop stopColor="#18CCFC" stopOpacity="0" />
+                  <stop stopColor="#18CCFC" />
+                  <stop offset="0.325" stopColor="#6344F5" />
+                  <stop offset="1" stopColor="#AE48FF" stopOpacity="0" />
+                </motion.linearGradient>
+              </defs>
+            </>
+          ) : (
+            <path
+              d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
+              fill="none"
+              stroke="#18CCFC"
+              strokeWidth="1.25"
+              className="motion-reduce:hidden"
+            />
+          )}
         </svg>
       </div>
       <div ref={contentRef}>{children}</div>

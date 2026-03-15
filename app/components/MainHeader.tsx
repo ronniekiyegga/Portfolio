@@ -77,7 +77,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
               className="relative shrink-0 flex items-center gap-2 sm:gap-3"
               ref={dropdownRef}
             >
-              <button
+              {/* <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-1 font-jetbrains text-[9px] sm:text-[10px] tracking-widest uppercase px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 bg-transparent hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors"
               >
@@ -94,7 +94,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                 >
                   <path d="M0 0l5 6 5-6z" />
                 </svg>
-              </button>
+              </button> */}
               <Link
                 href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
                 target="_blank"
