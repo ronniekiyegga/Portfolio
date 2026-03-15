@@ -235,18 +235,18 @@ export default function ExpandableFeatures4({
         .to(
           titleEl,
           { x: 0, opacity: 1, duration: 0.4, ease: "expo.out" },
-          "-=0.28"
+          "-=0.28",
         )
         .to(
           descEl,
           { y: 0, opacity: 1, duration: 0.38, ease: "expo.out" },
-          "-=0.25"
+          "-=0.25",
         )
         .to(ctaEl, { opacity: 1, duration: 0.32, ease: "expo.out" }, "-=0.22")
         .to(
           imageCol,
           { x: 0, opacity: 1, duration: 0.48, ease: "expo.out" },
-          "-=0.38"
+          "-=0.38",
         );
 
       if (buttons?.length) {
@@ -259,15 +259,15 @@ export default function ExpandableFeatures4({
             stagger: 0.05,
             ease: "expo.out",
           },
-          "-=0.28"
+          "-=0.28",
         );
       }
 
       const st = tl.scrollTrigger;
-    cleanupRef.current = () => {
-      st?.kill();
-      tl.kill();
-    };
+      cleanupRef.current = () => {
+        st?.kill();
+        tl.kill();
+      };
     });
 
     return () => {
@@ -287,10 +287,11 @@ export default function ExpandableFeatures4({
             ref={textColRef}
             className={cn(
               "flex min-w-0 flex-col gap-12 pb-6 sm:col-span-3 md:py-12",
+              "order-2 sm:order-1",
               imageOnLeft && "sm:order-2",
             )}
           >
-            <div className="min-w-0 text-balance">
+            <div className="min-w-0 text-balance gap-0 ">
               <h4
                 ref={badgeRef}
                 className="mb-2 w-fit rounded-full text-[11px] font-bold uppercase tracking-wide text-gradient-blue-static"
@@ -300,19 +301,14 @@ export default function ExpandableFeatures4({
               <h2
                 ref={titleRef}
                 data-project-title
-                className="font-cormorant font-normal leading-tight"
-                style={{
-                  color: "white",
-                  fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-                }}
+                className="font-semibold text-2xl leading-tight text-white "
               >
                 {title}
               </h2>
               <div
                 ref={descRef}
                 data-project-content
-                className="mt-6 leading-[1.6] [&_p]:mb-2 [&_p:last-child]:mb-0"
-                style={{ color: "rgba(255,255,255,0.7)", fontSize: "15px" }}
+                className="mt-4 leading-[1.6] [&_p]:mb-2 [&_p:last-child]:mb-0 text-[14px] md:text-sm text-gray-500"
               >
                 {description}
               </div>
@@ -320,7 +316,7 @@ export default function ExpandableFeatures4({
             <div
               ref={ctaRef}
               data-project-cta
-              className="opacity-0 flex flex-wrap items-center gap-3"
+              className="opacity-0 flex flex-wrap items-center gap-0"
             >
               {workItem && onOpenProjectModal && (
                 <NativeStartNow
@@ -334,43 +330,49 @@ export default function ExpandableFeatures4({
                 />
               )}
 
-              {links?.designFile && (
-                <a
-                  href={links.designFile}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                  aria-label="Open Figma file"
-                >
-                  <FaFigma className="size-4" />
-                </a>
-              )}
-              {(links?.liveWebsite ??
-                (workItem?.href && workItem.href !== "#")) && (
-                <a
-                  href={links?.liveWebsite ?? workItem?.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                  aria-label="Open live website"
-                >
-                  <BsBoxArrowUpRight className="size-4" />
-                </a>
-              )}
-              {(links?.githubHref ?? workItem?.githubHref) && (
-                <a
-                  href={links?.githubHref ?? workItem?.githubHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                  aria-label="Open GitHub repository"
-                >
-                  <FaGithub className="size-5" />
-                </a>
-              )}
+              {/*  Icons */}
+              <div className="flex items-center  px-2">
+                {links?.designFile && (
+                  <a
+                    href={links.designFile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex size-8 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                    aria-label="Open Figma file"
+                  >
+                    <FaFigma className="size-3" />
+                  </a>
+                )}
+                {(links?.liveWebsite ??
+                  (workItem?.href && workItem.href !== "#")) && (
+                  <a
+                    href={links?.liveWebsite ?? workItem?.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                    aria-label="Open live website"
+                  >
+                    <BsBoxArrowUpRight className="size-3" />
+                  </a>
+                )}
+                {(links?.githubHref ?? workItem?.githubHref) && (
+                  <a
+                    href={links?.githubHref ?? workItem?.githubHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
+                    aria-label="Open GitHub repository"
+                  >
+                    <FaGithub className="size-4" />
+                  </a>
+                )}
+              </div>
             </div>
 
-            <div ref={buttonsRef} className="-ml-6 mt-auto flex min-w-0 flex-col">
+            <div
+              ref={buttonsRef}
+              className="-ml-6 mt-auto flex min-w-0 flex-col"
+            >
               {tabFeatures.map((feature, index) => (
                 <button
                   key={feature.title}
@@ -382,7 +384,7 @@ export default function ExpandableFeatures4({
                       : "  text-gray-600 hover:text-gray-300 dark:text-white/70 dark:hover:text-white/90",
                   )}
                 >
-                  <div className="flex size-4 shrink-0 items-center justify-center">
+                  <div className="flex size-3 md:size-4 shrink-0 items-center justify-center">
                     {expandedIndex === index && (
                       <Loader
                         key={expandedIndex}
@@ -412,6 +414,7 @@ export default function ExpandableFeatures4({
             ref={imageColRef}
             className={cn(
               "relative min-w-0 overflow-hidden sm:col-span-4",
+              "order-1 sm:order-2",
               imageOnLeft && "sm:order-1",
             )}
           >
