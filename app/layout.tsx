@@ -3,7 +3,6 @@ import Script from "next/script";
 import {
   Geist,
   Geist_Mono,
-  Dancing_Script,
   Source_Serif_4,
   Style_Script,
   Bodoni_Moda,
@@ -17,10 +16,6 @@ import { SplashProvider } from "./contexts/SplashContext";
 import { ThemeProvider } from "next-themes";
 
 /* ── V1 fonts ─────────────────────────────────────────────── */
-const dancingScript = Dancing_Script({
-  subsets: ["latin"],
-  variable: "--font-dancing-script",
-});
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-source-serif",
@@ -87,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden`}
         suppressHydrationWarning
       >
         <Script
@@ -115,19 +110,28 @@ export default function RootLayout({
             `,
           }}
         />
+
         {/* SVG gradient for pill icons (light mode) */}
         <svg width="0" height="0" aria-hidden>
           <defs>
-            <linearGradient id="pillIconGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient
+              id="pillIconGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
               <stop offset="10.26%" stopColor="#3A07F2" />
               <stop offset="98.05%" stopColor="#0CD1CF" />
             </linearGradient>
           </defs>
         </svg>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <SplashProvider>
-            {children}
-          </SplashProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+        >
+          <SplashProvider>{children}</SplashProvider>
         </ThemeProvider>
       </body>
     </html>

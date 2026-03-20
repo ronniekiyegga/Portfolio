@@ -3,6 +3,7 @@ import HeroSection from "@/app/components/HeroSection";
 import ScrollAnimations from "@/app/components/ScrollAnimations";
 import DynamicIsland from "@/app/components/DynamicIsland";
 import { DesignSection } from "@/app/components/v2/DesignSection";
+import MyProcess from "../components/MyProcess";
 
 const ProjectSection = dynamic(
   () => import("@/app/components/ProjectSection"),
@@ -37,12 +38,14 @@ export default function Home() {
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-4 md:gap-y-6">
           <HeroSection />
           <ProjectSection />
+          <MyProcess />
           <Experiences />
-          <DesignSection />
+          {/* <DesignSection /> */}
+          {/* <ExpandableFeatures /> */}
           <FeaturesSliderSection />
-          <ExpandableFeatures />
-          <AnimatedLinks />
+          {/* <FeaturesSliderSection direction="right" /> */}
           <Marquee />
+          <AnimatedLinks />
         </ScrollAnimations>
         <DynamicIsland />
       </main>

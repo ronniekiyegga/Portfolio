@@ -839,6 +839,21 @@ html.light [style*="color:var(--accent)"]:has(svg) {
     transform: none;
     transition: none;
   }
+  /* Hero sections: ensure content visible when JS has not run */
+  [data-hero-badge],
+  [data-hero-name],
+  [data-hero-role],
+  [data-hero-bio],
+  [data-hero-contact],
+  [data-hero-stats],
+  [data-hero-stat],
+  [data-hero-stack],
+  [data-hero-lanyard],
+  [data-hero-availability],
+  [data-hero-intro] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @keyframes cycleWords {

@@ -236,19 +236,19 @@ export const projectSectionItems: ProjectSectionItem[] = [
     badge: "ANALYTICS PLATFORM",
     features: [
       {
-        title: "Design blog",
+        title: "Design",
         description: "",
         image: "/images/projects/edufeedbackpro/DMI_HERO.svg",
         background: "lightPillar",
       },
       {
-        title: "Engineering blog",
+        title: "Engineering",
         description: "",
         image: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
         background: "prism",
       },
       {
-        title: "Github",
+        title: "Architecture",
         description: "",
         image: "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg",
         background: "lightRays",
@@ -265,19 +265,21 @@ export const projectSectionItems: ProjectSectionItem[] = [
     },
     features: [
       {
-        title: "Design blog",
+        title: "Design",
         description: "",
         image: "/images/projects/maths-tutoring/MATHS_TUTORING_HERO.svg",
         background: "floatingLines",
+        href: "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
       },
       {
-        title: "Engineering blog",
+        title: "Engineering",
         description: "",
         image: "/images/projects/maths-tutoring/MATHS_TUTORING2.svg",
         background: "prism",
+        href: "https://www.msmaryamsmaths.com/",
       },
       {
-        title: "Github",
+        title: "Architecture",
         description: "",
         image: "/images/illustrations/BLOG.svg",
         background: "lightPillar",
@@ -287,25 +289,26 @@ export const projectSectionItems: ProjectSectionItem[] = [
   {
     workItem: workItems[2],
     badge: "EDUCATIONAL TOOL",
+    links: { liveWebsite: "https://blissfulcoda.github.io/teachablemachine/" },
     features: [
       {
-        title: "Design blog",
+        title: "Design",
         description: "",
         image: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
         background: "lightRays",
       },
       {
-        title: "Engineering blog",
+        title: "Engineering",
         description: "",
         image: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
         background: "prism",
+        href: "https://blissfulcoda.github.io/teachablemachine/",
       },
       {
-        title: "Github",
+        title: "Architecture",
         description: "",
         image: "/images/illustrations/CODE.svg",
         background: "lightPillar",
-        href: "https://github.com/BlissfulCoda/teachablemachine",
       },
     ],
   },
@@ -315,19 +318,20 @@ export const projectSectionItems: ProjectSectionItem[] = [
     links: { liveWebsite: "https://www.algo-pseudo.com/" },
     features: [
       {
-        title: "Design blog",
+        title: "Design",
         description: "",
         image: "/images/projects/algo-pseudo/PSEUDOLAB_HERO.svg",
         background: "prism",
       },
       {
-        title: "Engineering blog",
+        title: "Engineering",
         description: "",
         image: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
         background: "lightPillar",
+        href: "https://www.algo-pseudo.com/",
       },
       {
-        title: "Github",
+        title: "Architecture",
         description: "",
         image: "/images/illustrations/CODE.svg",
         background: "floatingLines",

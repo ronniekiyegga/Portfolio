@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import ContactInfo from "@/app/components/patterns/ContactInfo";
+
 const Lanyard = dynamic(() => import("../Lanyard"), { ssr: false });
 
 const stats = [
@@ -70,11 +71,28 @@ export function Hero() {
 
     hasAnimated.current = true;
 
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      const all = [...leftEls, statsGrid, ...statCells, stackRow, lanyard].filter(Boolean);
+      all.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
+      setLanyardDrop(true);
+      return;
+    }
+
     gsap.set(leftEls, { opacity: 0, y: Y_OFFSET, force3D: true });
     gsap.set(statsGrid, { opacity: 0, y: Y_OFFSET * 0.8, force3D: true });
     gsap.set(statCells, { opacity: 0, y: 12, force3D: true });
     gsap.set(stackRow, { opacity: 0, y: Y_OFFSET * 0.5, force3D: true });
     if (lanyard) gsap.set(lanyard, { opacity: 0, force3D: true });
+
+    const allAnimated = [...leftEls, statsGrid, ...statCells, stackRow, lanyard].filter(Boolean);
+    const fallbackTimer = setTimeout(() => {
+      allAnimated.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
+      setLanyardDrop(true);
+    }, 4000);
 
     const tl = gsap.timeline({
       defaults: { ease: "power3.out", force3D: true },
@@ -109,16 +127,19 @@ export function Hero() {
       0.45 + STAGGER * 4,
     );
 
+    /* Lanyard drops when stackRow finishes: 0.45 + STAGGER*4 + DURATION*0.8 ≈ 1.33 */
+    const lanyardTime = 0.45 + STAGGER * 4 + DURATION * 0.8;
     if (lanyard) {
-      tl.call(() => setLanyardDrop(true), undefined, 1.0);
+      tl.call(() => setLanyardDrop(true), undefined, lanyardTime);
       tl.to(
         lanyard,
         { opacity: 1, duration: 0.6, ease: "power2.out", force3D: true },
-        1.0,
+        lanyardTime,
       );
     }
 
     return () => {
+      clearTimeout(fallbackTimer);
       tl.kill();
     };
   }, [pathname]);

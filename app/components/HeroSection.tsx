@@ -9,11 +9,10 @@ import ContactInfo from "./patterns/ContactInfo";
 import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import LogoLoopSection from "@/app/widgets/LogoLoop";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
-
 const Lanyard = dynamic(() => import("./Lanyard"), { ssr: false });
 const LANYARD_DROP_HEIGHT = 2.2;
 const ENTRANCE_DELAY = 0.28;
-const LANYARD_DROP_TIME = 1.1;
+const LANYARD_DROP_TIME = 1.3; /* when els[5] finishes (0.7 + 0.6) */
 const STRING_GLASS_DELAY_MS = 6000;
 const STRING_GLASS_OPACITY = 0;
 
@@ -45,8 +44,24 @@ export default function HeroSection() {
     if (!els.length) return;
 
     hasAnimated.current = true;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setHeroReady(true);
+      setLanyardDrop(true);
+      return;
+    }
+
     gsap.set(els, { opacity: 0, y: 20, force3D: true });
     queueMicrotask(() => setHeroReady(true));
+
+    const fallbackTimer = setTimeout(() => {
+      els.forEach((el) => gsap.set(el, { opacity: 1, y: 0 }));
+      setLanyardDrop(true);
+    }, 4000);
 
     const tl = gsap.timeline({
       defaults: { ease: "power2.out", force3D: true },
@@ -62,6 +77,7 @@ export default function HeroSection() {
     tl.to(els[5], { opacity: 1, y: 0, duration: 0.6 }, 0.7);
 
     return () => {
+      clearTimeout(fallbackTimer);
       void tl.kill();
     };
   }, []);
