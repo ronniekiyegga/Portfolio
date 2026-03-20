@@ -25,12 +25,14 @@ export const ImageIllustration = ({
 
   const maxClip = 5;
   const maxScale = 1.4;
-  const scale = containerRef
-    ? useTransform(scrollYProgress, [0, 0.5], [maxScale, 1], { clamp: true })
-    : useTransform(scrollY, [0, 1500], [maxScale, 1], { clamp: true });
-  const clip = containerRef
-    ? useTransform(scrollYProgress, [0, 0.3], [maxClip, 0], { clamp: true })
-    : useTransform(scrollY, [0, 500], [maxClip, 0], { clamp: true });
+
+  const scaleFromProgress = useTransform(scrollYProgress, [0, 0.5], [maxScale, 1], { clamp: true });
+  const scaleFromScrollY = useTransform(scrollY, [0, 1500], [maxScale, 1], { clamp: true });
+  const scale = containerRef ? scaleFromProgress : scaleFromScrollY;
+
+  const clipFromProgress = useTransform(scrollYProgress, [0, 0.3], [maxClip, 0], { clamp: true });
+  const clipFromScrollY = useTransform(scrollY, [0, 500], [maxClip, 0], { clamp: true });
+  const clip = containerRef ? clipFromProgress : clipFromScrollY;
   const clipPath = useMotionTemplate`inset(${clip}% ${clip}% ${clip}% ${clip}% round 0.75rem)`;
 
   return (
