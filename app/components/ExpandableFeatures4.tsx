@@ -9,7 +9,6 @@ import {
   useRef,
   useCallback,
 } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import NativeStartNow from "./ui/NativeButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,10 +16,6 @@ import LightPillarComponent from "./ui/gradients/LightPillarComponent";
 import PrismComponent from "./ui/gradients/PrismComponent";
 import LightRaysComponent from "./ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
-import { MoveUpRight } from "lucide-react";
-import { FaFigma } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa";
-import { BsBoxArrowUpRight } from "react-icons/bs";
 import type { WorkItem } from "@/lib/data";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -67,7 +62,8 @@ const DEFAULT_FEATURES: Feature[] = [
     title: "Architecture",
     description:
       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-    image: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
+    image:
+      "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
     background: "lightRays",
   },
 ];
@@ -135,13 +131,16 @@ export default function ExpandableFeatures4({
   description = DESC,
   imageOnLeft = false,
   features: featuresProp,
-  links,
   workItem,
   onOpenProjectModal,
 }: ExpandableFeatures4Props) {
   const featuresList = featuresProp ?? DEFAULT_FEATURES;
   const tabFeatures = featuresList.filter((f) => !f.href);
-  const linkFeatures = featuresList.filter((f) => !!f.href);
+  /** Fixed image: prefer _HERO variant so it doesn't change when tabs/spinners cycle */
+  const heroImage =
+    featuresList.find((f) => f.image.includes("_HERO"))?.image ??
+    featuresList[0]?.image ??
+    "";
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
   const [isDark, setIsDark] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -329,85 +328,53 @@ export default function ExpandableFeatures4({
                   }}
                 />
               )}
-
-              {/*  Icons */}
-              <div className="flex items-center  px-2">
-                {links?.designFile && (
-                  <a
-                    href={links.designFile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex size-8 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                    aria-label="Open Figma file"
-                  >
-                    <FaFigma className="size-3" />
-                  </a>
-                )}
-                {(links?.liveWebsite ??
-                  (workItem?.href && workItem.href !== "#")) && (
-                  <a
-                    href={links?.liveWebsite ?? workItem?.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                    aria-label="Open live website"
-                  >
-                    <BsBoxArrowUpRight className="size-3" />
-                  </a>
-                )}
-                {(links?.githubHref ?? workItem?.githubHref) && (
-                  <a
-                    href={links?.githubHref ?? workItem?.githubHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex size-9 items-center justify-center rounded-md text-white/80 transition-colors hover:text-white hover:bg-white/10"
-                    aria-label="Open GitHub repository"
-                  >
-                    <FaGithub className="size-4" />
-                  </a>
-                )}
-              </div>
             </div>
 
             <div
               ref={buttonsRef}
               className="-ml-6 mt-auto flex min-w-0 flex-col"
             >
-              {tabFeatures.map((feature, index) => (
-                <button
-                  key={feature.title}
-                  onClick={() => handleSelect(index)}
-                  className={cn(
-                    "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
-                    expandedIndex === index
-                      ? "text-white"
-                      : "  text-gray-600 hover:text-gray-300 dark:text-white/70 dark:hover:text-white/90",
-                  )}
-                >
-                  <div className="flex size-3 md:size-4 shrink-0 items-center justify-center">
-                    {expandedIndex === index && (
-                      <Loader
-                        key={expandedIndex}
-                        duration={AUTOPLAY_DURATION}
-                      />
+              {featuresList.map((feature) => {
+                const tabIndex = tabFeatures.findIndex((t) => t === feature);
+                const isTab = tabIndex >= 0;
+                const isActive = isTab && expandedIndex === tabIndex;
+                if (feature.href) {
+                  return (
+                    <a
+                      key={feature.title}
+                      href={feature.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium text-gray-500 duration-200 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90"
+                    >
+                      <div className="flex size-3 md:size-4 shrink-0 items-center justify-center" />
+                      {feature.title}
+                    </a>
+                  );
+                }
+                return (
+                  <button
+                    key={feature.title}
+                    onClick={() => handleSelect(tabIndex)}
+                    className={cn(
+                      "active:scale-98 group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium duration-200",
+                      isActive
+                        ? "text-white"
+                        : "text-gray-600 hover:text-gray-300 dark:text-white/70 dark:hover:text-white/90",
                     )}
-                  </div>
-                  {feature.title}
-                </button>
-              ))}
-              {linkFeatures.map((feature) => (
-                <a
-                  key={feature.title}
-                  href={feature.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex w-fit cursor-pointer items-center gap-2 px-4 pb-2 pt-1.5 text-left text-sm font-medium text-gray-500 duration-200 hover:text-gray-700 dark:text-white/70 dark:hover:text-white/90"
-                >
-                  <div className="flex size-4 shrink-0 items-center justify-center" />
-                  {feature.title}
-                  <MoveUpRight className="size-3.5 opacity-70" />
-                </a>
-              ))}
+                  >
+                    <div className="flex size-3 md:size-4 shrink-0 items-center justify-center">
+                      {isActive && (
+                        <Loader
+                          key={expandedIndex}
+                          duration={AUTOPLAY_DURATION}
+                        />
+                      )}
+                    </div>
+                    {feature.title}
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div
@@ -445,29 +412,17 @@ export default function ExpandableFeatures4({
                 }}
               />
 
-              <AnimatePresence initial={false} mode="wait">
-                <motion.div
-                  key={expandedIndex}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{
-                    duration: 0.35,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  }}
-                  className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4"
-                >
-                  <div className="relative max-h-full min-w-0 scale-90 sm:scale-[1] aspect-square w-full max-w-[450px]">
-                    <Image
-                      src={tabFeatures[expandedIndex].image}
-                      alt={tabFeatures[expandedIndex].title}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 640px) 240px, 340px"
-                    />
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+              <div className="relative z-10 flex h-full min-h-0 min-w-0 items-center justify-center p-4">
+                <div className="relative max-h-full min-w-0 scale-90 sm:scale-[1] aspect-square w-full max-w-[450px]">
+                  <Image
+                    src={heroImage}
+                    alt={tabFeatures[expandedIndex]?.title ?? "Project"}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 240px, 340px"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

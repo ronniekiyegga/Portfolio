@@ -2,43 +2,64 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useSplash } from "@/app/contexts/SplashContext";
 import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibility";
-import { useMedia } from "@/app/hooks/use-media";
+import { useActiveSection } from "@/app/hooks/useActiveSection";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
-import { VersionDropdown } from "./v2/VersionDropdown";
-import { HiOutlineLink, HiOutlineMail } from "react-icons/hi";
+import { MdOutlineDynamicFeed } from "react-icons/md";
 import ButtonWidget from "@/app/widgets/ButtonWidget";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-const pillOuterGradient =
-  "bg-gradient-to-b from-white via-[#fff1fe] via-[#fbe9d9] via-[#dea8ff] to-white dark:from-[#0f0f18] dark:via-[#0f0f18] dark:to-[#0f0f18]";
+const navLinks = [
+  { label: "Work", href: "#projects", sectionId: "work" as const },
+  { label: "Process", href: "#process", sectionId: "process" as const },
+  {
+    label: "Experience",
+    href: "#experience",
+    sectionId: "experience" as const,
+  },
+  { label: "Design", href: "#design", sectionId: "design" as const },
+];
 
 export default function DynamicIsland() {
   const isVisible = useDynamicIslandVisibility();
-  const isMobile = useMedia("(max-width: 767px)");
+  const activeSection = useActiveSection();
   const { splashActive, setSplashActive } = useSplash();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const dotRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const onClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, []);
+  useLayoutEffect(() => {
+    const activeIndex = navLinks.findIndex(
+      (l) => l.sectionId === activeSection,
+    );
+    const dot = dotRef.current;
+    if (activeIndex < 0 || !navRef.current || !dot) return;
+    const link = linkRefs.current[activeIndex];
+    if (!link) return;
+    const navRect = navRef.current.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    const left = linkRect.left - navRect.left + linkRect.width / 2 - 1.5;
+    dot.style.left = `${left}px`;
+  }, [activeSection]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      document
+        .querySelector(href)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -89,86 +110,60 @@ export default function DynamicIsland() {
                 >
                   Ronniè
                 </span>
-                {/* <div className="relative ml-1" ref={dropdownRef}>
-                  <button
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-2 py-1 font-jetbrains text-[10px] tracking-widest uppercase text-white/80 transition-colors hover:bg-white/20"
-                  >
-                    V1
-                    <svg
-                      width="6"
-                      height="4"
-                      viewBox="0 0 10 6"
-                      fill="currentColor"
-                      className={cn(
-                        "transition-transform",
-                        dropdownOpen && "rotate-180",
-                      )}
-                    >
-                      <path d="M0 0l5 6 5-6z" />
-                    </svg>
-                  </button>
-                  {dropdownOpen && (
-                    <VersionDropdown
-                      placement="bottom"
-                      currentVersion="v1"
-                      onClose={() => setDropdownOpen(false)}
-                    />
-                  )}
-                </div> */}
               </div>
             </div>
           </ButtonWidget>
 
-          {/* Middle pill — Email + icons only (hidden on mobile) */}
-          <ButtonWidget isMobile={isMobile}>
+          {/* Middle pill — Nav links + active dot + icon (hidden on mobile) */}
+
+          <ButtonWidget>
             <div
+              ref={navRef}
               className={cn(
-                "items-center justify-between rounded-full gap-2 px-4 py-3 hidden md:flex",
-                "bg-linear-to-b from-[#fbfbfb] to-[#f7f7f9] dark:from-[#0d0d1a] dark:to-[#0a0a12] rounded-full",
-                "border border-[#e5e7eb] dark:border-white/10 rounded-full",
+                "left-pill-inner lets-chat-inner relative flex gap-4 items-center rounded-full px-8 pr-2 py-4.5",
+                "border border-white/10 dark:border-white/5",
               )}
+              style={{
+                borderRadius: "10.14463rem",
+                border: "1.116px solid var(--Gradients-Cream, #FFF)",
+                background:
+                  "var(--Gradients-White-1, linear-gradient(180deg, #FBFBFB 38.73%, #F7F7F9 100%))",
+              }}
             >
-              <Link
-                href="mailto:ronniekiyegga@hotmail.com"
-                className="text-xs text-[#000626] no-underline transition-opacity hover:opacity-80 dark:text-white/90"
-              >
-                Ronniekiyegga@hotmail.com
-              </Link>
-              <div className="flex items-center gap-2">
-                <Link
-                  href="/"
-                  aria-label="Home"
-                  className="flex size-5 items-center justify-center text-[#8d8fae] transition-colors hover:text-[#212225] dark:hover:text-white"
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
+              {navLinks.map((link, i) => {
+                const isActive = link.sectionId === activeSection;
+                return (
+                  <Link
+                    key={link.label}
+                    ref={(el) => {
+                      linkRefs.current[i] = el;
+                    }}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={cn(
+                      "flex justify-center items-center",
+                      isActive ? "" : "opacity-40",
+                    )}
                   >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/in/ronniekiyegga"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="flex size-5 items-center justify-center text-[#8d8fae] transition-colors hover:text-[#212225] dark:hover:text-white"
-                >
-                  <HiOutlineLink className="size-3.5" />
-                </Link>
-                <Link
-                  href="mailto:ronniekiyegga@hotmail.com"
-                  aria-label="Email"
-                  className="flex size-5 items-center justify-center text-[#8d8fae] transition-colors hover:text-[#212225] dark:hover:text-white"
-                >
-                  <HiOutlineMail className="size-3.5" />
-                </Link>
+                    <span className="font-medium text-[12px]  leading-[14.86px] text-center text-[#000626] dark:text-white/90">
+                      {link.label}
+                    </span>
+                  </Link>
+                );
+              })}
+              {activeSection && (
+                <div
+                  ref={dotRef}
+                  className="absolute bottom-2 left-0 size-[3px] rounded-full bg-[#000d4d] dark:bg-white/80 transition-[left] duration-200 ease-out pointer-events-none"
+                  aria-hidden
+                />
+              )}
+              <div className="h-4 w-px shrink-0 bg-black/20" />
+              <div className="flex items-center gap-[8.92px] pr-3">
+                <MdOutlineDynamicFeed
+                  className="size-[12.7px] text-[#000626] dark:text-white/90 opacity-40"
+                  aria-hidden
+                />
               </div>
             </div>
           </ButtonWidget>
@@ -179,7 +174,7 @@ export default function DynamicIsland() {
             <div className="right-pill-wrapper lets-chat-cream-wrapper">
               <div className="lets-chat-inner flex items-center gap-0 overflow-hidden p-1">
                 <Link
-                  href="mailto:ronniekiyegga@hotmail.com"
+                  href="mailto:kiyeggaronnie@gmail.com"
                   className={cn(
                     "flex items-center gap-1.5 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
                     styleScript.className,

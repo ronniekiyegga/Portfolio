@@ -356,7 +356,7 @@ export default function Header({
                     <div className="lets-chat-cream-wrapper">
                       <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
                         <Link
-                          href="mailto:ronniekiyegga@hotmail.com"
+                          href="mailto:kiyeggaronnie@gmail.com"
                           className={cn(
                             "flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90 no-underline",
                             styleScript.className,
@@ -605,7 +605,7 @@ function MobileMenu({
                     <div className="lets-chat-cream-wrapper">
                       <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
                         <Link
-                          href="mailto:ronniekiyegga@hotmail.com"
+                          href="mailto:kiyeggaronnie@gmail.com"
                           onClick={onClose}
                           className={cn(
                             "flex items-center gap-1.5 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, useAnimate } from "framer-motion";
 import DarkVeil from "./DarkVeil";
 import PrismComponent from "./ui/gradients/PrismComponent";
-import LightPillarComponent from "./ui/gradients/LightPillarComponent";
 import LightRaysComponent from "./ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "./ui/gradients/FloatingLinesComponent";
 
@@ -33,7 +32,7 @@ export const AnimatedLinks = () => {
       </motion.div>
       <div
         onMouseLeave={() => setActive(null)}
-        className="relative z-20 flex flex-col items-center mix-blend-difference"
+        className="relative z-20 flex flex-col items-center gap-6 md:gap-8 mix-blend-difference"
       >
         {/* <Logo /> */}
         {LINKS.map((l) => {
@@ -229,11 +228,5 @@ const LINKS: LinkConfig[] = [
     text: "BLOG",
     id: 3,
     background: <PrismComponent />,
-  },
-  {
-    href: "#",
-    text: "Snapshots",
-    id: 4,
-    background: <LightPillarComponent />,
   },
 ];

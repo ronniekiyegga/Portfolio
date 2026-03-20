@@ -25,6 +25,13 @@ export function ScrollReveal() {
 
     gsap.set(allRevealEls, { opacity: 0, y: 16, force3D: true })
 
+    const forceVisible = () => {
+      allRevealEls.forEach((el) => {
+        gsap.set(el, { opacity: 1, y: 0 })
+      })
+    }
+    const fallbackTimer = setTimeout(forceVisible, 4000)
+
     const tweens: gsap.core.Tween[] = []
 
     els.forEach((el) => {
@@ -68,6 +75,7 @@ export function ScrollReveal() {
     const refreshTimer = setTimeout(refresh, 500)
 
     return () => {
+      clearTimeout(fallbackTimer)
       clearTimeout(refreshTimer)
       tweens.forEach((tw) => tw.kill())
     }

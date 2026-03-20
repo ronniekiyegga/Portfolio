@@ -11,6 +11,7 @@ interface DesignCardMarqueeProps {
   itemCount: number;
   gap?: number;
   isPaused?: boolean;
+  direction?: "left" | "right";
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function DesignCardMarquee({
   itemCount,
   gap = 16,
   isPaused = false,
+  direction = "left",
   className,
 }: DesignCardMarqueeProps) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -53,7 +55,8 @@ export function DesignCardMarquee({
 
     if (prefersReduced) return;
 
-    const targetVelocity = isPaused ? 0 : MARQUEE_SPEED;
+    const sign = direction === "right" ? -1 : 1;
+    const targetVelocity = isPaused ? 0 : sign * MARQUEE_SPEED;
 
     const animate = (timestamp: number) => {
       if (lastTimestampRef.current === null)
@@ -78,7 +81,7 @@ export function DesignCardMarquee({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       lastTimestampRef.current = null;
     };
-  }, [seqWidth, isPaused]);
+  }, [seqWidth, isPaused, direction]);
 
   return (
     <div ref={containerRef} className={cn("relative w-full", className)}>
@@ -100,6 +103,7 @@ interface DesignMarqueeSectionProps {
   id?: string;
   children: React.ReactNode;
   itemCount: number;
+  direction?: "left" | "right";
   className?: string;
 }
 
@@ -107,6 +111,7 @@ export function DesignMarqueeSection({
   id,
   children,
   itemCount,
+  direction = "left",
   className,
 }: DesignMarqueeSectionProps) {
   return (
@@ -119,10 +124,14 @@ export function DesignMarqueeSection({
     >
       <div className="w-full overflow-x-hidden">
         <div className="relative overflow-hidden pt-6">
-          <DesignCardMarquee itemCount={itemCount}>
+          <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.13rem] text-neutral-400 dark:text-neutral-500 md:mb-8 ml-20 md:ml-24 lg:ml-44 xl:ml-80">
+            DESIGN & ENGINEERING COMBINED.
+          </h2>
+          <DesignCardMarquee itemCount={itemCount} direction={direction}>
             {children}
           </DesignCardMarquee>
         </div>
+        {/* <h4>There&apos;s more</h4> */}
       </div>
     </section>
   );

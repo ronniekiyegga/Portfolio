@@ -23,6 +23,20 @@ export default function ScrollAnimations({
     let rafId: number;
     let cleanup: (() => void) | null = null;
 
+    const forceVisible = () => {
+      const c = containerRef.current;
+      if (!c) return;
+      Array.from(c.children).forEach((el) => {
+        if (el instanceof HTMLElement) {
+          el.style.opacity = "1";
+          el.style.visibility = "visible";
+          el.style.transform = "translateY(0)";
+        }
+      });
+    };
+
+    const fallbackTimer = setTimeout(forceVisible, 4000);
+
     rafId = requestAnimationFrame(() => {
       const container = containerRef.current;
       if (!container) return;
@@ -31,11 +45,8 @@ export default function ScrollAnimations({
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       if (prefersReducedMotion) {
-        gsap.set(container.children, {
-          opacity: 1,
-          visibility: "visible",
-          y: 0,
-        });
+        clearTimeout(fallbackTimer);
+        forceVisible();
         return;
       }
 
@@ -61,7 +72,6 @@ export default function ScrollAnimations({
           },
         });
 
-        // to() reads initial state from CSS — no inline styles until trigger fires
         tl.to(section, {
           opacity: 1,
           visibility: "visible",
@@ -80,12 +90,14 @@ export default function ScrollAnimations({
       const t = setTimeout(refresh, 600);
 
       cleanup = () => {
+        clearTimeout(fallbackTimer);
         clearTimeout(t);
         triggers.forEach((st) => st.kill());
       };
     });
 
     return () => {
+      clearTimeout(fallbackTimer);
       cancelAnimationFrame(rafId);
       cleanup?.();
     };
@@ -94,7 +106,7 @@ export default function ScrollAnimations({
   return (
     <div
       ref={containerRef}
-      className={`${className} [&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0 [&>*:nth-child(n+2)]:translate-y-3.5`}
+      className={`${className} [&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0 [&>*:nth-child(n+2)]:translate-y-3.5 motion-reduce:[&>*:nth-child(n+2)]:visible motion-reduce:[&>*:nth-child(n+2)]:opacity-100 motion-reduce:[&>*:nth-child(n+2)]:translate-y-0`}
       suppressHydrationWarning
     >
       {children}

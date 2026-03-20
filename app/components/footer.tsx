@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 const footerLinks = [
   { title: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
   { title: "Github", href: "https://github.com/BlissfulCoda" },
-  { title: "Email", href: "mailto:ronniekiyegga@hotmail.com" },
+  { title: "Email", href: "mailto:kiyeggaronnie@gmail.com" },
 ];
 
 export default function FooterSection() {
@@ -19,24 +19,24 @@ export default function FooterSection() {
       <div className="relative flex flex-col items-center justify-between px-6 py-16 md:px-12 lg:py-12 lg:px-16">
         {/* CTA block - centered */}
         <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.15rem] text-gradient-blue-static">
+          <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.15rem] text-gradient-blue-static">
             Let&apos;s connect
           </p>
-          <h2 className="footer-cta-heading mb-3 max-w-4xl text-2xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[40px] dark:text-white">
+          <h2 className="footer-cta-heading mb-2 max-w-4xl text-2xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[30px] dark:text-white">
             <span className="font-(family-name:--font-source-serif) font-semibold">
-              Let&apos;s create something{" "}
+              Got idea you want to bring to{" "}
             </span>
             <span className="font-(family-name:--font-style-script) text-gradient-blue-static pr-2">
-              meaningful
+              {" "}
+              life?
             </span>
           </h2>
           <p className="footer-cta-paragraph mb-8 max-w-sm text-xs leading-relaxed text-[#595F7A] md:max-w-lg md:text-sm dark:text-white">
-            Whether you need a product built from scratch, a design system, or
-            help improving an existing product I&apos;d love to hear about your
-            project.
+            I help turn ideas into real, high-quality products, from concept to
+            launch.
           </p>
           <Link
-            href="mailto:ronniekiyegga@hotmail.com"
+            href="mailto:kiyeggaronnie@gmail.com"
             className="flex w-40 items-stretch gap-[0.2rem] p-[0.14rem_0.16rem] transition-opacity hover:opacity-95"
             style={{
               borderRadius: "1.44438rem",
@@ -66,7 +66,7 @@ export default function FooterSection() {
           className="pointer-events-none mt-12 flex w-full justify-center"
         >
           <span className="footer-design-engineer select-none text-[clamp(3rem,8rem,10rem)] font-bold leading-none tracking-widest opacity-[0.09]">
-            DESIGN ENGINEER
+            SOFTWARE ENGINEER
           </span>
         </div>
       </div>
@@ -75,9 +75,7 @@ export default function FooterSection() {
       <div className="border-t border-indigo-100/80 px-6 py-8  dark:border-indigo-800 md:px-12 lg:px-16">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 sm:flex-row sm:gap-0">
           <span className="text-[11px] text-neutral-500 dark:text-neutral-400 sm:text-xs">
-            ©2026 Ronnie{" "}
-            <span className="text-gradient-blue-static">Kiyegga</span>. All
-            rights reserved.
+            ©2026 Ronnie <span>Kiyegga</span>. All rights reserved.
           </span>
           <div className="flex gap-8">
             {footerLinks.map(({ title, href }) => (

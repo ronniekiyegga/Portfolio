@@ -23,8 +23,9 @@ export default function Experiences() {
       const content = contentRef.current;
       if (!section || !content) return;
 
-      const prefersReducedMotion =
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
       const heading = content.querySelector("h2");
       const items = content.querySelectorAll("[data-experience-item]");
@@ -46,7 +47,12 @@ export default function Experiences() {
         },
       });
 
-      tl.to(heading, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }).to(
+      tl.to(heading, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+      }).to(
         items,
         {
           opacity: 1,
@@ -55,7 +61,7 @@ export default function Experiences() {
           stagger: 0.06,
           ease: "power2.out",
         },
-        "-=0.5"
+        "-=0.5",
       );
 
       cleanupRef.current = () => {
@@ -82,7 +88,7 @@ export default function Experiences() {
         className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0"
         suppressHydrationWarning
       >
-        <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.15rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
+        <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.13rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
           EXPERIENCES
         </h2>
 

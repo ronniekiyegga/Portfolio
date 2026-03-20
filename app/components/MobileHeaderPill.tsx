@@ -43,7 +43,7 @@ export default function MobileHeaderPill({
         }}
       >
         <Link
-          href="mailto:ronniekiyegga@hotmail.com"
+          href="mailto:kiyeggaronnie@gmail.com"
           className={cn(
             "flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1.5 text-xs font-medium transition-opacity hover:opacity-90",
             styleScript.className,

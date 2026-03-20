@@ -43,7 +43,7 @@ const ContactInfo = () => {
 
         {/* Inactive: Email (underlined) */}
         <Link
-          href="mailto:ronniekiyegga@hotmail.com"
+          href="mailto:kiyeggaronnie@gmail.com"
           className="flex items-center px-5 mr-4 py-3 text-sm text-gray-400 decoration-gray-400 underline-offset-2 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
         >
           <span className="block text-xs lg:text-sm">Contact</span>

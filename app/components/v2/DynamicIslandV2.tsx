@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BsStars } from "react-icons/bs";
+import { MdOutlineDynamicFeed } from "react-icons/md";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibility";
 import { useActiveSection } from "@/app/hooks/useActiveSection";
@@ -24,14 +25,9 @@ interface DynamicIslandV2Props {
 
 const navLinks = [
   { label: "Work", href: "#work", sectionId: "work" as const },
-  { label: "Design", href: "#design", sectionId: "design" as const },
   { label: "Process", href: "#process", sectionId: "process" as const },
-  {
-    label: "Experience",
-    href: "#experience",
-    sectionId: "experience" as const,
-  },
-  { label: "Blog", href: "/blog", sectionId: null },
+  { label: "Experience", href: "#experience", sectionId: "experience" as const },
+  { label: "Design", href: "#design", sectionId: "design" as const },
 ];
 
 export function DynamicIslandV2({
@@ -172,7 +168,7 @@ export function DynamicIslandV2({
             </div>
           </div>
 
-          {/* Middle pill — Nav links + active dot */}
+          {/* Middle pill — Nav links + active dot + divider + icon */}
           <div
             className={cn(
               "hidden sm:flex items-center gap-0.5 dynamic-island-middle-outer",
@@ -186,8 +182,9 @@ export function DynamicIslandV2({
             <div
               className={cn(
                 "flex items-center gap-6 rounded-full px-6 py-2.5",
-                "bg-white/95 dark:bg-[#0d0d1a]",
+                "bg-white dark:bg-[#0d0d1a]",
                 "border border-white/30 dark:border-0",
+                "shadow-[0_2px_12px_rgba(0,0,0,0.04)]",
               )}
               style={{ borderRadius: pillRadius }}
             >
@@ -198,26 +195,38 @@ export function DynamicIslandV2({
                     key={link.label}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="relative flex flex-col items-center gap-1 py-1 transition-colors hover:opacity-100"
-                    style={{ color: isActive ? "var(--text)" : "var(--muted)" }}
+                    className="relative flex flex-col items-center gap-1 py-1 transition-colors"
                   >
-                    <span className="font-outfit text-[12px]">
+                    <span
+                      className={cn(
+                        "font-outfit text-[12px]",
+                        isActive
+                          ? "font-semibold text-neutral-900 dark:text-white"
+                          : "font-normal text-neutral-400 dark:text-neutral-500",
+                      )}
+                    >
                       {link.label}
                     </span>
                     <span
                       className={cn(
                         "h-1.5 w-1.5 shrink-0 rounded-full transition-opacity",
-                        link.sectionId &&
-                          (isActive ? "opacity-100" : "opacity-0"),
+                        isActive ? "opacity-100" : "opacity-0",
                       )}
-                      style={{
-                        background: "var(--text)",
-                        ...(!link.sectionId && { opacity: 0 }),
-                      }}
+                      style={{ background: "#6b8cff" }}
                     />
                   </Link>
                 );
               })}
+              <div
+                className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-600"
+                aria-hidden
+              />
+              <div className="flex items-center justify-center pl-1">
+                <MdOutlineDynamicFeed
+                  className="size-5 text-neutral-500 dark:text-neutral-400"
+                  aria-hidden
+                />
+              </div>
             </div>
           </div>
 
@@ -226,7 +235,7 @@ export function DynamicIslandV2({
             <div className="lets-chat-cream-wrapper">
               <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
                 <Link
-                  href="mailto:ronniekiyegga@hotmail.com"
+                  href="mailto:kiyeggaronnie@gmail.com"
                   className={cn(
                     "flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 no-underline",
                     styleScript.className,
