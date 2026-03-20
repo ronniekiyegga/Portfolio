@@ -456,7 +456,8 @@ function ResponseStream({
     return <>{displayedText}</>
   }
 
-  return <Component className={className}>{renderContent()}</Component>
+  const Tag = Component as React.ElementType;
+  return <Tag className={className}>{renderContent()}</Tag>
 }
 
 export { useTextStream, ResponseStream }
