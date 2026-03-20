@@ -2,9 +2,9 @@
 import ImagesBadge from "@/app/components/ui/images-badge";
 
 const PROJECT_IMAGES = [
-  "/NUMERIX_AI.svg",
-  "/DMI.svg",
-  "/GOOGLE_TEACHABLE.svg",
+  "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg",
+  "/images/projects/edufeedbackpro/DMI.svg",
+  "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
 ];
 
 export default function ImageBadgeFolder() {

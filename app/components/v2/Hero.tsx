@@ -5,10 +5,8 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import ContactInfo from "@/app/components/patterns/ContactInfo";
-import { useLoading } from "@/app/contexts/LoadingContext";
-
 const Lanyard = dynamic(() => import("../Lanyard"), { ssr: false });
 
 const stats = [
@@ -38,7 +36,6 @@ const STRING_GLASS_OPACITY = 0;
 
 export function Hero() {
   const pathname = usePathname();
-  const { isAppReady } = useLoading();
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [lanyardDrop, setLanyardDrop] = useState(false);
@@ -51,7 +48,7 @@ export function Hero() {
 
   useEffect(() => {
     const isHome = pathname === "/" || pathname === "/v2";
-    if (!isAppReady || hasAnimated.current || !isHome) return;
+    if (hasAnimated.current || !isHome) return;
 
     const container = containerRef.current;
     if (!container) return;
@@ -124,11 +121,14 @@ export function Hero() {
     return () => {
       tl.kill();
     };
-  }, [isAppReady, pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!lanyardDrop) return;
-    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
+    const t = setTimeout(
+      () => setAnimationsSettled(true),
+      STRING_GLASS_DELAY_MS,
+    );
     return () => clearTimeout(t);
   }, [lanyardDrop]);
 
@@ -276,7 +276,10 @@ export function Hero() {
         </div>
       </div>
 
-      <div data-hero-lanyard className="opacity-0 absolute inset-0 z-25 pointer-events-none">
+      <div
+        data-hero-lanyard
+        className="opacity-0 absolute inset-0 z-25 pointer-events-none"
+      >
         <Lanyard
           key={lanyardDrop ? "drop" : "preload"}
           visible

@@ -213,6 +213,31 @@ html {
     0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
+/* Right pill (DynamicIsland): fully rounded so pill stays round with extra padding */
+.right-pill-wrapper.lets-chat-cream-wrapper {
+  border-radius: 9999px;
+}
+.right-pill-wrapper .lets-chat-inner {
+  border-radius: 9999px;
+}
+
+/* Left pill (DynamicIsland): more rounded, white bg in light mode, same as right pill in dark */
+.left-pill-wrapper.lets-chat-cream-wrapper {
+  border-radius: 2.5rem;
+}
+.left-pill-inner.lets-chat-inner {
+  border-radius: calc(2.5rem - 2px);
+  background: #fff !important;
+}
+.dark .left-pill-inner.lets-chat-inner {
+  background: linear-gradient(
+    90deg,
+    #1a0d6b 0%,
+    #0a0518 50%,
+    #000000 100%
+  ) !important;
+}
+
 /* Right pill inner - unified white bg for Let's chat + icons (light mode), full pill roundness */
 .pill-right-inner {
   background: #fff;
@@ -504,7 +529,7 @@ body {
 }
 .dark .footer-section {
   background-color: #0a0a0a;
-  background-image: url("/BG_1.svg");
+  background-image: url("/images/backgrounds/BG_1.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -551,15 +576,6 @@ body {
   text-shadow:
     2px 4px 24px rgba(0, 0, 0, 0.4),
     1px 2px 12px rgba(0, 0, 0, 0.25);
-}
-
-/* Loading screen text — gradient blue in both themes */
-.text-loading-screen {
-  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
 }
 
 /* Gradient text using --gradient-blue */

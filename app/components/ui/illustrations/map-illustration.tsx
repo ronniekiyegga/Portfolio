@@ -3,9 +3,9 @@
 import Image from "next/image";
 import DottedMap from "dotted-map";
 
-const BERNARD_AVATAR = "/Avatar.svg";
-const THEO_AVATAR = "/Avatar.svg";
-const GLODIE_AVATAR = "/Avatar.svg";
+const BERNARD_AVATAR = "/images/profile/Avatar.svg";
+const THEO_AVATAR = "/images/profile/Avatar.svg";
+const GLODIE_AVATAR = "/images/profile/Avatar.svg";
 
 export const MapIllustration = () => (
   <div

@@ -7,7 +7,7 @@ import Image from "next/image";
 const projectCard = [
   {
     title: "EduFeedbackPro",
-    src: "/DMI.svg",
+    src: "/images/projects/edufeedbackpro/DMI.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -22,7 +22,7 @@ const projectCard = [
   },
   {
     title: "Maths Tutoring",
-    src: "/MATHS_TUTORING.svg",
+    src: "/images/projects/maths-tutoring/MATHS_TUTORING.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -37,7 +37,7 @@ const projectCard = [
   },
   {
     title: "Google Teachable",
-    src: "/GOOGLE_TEACHABLE.svg",
+    src: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -52,7 +52,7 @@ const projectCard = [
   },
   {
     title: "AI-Pseudocode",
-    src: "/AI_PSEUDOCODE.svg",
+    src: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -65,7 +65,7 @@ const projectCard = [
   },
   {
     title: "TrueFounders",
-    src: "/TRUE_FOUNDERS.svg",
+    src: "/images/projects/truefounders/TRUE_FOUNDERS.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -78,7 +78,7 @@ const projectCard = [
   },
   {
     title: "Github Finder",
-    src: "/GITHUB_FINDER.svg",
+    src: "/images/projects/github-finder/GITHUB_FINDER.svg",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
@@ -99,7 +99,7 @@ interface FeaturesSliderSectionProps {
 }
 
 export default function FeaturesSliderSection({
-  backgroundImage = "url(/Hero_background.png)",
+  backgroundImage = "url(/images/backgrounds/BG_1.png)",
   backgroundColor = "bg-transparent",
 }: FeaturesSliderSectionProps) {
   return (

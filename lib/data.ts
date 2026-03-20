@@ -120,7 +120,7 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
-    heroImage: "/EFP_PNG.png",
+    heroImage: "/images/projects/edufeedbackpro/EFP_PNG.png",
     insights: [
       {
         title: "The Problem",
@@ -143,7 +143,7 @@ export const workItems: WorkItem[] = [
     href: "https://www.msmaryamsmaths.com/",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
     preview: "maths",
-    heroImage: "/TUTORING_PNG.png",
+    heroImage: "/images/projects/maths-tutoring/TUTORING_PNG.png",
     insights: [
       {
         title: "The Challenge",
@@ -165,7 +165,7 @@ export const workItems: WorkItem[] = [
     href: "https://blissfulcoda.github.io/teachablemachine/",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
-    heroImage: "/KNN_CLASSIFIER.png",
+    heroImage: "/images/projects/knn-classifier/KNN_CLASSIFIER.png",
     githubHref: "https://github.com/BlissfulCoda/teachablemachine",
     insights: [
       {
@@ -188,7 +188,7 @@ export const workItems: WorkItem[] = [
     href: "https://www.algo-pseudo.com/",
     gradient: "linear-gradient(160deg, #0a1a1a 0%, #0d2e2e 50%, #081818 100%)",
     preview: "pseudolab",
-    heroImage: "/PSEUDOLAB_PNG.png",
+    heroImage: "/images/projects/algo-pseudo/PSEUDOLAB_PNG.png",
     blogHref: "#",
     githubHref: "https://github.com/BlissfulCoda/pseudolab",
     insights: [
@@ -238,19 +238,19 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design blog",
         description: "",
-        image: "/DMI_HERO.svg",
+        image: "/images/projects/edufeedbackpro/DMI_HERO.svg",
         background: "lightPillar",
       },
       {
         title: "Engineering blog",
         description: "",
-        image: "/EDUFEEDBACKPRO.svg",
+        image: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
         background: "prism",
       },
       {
         title: "Github",
         description: "",
-        image: "/NUMERIX_AI.svg",
+        image: "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg",
         background: "lightRays",
       },
     ],
@@ -267,19 +267,19 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design blog",
         description: "",
-        image: "/MATHS_TUTORING_HERO.svg",
+        image: "/images/projects/maths-tutoring/MATHS_TUTORING_HERO.svg",
         background: "floatingLines",
       },
       {
         title: "Engineering blog",
         description: "",
-        image: "/MATHS_TUTORING2.svg",
+        image: "/images/projects/maths-tutoring/MATHS_TUTORING2.svg",
         background: "prism",
       },
       {
         title: "Github",
         description: "",
-        image: "/BLOG.svg",
+        image: "/images/illustrations/BLOG.svg",
         background: "lightPillar",
       },
     ],
@@ -291,19 +291,19 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design blog",
         description: "",
-        image: "/GOOGLE_TEACHABLE.svg",
+        image: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
         background: "lightRays",
       },
       {
         title: "Engineering blog",
         description: "",
-        image: "/AI_PSEUDOCODE.svg",
+        image: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
         background: "prism",
       },
       {
         title: "Github",
         description: "",
-        image: "/CODE.svg",
+        image: "/images/illustrations/CODE.svg",
         background: "lightPillar",
         href: "https://github.com/BlissfulCoda/teachablemachine",
       },
@@ -317,19 +317,19 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design blog",
         description: "",
-        image: "/PSEUDOLAB_HERO.svg",
+        image: "/images/projects/algo-pseudo/PSEUDOLAB_HERO.svg",
         background: "prism",
       },
       {
         title: "Engineering blog",
         description: "",
-        image: "/AI_PSEUDOCODE.svg",
+        image: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
         background: "lightPillar",
       },
       {
         title: "Github",
         description: "",
-        image: "/CODE.svg",
+        image: "/images/illustrations/CODE.svg",
         background: "floatingLines",
       },
     ],
@@ -395,7 +395,7 @@ export const designItems: DesignItem[] = [
 export const experienceItems: ExperienceItem[] = [
   {
     initial: "S",
-    company: "The School of Research Science",
+    company: "School of Research Science",
     role: "Software Engineer",
     desc: "Built multiple internal EdTech platforms used across the school's computer science programme including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
     tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],

@@ -7,10 +7,10 @@ import { FaAws } from "react-icons/fa";
 
 const LOGO_SIZE = 28;
 const stackLogos: LogoItem[] = [
-  { src: "/Typescript_Icon.svg", alt: "TypeScript" },
-  { src: "/React_Icon.svg", alt: "React" },
-  { src: "/Nextjs_Icon.svg", alt: "Next.js" },
-  { src: "/Nodejs_Icon.svg", alt: "Node" },
+  { src: "/images/icons/Typescript_Icon.svg", alt: "TypeScript" },
+  { src: "/images/icons/React_Icon.svg", alt: "React" },
+  { src: "/images/icons/Nextjs_Icon.svg", alt: "Next.js" },
+  { src: "/images/icons/Nodejs_Icon.svg", alt: "Node" },
   {
     node: (
       <FaAws
@@ -20,8 +20,8 @@ const stackLogos: LogoItem[] = [
     ),
     ariaLabel: "AWS",
   },
-  { src: "/Docker_Icon.svg", alt: "Docker" },
-  { src: "/Figma_Icon.svg", alt: "Figma" },
+  { src: "/images/icons/Docker_Icon.svg", alt: "Docker" },
+  { src: "/images/icons/Figma_Icon.svg", alt: "Figma" },
 ];
 
 const LogoLoopSection = () => {

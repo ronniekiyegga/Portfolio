@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import HeaderWithFloatingControls from "@/app/components/HeaderWithFloatingControls";
 import FooterSection from "@/app/components/footer";
-import LoadingScreenGate from "@/app/components/LoadingScreenGate";
 import ScrollTriggerReset from "@/app/components/ScrollTriggerReset";
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ export default function MarketingLayout({
         data-theme="dark"
         className="bg-background"
         style={{
-          backgroundImage: `url(/BG_2.svg)`,
+          backgroundImage: `url(/images/backgrounds/BG_1.svg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -32,7 +31,6 @@ export default function MarketingLayout({
         {children}
       </main>
       <FooterSection />
-      <LoadingScreenGate />
     </>
   );
 }

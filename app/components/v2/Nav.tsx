@@ -7,8 +7,6 @@ import gsap from 'gsap'
 import { AnimatedThemeToggler } from '@/app/components/ui/animated-theme-toggler'
 import { VersionDropdown } from './VersionDropdown'
 import { cn } from '@/lib/utils'
-import { useLoading } from '@/app/contexts/LoadingContext'
-
 const navLinks = [
   { label: 'Work',       href: '#work' },
   { label: 'Design',     href: '#design' },
@@ -26,7 +24,6 @@ interface NavProps {
 
 export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = false }: NavProps) {
   const pathname = usePathname()
-  const { isAppReady } = useLoading()
   const logoHref = pathname?.startsWith('/v2') ? '/v2' : '/'
   const [mounted,      setMounted]      = useState(false)
   const [scrolled,     setScrolled]     = useState(false)
@@ -37,7 +34,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
   const hasAnimated = useRef(false)
 
   useEffect(() => {
-    if (!isAppReady || hasAnimated.current) return
+    if (hasAnimated.current) return
     const nav = navRef.current
     if (!nav) return
     hasAnimated.current = true
@@ -50,7 +47,7 @@ export function Nav({ splashEnabled = true, onToggleSplash, hideWhenBottomNav = 
       delay: 0.35, // Matches hero ENTRANCE_DELAY — nav fades in with hero content
       force3D: true,
     })
-  }, [isAppReady])
+  }, [])
 
   useEffect(() => {
     setMounted(true)

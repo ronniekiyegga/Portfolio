@@ -224,7 +224,7 @@ export default function Header() {
                 className="relative block h-6 w-6 overflow-hidden rounded-full"
               >
                 <Image
-                  src="/Avatar.svg"
+                  src="/images/profile/Avatar.svg"
                   alt="Home"
                   fill
                   className="object-cover"

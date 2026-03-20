@@ -103,7 +103,7 @@ export default function ProjectSection() {
   return (
     <section
       id="projects"
-      className="relative w-full min-w-0 overflow-x-hidden -mt-4 pt-4 pb-20 md:-mt-6 md:pt-16 md:pb-20 bg-[url('/BG_1.png')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full min-w-0 overflow-x-hidden -mt-4 pt-4 pb-20 md:-mt-6 md:pt-16 md:pb-20 bg-[url('/images/backgrounds/BG_1.png')] bg-cover bg-center bg-no-repeat"
       suppressHydrationWarning
     >
       <div className="absolute inset-0 z-0 dark:hidden">

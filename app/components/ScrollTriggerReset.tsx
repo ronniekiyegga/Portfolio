@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLoading } from "@/app/contexts/LoadingContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,8 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
  * ScrollTrigger when the app is ready so all scroll-triggered animations reset properly.
  */
 export default function ScrollTriggerReset() {
-  const { isAppReady } = useLoading();
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -27,12 +24,8 @@ export default function ScrollTriggerReset() {
 
     // Reset scroll to top on load (handles refresh when browser might restore position)
     window.scrollTo(0, 0);
-  }, []);
 
-  useEffect(() => {
-    if (!isAppReady || typeof window === "undefined") return;
-
-    // Refresh ScrollTrigger after loading screen completes and DOM is ready
+    // Refresh ScrollTrigger when DOM is ready
     const timer = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
@@ -40,7 +33,7 @@ export default function ScrollTriggerReset() {
     });
 
     return () => cancelAnimationFrame(timer);
-  }, [isAppReady]);
+  }, []);
 
   return null;
 }

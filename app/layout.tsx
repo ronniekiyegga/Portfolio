@@ -14,7 +14,6 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { SplashProvider } from "./contexts/SplashContext";
-import { LoadingProvider } from "./contexts/LoadingContext";
 import { ThemeProvider } from "next-themes";
 
 /* ── V1 fonts ─────────────────────────────────────────────── */
@@ -126,11 +125,9 @@ export default function RootLayout({
           </defs>
         </svg>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <LoadingProvider>
-            <SplashProvider>
-              {children}
-            </SplashProvider>
-          </LoadingProvider>
+          <SplashProvider>
+            {children}
+          </SplashProvider>
         </ThemeProvider>
       </body>
     </html>

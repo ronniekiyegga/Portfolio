@@ -8,6 +8,7 @@ import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
 import { useSplash } from "@/app/contexts/SplashContext";
 import { useDynamicIslandVisibility } from "@/app/hooks/useDynamicIslandVisibility";
+import { useMedia } from "@/app/hooks/use-media";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 import { VersionDropdown } from "./v2/VersionDropdown";
@@ -21,6 +22,7 @@ const pillOuterGradient =
 
 export default function DynamicIsland() {
   const isVisible = useDynamicIslandVisibility();
+  const isMobile = useMedia("(max-width: 767px)");
   const { splashActive, setSplashActive } = useSplash();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -48,43 +50,40 @@ export default function DynamicIsland() {
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          {/* Left pill — Profile + Ronniè + V1 dropdown */}
+          {/* Left pill — Profile + Ronniè (dark: same bg as right pill via lets-chat-*, gradient ring on avatar) */}
           <ButtonWidget>
-            <div
-              className="bg-white rounded-full"
-              // className={cn(
-              //   "flex flex-col gap-2.5 rounded-[32px] p-1.5",
-              //   pillOuterGradient,
-              //   "shadow-[0_0_20px_rgba(59,7,242,0.08)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)]",
-              // )}
-            >
+            <div className="left-pill-wrapper lets-chat-cream-wrapper">
               <div
                 className={cn(
-                  "flex h-11 items-center gap-2 rounded-full px-1 pr-2 py-1",
-                  "linear-gradient(135deg, rgba(255, 255, 255, 0.55) 4.86%, rgba(255, 241, 254, 0.08) 22.6%, rgba(251, 233, 217, 0.29) 35.05%, rgba(222, 168, 255, 0.13) 44.56%, rgba(251, 233, 217, 0.07) 57.23%, rgba(255, 255, 255, 0.42) 85.1%)",
-                  "dark:from-[#0d0d1a] dark:via-[#0d0d1a] dark:to-[#0d0d1a]",
-                  "border border-white/10",
+                  "left-pill-inner lets-chat-inner flex h-11 items-center gap-2 rounded-full px-1 pr-2 py-1",
+                  "border border-white/10 dark:border-white/5",
                 )}
               >
                 <div
-                  className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#e1e7fb] bg-gradient-to-b from-[#fbfbfb] to-[#e1e7fb] dark:border-white/10 dark:from-[#1a1a24] dark:to-[#0a0a12]"
-                  style={{
-                    borderRadius: "894.93506rem",
-                    border: "1.698px solid var(--Gradients-Cream, #FFF)",
-                    background: "#F9F9F9",
-                  }}
+                  className={cn(
+                    "shrink-0 rounded-full p-[2px]",
+                    "bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.76)_97.21%)]",
+                    "dark:bg-[linear-gradient(148deg,#3E7BFA_37.67%,#60C_71.02%)]",
+                  )}
                 >
-                  <Image
-                    src="/Avatar.svg"
-                    alt="Ronnie"
-                    width={40}
-                    height={40}
-                    className="size-full object-cover"
-                  />
+                  <div
+                    className={cn(
+                      "flex size-10 items-center justify-center overflow-hidden rounded-full",
+                      "bg-[#F9F9F9] dark:bg-[#0a0518]",
+                    )}
+                  >
+                    <Image
+                      src="/images/profile/Avatar.svg"
+                      alt="Ronnie"
+                      width={40}
+                      height={40}
+                      className="size-full object-cover"
+                    />
+                  </div>
                 </div>
                 <span
                   className={cn(
-                    "text-sm font-normal text-[#212225] dark:text-white",
+                    "text-sm font-normal text-black dark:text-white",
                     styleScript.className,
                   )}
                 >
@@ -121,8 +120,8 @@ export default function DynamicIsland() {
             </div>
           </ButtonWidget>
 
-          {/* Middle pill — Email + icons only (single pill, matches first image) */}
-          <ButtonWidget >
+          {/* Middle pill — Email + icons only (hidden on mobile) */}
+          <ButtonWidget isMobile={isMobile}>
             <div
               className={cn(
                 "items-center justify-between rounded-full gap-2 px-4 py-3 hidden md:flex",
@@ -177,8 +176,8 @@ export default function DynamicIsland() {
           {/* Right pill — same button as header (pill-outer-cream + lets-chat-inner) */}
 
           <ButtonWidget>
-            <div className="lets-chat-cream-wrapper">
-              <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
+            <div className="right-pill-wrapper lets-chat-cream-wrapper">
+              <div className="lets-chat-inner flex items-center gap-0 overflow-hidden p-1">
                 <Link
                   href="mailto:ronniekiyegga@hotmail.com"
                   className={cn(

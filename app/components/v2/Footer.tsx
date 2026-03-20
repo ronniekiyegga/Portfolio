@@ -3,7 +3,7 @@ import Link from 'next/link'
 const links = [
   { label: 'LinkedIn',  href: 'https://linkedin.com/in/ronniekiyegga' },
   { label: 'GitHub',    href: 'https://github.com/BlissfulCoda' },
-  { label: 'Version 1', href: '/v1' },
+  { label: 'Version 1', href: '/' },
 ]
 
 export function Footer() {

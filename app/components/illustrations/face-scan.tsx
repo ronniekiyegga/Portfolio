@@ -103,7 +103,7 @@ export const FaceScanIllustration = () => {
         }}
       >
         <Image
-          src="/Avatar.svg"
+          src="/images/profile/Avatar.svg"
           alt="Ronnie's Avatar"
           className="bg-illustration size-full object-cover grayscale"
           width={560}

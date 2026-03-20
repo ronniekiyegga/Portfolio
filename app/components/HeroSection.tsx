@@ -4,10 +4,9 @@ import React, { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { motion } from "motion/react";
-import { useLoading } from "@/app/contexts/LoadingContext";
 import IntroductionText from "@/app/components/IntroductionText";
 import ContactInfo from "./patterns/ContactInfo";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+import { BackgroundBeams } from "@/app/components/ui/background-beams";
 import LogoLoopSection from "@/app/widgets/LogoLoop";
 import { LayoutTextFlip } from "@/app/components/ui/layout-text-flip";
 
@@ -26,7 +25,6 @@ const STRING_GLASS_OPACITY = 0;
 // ];
 
 export default function HeroSection() {
-  const { isAppReady } = useLoading();
   const containerRef = useRef<HTMLDivElement>(null);
   const lanyardRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
@@ -36,7 +34,7 @@ export default function HeroSection() {
   const [heroReady, setHeroReady] = useState(false);
 
   React.useEffect(() => {
-    if (!isAppReady || hasAnimated.current) return;
+    if (hasAnimated.current) return;
 
     const container = containerRef.current;
     if (!container) return;
@@ -66,13 +64,12 @@ export default function HeroSection() {
     return () => {
       void tl.kill();
     };
-  }, [isAppReady]);
+  }, []);
 
   React.useEffect(() => {
-    if (!isAppReady) return;
     const t = setTimeout(() => setLanyardDrop(true), 4000);
     return () => clearTimeout(t);
-  }, [isAppReady]);
+  }, []);
 
   React.useEffect(() => {
     if (!lanyardDrop) return;
