@@ -112,7 +112,7 @@ export function DynamicIslandV2({
                   )}
                 >
                   <Image
-                    src="/Avatar.svg"
+                    src="/images/profile/Avatar.svg"
                     alt="Ronniè"
                     width={43}
                     height={43}

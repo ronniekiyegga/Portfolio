@@ -1,6 +1,6 @@
 # Portfolio
 
-![Portfolio](public/Portfolio_IMG.svg)
+![Portfolio](public/images/illustrations/Portfolio_IMG.svg)
 
 A personal portfolio site — clean, modern, and built for showcasing projects and skills.
 

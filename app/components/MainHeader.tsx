@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { BsStars } from "react-icons/bs";
 import { RiMenu4Fill } from "react-icons/ri";
 import { AnimatedThemeToggler } from "@/app/components/ui/animated-theme-toggler";
@@ -10,6 +11,29 @@ import { useSplash } from "@/app/contexts/SplashContext";
 import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
+
+const navVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
+      staggerChildren: 0.04,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const navItemVariants = {
+  hidden: { opacity: 0, y: -6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  },
+};
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
@@ -56,7 +80,10 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
 
   return (
     <>
-      <nav
+      <motion.nav
+        initial="hidden"
+        animate="visible"
+        variants={navVariants}
         className={cn(
           "fixed top-0 left-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 border-b border-neutral-200/80 dark:border-neutral-700/50 bg-[#FEFBF1] dark:bg-neutral-950/90 backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
           hideWhenBottomNav &&
@@ -64,7 +91,10 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
         )}
       >
         <div className="flex items-center justify-between gap-4 w-full max-w-7xl">
-          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 shrink">
+          <motion.div
+            variants={navItemVariants}
+            className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 shrink"
+          >
             <Link
               href="/"
               className="font-jetbrains text-[11px] sm:text-[13px] font-medium tracking-[0.08em] uppercase text-neutral-900 dark:text-neutral-100 no-underline hover:opacity-80 transition-opacity shrink-0"
@@ -95,14 +125,6 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                   <path d="M0 0l5 6 5-6z" />
                 </svg>
               </button> */}
-              <Link
-                href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-jetbrains text-[9px] sm:text-[10px] tracking-widest uppercase px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 bg-transparent hover:border-neutral-400 dark:hover:border-neutral-500 transition-colors no-underline"
-              >
-                Resume
-              </Link>
               {dropdownOpen && (
                 <VersionDropdown
                   placement="top"
@@ -112,11 +134,14 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                 />
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <ul className="hidden md:flex items-center gap-6 list-none shrink-0">
+          <motion.ul
+            variants={navItemVariants}
+            className="hidden md:flex items-center gap-6 list-none shrink-0"
+          >
             {navLinks.map((link) => (
-              <li key={link.label}>
+              <motion.li key={link.label} variants={navItemVariants}>
                 <Link
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
@@ -124,9 +149,9 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                 >
                   {link.label}
                 </Link>
-              </li>
+              </motion.li>
             ))}
-            <li>
+            <motion.li variants={navItemVariants}>
               <div className="rounded-full pill-outer-cream">
                 <div className="lets-chat-cream-wrapper">
                   <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
@@ -173,11 +198,14 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                   </div>
                 </div>
               </div>
-            </li>
-          </ul>
+            </motion.li>
+          </motion.ul>
 
           {/* Mobile: pill-style Let's chat + icons + menu button */}
-          <div className="flex md:hidden items-center gap-2 shrink-0">
+          <motion.div
+            variants={navItemVariants}
+            className="flex md:hidden items-center gap-2 shrink-0"
+          >
             <div className="rounded-full pill-outer-cream">
               <div className="lets-chat-cream-wrapper">
                 <div className="lets-chat-inner flex items-center gap-0 rounded-full overflow-hidden">
@@ -230,9 +258,9 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
             >
               <RiMenu4Fill className="size-5" />
             </button>
-          </div>
+          </motion.div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile menu overlay */}
       {mobileMenuOpen && (
@@ -286,17 +314,6 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                   {link.label}
                 </Link>
               ))}
-              <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-700">
-                <Link
-                  href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="py-3 text-base text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors no-underline block"
-                >
-                  Resume
-                </Link>
-              </div>
             </nav>
           </div>
         </div>

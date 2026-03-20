@@ -64,7 +64,7 @@ export default function Header({
   const [hash, setHash] = React.useState("");
   const [versionDropdownOpen, setVersionDropdownOpen] = React.useState(false);
   const versionDropdownRef = useRef<HTMLDivElement>(null);
-  const isV1 = pathname?.startsWith("/v1");
+  const isV1 = pathname === "/" || pathname?.startsWith("/v1");
   React.useEffect(() => {
     setHash(typeof window !== "undefined" ? window.location.hash.slice(1) : "");
     const onHashChange = () => setHash(window.location.hash.slice(1));
@@ -125,7 +125,7 @@ export default function Header({
                 >
                   <Link href="/" aria-label="Home" className="shrink-0">
                     <Image
-                      src="/Ronnie_Logo.svg"
+                      src="/images/branding/Ronnie_Logo.svg"
                       alt="Ronnie Kiyegga - Engineer"
                       width={80}
                       height={44}
@@ -204,7 +204,7 @@ export default function Header({
                 >
                   <Link href="/" aria-label="Home" className="shrink-0">
                     <Image
-                      src="/Ronnie_Logo.svg"
+                      src="/images/branding/Ronnie_Logo.svg"
                       alt="Ronnie Kiyegga - Engineer"
                       width={105}
                       height={57}
@@ -329,7 +329,7 @@ export default function Header({
                   </nav>
                 </div>
 
-                {/* Desktop: Right pill - Blog + Resume + dark pill */}
+                {/* Desktop: Right pill - Blog + dark pill */}
                 <div
                   className={cn(
                     pillBaseRight,
@@ -346,20 +346,6 @@ export default function Header({
                       aria-hidden
                     /> */}
                   </Link>
-                  <span
-                    className=" size-1 rounded-full bg-gray-300"
-                    aria-hidden
-                  />
-                  {/* <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" /> */}
-                  <Link
-                    href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-                  >
-                    Resume
-                  </Link>
-                  {/* <div className="h-4 w-px shrink-0 bg-neutral-200 dark:bg-neutral-700" /> */}
                   <span
                     className=" size-1 rounded-full bg-gray-300"
                     aria-hidden
@@ -423,7 +409,6 @@ const exploreLinks = [
   { name: "About", href: "/#about" },
   { name: "More", href: "#" },
   { name: "Blog", href: "/blog" },
-  { name: "Resume", href: "/Ronnie%20Kiyegga%20-%20SWE.pdf" },
 ];
 
 function MobileMenu({
@@ -483,7 +468,7 @@ function MobileMenu({
                   aria-label="Home"
                 >
                   <Image
-                    src="/Ronnie_Logo.svg"
+                    src="/images/branding/Ronnie_Logo.svg"
                     alt="Ronnie Kiyegga - Engineer"
                     width={80}
                     height={44}
@@ -521,12 +506,6 @@ function MobileMenu({
                         key={item.name}
                         href={item.href}
                         onClick={onClose}
-                        {...(item.name === "Resume"
-                          ? {
-                              target: "_blank",
-                              rel: "noopener noreferrer",
-                            }
-                          : {})}
                         className={cn(
                           "w-full rounded-lg py-0.5 pr-3 text-lg font-bold text-neutral-900 dark:text-neutral-100",
                         )}
@@ -596,7 +575,7 @@ function MobileMenu({
                 </div>
               </motion.div>
 
-              {/* Bottom: Blog | Resume + Let's chat pill (cream outer, dark inner, icons) */}
+              {/* Bottom: Blog + Let's chat pill (cream outer, dark inner, icons) */}
               <motion.div
                 initial={{ y: -24, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -620,18 +599,6 @@ function MobileMenu({
                         aria-hidden
                       />
                       Blog
-                    </Link>
-                    <span
-                      className="h-4 w-px bg-neutral-300 dark:bg-neutral-600"
-                      aria-hidden
-                    />
-                    <Link
-                      href="/Ronnie%20Kiyegga%20-%20SWE.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={onClose}
-                    >
-                      Resume
                     </Link>
                   </div>
                   <div className="rounded-full pill-outer-cream">

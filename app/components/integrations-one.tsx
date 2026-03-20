@@ -10,18 +10,18 @@ import {
 import Image from "next/image";
 
 export const TECH_ICONS = [
-  { src: "/Figma_Icon.svg", alt: "Figma" },
-  { src: "/React_Icon.svg", alt: "React" },
-  { src: "/Nextjs_Icon.svg", alt: "Nextjs" },
-  { src: "/Python_Icon.svg", alt: "Python" },
-  { src: "/Typescript_Icon.svg", alt: "TypeScript" },
-  { src: "/Docker_Icon.svg", alt: "Docker" },
-  { src: "/Redis_Icon.svg", alt: "Redis" },
-  { src: "/Slack_Icon.svg", alt: "Slack" },
-  { src: "/Github_Actions_Icon.svg", alt: "GitHub Actions" },
-  { src: "/Nginx_Icon.svg", alt: "Nginx" },
-  { src: "/Nodejs_Icon.svg", alt: "Nodejs" },
-  { src: "/TensorFlow_Icon.svg", alt: "TensorFlow" },
+  { src: "/images/icons/Figma_Icon.svg", alt: "Figma" },
+  { src: "/images/icons/React_Icon.svg", alt: "React" },
+  { src: "/images/icons/Nextjs_Icon.svg", alt: "Nextjs" },
+  { src: "/images/icons/Python_Icon.svg", alt: "Python" },
+  { src: "/images/icons/Typescript_Icon.svg", alt: "TypeScript" },
+  { src: "/images/icons/Docker_Icon.svg", alt: "Docker" },
+  { src: "/images/icons/Redis_Icon.svg", alt: "Redis" },
+  { src: "/images/icons/Slack_Icon.svg", alt: "Slack" },
+  { src: "/images/icons/Github_Actions_Icon.svg", alt: "GitHub Actions" },
+  { src: "/images/icons/Nginx_Icon.svg", alt: "Nginx" },
+  { src: "/images/icons/Nodejs_Icon.svg", alt: "Nodejs" },
+  { src: "/images/icons/TensorFlow_Icon.svg", alt: "TensorFlow" },
 ] as const;
 
 export type TechIconKey = (typeof TECH_ICONS)[number]["alt"];

@@ -17,7 +17,7 @@ const features = [
     description:
       "With AI-powered suggestions, templates, and seamless collaboration.",
     ariaLabel: "extend smart email composition feature",
-    image: "/AI_PSEUDOCODE.svg",
+    image: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
     imageAlt: "bg c1",
     cardClassName: "h-96",
   },
@@ -26,7 +26,7 @@ const features = [
     description:
       "That learns your writing style and provides context-aware suggestions.",
     ariaLabel: "extend AI autocomplete feature",
-    image: "/NUMERIX_AI.png",
+    image: "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.png",
     imageAlt: "bg c3",
     cardClassName: "h-96",
   },

@@ -95,7 +95,7 @@ export const BackgroundBeams = React.memo(
           if (r < 0.65) return 7; // original
           return 10 + r * 2; // slow: 10–11s
         }),
-      [visiblePaths.length],
+      [visiblePaths],
     );
 
     const showBasePaths = true;

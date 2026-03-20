@@ -21,7 +21,7 @@ export default function AnimatedText({
         </span>
         <LinkPreview
           url="https://www.msmaryamsmaths.com"
-          imageSrc="/BLOG.svg"
+          imageSrc="/images/illustrations/BLOG.svg"
           isStatic
           className={`${styleScript.className} font-bold text-2xl md:text-2xl`}
         >
@@ -29,7 +29,7 @@ export default function AnimatedText({
         </LinkPreview>{" "}
         <LinkPreview
           url="/templates"
-          imageSrc="/NUMERIX_AI.svg"
+          imageSrc="/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg"
           isStatic
           className={`${styleScript.className} font-bold text-2xl md:text-2xl `}
         >

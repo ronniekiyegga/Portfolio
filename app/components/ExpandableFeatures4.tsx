@@ -53,30 +53,30 @@ const DEFAULT_FEATURES: Feature[] = [
     title: "Design",
     description:
       "Access and switch between multiple AI models including GPT, Claude, and Gemini from a unified interface with seamless provider switching.",
-    image: "/DESIGN.svg",
+    image: "/images/illustrations/DESIGN.svg",
     background: "lightPillar",
   },
   {
     title: "Engineering",
     description:
       "Work with teammates across the globe with real-time presence indicators, seamless syncing, and automatic conflict resolution.",
-    image: "/NUMERIX_AI.svg",
+    image: "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg",
     background: "prism",
   },
   {
     title: "Architecture",
     description:
       "Deploy intelligent agents that learn your workflow patterns and automate repetitive tasks with context-aware suggestions.",
-    image: "/GOOGLE_TEACHABLE.svg",
+    image: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
     background: "lightRays",
   },
 ];
 
 /** Used when page theme is dark (card contrasts with dark page) */
 const LIGHT_BACKGROUNDS = [
-  "/BG_HERO1.svg",
-  "/BG_1.png",
-  "/BackgroundImage_2.svg",
+  "/images/backgrounds/BG_HERO1.svg",
+  "/images/backgrounds/BG_1.png",
+  "/images/backgrounds/BackgroundImage_2.svg",
 ] as const;
 
 const DARK_BACKGROUNDS = [

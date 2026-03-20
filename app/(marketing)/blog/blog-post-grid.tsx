@@ -74,7 +74,7 @@ export function BlogPostGrid({ posts }: { posts: Post[] }) {
                       >
                         <div className="relative size-8 overflow-hidden rounded-full bg-card">
                           <Image
-                            src="/Avatar.svg"
+                            src="/images/profile/Avatar.svg"
                             alt="Ronnie"
                             width={32}
                             height={32}

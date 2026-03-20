@@ -37,7 +37,7 @@ export default function MobileHeaderPill({
           "bg-neutral-900 text-white",
         )}
         style={{
-          backgroundImage: "url(/BG_1.png)",
+          backgroundImage: "url(/images/backgrounds/BG_1.png)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

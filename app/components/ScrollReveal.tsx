@@ -1,17 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useLoading } from '@/app/contexts/LoadingContext'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function ScrollReveal() {
-  const { isAppReady } = useLoading()
-
   useEffect(() => {
-    if (!isAppReady || typeof window === 'undefined') return
+    if (typeof window === 'undefined') return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
@@ -74,7 +71,7 @@ export function ScrollReveal() {
       clearTimeout(refreshTimer)
       tweens.forEach((tw) => tw.kill())
     }
-  }, [isAppReady])
+  }, [])
 
   return null
 }

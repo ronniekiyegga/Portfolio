@@ -25,12 +25,6 @@ const SplashCursor = dynamic(() => import("@/app/components/SplashCursor"), {
 const CustomCursor = dynamic(() => import("@/app/components/CustomCursor"), {
   ssr: false,
 });
-const LoadingScreenGate = dynamic(
-  () => import("@/app/components/LoadingScreenGate"),
-  {
-    ssr: false,
-  },
-);
 const Marquee = dynamic(() => import("@/app/components/Marquee"), {
   loading: () => <section className="min-h-[200px]" aria-hidden />,
 });
@@ -55,8 +49,6 @@ export default function V2Page() {
       className="min-h-screen w-full overflow-x-hidden"
       style={{ background: "var(--bg)", color: "var(--text)" }}
     >
-      {/* Loading intro — DESIGN / CODE / PRODUCTION sequence */}
-      <LoadingScreenGate />
       <ScrollReveal />
 
       {/* Custom cursor (dot + ring) — desktop only, hidden when fluid cursor is on */}

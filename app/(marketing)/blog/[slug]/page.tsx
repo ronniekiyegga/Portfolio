@@ -115,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                                     >
                                         <div className="aspect-square size-6 overflow-hidden rounded-full bg-card">
                                             <Image
-                                                src="/Avatar.svg"
+                                                src="/images/profile/Avatar.svg"
                                                 alt="Ronnie"
                                                 width={24}
                                                 height={24}
