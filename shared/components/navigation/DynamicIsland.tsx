@@ -2,64 +2,41 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/shared/components/ui/animated-theme-toggler";
 import { useSplash } from "@/shared/contexts/SplashContext";
 import { useDynamicIslandVisibility } from "@/shared/hooks/useDynamicIslandVisibility";
-import { useActiveSection } from "@/shared/hooks/useActiveSection";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
-import { MdOutlineDynamicFeed } from "react-icons/md";
 import ButtonWidget from "@/shared/components/sections/ButtonWidget";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-const navLinks = [
-  { label: "Work", href: "#projects", sectionId: "work" as const },
-  { label: "Process", href: "#process", sectionId: "process" as const },
+const CONTACT_EMAIL = "kiyeggaronnie@gmail.com";
+
+const middlePillSocial = [
   {
-    label: "Experience",
-    href: "#experience",
-    sectionId: "experience" as const,
+    href: "https://www.linkedin.com/in/ronnie-kiyegga/",
+    label: "LinkedIn",
+    Icon: Linkedin,
   },
-  { label: "Design", href: "#design", sectionId: "design" as const },
-];
+  {
+    href: "https://github.com/ronniekiyegga",
+    label: "GitHub",
+    Icon: Github,
+  },
+  {
+    href: `mailto:${CONTACT_EMAIL}`,
+    label: "Email",
+    Icon: Mail,
+  },
+] as const;
 
 export default function DynamicIsland() {
   const isVisible = useDynamicIslandVisibility();
-  const activeSection = useActiveSection();
   const { splashActive, setSplashActive } = useSplash();
-  const navRef = useRef<HTMLDivElement>(null);
-  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const dotRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const activeIndex = navLinks.findIndex(
-      (l) => l.sectionId === activeSection,
-    );
-    const dot = dotRef.current;
-    if (activeIndex < 0 || !navRef.current || !dot) return;
-    const link = linkRefs.current[activeIndex];
-    if (!link) return;
-    const navRect = navRef.current.getBoundingClientRect();
-    const linkRect = link.getBoundingClientRect();
-    const left = linkRect.left - navRect.left + linkRect.width / 2 - 1.5;
-    dot.style.left = `${left}px`;
-  }, [activeSection]);
-
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      document
-        .querySelector(href)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   return (
     <AnimatePresence>
@@ -114,14 +91,13 @@ export default function DynamicIsland() {
             </div>
           </ButtonWidget>
 
-          {/* Middle pill — Nav links + active dot + icon (hidden on mobile) */}
+          {/* Middle pill — email + LinkedIn / GitHub / mail (hidden on mobile) */}
 
-          <ButtonWidget className="hidden md:flex">
+          <ButtonWidget className="hidden md:flex max-w-[min(100vw-10rem,36rem)]">
             <div
-              ref={navRef}
               className={cn(
-                "left-pill-inner lets-chat-inner relative flex gap-4 items-center rounded-full px-8 pr-2 py-4.5",
-                "border border-white/10 dark:border-white/5",
+                "left-pill-inner lets-chat-inner flex min-h-12 w-full max-w-full items-center justify-between gap-4 rounded-full px-4 py-3.5 sm:px-6 sm:py-4",
+                "border border-white/10 dark:border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.18)]",
               )}
               style={{
                 borderRadius: "10.14463rem",
@@ -130,40 +106,32 @@ export default function DynamicIsland() {
                   "var(--Gradients-White-1, linear-gradient(180deg, #FBFBFB 38.73%, #F7F7F9 100%))",
               }}
             >
-              {navLinks.map((link, i) => {
-                const isActive = link.sectionId === activeSection;
-                return (
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className={cn(
+                  "min-w-0 shrink truncate text-[12px] font-medium leading-tight tracking-tight text-[#000626] sm:text-[13px]",
+                  "font-(family-name:--font-source-serif) hover:opacity-80 no-underline",
+                )}
+              >
+                {CONTACT_EMAIL}
+              </a>
+              <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+                {middlePillSocial.map(({ href, label, Icon }) => (
                   <Link
-                    key={link.label}
-                    ref={(el) => {
-                      linkRefs.current[i] = el;
-                    }}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={cn(
-                      "flex justify-center items-center",
-                      isActive ? "" : "opacity-40",
-                    )}
+                    key={label}
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    className="inline-flex text-[#000626] transition-opacity hover:opacity-65"
+                    aria-label={label}
                   >
-                    <span className="font-medium text-[12px]  leading-[14.86px] text-center text-[#000626] dark:text-white/90">
-                      {link.label}
-                    </span>
+                    <Icon className="size-[14px] sm:size-[15px]" strokeWidth={1.5} />
                   </Link>
-                );
-              })}
-              {activeSection && (
-                <div
-                  ref={dotRef}
-                  className="absolute bottom-2 left-0 size-[3px] rounded-full bg-[#000d4d] dark:bg-white/80 transition-[left] duration-200 ease-out pointer-events-none"
-                  aria-hidden
-                />
-              )}
-              <div className="h-4 w-px shrink-0 bg-black/20" />
-              <div className="flex items-center gap-[8.92px] pr-3">
-                <MdOutlineDynamicFeed
-                  className="size-[12.7px] text-[#000626] dark:text-white/90 opacity-40"
-                  aria-hidden
-                />
+                ))}
               </div>
             </div>
           </ButtonWidget>

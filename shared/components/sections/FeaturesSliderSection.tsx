@@ -111,6 +111,8 @@ interface FeaturesSliderSectionProps {
    * (e.g. hero webp assets under `/carousel`).
    */
   slides?: HeroCarouselImageSlide[];
+  /** When true, shows a three-word caption at the bottom of each card (up carousel only) */
+  showCaption?: boolean;
 }
 
 export default function FeaturesSliderSection({
@@ -124,6 +126,7 @@ export default function FeaturesSliderSection({
   sectionId,
   className,
   slides,
+  showCaption = false,
 }: FeaturesSliderSectionProps) {
   const resolvedId =
     sectionId ?? (direction === "right" ? "design-reverse" : "design");
@@ -141,17 +144,18 @@ export default function FeaturesSliderSection({
     <div
       key={`${content.src}-${index}`}
       className={
-        axis === "y"
-          ? cn(
-              "flex w-full shrink-0 flex-col gap-4",
-              dense ? "my-2 max-w-[min(420px,100%)]" : "my-4 max-w-[400px]",
-            )
-          : dense
-            ? "flex w-[min(220px,42vw)] min-w-[180px] max-w-[240px] shrink-0 flex-col gap-2 my-2"
-            : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
+      axis === "y"
+      ? cn(
+      "flex w-full shrink-0 flex-col gap-4",
+      dense ? "my-2 max-w-[min(420px,100%)]" : "my-4 max-w-[400px]",
+      )
+      : dense
+      ? "flex w-[min(220px,42vw)] min-w-[180px] max-w-[240px] shrink-0 flex-col gap-2 my-2"
+      : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
       }
-    >
-      <Card
+      >
+      <div className="relative">
+          <Card
         className={`ring-indigo-600 bg-${backgroundColor} border-white shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-lg ring-0`}
         style={{
           backgroundImage: `url(${backgroundImage.startsWith("/") ? backgroundImage : `/${backgroundImage}`})`,
@@ -179,8 +183,26 @@ export default function FeaturesSliderSection({
                 : "(max-width: 640px) 280px, 460px"
           }
           className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
-        />
-      </Card>
+          />
+          </Card>
+          {showCaption && content.caption && (
+            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
+              <span
+                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
+                style={{ letterSpacing: "0.18em" }}
+              >
+                {content.caption[0]}
+              </span>
+              <span className="mx-1.5 text-white/40 text-[8px]">·</span>
+              <span
+                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
+              >
+                {content.caption[1]}
+              </span>
+
+            </div>
+          )}
+          </div>
       {/* {content.description} */}
     </div>
   ));

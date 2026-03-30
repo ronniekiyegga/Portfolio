@@ -117,7 +117,7 @@ export const workItems: WorkItem[] = [
     desc: "B2B school analytics platform designed to replace spreadsheet reporting with real-time dashboards and performance insights.",
     tags: ["Next.js", "BigQuery", "MongoDB", "Docker"],
     metric: "sub-50ms P95 response",
-    href: "#",
+    href: "https://edu-feedback-pro-beta.vercel.app/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
     heroImage: "/images/projects/edufeedbackpro/EFP_PNG.png",

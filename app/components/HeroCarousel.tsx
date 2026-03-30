@@ -1,13 +1,31 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import FeaturesSliderSection from "@/shared/components/sections/FeaturesSliderSection";
 import { cn } from "@/lib/utils";
 import type { HeroCarouselSlidesProp } from "@/lib/hero-carousel-types";
+
+const API_PATH = "/api/hero-carousel-slides";
+
+/** Dev: pick up new files quickly. Prod: light polling (serverless FS rarely changes at runtime). */
+const POLL_MS =
+  process.env.NODE_ENV === "development" ? 1_500 : 30_000;
+
+function slidesSignature(s: HeroCarouselSlidesProp | null | undefined): string {
+  if (!s) return "";
+  return JSON.stringify({ up: s.up, down: s.down });
+}
 
 const HERO_CAROUSEL_FADE_V =
   "pointer-events-none absolute inset-x-0 z-10 h-[clamp(32px,10%,100px)]";
 
 const HERO_CAROUSEL_FADE_H =
   "pointer-events-none absolute inset-y-0 z-10 w-[clamp(20px,8%,72px)]";
+
+/** Slightly narrower + shorter blend so less content washes out on the trailing edge */
+const HERO_CAROUSEL_FADE_H_RIGHT =
+  "pointer-events-none absolute inset-y-0 right-0 z-10 w-[clamp(16px,6.5%,58px)]";
 
 function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
   return (
@@ -35,7 +53,6 @@ function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
   );
 }
 
-/** Left/right edge fade for horizontal hero rows (mobile). */
 function HeroCarouselMobileRowFade({ children }: { children: ReactNode }) {
   return (
     <div className="relative isolate w-full min-w-0 overflow-hidden py-1">
@@ -51,10 +68,9 @@ function HeroCarouselMobileRowFade({ children }: { children: ReactNode }) {
       <div
         aria-hidden
         className={cn(
-          HERO_CAROUSEL_FADE_H,
-          "right-0",
-          "bg-[linear-gradient(to_left,#FDFBF7_0%,rgba(253,251,247,0)_100%)]",
-          "dark:bg-[linear-gradient(to_left,#0a0a0a_0%,rgba(10,10,10,0)_100%)]",
+          HERO_CAROUSEL_FADE_H_RIGHT,
+          "bg-[linear-gradient(to_left,#FDFBF7_0%,rgba(253,251,247,0)_72%)]",
+          "dark:bg-[linear-gradient(to_left,#0a0a0a_0%,rgba(10,10,10,0)_72%)]",
         )}
       />
       {children}
@@ -63,24 +79,78 @@ function HeroCarouselMobileRowFade({ children }: { children: ReactNode }) {
 }
 
 type HeroCarouselProps = {
-  /** When omitted or a column has no slides, that column uses the default project thumbnails. */
+  /** SSR snapshot; client keeps polling `/api/hero-carousel-slides` to pick up new `public/carousel` files. */
   slides?: HeroCarouselSlidesProp | null;
 };
 
-const HeroCarousel = ({ slides }: HeroCarouselProps) => {
+const HeroCarousel = ({ slides: initialSlides }: HeroCarouselProps) => {
+  const [resolved, setResolved] = useState<HeroCarouselSlidesProp | null>(
+    () => initialSlides ?? null,
+  );
+  const sigRef = useRef(slidesSignature(initialSlides));
+
+  const refresh = useCallback(async (signal?: AbortSignal) => {
+    try {
+      const url =
+        typeof window !== "undefined"
+          ? new URL(API_PATH, window.location.origin).toString()
+          : API_PATH;
+      const res = await fetch(url, {
+        cache: "no-store",
+        signal,
+      });
+      if (!res.ok) return;
+      const next = (await res.json()) as HeroCarouselSlidesProp;
+      if (!Array.isArray(next?.up) || !Array.isArray(next?.down)) return;
+      const nextSig = slidesSignature(next);
+      if (nextSig !== sigRef.current) {
+        sigRef.current = nextSig;
+        setResolved(next);
+      }
+    } catch (e) {
+      if ((e as Error).name === "AbortError") return;
+    }
+  }, []);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    const initialId = window.setTimeout(() => {
+      void refresh(ac.signal);
+    }, 0);
+
+    const id = window.setInterval(() => {
+      void refresh();
+    }, POLL_MS);
+
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void refresh();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      window.clearTimeout(initialId);
+      ac.abort();
+      window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [refresh]);
+
   const slidesUp =
-    slides?.up && slides.up.length > 0 ? slides.up : undefined;
+    resolved?.up && resolved.up.length > 0 ? resolved.up : undefined;
   const slidesDown =
-    slides?.down && slides.down.length > 0 ? slides.down : undefined;
+    resolved?.down && resolved.down.length > 0 ? resolved.down : undefined;
+
+  const upKey = slidesUp?.map((s) => s.src).join("|") ?? "default-up";
+  const downKey = slidesDown?.map((s) => s.src).join("|") ?? "default-down";
 
   return (
     <div data-hero-carousel className="min-w-0 w-full self-stretch">
-      {/* Mobile / tablet: two horizontal marquees (matches up/down columns). */}
       <div className="mt-8 flex w-full min-w-0 flex-col gap-5 lg:mt-0 lg:hidden">
         <HeroCarouselMobileRowFade>
           <FeaturesSliderSection
+            key={`m-up-${upKey}`}
             axis="x"
-            direction="left"
+            direction="right"
             dense
             speed={18}
             showHeading={false}
@@ -91,8 +161,9 @@ const HeroCarousel = ({ slides }: HeroCarouselProps) => {
         </HeroCarouselMobileRowFade>
         <HeroCarouselMobileRowFade>
           <FeaturesSliderSection
+            key={`m-down-${downKey}`}
             axis="x"
-            direction="right"
+            direction="left"
             dense
             speed={18}
             showHeading={false}
@@ -103,22 +174,10 @@ const HeroCarousel = ({ slides }: HeroCarouselProps) => {
         </HeroCarouselMobileRowFade>
       </div>
 
-      {/* Desktop: vertical columns */}
       <div className="hidden min-h-0 min-w-0 w-full max-w-none grid-cols-2 items-stretch gap-6 lg:grid lg:gap-7">
         <HeroCarouselColumnFade>
           <FeaturesSliderSection
-            axis="y"
-            direction="up"
-            dense
-            speed={18}
-            showHeading={false}
-            sectionId="hero-design-up"
-            className="py-0"
-            slides={slidesUp}
-          />
-        </HeroCarouselColumnFade>
-        <HeroCarouselColumnFade>
-          <FeaturesSliderSection
+            key={`d-down-${downKey}`}
             axis="y"
             direction="down"
             dense
@@ -127,6 +186,20 @@ const HeroCarousel = ({ slides }: HeroCarouselProps) => {
             sectionId="hero-design-down"
             className="py-0"
             slides={slidesDown}
+          />
+        </HeroCarouselColumnFade>
+        <HeroCarouselColumnFade>
+          <FeaturesSliderSection
+            key={`d-up-${upKey}`}
+            axis="y"
+            direction="up"
+            dense
+            speed={18}
+            showHeading={false}
+            sectionId="hero-design-up"
+            className="py-0"
+            slides={slidesUp}
+            showCaption
           />
         </HeroCarouselColumnFade>
       </div>
