@@ -39,7 +39,7 @@ export default function HeroSection({
     if (!root) return;
 
     const els = root.querySelectorAll(
-      "[data-hero-availability], [data-hero-name], [data-hero-intro], [data-hero-stats], [data-hero-stack], [data-hero-contact]",
+      "[data-hero-availability], [data-hero-name], [data-hero-intro], [data-hero-stack], [data-hero-contact], [data-hero-carousel]",
     );
     if (!els.length) return;
 
@@ -52,14 +52,24 @@ export default function HeroSection({
     if (prefersReducedMotion) {
       setHeroReady(true);
       setLanyardDrop(true);
+      els.forEach((el) => gsap.set(el, { opacity: 1, y: 0, x: 0 }));
       return;
     }
 
     gsap.set(els, { opacity: 0, y: 20, force3D: true });
+    const carouselEl = root.querySelector("[data-hero-carousel]");
+    if (carouselEl) {
+      gsap.set(carouselEl, {
+        opacity: 0,
+        y: -48,
+        x: 0,
+        force3D: true,
+      });
+    }
     queueMicrotask(() => setHeroReady(true));
 
     const fallbackTimer = setTimeout(() => {
-      els.forEach((el) => gsap.set(el, { opacity: 1, y: 0 }));
+      els.forEach((el) => gsap.set(el, { opacity: 1, y: 0, x: 0 }));
       setLanyardDrop(true);
     }, 4000);
 
@@ -74,6 +84,19 @@ export default function HeroSection({
     tl.call(() => setLanyardDrop(true), undefined, LANYARD_DROP_TIME);
     tl.to(els[3], { opacity: 1, y: 0, duration: 0.6 }, 0.5);
     tl.to(els[4], { opacity: 1, y: 0, duration: 0.6 }, 0.6);
+    if (els[5]) {
+      tl.to(
+        els[5],
+        {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          duration: 0.85,
+          ease: "power2.out",
+        },
+        0.42,
+      );
+    }
 
     return () => {
       clearTimeout(fallbackTimer);
@@ -139,7 +162,7 @@ export default function HeroSection({
       <div
         ref={lanyardRef}
         data-hero-lanyard
-        className="absolute inset-0 z-25 pointer-events-none"
+        className="pointer-events-none absolute inset-0 z-25 hidden lg:block"
         style={{
           opacity: lanyardDrop ? 1 : 0,
           visibility: lanyardDrop ? "visible" : "hidden",
