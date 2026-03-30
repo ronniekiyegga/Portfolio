@@ -40,7 +40,7 @@ export interface DesignItem {
   extras?: "buttons" | "logo-circle" | "code" | "dots" | "search";
 }
 
-import type { TechIconKey } from "@/app/components/integrations-one";
+import type { TechIconKey } from "@/shared/components/sections/integrations-one";
 
 export interface ExperienceItem {
   initial: string;

@@ -2,9 +2,9 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { BlogCommandDialog } from "@/app/components/blog-command";
+import { BlogCommandDialog } from "@/shared/components/navigation/blog-command";
 import { Post } from "@/types/post";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { Rss } from "lucide-react";
 

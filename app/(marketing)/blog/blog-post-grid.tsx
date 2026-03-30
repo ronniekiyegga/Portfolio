@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Clock } from 'lucide-react'
 import { Post } from '@/types/post'
-import { formatDateOrdinal } from '@/lib/format-date'
+import { formatDateOrdinal } from '@/shared/utils/format-date'
 
 function estimateReadTime(description: string): number {
   const words = description.trim().split(/\s+/).length

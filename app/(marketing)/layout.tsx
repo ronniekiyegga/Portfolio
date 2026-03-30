@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import HeaderWithFloatingControls from "@/app/components/HeaderWithFloatingControls";
-import FooterSection from "@/app/components/footer";
-import ScrollTriggerReset from "@/app/components/ScrollTriggerReset";
+import HeaderWithFloatingControls from "@/shared/components/navigation/HeaderWithFloatingControls";
+import FooterSection from "@/shared/components/navigation/footer";
+import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga — Blog",

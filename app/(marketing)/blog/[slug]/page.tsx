@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { PortableText } from '@portabletext/react'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/app/components/ui/breadcrumb'
-import { formatDate } from '@/lib/format-date'
-import { portableTextComponents } from '@/app/components/content-components'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/shared/components/ui/breadcrumb'
+import { formatDate } from '@/shared/utils/format-date'
+import { portableTextComponents } from '@/shared/components/sections/content-components'
 import { getPostBySlug, getAllPostSlugs } from '@/lib/actions'
 import { Slash } from 'lucide-react'
 

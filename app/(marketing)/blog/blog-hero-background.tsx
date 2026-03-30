@@ -1,6 +1,6 @@
 "use client";
 
-import { LiquidChrome } from "@/app/components/LiquidChrome";
+import { LiquidChrome } from "@/shared/components/effects/LiquidChrome";
 
 export function BlogHeroBackground() {
   return (
