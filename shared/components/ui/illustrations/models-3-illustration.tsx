@@ -1,8 +1,8 @@
-import { Gemini } from "@/app/components/ui/svgs/gemini";
-import { MistralAi } from "@/app/components/ui/svgs/mistral-ai";
-import { OpenAI } from "@/app/components/ui/svgs/open-ai";
-import { Deepseek } from "@/app/components/ui/svgs/deepseek";
-import { QwenLight as Qwen } from "@/app/components/ui/svgs/qwen";
+import { Gemini } from "@/shared/components/ui/svgs/gemini";
+import { MistralAi } from "@/shared/components/ui/svgs/mistral-ai";
+import { OpenAI } from "@/shared/components/ui/svgs/open-ai";
+import { Deepseek } from "@/shared/components/ui/svgs/deepseek";
+import { QwenLight as Qwen } from "@/shared/components/ui/svgs/qwen";
 import { Play } from "lucide-react";
 
 type Model = {
