@@ -146,7 +146,9 @@ export default function FeaturesSliderSection({
               "flex w-full shrink-0 flex-col gap-4",
               dense ? "my-2 max-w-[min(420px,100%)]" : "my-4 max-w-[400px]",
             )
-          : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
+          : dense
+            ? "flex w-[min(220px,42vw)] min-w-[180px] max-w-[240px] shrink-0 flex-col gap-2 my-2"
+            : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
       }
     >
       <Card
@@ -161,14 +163,20 @@ export default function FeaturesSliderSection({
         <Image
           src={content.src}
           alt={content.alt ?? content.title}
-          width={axis === "y" ? (dense ? 420 : 320) : 380}
-          height={axis === "y" ? (dense ? 420 : 320) : 380}
+          width={
+            axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380
+          }
+          height={
+            axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380
+          }
           sizes={
             axis === "y"
               ? dense
                 ? "(max-width: 1024px) 360px, 420px"
                 : "(max-width: 1024px) 300px, 360px"
-              : "(max-width: 640px) 280px, 460px"
+              : dense
+                ? "(max-width: 640px) 42vw, 240px"
+                : "(max-width: 640px) 280px, 460px"
           }
           className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
         />
@@ -188,6 +196,23 @@ export default function FeaturesSliderSection({
           axis="y"
           speed={speed}
           className="h-full min-h-0"
+        >
+          {cards}
+        </DesignCardMarquee>
+      </div>
+    );
+  }
+
+  // Hero mobile: horizontal marquee without DesignMarqueeSection chrome.
+  if (axis === "x" && !showHeading) {
+    return (
+      <div className={cn("w-full min-h-0 overflow-hidden", className)}>
+        <DesignCardMarquee
+          itemCount={slideSources.length}
+          direction={direction}
+          axis="x"
+          speed={speed}
+          className="w-full"
         >
           {cards}
         </DesignCardMarquee>
