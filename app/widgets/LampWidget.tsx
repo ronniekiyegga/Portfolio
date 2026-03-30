@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Lamp.module.css";
-import SectionKicker from "../components/ui/section-kicker";
-import AnimatedText from "../components/AnimatedText";
+import SectionKicker from "@/shared/components/ui/section-kicker";
+import AnimatedText from "@/shared/components/effects/AnimatedText";
 
 const BAR_Y = 130;
 const SQ = 422;

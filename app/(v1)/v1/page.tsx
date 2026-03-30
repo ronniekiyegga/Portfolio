@@ -1,46 +1,47 @@
-import dynamic from "next/dynamic";
-import HeroSection from "@/app/components/HeroSection";
-import ScrollAnimations from "@/app/components/ScrollAnimations";
-import DynamicIsland from "@/app/components/DynamicIsland";
-import { DesignSection } from "@/app/components/v2/DesignSection";
+import nextDynamic from "next/dynamic";
+import HeroSection from "@/shared/components/sections/HeroSection";
+import { getResolvedHeroCarouselSlides } from "@/lib/hero-carousel-images";
+import ScrollAnimations from "@/shared/components/effects/ScrollAnimations";
+import DynamicIsland from "@/shared/components/navigation/DynamicIsland";
 
-const ProjectSection = dynamic(
-  () => import("@/app/components/ProjectSection"),
+export const dynamic = "force-dynamic";
+
+const ProjectSection = nextDynamic(
+  () => import("@/shared/components/sections/ProjectSection"),
   { loading: () => <section className="min-h-[400px]" aria-hidden /> },
 );
-const Experiences = dynamic(() => import("@/app/components/Experiences"), {
-  loading: () => <section className="min-h-[400px]" aria-hidden />,
-});
-const FeaturesSliderSection = dynamic(
-  () => import("@/app/components/FeaturesSliderSection"),
+const Experiences = nextDynamic(
+  () => import("@/shared/components/sections/Experiences"),
+  {
+    loading: () => <section className="min-h-[400px]" aria-hidden />,
+  },
+);
+const ExpandableFeatures = nextDynamic(
+  () => import("@/shared/components/sections/ExpandableFeatures"),
   { loading: () => <section className="min-h-[300px]" aria-hidden /> },
 );
-const ExpandableFeatures = dynamic(
-  () => import("@/app/components/ExpandableFeatures"),
-  { loading: () => <section className="min-h-[300px]" aria-hidden /> },
-);
-const AnimatedLinks = dynamic(
+const AnimatedLinks = nextDynamic(
   () =>
-    import("@/app/components/AnimatedLinks").then((m) => ({
+    import("@/shared/components/sections/AnimatedLinks").then((m) => ({
       default: m.AnimatedLinks,
     })),
   { loading: () => <section className="min-h-screen" aria-hidden /> },
 );
-const Marquee = dynamic(() => import("@/app/components/Marquee"), {
+const Marquee = nextDynamic(() => import("@/shared/components/sections/Marquee"), {
   loading: () => <section className="min-h-[200px]" aria-hidden />,
 });
 
-export default function V1Home() {
+export default async function V1Home() {
+  const heroCarouselSlides = getResolvedHeroCarouselSlides();
+
   return (
     <div className="min-h-screen w-full min-w-0 font-sans bg-background dark:bg-neutral-950">
       <main className="flex w-full min-w-0 flex-col items-center">
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-4 md:gap-y-6">
-          <HeroSection />
+          <HeroSection heroCarouselSlides={heroCarouselSlides} />
           <ProjectSection />
-          <Experiences />
-          <DesignSection />
-          <FeaturesSliderSection />
           <ExpandableFeatures />
+          <Experiences />
           <AnimatedLinks />
           <Marquee />
         </ScrollAnimations>

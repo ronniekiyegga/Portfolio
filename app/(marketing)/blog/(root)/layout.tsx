@@ -1,6 +1,6 @@
 import { BlogFilter } from "@/app/(marketing)/blog/category-filter";
 import { BlogHeroBackground } from "@/app/(marketing)/blog/blog-hero-background";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { getInitialPosts, getTotalPostsCount } from "@/lib/actions";
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
 import Link from "next/link";

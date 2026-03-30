@@ -12,7 +12,7 @@ import {
   David_Libre,
 } from "next/font/google";
 import "./globals.css";
-import { SplashProvider } from "./contexts/SplashContext";
+import { SplashProvider } from "@/shared/contexts/SplashContext";
 import { ThemeProvider } from "next-themes";
 
 /* ── V1 fonts ─────────────────────────────────────────────── */
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
   description:
     "Design Engineer based in London. I design in Figma and build in TypeScript.",
   openGraph: {
-    title: "Ronnie Kiyegga — Design Engineer",
-    description: "Design Engineer based in London.",
+    title: "Ronnie Kiyegga — Full Stack Engineer",
+    description: "Full Stack Engineer based in London.",
     url: "https://ronniekiyegga.com",
   },
 };
