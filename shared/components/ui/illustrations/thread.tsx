@@ -1,4 +1,4 @@
-import Threads from "../../Threads";
+import Threads from "@/shared/components/effects/Threads";
 const ThreadMotion = () => {
   return (
     <div style={{ width: "1080px", height: "1080px", position: "relative" }}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLoading } from "@/app/contexts/LoadingContext";
+import { useLoading } from "@/shared/contexts/LoadingContext";
 import LoadingScreen from "./LoadingScreen";
 
 function scrollToHero() {

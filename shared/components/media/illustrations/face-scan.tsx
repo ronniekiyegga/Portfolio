@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { TextScramble } from "@/app/components/motion-primitives/text-scramble";
+import { TextScramble } from "@/shared/components/ui/motion-primitives/text-scramble";
 import { LightDarkParticles } from "@/app/blocks/bento/three/particles";
 import Image from "next/image";
 
