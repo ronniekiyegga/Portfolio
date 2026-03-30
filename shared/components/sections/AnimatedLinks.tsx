@@ -212,13 +212,13 @@ type LinkConfig = {
 
 const LINKS: LinkConfig[] = [
   {
-    href: "#",
+    href: "/blog",
     text: "DESIGN",
     id: 1,
     background: <FloatingLinesComponent />,
   },
   {
-    href: "#",
+    href: "/blog",
     text: "ENGINEERING",
     id: 2,
     background: <LightRaysComponent />,

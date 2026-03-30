@@ -5,7 +5,7 @@ import Image from "next/image";
 import LogoLoop, { type LogoItem } from "@/shared/components/media/LogoLoop";
 import { FaAws } from "react-icons/fa";
 
-const LOGO_SIZE = 24;
+const LOGO_SIZE = 23;
 const stackLogos: LogoItem[] = [
   { src: "/images/icons/Typescript_Icon.svg", alt: "TypeScript" },
   { src: "/images/icons/React_Icon.svg", alt: "React" },

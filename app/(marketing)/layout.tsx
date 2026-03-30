@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import HeaderWithFloatingControls from "@/shared/components/navigation/HeaderWithFloatingControls";
+import NavV1Wrapper from "@/shared/components/navigation/NavV1Wrapper";
 import FooterSection from "@/shared/components/navigation/footer";
 import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 
@@ -16,17 +16,10 @@ export default function MarketingLayout({
   return (
     <>
       <ScrollTriggerReset />
-      <HeaderWithFloatingControls />
+      <NavV1Wrapper />
       <main
         role="main"
-        data-theme="dark"
-        className="bg-background"
-        style={{
-          backgroundImage: `url(/images/backgrounds/BG_1.svg)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+        className="bg-background dark:[background-image:url(/images/backgrounds/BG_1.svg)] dark:[background-size:cover] dark:[background-position:center] dark:[background-repeat:no-repeat]"
       >
         {children}
       </main>

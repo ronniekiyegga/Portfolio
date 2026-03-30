@@ -84,9 +84,9 @@ export default function HeroSection({
     tl.call(() => setLanyardDrop(true), undefined, LANYARD_DROP_TIME);
     tl.to(els[3], { opacity: 1, y: 0, duration: 0.6 }, 0.5);
     tl.to(els[4], { opacity: 1, y: 0, duration: 0.6 }, 0.6);
-    if (els[5]) {
+    if (carouselEl) {
       tl.to(
-        els[5],
+        carouselEl,
         {
           opacity: 1,
           y: 0,
@@ -132,7 +132,7 @@ export default function HeroSection({
     <section
       ref={sectionRef}
       id="hero-section"
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#fdfbf7bd] dark:bg-neutral-950 relative overflow-hidden"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#fdfbf7bd] dark:bg-neutral-950 relative overflow-hidden"
     >
       <div className="absolute inset-0">
         <BackgroundBeams
