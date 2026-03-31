@@ -5,7 +5,7 @@ import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga — Blog",
-  description: "Thoughts on design engineering, TypeScript, and shipping products.",
+  description: "Thoughts on full-stack engineering, TypeScript, and shipping products.",
 };
 
 export default function MarketingLayout({
