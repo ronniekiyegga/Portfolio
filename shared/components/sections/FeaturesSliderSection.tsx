@@ -103,15 +103,9 @@ interface FeaturesSliderSectionProps {
   dense?: boolean;
   speed?: number;
   showHeading?: boolean;
-  /** Overrides root `id` (avoids duplicate ids when multiple sliders on one page) */
   sectionId?: string;
   className?: string;
-  /**
-   * When set and non-empty, replaces the default project card list with these slides
-   * (e.g. hero webp assets under `/carousel`).
-   */
   slides?: HeroCarouselImageSlide[];
-  /** When true, shows a three-word caption at the bottom of each card (up carousel only) */
   showCaption?: boolean;
 }
 
@@ -144,71 +138,62 @@ export default function FeaturesSliderSection({
     <div
       key={`${content.src}-${index}`}
       className={
-      axis === "y"
-      ? cn(
-      "flex w-full shrink-0 flex-col gap-4",
-      dense ? "my-2 max-w-[min(420px,100%)]" : "my-4 max-w-[400px]",
-      )
-      : dense
-      ? "flex w-[min(220px,42vw)] min-w-[180px] max-w-[240px] shrink-0 flex-col gap-2 my-2"
-      : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
+        axis === "y"
+          ? cn(
+              "flex w-full shrink-0 flex-col gap-4",
+              dense ? "my-2 max-w-[min(420px,100%)]" : "my-4 max-w-[400px]",
+            )
+          : dense
+            ? "flex w-[min(220px,42vw)] min-w-[180px] max-w-[240px] shrink-0 flex-col gap-2 my-2"
+            : "flex w-[min(480px,40vw)] min-w-[280px] my-4 max-w-[500px] shrink-0 flex-col gap-4"
       }
-      >
+    >
       <div className="relative">
-          <Card
-        className={`ring-indigo-600 bg-${backgroundColor} border-white shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-lg ring-0`}
-        style={{
-          backgroundImage: `url(${backgroundImage.startsWith("/") ? backgroundImage : `/${backgroundImage}`})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <Image
-          src={content.src}
-          alt={content.alt ?? content.title}
-          width={
-            axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380
-          }
-          height={
-            axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380
-          }
-          sizes={
-            axis === "y"
-              ? dense
-                ? "(max-width: 1024px) 360px, 420px"
-                : "(max-width: 1024px) 300px, 360px"
-              : dense
-                ? "(max-width: 640px) 42vw, 240px"
-                : "(max-width: 640px) 280px, 460px"
-          }
-          className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
+        <Card
+          className={`ring-indigo-600 bg-${backgroundColor} border-white shadow-black/4 relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl shadow-lg ring-0`}
+          style={{
+            backgroundImage: `url(${backgroundImage.startsWith("/") ? backgroundImage : `/${backgroundImage}`})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <Image
+            src={content.src}
+            alt={content.alt ?? content.title}
+            width={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
+            height={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
+            sizes={
+              axis === "y"
+                ? dense
+                  ? "(max-width: 1024px) 360px, 420px"
+                  : "(max-width: 1024px) 300px, 360px"
+                : dense
+                  ? "(max-width: 640px) 42vw, 240px"
+                  : "(max-width: 640px) 280px, 460px"
+            }
+            className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
           />
-          </Card>
-          {showCaption && content.caption && (
-            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
-              <span
-                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
-                style={{ letterSpacing: "0.18em" }}
-              >
-                {content.caption[0]}
-              </span>
-              <span className="mx-1.5 text-white/40 text-[8px]">·</span>
-              <span
-                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
-              >
-                {content.caption[1]}
-              </span>
-
-            </div>
-          )}
+        </Card>
+        {showCaption && content.caption && (
+          <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
+            <span
+              className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
+              style={{ letterSpacing: "0.18em" }}
+            >
+              {content.caption[0]}
+            </span>
+            <span className="mx-1.5 text-white/40 text-[8px]">·</span>
+            <span className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference">
+              {content.caption[1]}
+            </span>
           </div>
+        )}
+      </div>
       {/* {content.description} */}
     </div>
   ));
 
-  // Hero embeds this vertically inside a fixed-height, overflow-hidden container.
-  // Using DesignMarqueeSection (py-24) can clip everything; so use a slim wrapper.
   if (axis === "y" && !showHeading) {
     return (
       <div className={cn("w-full h-full min-h-0 overflow-hidden", className)}>
@@ -255,16 +240,4 @@ export default function FeaturesSliderSection({
       {cards}
     </DesignMarqueeSection>
   );
-}
-
-{
-  /* <div className="scale-90">
-  <AiAutocompleteIllustration />
-</div> */
-}
-
-{
-  /* <div className="scale-90">
-    <TranslationInterfaceIllustration />
-</div> */
 }

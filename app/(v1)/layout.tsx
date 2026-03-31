@@ -3,6 +3,7 @@ import V1Cursors from "@/shared/components/effects/V1Cursors";
 import FooterSection from "@/shared/components/navigation/footer";
 import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 import { ScrollReveal } from "@/shared/components/effects/ScrollReveal";
+import { ProjectContextProvider } from "@/app/contexts/ProjectContext";
 
 export default function V1Layout({
   children,
@@ -15,7 +16,7 @@ export default function V1Layout({
       <ScrollReveal />
       <NavV1Wrapper />
       <V1Cursors />
-      {children}
+      <ProjectContextProvider>{children}</ProjectContextProvider>
       <FooterSection />
     </>
   );

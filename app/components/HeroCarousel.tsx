@@ -18,7 +18,7 @@ function slidesSignature(s: HeroCarouselSlidesProp | null | undefined): string {
 }
 
 const HERO_CAROUSEL_FADE_V =
-  "pointer-events-none absolute inset-x-0 z-10 h-[clamp(32px,10%,100px)]";
+  "pointer-events-none absolute inset-x-0 z-10 h-[clamp(20px,7%,80px)]";
 
 const HERO_CAROUSEL_FADE_H =
   "pointer-events-none absolute inset-y-0 z-10 w-[clamp(20px,8%,72px)]";
@@ -35,8 +35,8 @@ function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
         className={cn(
           HERO_CAROUSEL_FADE_V,
           "top-0",
-          "bg-[linear-gradient(to_bottom,#FDFBF7_0%,rgba(253,251,247,0)_70%)]",
-          "dark:bg-[linear-gradient(to_bottom,#0a0a0a_0%,rgba(10,10,10,0)_70%)]",
+          "bg-[linear-gradient(to_bottom,#FDFBF7_0%,rgba(253,251,247,0)_55%)]",
+          "dark:bg-[linear-gradient(to_bottom,#0a0a0a_0%,rgba(10,10,10,0)_55%)]",
         )}
       />
       <div
@@ -44,8 +44,8 @@ function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
         className={cn(
           HERO_CAROUSEL_FADE_V,
           "bottom-0",
-          "bg-[linear-gradient(to_top,#FDFBF7_0%,rgba(253,251,247,0)_100%)]",
-          "dark:bg-[linear-gradient(to_top,#0a0a0a_0%,rgba(10,10,10,0)_100%)]",
+          "bg-[linear-gradient(to_top,#FDFBF7_0%,rgba(253,251,247,0)_78%)]",
+          "dark:bg-[linear-gradient(to_top,#0a0a0a_0%,rgba(10,10,10,0)_78%)]",
         )}
       />
       {children}

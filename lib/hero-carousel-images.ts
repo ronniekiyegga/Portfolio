@@ -1,7 +1,6 @@
 import { existsSync, readdirSync, statSync } from "fs";
 import { join } from "path";
 import type { HeroCarouselImageSlide, HeroCarouselSlidesProp } from "./hero-carousel-types";
-import { HERO_CAROUSEL_SLIDES } from "./hero-carousel-slides";
 
 const CAROUSEL_DIR = join(process.cwd(), "public", "images", "carousel");
 const CAROUSEL_PUBLIC_PREFIX = "/images/carousel";
@@ -117,15 +116,8 @@ export function getHeroCarouselSlidesFromPublic(): {
 
 /**
  * Resolves slides for `<HeroSection heroCarouselSlides={...} />`.
- * Per column: uses `HERO_CAROUSEL_SLIDES` in `lib/hero-carousel-slides.ts` when
- * that array is non-empty; otherwise uses files from `public/images/carousel`.
+ * Sources slides from files in `public/images/carousel`.
  */
 export function getResolvedHeroCarouselSlides(): HeroCarouselSlidesProp {
-  const fromDisk = getHeroCarouselSlidesFromPublic();
-  const manual = HERO_CAROUSEL_SLIDES;
-
-  return {
-    up: manual.up.length > 0 ? manual.up : fromDisk.up,
-    down: manual.down.length > 0 ? manual.down : fromDisk.down,
-  };
+  return getHeroCarouselSlidesFromPublic();
 }

@@ -34,7 +34,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
 
   const heroImageClassName =
     item?.preview === "analytics"
-      ? "mx-auto w-full max-w-[320px] max-h-[140px] md:max-h-[160px] h-auto object-contain rounded-lg"
+      ? "mx-auto w-full max-w-[920px] max-h-[420px] md:max-h-[460px] h-auto object-contain rounded-lg"
       : "mx-auto w-full max-w-[920px] max-h-[420px] md:max-h-[480px] h-auto object-contain rounded-lg";
 
   const startAutoScroll = useCallback((el: HTMLDivElement) => {
@@ -263,10 +263,12 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                         <div className="space-y-8">
                           <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4 py-6">
                             <Image
-                              src={item?.heroImage ?? ""}
+                              src={
+                                item?.modalDetailImage ?? item?.heroImage ?? ""
+                              }
                               alt={item?.title ?? "Project"}
-                              width={item?.preview === "analytics" ? 320 : 800}
-                              height={item?.preview === "analytics" ? 160 : 520}
+                              width={1200}
+                              height={700}
                               className={heroImageClassName}
                             />
                           </div>
@@ -275,7 +277,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                               {item.statistics.map((stat, i) => (
                                 <div
                                   key={i}
-                                  className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3"
+                                  className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3 text-center"
                                 >
                                   <div
                                     className="text-base sm:text-lg font-semibold tabular-nums"
@@ -324,10 +326,12 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       <div className="space-y-8">
                         <div className="relative overflow-hidden rounded-xl bg-muted/30 p-6">
                           <Image
-                            src={item?.heroImage ?? ""}
+                            src={
+                              item?.modalDetailImage ?? item?.heroImage ?? ""
+                            }
                             alt={item?.title ?? "Project"}
-                            width={item?.preview === "analytics" ? 320 : 800}
-                            height={item?.preview === "analytics" ? 160 : 520}
+                            width={1200}
+                            height={700}
                             className={heroImageClassName}
                           />
                         </div>
@@ -336,7 +340,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                             {item.statistics.map((stat, i) => (
                               <div
                                 key={i}
-                                className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3"
+                                className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3 text-center"
                               >
                                 <div
                                   className="text-base sm:text-lg font-semibold tabular-nums"

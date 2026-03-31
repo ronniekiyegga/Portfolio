@@ -11,6 +11,7 @@ export interface ProjectSectionStat {
 }
 
 export interface WorkItem {
+  tag?: string;
   type: string;
   title: string;
   desc: string;
@@ -18,17 +19,12 @@ export interface WorkItem {
   metric: string;
   href: string;
   gradient: string;
-  /** Preview variant: inline HTML/CSS mockup (analytics | maths | knn | pseudolab) */
   preview: "analytics" | "maths" | "knn" | "pseudolab";
-  /** HERO SVG from public folder for preview image */
   heroImage: string;
-  /** Optional blog URL for project modal header */
+  modalDetailImage?: string;
   blogHref?: string;
-  /** Optional GitHub URL for project modal header */
   githubHref?: string;
-  /** Optional insights for tracing beam in project modal */
   insights?: WorkItemInsight[];
-  /** Optional stats shown in project modal below image, above problem */
   statistics?: ProjectSectionStat[];
 }
 
@@ -114,6 +110,7 @@ export const experiencesV1: ExperienceV1Item[] = [
 
 export const workItems: WorkItem[] = [
   {
+    
     type: "B2B SaaS · Analytics Platform",
     title: "EduFeedbackPro",
     desc: "B2B school analytics platform designed to replace spreadsheet reporting with real-time dashboards and performance insights.",
@@ -123,6 +120,7 @@ export const workItems: WorkItem[] = [
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
     heroImage: "/images/projects/edufeedbackpro/edufeedbackpro_hero.webp",
+    modalDetailImage: "/images/projects/edufeedbackpro/EFP_PNG.png",
     insights: [
       {
         title: "Problem",
