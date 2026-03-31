@@ -132,7 +132,7 @@ export default function HeroSection({
     <section
       ref={sectionRef}
       id="hero-section"
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-24 pb-24 md:pt-32 md:pb-32 bg-[#fdfbf7bd] dark:bg-neutral-950 relative overflow-hidden"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32 bg-[#fdfbf7bd] dark:bg-neutral-950 relative overflow-hidden"
     >
       <div className="absolute inset-0">
         <BackgroundBeams

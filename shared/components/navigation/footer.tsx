@@ -24,7 +24,7 @@ export default function FooterSection() {
           </p>
           <h2 className="footer-cta-heading mb-2 max-w-4xl text-2xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[30px] dark:text-white">
             <span className="font-(family-name:--font-source-serif) font-semibold">
-              Got idea you want to bring to{" "}
+              Have a project you want to bring to{" "}
             </span>
             <span className="font-(family-name:--font-style-script) text-gradient-blue-static pr-2">
               {" "}

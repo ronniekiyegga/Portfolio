@@ -5,11 +5,8 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useMedia } from "@/shared/hooks/use-media";
 import SectionKicker from "@/shared/components/ui/section-kicker";
-import { Style_Script } from "next/font/google";
 
-const AUTOPLAY_DURATION = 7000;
-
-const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
+const AUTOPLAY_DURATION = 6000;
 
 const features = [
   {

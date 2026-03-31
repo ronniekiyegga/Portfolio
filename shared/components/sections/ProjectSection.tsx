@@ -1,24 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LampWidget from "@/app/widgets/LampWidget";
 import ExpandableFeatures4 from "./ExpandableFeatures4";
 import { TracingBeam } from "@/shared/components/ui/tracing-beam";
 import { ProjectModal } from "./ProjectModal";
-import { projectSectionItems, type WorkItem } from "@/lib/data";
+import { projectSectionItems } from "@/lib/data";
+
+import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 export default function ProjectSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
-  const [selectedItem, setSelectedItem] = useState<WorkItem | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = (workItem: WorkItem) => {
-    setSelectedItem(workItem);
-    setModalOpen(true);
-  };
+  const { openModal, modalOpen, setModalOpen, selectedItem } =
+    useProjectContext();
 
   useEffect(() => {
     const rafId = requestAnimationFrame(() => {
@@ -136,6 +133,7 @@ export default function ProjectSection() {
           </div>
         </TracingBeam>
       </div>
+
       <ProjectModal
         item={selectedItem}
         open={modalOpen}
