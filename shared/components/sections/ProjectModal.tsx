@@ -32,6 +32,11 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
   const rafRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
 
+  const heroImageClassName =
+    item?.preview === "analytics"
+      ? "mx-auto w-full max-w-[320px] max-h-[140px] md:max-h-[160px] h-auto object-contain rounded-lg"
+      : "mx-auto w-full max-w-[920px] max-h-[420px] md:max-h-[480px] h-auto object-contain rounded-lg";
+
   const startAutoScroll = useCallback((el: HTMLDivElement) => {
     isAnimatingRef.current = true;
     el.scrollTop = 0;
@@ -147,53 +152,33 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
               <span className="font-semibold text-[15px] leading-tight bg-linear-to-r from-[#3e7bfa] to-[#6600cc] bg-clip-text text-transparent">
                 {item?.title ?? "Project"}
               </span>
+            </div>
+            <div className="flex items-center gap-3">
               {item?.href && item.href !== "#" ? (
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
-                  aria-label="Open project"
+                  className="inline-flex items-center gap-1 font-medium leading-normal text-muted-foreground hover:text-foreground transition-colors"
+                  style={{
+                    fontFamily: "var(--font-david-libre), serif",
+                    fontSize: "0.78906rem",
+                  }}
                 >
-                  <ArrowUpRight className="w-4 h-4" />
+                  LIVE <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               ) : (
-                <span className="text-muted-foreground/50 shrink-0" aria-hidden>
-                  <ArrowUpRight className="w-4 h-4" />
+                <span
+                  className="inline-flex items-center gap-1 font-medium leading-normal text-muted-foreground/50"
+                  style={{
+                    fontFamily: "var(--font-david-libre), serif",
+                    fontSize: "0.78906rem",
+                  }}
+                  aria-hidden
+                >
+                  LIVE <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               )}
-            </div>
-            <div className="flex items-center gap-3">
-              <a
-                href={
-                  item?.blogHref && item.blogHref !== "#" ? item.blogHref : "#"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium leading-normal text-muted-foreground hover:text-foreground transition-colors"
-                style={{
-                  fontFamily: "var(--font-david-libre), serif",
-                  fontSize: "0.78906rem",
-                }}
-              >
-                BLOG
-              </a>
-              <a
-                href={
-                  item?.githubHref && item.githubHref !== "#"
-                    ? item.githubHref
-                    : "#"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium leading-normal text-muted-foreground hover:text-foreground transition-colors"
-                style={{
-                  fontFamily: "var(--font-david-libre), serif",
-                  fontSize: "0.78906rem",
-                }}
-              >
-                GITHUB
-              </a>
               <button
                 type="button"
                 className="relative inline-flex h-[22px] w-[22px] items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
@@ -234,6 +219,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                   containerRef={scrollRef}
                   src={item?.heroImage}
                   alt={item?.title ?? "Project"}
+                  minScale={item?.preview === "analytics" ? 0.6 : undefined}
                 />
                 <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
                   <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12 lg:gap-8">
@@ -244,7 +230,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       >
                         {item?.type}
                       </p>
-                      <h3 className="font-cormorant text-xl md:text-2xl font-normal leading-tight text-foreground break-words">
+                      <h3 className="font-cormorant text-xl md:text-2xl font-normal leading-tight text-foreground wrap-break-word">
                         {item?.title}
                       </h3>
                       <p className="text-muted-foreground text-sm leading-relaxed">
@@ -279,9 +265,9 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                             <Image
                               src={item?.heroImage ?? ""}
                               alt={item?.title ?? "Project"}
-                              width={800}
-                              height={520}
-                              className="w-full h-auto object-contain rounded-lg"
+                              width={item?.preview === "analytics" ? 320 : 800}
+                              height={item?.preview === "analytics" ? 160 : 520}
+                              className={heroImageClassName}
                             />
                           </div>
                           {item?.statistics && item.statistics.length > 0 && (
@@ -318,6 +304,18 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                               <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
                                 {insight.content}
                               </p>
+                              {insight.actions && insight.actions.length > 0 ? (
+                                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground dark:text-gray-400">
+                                  {insight.actions.map((action) => (
+                                    <li
+                                      key={action}
+                                      className="leading-relaxed"
+                                    >
+                                      {action}
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : null}
                             </div>
                           ))}
                         </div>
@@ -328,9 +326,9 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                           <Image
                             src={item?.heroImage ?? ""}
                             alt={item?.title ?? "Project"}
-                            width={800}
-                            height={520}
-                            className="w-full h-auto object-contain rounded-lg"
+                            width={item?.preview === "analytics" ? 320 : 800}
+                            height={item?.preview === "analytics" ? 160 : 520}
+                            className={heroImageClassName}
                           />
                         </div>
                         {item?.statistics && item.statistics.length > 0 && (

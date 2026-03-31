@@ -64,12 +64,12 @@ const davidLibre = David_Libre({
 });
 
 export const metadata: Metadata = {
-  title: "Ronnie Kiyegga — Design Engineer",
+  title: "Ronnie Kiyegga — Full Stack Software Engineer",
   description:
-    "Design Engineer based in London. I design in Figma and build in TypeScript.",
+    "Full Stack Software Engineer based in London. I design in Figma and build in TypeScript.",
   openGraph: {
-    title: "Ronnie Kiyegga — Full Stack Engineer",
-    description: "Full Stack Engineer based in London.",
+    title: "Ronnie Kiyegga — Full Stack Software Engineer",
+    description: "Full Stack Software Engineer based in London.",
     url: "https://ronniekiyegga.com",
   },
 };

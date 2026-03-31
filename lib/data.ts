@@ -1,6 +1,8 @@
 export interface WorkItemInsight {
   title: string;
   content: string;
+  /** Optional bullet list (used for Solution focus, tradeoffs, etc.) */
+  actions?: string[];
 }
 
 export interface ProjectSectionStat {
@@ -120,18 +122,49 @@ export const workItems: WorkItem[] = [
     href: "https://edu-feedback-pro-beta.vercel.app/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
-    heroImage: "/images/projects/edufeedbackpro/EFP_PNG.png",
+    heroImage: "/images/projects/edufeedbackpro/edufeedbackpro_hero.webp",
     insights: [
       {
-        title: "The Problem",
+        title: "Problem",
         content:
-          "Assessment feedback in schools faces a critical timing challenge. The gap between when students complete an assessment and when they receive actionable feedback directly impacts learning outcomes. Teachers face a fragmented data landscape when preparing student feedback. Assessment results often reside across multiple disconnected systems—exam board portals, spreadsheets, student information systems, and paper-based records. Consolidating this data and generating meaningful, individualised feedback requires significant manual effort. The consequence: feedback reaches students days or weeks after the assessment, by which point they've progressed to new topics.",
+          "Schools rely on fragmented systems to track student performance — spreadsheets, exam board portals, and internal systems — resulting in delayed and inconsistent feedback. Teachers spend significant time manually aggregating data, and even when data is available, identifying at-risk students or performance trends requires additional effort.",
+      },
+      {
+        title: "Solution",
+        content:
+          "I built EduFeedbackPro as a real-time analytics platform that consolidates student performance data and surfaces actionable insights through dashboards and event-driven updates. Instead of adding more data, the platform is designed to make existing data usable, timely, and actionable. The system focuses on:",
+        actions: [
+          "replacing manual reporting with real-time dashboards",
+          "enabling faster intervention through at-risk student identification",
+          "reducing feedback latency with event-driven notifications",
+          "providing explainable insights rather than black-box outputs",
+        ],
+      },
+      {
+        title: "Architecture Overview",
+        content:
+          "The system uses a dual-database architecture to separate concerns.",
+        actions: [
+          "Postgres (Neon) handles transactional data (users, enrollments, notifications, surveys)",
+          "BigQuery handles analytical workloads (aggregations, performance trends, large-scale queries)",
+          "Server-Sent Events (SSE) pushes updates only when data changes; polling is fallback only",
+        ],
+      },
+      {
+        title: "Tradeoffs",
+        content: "Key tradeoffs made to keep the system simple and fast:",
+        actions: [
+          "SSE chosen over WebSockets for lower overhead; limited to one-way communication",
+          "In-memory broadcaster is fast for a single instance; future: Redis Pub/Sub for distributed events",
+          "Dual-database setup improves performance but increases coordination complexity",
+          "TTL caching reduces DB load at the cost of slight staleness (~10 seconds)",
+        ],
       },
     ],
     statistics: [
-      { value: "95%", label: "Time Saved" },
-      { value: "30+", label: "Teachers" },
-      { value: "50ms", label: "P95 Latency" },
+      { value: "50ms", label: "P95" },
+      { value: "<10s", label: "SEE Updates" },
+      { value: "0", label: "Polling" },
     ],
   },
   {
@@ -143,7 +176,7 @@ export const workItems: WorkItem[] = [
     href: "https://www.msmaryamsmaths.com/",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
     preview: "maths",
-    heroImage: "/images/projects/maths-tutoring/TUTORING_PNG.png",
+    heroImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",
     insights: [
       {
         title: "The Challenge",
@@ -294,7 +327,8 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design",
         description: "",
-        image: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
+        image:
+          "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
         background: "lightRays",
       },
       {

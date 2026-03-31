@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { LayoutTextFlip } from "@/shared/components/ui/layout-text-flip";
 import IntroductionText from "@/shared/components/sections/IntroductionText";
 import LogoLoopSection from "@/shared/components/sections/LogoLoop";
 import ContactInfo from "@/shared/components/media/patterns/ContactInfo";
@@ -13,7 +12,7 @@ const HeroBio = () => {
       >
         <span className="w-2.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
         <motion.div className="relative w-full my-0 flex items-center justify-start gap-3 sm:mx-0 sm:mb-0 sm:flex-row">
-          <LayoutTextFlip text="SOFTWARE" words={["DESIGNER", "ENGINEER"]} />
+          <span className="text-[10px] md:text-[11px] font-medium drop-shadow-lg tracking-wide uppercase text-neutral-500 dark:text-neutral-400">FULL STACK SOFTWARE ENGINEER</span>
         </motion.div>
         · London, UK
       </div>
