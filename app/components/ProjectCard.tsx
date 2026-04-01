@@ -32,12 +32,9 @@ export type StackDef = {
   id: number;
   title: string | null;
   icon: "purple" | "teal" | null;
-  /** Full-bleed mock inside this stack layer (swap paths in `SHOWCASE_ROWS` / stacks below). */
   imageSrc: string;
   imageAlt: string;
-  /** Up to 3 labels; rendered uppercase with middot separators at the card bottom. */
   footerWords?: readonly string[];
-  /** When true, the last footer label uses an accent color. */
   footerAccentLast?: boolean;
 };
 
@@ -340,9 +337,7 @@ function ProjectCardVisualStack({
                     ) : null}
                   </div>
                   {footerWords.length > 0 ? (
-                    <p
-                      className="pointer-events-none relative z-10 m-0 flex w-full shrink-0 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 border-t border-neutral-900/7 px-0.5 pb-2.5 pt-2 font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-neutral-500"
-                    >
+                    <p className="pointer-events-none relative z-10 m-0 flex w-full shrink-0 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 border-t border-neutral-900/7 px-0.5 pb-2.5 pt-2 font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-neutral-500">
                       {footerWords.map((word, wi) => {
                         const isLast = wi === footerWords.length - 1;
                         return (
