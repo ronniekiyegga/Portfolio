@@ -67,13 +67,15 @@ const projectCard = [
   },
   {
     title: "TrueFounders",
-    src: "/images/projects/truefounders/TRUE_FOUNDERS.svg",
+    src: "/images/projects/truefounders/TrueFounders_card.png",
     description: (
       <>
         <p className="text-muted-foreground text-balance">
           <strong className="text-foreground font-medium">TrueFounders</strong>{" "}
-          with AI-powered suggestions, templates, and seamless collaboration for
-          faster communication.
+          Brand identity and landing page for a women&apos;s life coaching
+          business in Dubai. Competitive analysis across 12 competitors, persona
+          development for three audience segments, and a conversion-focused
+          landing page design.
         </p>
       </>
     ),

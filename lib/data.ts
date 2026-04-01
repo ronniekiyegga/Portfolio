@@ -166,6 +166,30 @@ export const workItems: WorkItem[] = [
     ],
   },
   {
+    type: "Brand Identity · Landing Page",
+    title: "True Founders",
+    desc: "Brand identity and landing page concept for a women's life coaching business in Dubai, backed by competitive analysis, personas, and conversion-focused UX.",
+    tags: ["Figma", "UX Audit", "Competitive Analysis", "Personas", "Landing Page"],
+    metric: "12 competitors analysed",
+    href: "#",
+    gradient: "linear-gradient(160deg, #100e00 0%, #2a2200 50%, #181400 100%)",
+    preview: "analytics",
+    heroImage: "/images/projects/truefounders/TrueFounders_card.png",
+    modalDetailImage: "/images/projects/truefounders/TrueFounders_support.svg",
+    insights: [
+      {
+        title: "Overview",
+        content:
+          "A brand identity and landing page redesign concept for a women's life coaching business in Dubai, informed by competitive analysis across 12 competitors, persona development for three audience segments, and conversion-focused page structure.",
+      },
+    ],
+    statistics: [
+      { value: "12", label: "Competitors" },
+      { value: "3", label: "Personas" },
+      { value: "UX", label: "Audit" },
+    ],
+  },
+  {
     type: "B2C SaaS · Tutoring Platform",
     title: "Ms. Maryam's Maths",
     desc: "End-to-end design and development of a tutoring platform for GCSE and A-Level students from brand and UX in Figma to a production dashboard system.",

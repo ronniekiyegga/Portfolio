@@ -1,23 +1,19 @@
 "use client";
 
-import { FaGithub } from "react-icons/fa";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { motion, useReducedMotion } from "motion/react";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 import type { WorkItem } from "@/lib/data";
 import ProjectCardItem from "./ProjectCardItem";
 
-export type TechTag = {
-  label: string;
-  hasBorder: boolean;
-  hasBg: boolean;
-};
+export type TechTag = string;
 
 export type ShowcaseProject = {
   category?: string;
   title: string;
   tag: string;
   year: number;
+  figmaHref?: string;
   caseStudy: string;
   description: string;
 };
@@ -68,7 +64,7 @@ const ProjectCardTextContent = ({
       };
 
   return (
-    <div className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-6">
+    <div className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-4">
       <ProjectCardItem
         index={0}
         title={project.title}
@@ -76,48 +72,50 @@ const ProjectCardTextContent = ({
         tag={project.tag}
         caseStudy={project.caseStudy}
         year={project.year}
+        figmaHref={project.figmaHref}
         description={project.description}
         workItem={workItem}
         openModal={openModal}
       />
 
       <motion.div
-        className="flex w-full flex-wrap items-center gap-3"
+        className="flex w-full flex-wrap items-center gap-2"
         variants={staggerParent}
         initial="hidden"
         whileInView="show"
         viewport={PC_VIEWPORT}
       >
-        {techTags.map((tag) =>
-          tag.hasBg ? (
-            <motion.span
-              key={`${tag.label}-bg`}
-              variants={staggerChild}
-              className="rounded-[4.08px] bg-[#fbfbfb] px-[12.23px] text-[10.2px] font-semibold leading-[20.9px] text-[rgba(186,188,205,1)]"
-            >
-              {tag.label}
-            </motion.span>
-          ) : (
-            <motion.span
-              key={tag.label}
-              variants={staggerChild}
-              className="border-b border-black/10 px-0.5 text-[10.2px] font-semibold leading-[20.9px] text-[rgba(186,188,205,1)]"
-            >
-              {tag.label}
-            </motion.span>
-          ),
-        )}
+        {techTags.map((tag) => {
+          const base =
+            "text-[10.2px] font-semibold leading-[20.9px] text-black/60 dark:text-white/60 bg-gray-50 px-1 py-0.5 ";
+
+          return (
+            <span key={tag} className={` ${base} dark:bg-gray-600 rounded-sm`}>
+              {tag}
+            </span>
+          );
+        })}
 
         <motion.span
           variants={staggerChild}
           className="mx-2 hidden h-[10.64px] w-px bg-black/15 sm:block"
         />
-        <motion.span
-          variants={staggerChild}
-          className="inline-flex items-center gap-2 text-[rgba(0,0,0,0.65)]"
-        >
-          <FaGithub />
-          <HiArrowTopRightOnSquare />
+        <motion.span variants={staggerChild} className="inline-flex">
+          {project.title.trim().toLowerCase() === "true founders" ? (
+            <span className="font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-[rgba(0,0,0,0.55)] dark:text-white">
+              COMING SOON
+            </span>
+          ) : (
+            <a
+              href={workItem.href}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-[rgba(0,0,0,0.55)] dark:text-white transition-opacity hover:opacity-80"
+            >
+              <span>LIVE</span>
+              <HiArrowTopRightOnSquare className="h-4 w-4 text-[rgba(0,0,0,0.65)] dark:text-white" />
+            </a>
+          )}
         </motion.span>
       </motion.div>
     </div>
