@@ -38,6 +38,10 @@ export type StackDef = {
   footerAccentLast?: boolean;
 };
 
+/** Figma “Project Files” — used for FIGMA FILE on every showcase row */
+const SHOWCASE_FIGMA_HREF =
+  "https://www.figma.com/design/Au6mJ4osdzMpUBlqojMYzm/Project-Files?node-id=0-1&t=52XXZclkPhzyBPFG-1";
+
 const STACK_ROW_1: StackDef[] = [
   {
     id: 1,
@@ -155,7 +159,7 @@ const SHOWCASE_ROWS: {
       title: "Personalized Student Feedback Dashboard",
       tag: "School Analytics Platform",
       year: 2026,
-      figmaHref: "#",
+      figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
         "A multi-tenant B2B SaaS platform that helps schools analyse KS4/5 exam performance and deliver AI-driven personalised feedback to students. Real-time analytics platform for surfacing student performance signals and enabling faster, data-driven intervention decisions",
@@ -172,7 +176,7 @@ const SHOWCASE_ROWS: {
       title: "Mathematics Tutoring",
       tag: "B2C SaaS Platform",
       year: 2026,
-      figmaHref: "#",
+      figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
         "Professional tutoring platform for GCSE and A-Level mathematics. Full-stack application with modern design, student engagement features, and production deployment architecture.",
@@ -189,7 +193,7 @@ const SHOWCASE_ROWS: {
       title: "True Founders",
       tag: "Women's Life Coaching",
       year: 2024,
-      figmaHref: "#",
+      figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
         "Brand identity and landing page for a women's life coaching business in Dubai. Competitive analysis across 12 competitors, persona development for three audience segments, and a conversion-focused landing page design.",

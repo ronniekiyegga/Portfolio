@@ -174,8 +174,8 @@ export const workItems: WorkItem[] = [
     href: "#",
     gradient: "linear-gradient(160deg, #100e00 0%, #2a2200 50%, #181400 100%)",
     preview: "analytics",
-    heroImage: "/images/projects/truefounders/TrueFounders_card.png",
-    modalDetailImage: "/images/projects/truefounders/TrueFounders_support.svg",
+    heroImage: "/images/projects/truefounders/TrueFounders_hero.webp",
+    modalDetailImage: "/images/projects/truefounders/TrueFounders_benefits.svg",
     insights: [
       {
         title: "Overview",
