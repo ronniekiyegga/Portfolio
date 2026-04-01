@@ -30,7 +30,7 @@ export const SparkIcon = ({
 
 export type StackDef = {
   id: number;
-  title: string | null;
+  title?: string | null;
   icon: "purple" | "teal" | null;
   imageSrc: string;
   imageAlt: string;
@@ -41,26 +41,23 @@ export type StackDef = {
 const STACK_ROW_1: StackDef[] = [
   {
     id: 1,
-    title: null,
     icon: "teal",
     imageSrc: "/images/projects/edufeedbackpro/DMI_HERO.svg",
-    imageAlt: "EduFeedbackPro analytics dashboard preview",
+    imageAlt: "EduFeedbackPro hero preview",
     footerWords: ["Analytics", "Dashboard", "B2B"],
   },
   {
     id: 2,
-    title: "TRANSFORMATION",
     icon: "purple",
-    imageSrc: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
-    imageAlt: "EduFeedbackPro product overview",
+    imageSrc: "/images/projects/edufeedbackpro/DMI.svg",
+    imageAlt: "EduFeedbackPro benefits preview",
     footerWords: ["Product", "SaaS", "Schools"],
   },
   {
     id: 3,
-    title: "MASTERY",
     icon: null,
-    imageSrc: "/images/projects/maths-tutoring/MATHS_TUTORING_HERO.svg",
-    imageAlt: "Student-facing learning platform UI",
+    imageSrc: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
+    imageAlt: "EduFeedbackPro support preview",
     footerWords: ["Learning", "Platform", "UX"],
   },
 ];
@@ -68,82 +65,75 @@ const STACK_ROW_1: StackDef[] = [
 const STACK_ROW_2: StackDef[] = [
   {
     id: 1,
-    title: "EXPLORE",
-    icon: "purple",
-    imageSrc: "/images/projects/algo-pseudo/PSEUDOLAB_HERO.svg",
-    imageAlt: "Algo-pseudo IDE interface",
-    footerWords: ["IDE", "Editor", "Tools"],
+    icon: "teal",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_hero.webp",
+    imageAlt: "Mathematics Tutoring hero preview",
+    footerWords: ["Tutoring", "Maths", "B2C"],
   },
   {
     id: 2,
-    title: null,
-    icon: "teal",
-    imageSrc:
-      "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
-    imageAlt: "KNN classifier teaching tool UI",
-    footerWords: ["ML", "Teachable", "KNN"],
+    icon: "purple",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
+    imageAlt: "Mathematics Tutoring benefits preview",
+    footerWords: ["Product", "UX", "Growth"],
   },
   {
     id: 3,
-    title: "REFINE",
-    icon: "purple",
-    imageSrc: "/images/projects/edufeedbackpro/numerix-ai/NUMERIX_AI.svg",
-    imageAlt: "Numerix AI assistant in EduFeedbackPro",
-    footerWords: ["AI", "Assistant", "Chat"],
-    footerAccentLast: true,
+    icon: null,
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
+    imageAlt: "Mathematics Tutoring support preview",
+    footerWords: ["Support", "Parents", "Students"],
   },
 ];
 
 const STACK_ROW_3: StackDef[] = [
   {
     id: 1,
-    title: null,
-    icon: "teal",
-    imageSrc: "/images/projects/maths-tutoring/MATHS_TUTORING2.svg",
-    imageAlt: "Tutoring platform experience",
-    footerWords: ["Tutoring", "Maths", "Web"],
+    icon: "purple",
+    imageSrc: "/images/projects/truefounders/TRUEFOUNDERS_HERO.svg",
+    imageAlt: "TrueFounders hero preview",
+    footerWords: ["Brand", "Landing", "UI"],
   },
   {
     id: 2,
-    title: "VISION",
-    icon: "purple",
-    imageSrc: "/images/projects/maths-tutoring/MATHS_TUTORING.svg",
-    imageAlt: "Maths tutoring product screens",
-    footerWords: ["Lessons", "Content", "UI"],
+    icon: "teal",
+    imageSrc: "/images/projects/truefounders/TrueFounders_benefits.svg",
+    imageAlt: "TrueFounders benefits preview",
+    footerWords: ["Audit", "Personas", "UX"],
   },
   {
     id: 3,
-    title: null,
     icon: null,
-    imageSrc: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
-    imageAlt: "Pseudocode IDE workspace",
-    footerWords: ["Code", "Pseudo", "Lab"],
+    imageSrc: "/images/projects/truefounders/TrueFounders_support.svg",
+    imageAlt: "TrueFounders support preview",
+    footerWords: ["Design", "Concept", "2024"],
   },
 ];
 
-const TECH_ROW_1: TechTag[] = [
-  { label: "Next.js", hasBorder: true, hasBg: false },
-  { label: "Node.js", hasBorder: true, hasBg: false },
-  { label: "Typescript", hasBorder: true, hasBg: false },
-  { label: "BigQuery", hasBorder: true, hasBg: false },
-  { label: "NeonDB", hasBorder: true, hasBg: false },
-  { label: "ElevenLabs", hasBorder: true, hasBg: false },
+const TECH_ROW_TRUEFOUNDERS: TechTag[] = [
+  "Figma",
+  "UX Audit",
+  "Competitive Analysis",
+  "Personas",
+  "Landing Page",
 ];
 
-const TECH_ROW_2: TechTag[] = [
-  { label: "Next.js", hasBorder: true, hasBg: false },
-  { label: "React.js", hasBorder: true, hasBg: false },
-  { label: "Typescript", hasBorder: true, hasBg: false },
-  { label: "Tailwind", hasBorder: true, hasBg: false },
-  { label: "MongoDB", hasBorder: true, hasBg: false },
-  { label: "NeonDB", hasBorder: true, hasBg: false },
+const TECH_ROW_1: TechTag[] = [
+  "Next.js",
+  "Node.js",
+  "Typescript",
+  "BigQuery",
+  "NeonDB",
+  "ElevenLabs",
 ];
 
 const TECH_ROW_3: TechTag[] = [
-  { label: "Figma", hasBorder: true, hasBg: false },
-  { label: "Node.js", hasBorder: true, hasBg: false },
-  { label: "Typescript", hasBorder: true, hasBg: false },
-  { label: "Competitive Analysis", hasBorder: false, hasBg: true },
+  "TypeScript",
+  "Next.js 16",
+  "Postgres",
+  "Clerk",
+  "Nginx",
+  "Digital Ocean",
 ];
 
 const SHOWCASE_ROWS: {
@@ -165,6 +155,7 @@ const SHOWCASE_ROWS: {
       title: "Personalized Student Feedback Dashboard",
       tag: "School Analytics Platform",
       year: 2026,
+      figmaHref: "#",
       caseStudy: "READ CASE STUDY",
       description:
         "A multi-tenant B2B SaaS platform that helps schools analyse KS4/5 exam performance and deliver AI-driven personalised feedback to students. Real-time analytics platform for surfacing student performance signals and enabling faster, data-driven intervention decisions",
@@ -174,32 +165,34 @@ const SHOWCASE_ROWS: {
     imageOnLeft: false,
     watermark: "PROJECT 2",
     stack: STACK_ROW_2,
-    workItemTitle: "Algo-pseudo IDE",
-    techTags: TECH_ROW_2,
+    workItemTitle: "Ms. Maryam's Maths",
+    techTags: TECH_ROW_3,
     project: {
       category: "ENGINEERING",
-      title: "AI-Powered Pseudocode Reviewer",
-      tag: "Education Development Tool",
+      title: "Mathematics Tutoring",
+      tag: "B2C SaaS Platform",
       year: 2026,
+      figmaHref: "#",
       caseStudy: "READ CASE STUDY",
       description:
-        "A browser-based IDE that enables KS4/5 students to write, execute, and visualise Cambridge-spec pseudocode.",
+        "Professional tutoring platform for GCSE and A-Level mathematics. Full-stack application with modern design, student engagement features, and production deployment architecture.",
     },
   },
   {
     imageOnLeft: true,
     watermark: "PROJECT 3",
     stack: STACK_ROW_3,
-    workItemTitle: "Ms. Maryam's Maths",
-    techTags: TECH_ROW_3,
+    workItemTitle: "True Founders",
+    techTags: TECH_ROW_TRUEFOUNDERS,
     project: {
-      category: "DESIGN",
+      category: "DESIGN - BRAND IDENTITY",
       title: "True Founders",
-      tag: "UX/UI Redesign Concept",
-      year: 2025,
+      tag: "Women's Life Coaching",
+      year: 2024,
+      figmaHref: "#",
       caseStudy: "READ CASE STUDY",
       description:
-        "A comprehensive UX/UI audit and redesign concept for a Dubai-based life coaching platform.",
+        "Brand identity and landing page for a women's life coaching business in Dubai. Competitive analysis across 12 competitors, persona development for three audience segments, and a conversion-focused landing page design.",
     },
   },
 ];
@@ -262,11 +255,7 @@ function ProjectCardVisualStack({
         "relative z-10 w-full max-w-[520px] lg:w-[520px]",
         stackFan === "sw" && "lg:ml-auto",
       )}
-      initial={
-        reduceMotion
-          ? { opacity: 1, x: 0, filter: "blur(0px)" }
-          : { opacity: 0, x: slideX, filter: "blur(10px)" }
-      }
+      initial={{ opacity: 0, x: slideX, filter: "blur(10px)" }}
       whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.22, margin: "0px 0px -8% 0px" }}
       transition={{
@@ -307,7 +296,7 @@ function ProjectCardVisualStack({
               >
                 <div className="relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
                   <div className="relative grid min-h-0 flex-1 place-items-center">
-                    <div className="relative z-0 aspect-4/5 w-[82%] max-w-[320px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px]">
+                    <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px]">
                       <Image
                         src={def.imageSrc}
                         alt={def.imageAlt}
@@ -318,23 +307,10 @@ function ProjectCardVisualStack({
                             ? "object-contain"
                             : "object-cover",
                         )}
-                        sizes="(max-width: 1024px) 100vw, 450px"
+                        sizes="(max-width: 1024px) 96vw, 392px"
                         unoptimized={def.imageSrc.endsWith(".svg")}
                       />
                     </div>
-                    {def.icon ? (
-                      <div className="pointer-events-none absolute left-6 top-5 z-10 size-[48.26px]">
-                        {/* <SparkIcon
-                      className="absolute left-[8.34%] top-[8.33%] h-[91.67%] w-[91.66%]"
-                      variant={def.icon}
-                    /> */}
-                      </div>
-                    ) : null}
-                    {def.title ? (
-                      <div className="pointer-events-none absolute left-6 top-[42px] z-10 max-w-[calc(100%-3rem)] bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[13.4px] font-bold leading-[9.7px] text-transparent [text-shadow:0px_2.2px_3.42px_rgba(0,0,0,0.25)]">
-                        {def.title}
-                      </div>
-                    ) : null}
                   </div>
                   {footerWords.length > 0 ? (
                     <p className="pointer-events-none relative z-10 m-0 flex w-full shrink-0 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 border-t border-neutral-900/7 px-0.5 pb-2.5 pt-2 font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-neutral-500">
@@ -416,42 +392,6 @@ export default function ProjectCard() {
                       delay: reduceMotion ? 0 : 0.06,
                     }}
                   >
-                    <motion.div
-                      aria-hidden
-                      className={cn(
-                        "pointer-events-none absolute top-0 z-0 h-[172px] w-full max-w-[493px] select-none bg-white dark:bg-neutral-950",
-                        row.imageOnLeft ? "right-0" : "left-0",
-                      )}
-                      initial={
-                        reduceMotion
-                          ? { opacity: 1, y: 0 }
-                          : { opacity: 0, y: 14 }
-                      }
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.2 }}
-                      transition={{
-                        duration: reduceMotion ? 0 : 0.55,
-                        ease: [0.22, 1, 0.36, 1],
-                        delay: reduceMotion ? 0 : 0.1,
-                      }}
-                    >
-                      <div className="relative h-full w-full overflow-hidden">
-                        <div
-                          className={cn(
-                            "absolute left-0 -top-20 w-[98.17%] whitespace-nowrap bg-[linear-gradient(180deg,#FBFBFB_68.72%,#E1E7FB_130.66%),linear-gradient(180deg,#FBFBFB_38.73%,#F7F7F9_100%)] bg-clip-text pt-1 font-[Inter,Helvetica,sans-serif] font-semibold tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [-webkit-text-stroke:1px_transparent] [text-fill-color:transparent] [text-shadow:0px_4px_4px_#bfbfbf40]",
-                            "text-[clamp(2.75rem,14vw,90px)] leading-[clamp(3.25rem,15vw,116.2px)]",
-                          )}
-                        >
-                          {row.watermark}
-                        </div>
-                        <div
-                          className={cn(
-                            "absolute left-0 top-[37.61%] flex h-[72.65%] w-[109.33%] flex-col items-start justify-end gap-[2.44px] bg-[linear-gradient(180deg,rgba(255,255,255,0)_13%,rgba(255,255,255,0.4)_50%,rgba(252,252,252,1)_99%)] px-[7.31px] py-[4.87px]",
-                            "dark:bg-[linear-gradient(180deg,rgba(10,10,10,0)_13%,rgba(10,10,10,0.4)_50%,rgba(10,10,10,1)_99%)]",
-                          )}
-                        />
-                      </div>
-                    </motion.div>
                     <ProjectCardTextContent
                       project={row.project}
                       workItem={workItem}

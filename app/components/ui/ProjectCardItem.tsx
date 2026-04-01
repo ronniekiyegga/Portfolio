@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useMemo, useState } from "react";
 import { IoPlay } from "react-icons/io5";
 import { Rocket } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -15,6 +15,7 @@ interface ProjectCardItemProps {
   category?: string;
   tag: string;
   year: number;
+  figmaHref?: string;
   caseStudy: string;
   description: string;
   workItem: WorkItem;
@@ -26,16 +27,24 @@ const ProjectCardItem = ({
   title,
   category,
   tag,
-  year,
+  figmaHref,
   caseStudy,
   description,
   workItem,
   openModal,
 }: ProjectCardItemProps) => {
-  const playGradientId = useId().replace(/:/g, "");
+  const playGradientId = useMemo(() => {
+    // Deterministic id to avoid SSR/client hydration mismatches.
+    const slug = `${title}-${index}`
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+    return `play-gradient-${slug || "default"}`;
+  }, [title, index]);
   const reduceMotion = useReducedMotion();
   const [ctaHovered, setCtaHovered] = useState(false);
   const showRockets = ctaHovered && !reduceMotion;
+  const effectiveFigmaHref = figmaHref ?? "#";
 
   const hidden = reduceMotion
     ? { opacity: 1, y: 0 }
@@ -50,7 +59,7 @@ const ProjectCardItem = ({
   return (
     <div
       key={`${title}-${index}`}
-      className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-6"
+      className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-4"
     >
       <motion.div
         className="flex items-center gap-0.5"
@@ -67,7 +76,7 @@ const ProjectCardItem = ({
         </span>
       </motion.div>
 
-      <div className="flex w-full min-w-0 flex-col gap-4">
+      <div className="flex w-full min-w-0 flex-col gap-3">
         <motion.div
           className="text-[28px] font-semibold leading-[31.5px] tracking-[-0.28px] text-(--colours-semantic-text-strong,#000626)"
           initial={hidden}
@@ -79,7 +88,7 @@ const ProjectCardItem = ({
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap items-center gap-2"
+          className="flex flex-wrap items-center gap-1.5"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
@@ -89,9 +98,14 @@ const ProjectCardItem = ({
             {tag}
           </span>
           <span className="size-[5.91px]">{/* <CircularDivider /> */}</span>
-          <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11.5px] font-semibold leading-[22.9px] text-transparent">
-            {year}
-          </span>
+          <a
+            href={effectiveFigmaHref}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11.5px] font-semibold leading-[22.9px] text-transparent hover:opacity-80 transition-opacity"
+          >
+            FIGMA FILE
+          </a>
           <span className="mx-2 hidden h-[10.64px] w-px bg-black/15 sm:block" />
           <span className="inline-flex items-center gap-2">
             <motion.div
@@ -167,7 +181,7 @@ const ProjectCardItem = ({
           </span>
         </motion.div>
         <motion.p
-          className="text-sm leading-[22px] text-[rgba(0,9,51,0.65)]"
+          className="text-sm leading-[20px] text-[rgba(0,9,51,0.65)]"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
