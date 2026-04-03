@@ -54,6 +54,8 @@ interface LanyardProps {
   slipFromTop?: boolean;
   onCardHover?: (hovered: boolean) => void;
   onCardMotionChange?: (moving: boolean) => void;
+  /** When true, canvas accepts pointer events (drag/hover). When false, it won't block UI clicks underneath. */
+  interactive?: boolean;
 }
 
 export default function Lanyard({
@@ -78,6 +80,7 @@ export default function Lanyard({
   slipFromTop = true,
   onCardHover,
   onCardMotionChange,
+  interactive = false,
 }: LanyardProps) {
   const { resolvedTheme } = useTheme();
   const mounted = useSyncExternalStore(
@@ -107,8 +110,8 @@ export default function Lanyard({
     >
       <div
         className={cn(
-          "pointer-events-none size-full *:pointer-events-none [&_canvas]:bg-transparent!",
-          onCardHover && "[&_canvas]:pointer-events-auto"
+          "pointer-events-none size-full *:pointer-events-none [&_canvas]:bg-transparent! [&_canvas]:pointer-events-none",
+          interactive && "[&_canvas]:pointer-events-auto",
         )}
         style={{ background: "transparent" }}
       >

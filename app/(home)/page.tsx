@@ -8,18 +8,6 @@ import ProjectCard from "../components/ProjectCard";
 /** Re-read `public/carousel` on each request (avoids stale empty slides after adding files). */
 export const dynamic = "force-dynamic";
 
-const ProjectSection = nextDynamic(
-  () => import("@/shared/components/sections/ProjectSection"),
-  { loading: () => <section className="min-h-[400px]" aria-hidden /> },
-);
-// const Experiences = nextDynamic(() => import("@/shared/components/sections/Experiences"), {
-//   loading: () => <section className="min-h-[400px]" aria-hidden />,
-// });
-// Sliders live inside HeroSection; a second instance here stays opacity-0 until scroll (ScrollAnimations).
-// const ExpandableFeatures = nextDynamic(
-//   () => import("@/shared/components/sections/ExpandableFeatures"),
-//   { loading: () => <section className="min-h-[300px]" aria-hidden /> },
-// );
 const AnimatedLinks = nextDynamic(
   () =>
     import("@/shared/components/sections/AnimatedLinks").then((m) => ({
@@ -43,13 +31,8 @@ export default async function Home() {
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-4 md:gap-y-6">
           <HeroSection heroCarouselSlides={heroCarouselSlides} />
           <ProjectCard />
-          {/* <ProjectSection /> */}
           <AnimatedLinks />
           <Marquee />
-          {/* <Experiences /> */}
-          {/* <DesignSection /> */}
-          {/* <ExpandableFeatures /> */}
-          {/* <FeaturesSliderSection direction="right" /> */}
         </ScrollAnimations>
         <DynamicIsland />
       </main>

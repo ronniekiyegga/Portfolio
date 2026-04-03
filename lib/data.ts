@@ -161,7 +161,7 @@ export const workItems: WorkItem[] = [
     ],
     statistics: [
       { value: "50ms", label: "P95" },
-      { value: "<10s", label: "SEE Updates" },
+      { value: "<10s", label: "SSE Updates" },
       { value: "0", label: "Polling" },
     ],
   },

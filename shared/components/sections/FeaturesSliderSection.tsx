@@ -67,7 +67,7 @@ const projectCard = [
   },
   {
     title: "TrueFounders",
-    src: "/images/projects/truefounders/TrueFounders_card.png",
+    src: "/images/projects/truefounders/TrueFounders_hero.webp",
     description: (
       <>
         <p className="text-muted-foreground text-balance">

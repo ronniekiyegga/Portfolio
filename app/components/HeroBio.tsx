@@ -1,9 +1,17 @@
+"use client";
+
+import type { RefObject } from "react";
 import { motion } from "motion/react";
 import IntroductionText from "@/shared/components/sections/IntroductionText";
 import LogoLoopSection from "@/shared/components/sections/LogoLoop";
 import ContactInfo from "@/shared/components/media/patterns/ContactInfo";
 
-const HeroBio = () => {
+type HeroBioProps = {
+  /** lg: measure this box so ContactInfo can be layered above the lanyard canvas */
+  contactLiftTargetRef?: RefObject<HTMLDivElement | null>;
+};
+
+const HeroBio = ({ contactLiftTargetRef }: HeroBioProps = {}) => {
   return (
     <div className="flex min-w-0 flex-col items-center text-center lg:items-start lg:text-left xl:mt-32">
       <div
@@ -38,12 +46,15 @@ const HeroBio = () => {
 
       <LogoLoopSection />
 
-      {/* Contact aligned with left content */}
+      {/* Contact: in-flow on mobile; lg uses layout anchor + duplicate layer in HeroSection */}
       <div
+        ref={contactLiftTargetRef}
         data-hero-contact
-        className="relative z-30 mt-10 w-full max-w-sm pointer-events-auto lg:mx-0"
+        className="relative z-30 mt-10 w-full max-w-sm lg:mx-0 lg:min-h-14"
       >
-        <ContactInfo />
+        <div className="lg:hidden">
+          <ContactInfo />
+        </div>
       </div>
     </div>
   );
