@@ -7,7 +7,7 @@ import PrismComponent from "@/shared/components/ui/gradients/PrismComponent";
 import LightRaysComponent from "@/shared/components/ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "@/shared/components/ui/gradients/FloatingLinesComponent";
 
-export const AnimatedLinks = () => {
+export const AnimatedBlogLinks = () => {
   const [active, setActive] = useState<number | null>(null);
 
   return (

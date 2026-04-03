@@ -10,9 +10,12 @@ const ProjectSection = nextDynamic(
   () => import("@/shared/components/sections/ProjectSection"),
   { loading: () => <section className="min-h-[400px]" aria-hidden /> },
 );
-const Experiences = nextDynamic(() => import("@/shared/components/sections/Experiences"), {
-  loading: () => <section className="min-h-[400px]" aria-hidden />,
-});
+const Experiences = nextDynamic(
+  () => import("@/shared/components/sections/Experiences"),
+  {
+    loading: () => <section className="min-h-[400px]" aria-hidden />,
+  },
+);
 const FeaturesSliderSection = nextDynamic(
   () => import("@/shared/components/sections/FeaturesSliderSection"),
   { loading: () => <section className="min-h-[300px]" aria-hidden /> },
@@ -23,14 +26,17 @@ const ExpandableFeatures = nextDynamic(
 );
 const AnimatedLinks = nextDynamic(
   () =>
-    import("@/shared/components/sections/AnimatedLinks").then((m) => ({
+    import("@/shared/components/sections/AnimatedBlogLinks").then((m) => ({
       default: m.AnimatedLinks,
     })),
   { loading: () => <section className="min-h-screen" aria-hidden /> },
 );
-const Marquee = nextDynamic(() => import("@/shared/components/sections/Marquee"), {
-  loading: () => <section className="min-h-[200px]" aria-hidden />,
-});
+const Marquee = nextDynamic(
+  () => import("@/shared/components/sections/Marquee"),
+  {
+    loading: () => <section className="min-h-[200px]" aria-hidden />,
+  },
+);
 
 export default async function V1Home() {
   const heroCarouselSlides = getResolvedHeroCarouselSlides();

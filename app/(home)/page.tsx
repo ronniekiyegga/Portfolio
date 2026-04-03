@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic";
 
 const AnimatedLinks = nextDynamic(
   () =>
-    import("@/shared/components/sections/AnimatedLinks").then((m) => ({
-      default: m.AnimatedLinks,
+    import("@/shared/components/sections/AnimatedBlogLinks").then((m) => ({
+      default: m.AnimatedBlogLinks,
     })),
   { loading: () => <section className="min-h-screen" aria-hidden /> },
 );

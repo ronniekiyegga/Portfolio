@@ -39,8 +39,6 @@ const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 const navLinks = [
   { label: "Work", href: "#projects" },
   { label: "Design", href: "#design" },
-  { label: "Process", href: "#process" },
-  { label: "Experience", href: "#experience" },
 ];
 
 interface NavV1Props {
@@ -103,8 +101,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
             <div
               className="relative shrink-0 flex items-center gap-2 sm:gap-3"
               ref={dropdownRef}
-            >
-            </div>
+            ></div>
           </motion.div>
 
           <motion.ul

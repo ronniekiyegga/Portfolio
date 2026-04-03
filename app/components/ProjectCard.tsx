@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -34,8 +34,6 @@ export type StackDef = {
   icon: "purple" | "teal" | null;
   imageSrc: string;
   imageAlt: string;
-  footerWords?: readonly string[];
-  footerAccentLast?: boolean;
 };
 
 /** Figma “Project Files” — used for FIGMA FILE on every showcase row */
@@ -48,21 +46,18 @@ const STACK_ROW_1: StackDef[] = [
     icon: "teal",
     imageSrc: "/images/projects/edufeedbackpro/DMI_HERO.svg",
     imageAlt: "EduFeedbackPro hero preview",
-    footerWords: ["Analytics", "Dashboard", "B2B"],
   },
   {
     id: 2,
     icon: "purple",
     imageSrc: "/images/projects/edufeedbackpro/DMI.svg",
     imageAlt: "EduFeedbackPro benefits preview",
-    footerWords: ["Product", "SaaS", "Schools"],
   },
   {
     id: 3,
     icon: null,
     imageSrc: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
     imageAlt: "EduFeedbackPro support preview",
-    footerWords: ["Learning", "Platform", "UX"],
   },
 ];
 
@@ -72,21 +67,18 @@ const STACK_ROW_2: StackDef[] = [
     icon: "teal",
     imageSrc: "/images/projects/maths-tutoring/Tutoring_hero.webp",
     imageAlt: "Mathematics Tutoring hero preview",
-    footerWords: ["Tutoring", "Maths", "B2C"],
   },
   {
     id: 2,
     icon: "purple",
     imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
     imageAlt: "Mathematics Tutoring benefits preview",
-    footerWords: ["Product", "UX", "Growth"],
   },
   {
     id: 3,
     icon: null,
     imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
     imageAlt: "Mathematics Tutoring support preview",
-    footerWords: ["Support", "Parents", "Students"],
   },
 ];
 
@@ -96,21 +88,18 @@ const STACK_ROW_3: StackDef[] = [
     icon: "purple",
     imageSrc: "/images/projects/truefounders/TrueFounders_hero.webp",
     imageAlt: "TrueFounders hero preview",
-    footerWords: ["Brand", "Landing", "UI"],
   },
   {
     id: 2,
     icon: "teal",
     imageSrc: "/images/projects/truefounders/TrueFounders_benefits.svg",
     imageAlt: "TrueFounders benefits preview",
-    footerWords: ["Audit", "Personas", "UX"],
   },
   {
     id: 3,
     icon: null,
     imageSrc: "/images/projects/truefounders/TrueFounders_testimonial.svg",
     imageAlt: "TrueFounders testimonials preview",
-    footerWords: ["Design", "Concept", "2024"],
   },
 ];
 
@@ -275,10 +264,6 @@ function ProjectCardVisualStack({
         >
           {cards.map((def, index) => {
             const { left, top } = stackOffset(index, stackFan);
-            const footerWords = (def.footerWords ?? [])
-              .map((w) => w.trim())
-              .filter(Boolean)
-              .slice(0, 3);
             return (
               <motion.div
                 key={def.id}
@@ -300,45 +285,17 @@ function ProjectCardVisualStack({
               >
                 <div className="relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
                   <div className="relative grid min-h-0 flex-1 place-items-center">
-                    <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px]">
+                    <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px] bg-white/50 dark:bg-neutral-950/20">
                       <Image
                         src={def.imageSrc}
                         alt={def.imageAlt}
                         fill
-                        className={cn(
-                          "object-center",
-                          def.imageSrc.endsWith(".svg")
-                            ? "object-contain"
-                            : "object-cover",
-                        )}
+                        className="object-contain object-center"
                         sizes="(max-width: 1024px) 96vw, 392px"
                         unoptimized={def.imageSrc.endsWith(".svg")}
                       />
                     </div>
                   </div>
-                  {footerWords.length > 0 ? (
-                    <p className="pointer-events-none relative z-10 m-0 flex w-full shrink-0 flex-wrap items-center justify-center gap-x-2 gap-y-0.5 border-t border-neutral-900/7 px-0.5 pb-2.5 pt-2 font-jetbrains text-[9px] font-medium uppercase tracking-[0.22em] text-neutral-500">
-                      {footerWords.map((word, wi) => {
-                        const isLast = wi === footerWords.length - 1;
-                        return (
-                          <Fragment key={`${def.id}-${wi}`}>
-                            {wi > 0 ? (
-                              <span className="text-neutral-400/90">·</span>
-                            ) : null}
-                            <span
-                              className={cn(
-                                isLast &&
-                                  def.footerAccentLast &&
-                                  "text-[#e85d4c]",
-                              )}
-                            >
-                              {word}
-                            </span>
-                          </Fragment>
-                        );
-                      })}
-                    </p>
-                  ) : null}
                 </div>
               </motion.div>
             );
