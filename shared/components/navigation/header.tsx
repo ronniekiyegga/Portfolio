@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React, { useRef, useEffect } from "react";
+import React, {  } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { RiMenu4Line } from "react-icons/ri";
