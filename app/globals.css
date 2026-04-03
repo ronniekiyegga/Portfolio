@@ -832,6 +832,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   opacity: 1;
   transform: translateY(0);
 }
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-once {
@@ -845,6 +846,7 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   [data-hero-role],
   [data-hero-bio],
   [data-hero-contact],
+  [data-hero-contact-lift],
   [data-hero-stats],
   [data-hero-stat],
   [data-hero-stack],

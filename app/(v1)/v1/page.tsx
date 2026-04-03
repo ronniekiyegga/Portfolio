@@ -43,7 +43,7 @@ export default async function V1Home() {
           <ExpandableFeatures />
           <Experiences />
           <AnimatedLinks />
-          <Marquee />
+          {/* <Marquee /> */}
         </ScrollAnimations>
         <DynamicIsland />
       </main>

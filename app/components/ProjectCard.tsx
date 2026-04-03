@@ -94,7 +94,7 @@ const STACK_ROW_3: StackDef[] = [
   {
     id: 1,
     icon: "purple",
-    imageSrc: "/images/projects/truefounders/TRUEFOUNDERS_HERO.svg",
+    imageSrc: "/images/projects/truefounders/TrueFounders_hero.webp",
     imageAlt: "TrueFounders hero preview",
     footerWords: ["Brand", "Landing", "UI"],
   },
@@ -108,8 +108,8 @@ const STACK_ROW_3: StackDef[] = [
   {
     id: 3,
     icon: null,
-    imageSrc: "/images/projects/truefounders/TrueFounders_support.svg",
-    imageAlt: "TrueFounders support preview",
+    imageSrc: "/images/projects/truefounders/TrueFounders_testimonial.svg",
+    imageAlt: "TrueFounders testimonials preview",
     footerWords: ["Design", "Concept", "2024"],
   },
 ];
