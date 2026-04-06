@@ -212,20 +212,20 @@ type LinkConfig = {
 
 const LINKS: LinkConfig[] = [
   {
-    href: "/blog",
+    href: "/blog/category/design",
     text: "DESIGN",
     id: 1,
     background: <FloatingLinesComponent />,
   },
   {
-    href: "/blog",
+    href: "/blog/category/engineering",
     text: "ENGINEERING",
     id: 2,
     background: <LightRaysComponent />,
   },
   {
-    href: "/blog",
-    text: "BLOG",
+    href: "/blog/category/product",
+    text: "PRODUCT",
     id: 3,
     background: <PrismComponent />,
   },

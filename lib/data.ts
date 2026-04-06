@@ -110,10 +110,9 @@ export const experiencesV1: ExperienceV1Item[] = [
 
 export const workItems: WorkItem[] = [
   {
-    
     type: "B2B SaaS · Analytics Platform",
     title: "EduFeedbackPro",
-    desc: "B2B school analytics platform that replaces fragmented spreadsheet reporting with real-time dashboards, surfacing student performance signals and enabling faster, data-driven intervention decisions for 600+ users.",
+    desc: "An analytics platform that transforms student performance data into clear, actionable insights by helping educators instantly identify underperforming students and reduce workload by up to 60%.",
     tags: ["Next.js", "BigQuery", "PostgreSQL", "Docker"],
     metric: "sub-50ms latency",
     href: "https://edu-feedback-pro-beta.vercel.app/",
@@ -152,7 +151,8 @@ export const workItems: WorkItem[] = [
       },
       {
         title: "Key Engineering",
-        content: "Engineering decisions that drive the platform's performance and reliability:",
+        content:
+          "Engineering decisions that drive the platform's performance and reliability:",
         actions: [
           "Event-driven architecture enables real-time updates across the platform without polling overhead",
           "Analytical queries offloaded to BigQuery, reducing PostgreSQL load and improving query performance",
@@ -192,7 +192,13 @@ export const workItems: WorkItem[] = [
     type: "Brand Identity · Landing Page",
     title: "True Founders",
     desc: "Brand identity and landing page concept for a women's life coaching business in Dubai, backed by competitive analysis, personas, and conversion-focused UX.",
-    tags: ["Figma", "UX Audit", "Competitive Analysis", "Personas", "Landing Page"],
+    tags: [
+      "Figma",
+      "UX Audit",
+      "Competitive Analysis",
+      "Personas",
+      "Landing Page",
+    ],
     metric: "12 competitors analysed",
     href: "#",
     gradient: "linear-gradient(160deg, #100e00 0%, #2a2200 50%, #181400 100%)",
@@ -230,7 +236,8 @@ export const workItems: WorkItem[] = [
       },
       {
         title: "Design Process",
-        content: "Figma-first meant engineering decisions were already validated against real user needs before implementation started:",
+        content:
+          "Figma-first meant engineering decisions were already validated against real user needs before implementation started:",
         actions: [
           "Brand identity, colour system, and typography locked in before any code was written",
           "Seven marketing sections prototyped: Hero, Product Display, Results, Possibilities, Curriculum, Differentiators, AI Benefits",
@@ -239,7 +246,8 @@ export const workItems: WorkItem[] = [
       },
       {
         title: "System Architecture",
-        content: "Next.js 16 App Router with route groups separating marketing, auth, dashboard, and course concerns:",
+        content:
+          "Next.js 16 App Router with route groups separating marketing, auth, dashboard, and course concerns:",
         actions: [
           "Clerk handles auth with a checkUser sync pattern that keeps Clerk and Postgres in step on every sign-in",
           "PostgreSQL via Prisma ORM, schema covers users and tasks with cascade deletes on user removal",
@@ -250,7 +258,8 @@ export const workItems: WorkItem[] = [
       },
       {
         title: "Deployment Pipeline",
-        content: "GitHub Actions handles the full build and deploy on every push to main, no manual steps:",
+        content:
+          "GitHub Actions handles the full build and deploy on every push to main, no manual steps:",
         actions: [
           "Pipeline: npm ci, Prisma generate, Next.js build, verify standalone output exists, bundle static assets",
           "SCP deploys the Next.js standalone build and Express server to the DigitalOcean VPS as separate steps",

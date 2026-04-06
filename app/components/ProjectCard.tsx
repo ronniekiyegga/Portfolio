@@ -151,7 +151,7 @@ const SHOWCASE_ROWS: {
       figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
-        "B2B school analytics platform that replaces fragmented spreadsheet reporting with real-time dashboards, surfacing student performance signals and enabling faster, data-driven intervention decisions for 600+ users.",
+        "An analytics platform that transforms student performance data into clear, actionable insights by helping educators instantly identify underperforming students and reduce workload by up to 60%.",
     },
   },
   {
@@ -245,7 +245,7 @@ function ProjectCardVisualStack({
   return (
     <motion.div
       className={cn(
-        "relative z-10 w-full max-w-[520px] lg:w-[520px]",
+        "relative z-10 w-full max-w-[520px] lg:w-[520px] mx-auto lg:mx-0",
         stackFan === "sw" && "lg:ml-auto",
       )}
       initial={{ opacity: 0, x: slideX, filter: "blur(10px)" }}
@@ -323,7 +323,7 @@ export default function ProjectCard() {
               >
                 <div
                   className={cn(
-                    "relative flex w-full min-w-0 flex-col items-stretch justify-center gap-10 lg:flex-row lg:items-center lg:gap-12",
+                    "relative flex w-full min-w-0 flex-col items-center justify-center gap-10 lg:flex-row lg:items-center lg:gap-12",
                     !row.imageOnLeft && "lg:flex-row-reverse",
                   )}
                 >
