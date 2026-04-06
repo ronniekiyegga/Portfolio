@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { IoPlay } from "react-icons/io5";
 import { Rocket } from "lucide-react";
+import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { WorkItem } from "@/lib/data";
 
@@ -46,9 +47,7 @@ const ProjectCardItem = ({
   const showRockets = ctaHovered && !reduceMotion;
   const effectiveFigmaHref = figmaHref ?? "#";
 
-  const hidden = reduceMotion
-    ? { opacity: 1, y: 0 }
-    : { opacity: 0, y: 22 };
+  const hidden = reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 };
   const visible = { opacity: 1, y: 0 };
   const baseTransition = (delay: number) => ({
     duration: reduceMotion ? 0 : 0.52,
@@ -88,7 +87,7 @@ const ProjectCardItem = ({
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap items-center gap-1.5"
+          className="flex flex-wrap items-center gap-2"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
@@ -98,16 +97,8 @@ const ProjectCardItem = ({
             {tag}
           </span>
           <span className="size-[5.91px]">{/* <CircularDivider /> */}</span>
-          <a
-            href={effectiveFigmaHref}
-            target="_blank"
-            rel="noreferrer"
-            className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11.5px] font-semibold leading-[22.9px] text-transparent hover:opacity-80 transition-opacity"
-          >
-            FIGMA FILE
-          </a>
-          <span className="mx-2 hidden h-[10.64px] w-px bg-black/15 dark:bg-white/15 sm:block" />
           <span className="inline-flex items-center gap-2">
+            {/* Order: CASE STUDY | DESIGN FILE • LIVE WEBSITE */}
             <motion.div
               className="relative inline-flex"
               onHoverStart={() => setCtaHovered(true)}
@@ -146,12 +137,13 @@ const ProjectCardItem = ({
                   </>
                 ) : null}
               </AnimatePresence>
+
               <button
                 type="button"
                 onClick={() => openModal(workItem)}
                 className="group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent">
+                <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent hover:opacity-80 transition-opacity">
                   {caseStudy}
                 </span>
                 <svg
@@ -178,6 +170,35 @@ const ProjectCardItem = ({
                 />
               </button>
             </motion.div>
+
+            <span className="mx-1.5 text-[rgba(186,188,205,1)]">|</span>
+
+            <a
+              href={effectiveFigmaHref}
+              target="_blank"
+              rel="noreferrer"
+              className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11.5px] font-semibold leading-[22.9px] text-transparent hover:opacity-80 transition-opacity"
+            >
+              DESIGN FILE
+            </a>
+
+            <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>
+
+            {title.trim().toLowerCase() === "true founders" ? (
+              <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent">
+                COMING SOON
+              </span>
+            ) : (
+              <a
+                href={workItem.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent hover:opacity-80 transition-opacity"
+              >
+                <span>LIVE WEBSITE</span>
+                <HiArrowTopRightOnSquare className="h-4 w-4 text-[rgba(102,123,246,1)] dark:text-[rgba(38,208,206,1)]" />
+              </a>
+            )}
           </span>
         </motion.div>
         <motion.p

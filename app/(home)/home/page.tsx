@@ -27,7 +27,7 @@ const ExpandableFeatures = nextDynamic(
 const AnimatedLinks = nextDynamic(
   () =>
     import("@/shared/components/sections/AnimatedBlogLinks").then((m) => ({
-      default: m.AnimatedLinks,
+      default: m.AnimatedBlogLinks,
     })),
   { loading: () => <section className="min-h-screen" aria-hidden /> },
 );
