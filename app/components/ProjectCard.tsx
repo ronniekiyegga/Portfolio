@@ -121,10 +121,10 @@ const TECH_ROW_1: TechTag[] = [
 ];
 
 const TECH_ROW_3: TechTag[] = [
-  "TypeScript",
-  "Next.js 16",
-  "Postgres",
+  "Next.js",
   "Clerk",
+  "PostgreSQL",
+  "GitHub Actions",
   "Nginx",
   "Digital Ocean",
 ];
@@ -151,7 +151,7 @@ const SHOWCASE_ROWS: {
       figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
-        "A multi-tenant B2B SaaS platform that helps schools analyse KS4/5 exam performance and deliver AI-driven personalised feedback to students. Real-time analytics platform for surfacing student performance signals and enabling faster, data-driven intervention decisions",
+        "B2B school analytics platform that replaces fragmented spreadsheet reporting with real-time dashboards, surfacing student performance signals and enabling faster, data-driven intervention decisions for 600+ users.",
     },
   },
   {
@@ -168,7 +168,7 @@ const SHOWCASE_ROWS: {
       figmaHref: SHOWCASE_FIGMA_HREF,
       caseStudy: "READ CASE STUDY",
       description:
-        "Professional tutoring platform for GCSE and A-Level mathematics. Full-stack application with modern design, student engagement features, and production deployment architecture.",
+        "Tutoring platform for GCSE and A-Level maths built end-to-end. Started in Figma, prototyped the full UX across seven sections before writing any code, then built out the marketing site, Clerk-authenticated dashboard, and six course routes. Deployed to a DigitalOcean VPS via a GitHub Actions pipeline that handles the full build and deploy on every push to main.",
     },
   },
   {

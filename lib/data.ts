@@ -113,9 +113,9 @@ export const workItems: WorkItem[] = [
     
     type: "B2B SaaS · Analytics Platform",
     title: "EduFeedbackPro",
-    desc: "B2B school analytics platform designed to replace spreadsheet reporting with real-time dashboards and performance insights.",
-    tags: ["Next.js", "BigQuery", "MongoDB", "Docker"],
-    metric: "sub-50ms P95 response",
+    desc: "B2B school analytics platform that replaces fragmented spreadsheet reporting with real-time dashboards, surfacing student performance signals and enabling faster, data-driven intervention decisions for 600+ users.",
+    tags: ["Next.js", "BigQuery", "PostgreSQL", "Docker"],
+    metric: "sub-50ms latency",
     href: "https://edu-feedback-pro-beta.vercel.app/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
@@ -125,38 +125,61 @@ export const workItems: WorkItem[] = [
       {
         title: "Problem",
         content:
-          "Schools rely on fragmented systems to track student performance — spreadsheets, exam board portals, and internal systems — resulting in delayed and inconsistent feedback. Teachers spend significant time manually aggregating data, and even when data is available, identifying at-risk students or performance trends requires additional effort.",
+          "Schools rely on fragmented systems to track student performance: spreadsheets, exam board portals, and internal tools, resulting in delayed insight, inconsistent data, and a heavy reliance on manual processes. Staff spend significant time aggregating data across multiple sources, and even when the data is available, identifying at-risk students or performance trends requires additional effort. Interventions are typically reactive rather than proactive.",
       },
       {
         title: "Solution",
         content:
-          "I built EduFeedbackPro as a real-time analytics platform that consolidates student performance data and surfaces actionable insights through dashboards and event-driven updates. Instead of adding more data, the platform is designed to make existing data usable, timely, and actionable. The system focuses on:",
+          "EduFeedbackPro consolidates student performance data and surfaces actionable insights through real-time dashboards and event-driven updates. The goal was to make existing data usable and timely rather than introduce more complexity. It focuses on:",
         actions: [
-          "replacing manual reporting with real-time dashboards",
-          "enabling faster intervention through at-risk student identification",
-          "reducing feedback latency with event-driven notifications",
-          "providing explainable insights rather than black-box outputs",
+          "Replacing manual reporting with real-time dashboards serving 600+ active users across 4 departments",
+          "Enabling faster intervention through at-risk student identification and cohort-level analytics",
+          "Reducing feedback latency with event-driven SSE notifications, eliminating polling entirely",
+          "Surfacing explainable insights that staff can act on without interpreting raw data",
         ],
       },
       {
-        title: "Architecture Overview",
+        title: "System Architecture",
         content:
-          "The system uses a dual-database architecture to separate concerns.",
+          "Dual-database architecture separates transactional and analytical concerns:",
         actions: [
-          "Postgres (Neon) handles transactional data (users, enrollments, notifications, surveys)",
-          "BigQuery handles analytical workloads (aggregations, performance trends, large-scale queries)",
-          "Server-Sent Events (SSE) pushes updates only when data changes; polling is fallback only",
+          "PostgreSQL (Neon) handles users, enrolments, notifications, and survey inputs",
+          "BigQuery handles analytical workloads: aggregations, performance trends, and large-scale queries",
+          "Server-Sent Events push updates only when data changes, no polling",
+          "In-memory pub/sub using a Map-based client registry; architected to migrate to Redis Pub/Sub for horizontal scaling",
+          "Stack: Next.js 15 App Router, next-auth, Prisma ORM, Neon Postgres, BigQuery, Docker, Sentry",
         ],
+      },
+      {
+        title: "Key Engineering",
+        content: "Engineering decisions that drive the platform's performance and reliability:",
+        actions: [
+          "Event-driven architecture enables real-time updates across the platform without polling overhead",
+          "Analytical queries offloaded to BigQuery, reducing PostgreSQL load and improving query performance",
+          "Server-side query layer translates application interactions into efficient analytical queries",
+          "Voice querying interface via ElevenLabs API so staff can retrieve insights without writing SQL",
+          "Cohort-level analytics and student-level risk indicators built to support proactive decision-making",
+        ],
+      },
+      {
+        title: "Performance",
+        content:
+          "SSE delivers updates only when data changes, eliminating continuous polling and hitting sub-50ms P99 response times. Analytical workloads isolated in BigQuery reduce PostgreSQL query load. TTL-based caching limits repeated queries while keeping data freshness within 10 seconds for notifications and 60 minutes for BigQuery responses.",
       },
       {
         title: "Tradeoffs",
         content: "Key tradeoffs made to keep the system simple and fast:",
         actions: [
-          "SSE chosen over WebSockets for lower overhead; limited to one-way communication",
-          "In-memory broadcaster is fast for a single instance; future: Redis Pub/Sub for distributed events",
-          "Dual-database setup improves performance but increases coordination complexity",
-          "TTL caching reduces DB load at the cost of slight staleness (~10 seconds)",
+          "SSE over WebSockets: lower overhead and simpler infrastructure, trade-off is one-way communication only",
+          "In-memory broadcaster: fast for a single instance, trade-off is no horizontal scaling without Redis",
+          "Dual-database setup improves read performance but increases coordination complexity",
+          "TTL caching reduces DB load at the cost of slight data staleness",
         ],
+      },
+      {
+        title: "Product Thinking",
+        content:
+          "Started in Figma, mapping out staff workflows and the key interactions before writing any code. The brief was clear: the platform should make existing data actionable, not introduce more to interpret. Design decisions were driven by reducing the number of steps between a data point and an intervention, with clarity and speed as the primary constraints.",
       },
     ],
     statistics: [
@@ -192,8 +215,8 @@ export const workItems: WorkItem[] = [
   {
     type: "B2C SaaS · Tutoring Platform",
     title: "Ms. Maryam's Maths",
-    desc: "End-to-end design and development of a tutoring platform for GCSE and A-Level students from brand and UX in Figma to a production dashboard system.",
-    tags: ["TypeScript", "PostgreSQL", "GitHub Actions"],
+    desc: "Tutoring platform for GCSE and A-Level maths built end-to-end: brand and UX designed in Figma, then coded into a production Next.js app with Clerk auth, PostgreSQL, and a fully automated deployment pipeline to a DigitalOcean VPS.",
+    tags: ["Next.js", "Clerk", "PostgreSQL", "DigitalOcean"],
     metric: "3 min deploy vs 20+ min",
     href: "https://www.msmaryamsmaths.com/",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
@@ -201,14 +224,46 @@ export const workItems: WorkItem[] = [
     heroImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",
     insights: [
       {
-        title: "The Challenge",
+        title: "Overview",
         content:
-          "Building a tutoring platform that scales securely required rethinking authentication and deployment. Role-based access with JWT needed to handle multiple user types—students, tutors, and admins—while maintaining zero unauthorised access. The CI/CD pipeline reduced manual deployment from 20+ minutes to under 3 minutes, enabling faster iteration and more reliable releases.",
+          "Built this from scratch for a GCSE and A-Level maths tutor. The process started entirely in Figma: brand identity, user flows, and a full component spec across seven marketing sections before writing any code. Once the design was locked in, the build covered the public marketing site, Clerk-authenticated dashboard, and a structured course catalogue across six subject areas, all shipped to a self-hosted VPS with a zero-touch deployment pipeline.",
+      },
+      {
+        title: "Design Process",
+        content: "Figma-first meant engineering decisions were already validated against real user needs before implementation started:",
+        actions: [
+          "Brand identity, colour system, and typography locked in before any code was written",
+          "Seven marketing sections prototyped: Hero, Product Display, Results, Possibilities, Curriculum, Differentiators, AI Benefits",
+          "Student dashboard and course pages designed as a component spec, then coded directly from that",
+        ],
+      },
+      {
+        title: "System Architecture",
+        content: "Next.js 16 App Router with route groups separating marketing, auth, dashboard, and course concerns:",
+        actions: [
+          "Clerk handles auth with a checkUser sync pattern that keeps Clerk and Postgres in step on every sign-in",
+          "PostgreSQL via Prisma ORM, schema covers users and tasks with cascade deletes on user removal",
+          "Express sidecar running on port 3001 for server-side logic that sits outside the Next.js request lifecycle",
+          "Standalone output in next.config so the app self-hosts without a separate Node runtime layer",
+          "Six course routes: GCSE Foundation, GCSE Higher, A-Levels, Further Maths, Exam Prep, Homework Support",
+        ],
+      },
+      {
+        title: "Deployment Pipeline",
+        content: "GitHub Actions handles the full build and deploy on every push to main, no manual steps:",
+        actions: [
+          "Pipeline: npm ci, Prisma generate, Next.js build, verify standalone output exists, bundle static assets",
+          "SCP deploys the Next.js standalone build and Express server to the DigitalOcean VPS as separate steps",
+          "PM2 manages both processes on the VPS with auto-restart on failure",
+          "Nginx sits in front as the reverse proxy",
+          "Took deployment from 20+ minutes of manual SSH and copy steps down to under 3 minutes end-to-end",
+        ],
       },
     ],
     statistics: [
-      { value: "20+", label: "Active Students" },
-      { value: "3min", label: "Deploy Time" },
+      { value: "<3min", label: "Deploy Time" },
+      { value: "6", label: "Course Types" },
+      { value: "7", label: "Marketing Sections" },
     ],
   },
   {
