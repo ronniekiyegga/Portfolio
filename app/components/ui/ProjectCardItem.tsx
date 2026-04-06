@@ -78,7 +78,7 @@ const ProjectCardItem = ({
 
       <div className="flex w-full min-w-0 flex-col gap-3">
         <motion.div
-          className="text-[28px] font-semibold leading-[31.5px] tracking-[-0.28px] text-(--colours-semantic-text-strong,#000626)"
+          className="text-[28px] font-semibold leading-[31.5px] tracking-[-0.28px] text-[#000626] dark:text-white"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
@@ -106,7 +106,7 @@ const ProjectCardItem = ({
           >
             FIGMA FILE
           </a>
-          <span className="mx-2 hidden h-[10.64px] w-px bg-black/15 sm:block" />
+          <span className="mx-2 hidden h-[10.64px] w-px bg-black/15 dark:bg-white/15 sm:block" />
           <span className="inline-flex items-center gap-2">
             <motion.div
               className="relative inline-flex"
@@ -181,7 +181,7 @@ const ProjectCardItem = ({
           </span>
         </motion.div>
         <motion.p
-          className="text-sm leading-[20px] text-[rgba(0,9,51,0.65)]"
+          className="text-sm leading-[20px] text-[rgba(0,9,51,0.65)] dark:text-white/60"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}

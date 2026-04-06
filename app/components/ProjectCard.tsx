@@ -267,7 +267,7 @@ function ProjectCardVisualStack({
             return (
               <motion.div
                 key={def.id}
-                className="absolute inline-flex items-center gap-2 rounded-[7.63px] bg-white will-change-transform"
+                className="absolute inline-flex items-center gap-2 rounded-[7.63px] bg-white dark:bg-transparent will-change-transform"
                 style={{
                   transformOrigin: stackFan === "se" ? "top left" : "top right",
                 }}
@@ -283,7 +283,7 @@ function ProjectCardVisualStack({
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                <div className="relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
+                <div className="project-visual-card relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
                   <div className="relative grid min-h-0 flex-1 place-items-center">
                     <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px] bg-white/50 dark:bg-neutral-950/20">
                       <Image
