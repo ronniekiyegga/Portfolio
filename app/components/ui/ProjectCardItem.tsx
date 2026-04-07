@@ -15,7 +15,6 @@ interface ProjectCardItemProps {
   title: string;
   category?: string;
   tag: string;
-  year: number;
   figmaHref?: string;
   caseStudy: string;
   description: string;

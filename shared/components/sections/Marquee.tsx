@@ -41,11 +41,7 @@ export default function Marquee() {
   ];
   return (
     <div
-      className="relative w-full min-w-0 overflow-x-hidden section-white-bg"
-      style={{
-        background: "var(--surface)",
-        border: "1px solid var(--border)",
-      }}
+      className="relative w-full min-w-0 overflow-x-hidden bg-[#FDFBF7] dark:bg-neutral-950"
     >
       <ThreeDMarquee images={images} />
     </div>
