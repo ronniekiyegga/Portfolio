@@ -8,13 +8,8 @@ import ProjectCardItem from "./ProjectCardItem";
 export type TechTag = string;
 
 export type ShowcaseProject = {
-  category?: string;
-  title: string;
-  tag: string;
-  year: number;
   figmaHref?: string;
   caseStudy: string;
-  description: string;
 };
 
 export type ProjectCardTextContentProps = {
@@ -25,6 +20,16 @@ export type ProjectCardTextContentProps = {
 
 const PC_VIEWPORT = { once: true, amount: 0.3 as const };
 
+function typeToCategoryAndTag(type: string, tag?: string): {
+  category?: string;
+  tag: string;
+} {
+  const parts = type.split("·").map((p) => p.trim()).filter(Boolean);
+  const category = parts[0]?.toUpperCase();
+  const resolvedTag = tag ?? parts[1] ?? parts[0] ?? "";
+  return { category, tag: resolvedTag };
+}
+
 const ProjectCardTextContent = ({
   project,
   workItem,
@@ -32,6 +37,7 @@ const ProjectCardTextContent = ({
 }: ProjectCardTextContentProps) => {
   const { openModal } = useProjectContext();
   const reduceMotion = useReducedMotion();
+  const { category, tag } = typeToCategoryAndTag(workItem.type, workItem.tag);
 
   const staggerParent = reduceMotion
     ? {
@@ -51,13 +57,12 @@ const ProjectCardTextContent = ({
     <div className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-4 text-left">
       <ProjectCardItem
         index={0}
-        title={project.title}
-        category={project.category}
-        tag={project.tag}
+        title={workItem.title}
+        category={category}
+        tag={tag}
         caseStudy={project.caseStudy}
-        year={project.year}
         figmaHref={project.figmaHref}
-        description={project.description}
+        description={workItem.desc}
         workItem={workItem}
         openModal={openModal}
       />

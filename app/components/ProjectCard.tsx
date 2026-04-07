@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 import { workItems } from "@/lib/data";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 import { ProjectModal } from "@/shared/components/sections/ProjectModal";
+import SectionKicker from "@/shared/components/ui/section-kicker";
 import ProjectCardTextContent, {
-  type ShowcaseProject,
   type TechTag,
 } from "./ui/ProjectCardTextContent";
 
@@ -103,90 +103,29 @@ const STACK_ROW_3: StackDef[] = [
   },
 ];
 
-const TECH_ROW_TRUEFOUNDERS: TechTag[] = [
-  "Figma",
-  "UX Audit",
-  "Competitive Analysis",
-  "Personas",
-  "Landing Page",
-];
-
-const TECH_ROW_1: TechTag[] = [
-  "Next.js",
-  "Node.js",
-  "Typescript",
-  "BigQuery",
-  "NeonDB",
-  "ElevenLabs",
-];
-
-const TECH_ROW_3: TechTag[] = [
-  "Next.js",
-  "Clerk",
-  "PostgreSQL",
-  "GitHub Actions",
-  "Nginx",
-  "Digital Ocean",
-];
-
 const SHOWCASE_ROWS: {
   imageOnLeft: boolean;
   watermark: string;
   stack: StackDef[];
-  project: ShowcaseProject;
   workItemTitle: string;
-  techTags: TechTag[];
 }[] = [
   {
     imageOnLeft: true,
     watermark: "PROJECT 1",
     stack: STACK_ROW_1,
     workItemTitle: "EduFeedbackPro",
-    techTags: TECH_ROW_1,
-    project: {
-      category: "ENGINEERING",
-      title: "Personalized Student Feedback Dashboard",
-      tag: "School Analytics Platform",
-      year: 2026,
-      figmaHref: SHOWCASE_FIGMA_HREF,
-      caseStudy: "READ CASE STUDY",
-      description:
-        "An analytics platform that transforms student performance data into clear, actionable insights by helping educators instantly identify underperforming students and reduce workload by up to 60%.",
-    },
   },
   {
     imageOnLeft: false,
     watermark: "PROJECT 2",
     stack: STACK_ROW_2,
     workItemTitle: "Ms. Maryam's Maths",
-    techTags: TECH_ROW_3,
-    project: {
-      category: "ENGINEERING",
-      title: "Mathematics Tutoring",
-      tag: "B2C SaaS Platform",
-      year: 2026,
-      figmaHref: SHOWCASE_FIGMA_HREF,
-      caseStudy: "READ CASE STUDY",
-      description:
-        "Tutoring platform for GCSE and A-Level maths built end-to-end. Started in Figma, prototyped the full UX across seven sections before writing any code, then built out the marketing site, Clerk-authenticated dashboard, and six course routes. Deployed to a DigitalOcean VPS via a GitHub Actions pipeline that handles the full build and deploy on every push to main.",
-    },
   },
   {
     imageOnLeft: true,
     watermark: "PROJECT 3",
     stack: STACK_ROW_3,
-    workItemTitle: "True Founders",
-    techTags: TECH_ROW_TRUEFOUNDERS,
-    project: {
-      category: "DESIGN - BRAND IDENTITY",
-      title: "True Founders",
-      tag: "Women's Life Coaching",
-      year: 2024,
-      figmaHref: SHOWCASE_FIGMA_HREF,
-      caseStudy: "READ CASE STUDY",
-      description:
-        "Brand identity and landing page for a women's life coaching business in Dubai. Competitive analysis across 12 competitors, persona development for three audience segments, and a conversion-focused landing page design.",
-    },
+    workItemTitle: "TrueFounders",
   },
 ];
 
@@ -311,8 +250,11 @@ export default function ProjectCard() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full min-w-0 py-20 md:py-40">
+    <section className="w-full min-w-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950">
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+        <SectionKicker className="mb-10 md:mb-14">
+          Things I&apos;ve Built
+        </SectionKicker>
         <div className="flex w-full min-w-0 flex-col gap-24 md:gap-32 lg:gap-40">
           {SHOWCASE_ROWS.map((row) => {
             const workItem = workItemByTitle(row.workItemTitle);
@@ -354,9 +296,12 @@ export default function ProjectCard() {
                     }}
                   >
                     <ProjectCardTextContent
-                      project={row.project}
+                      project={{
+                        figmaHref: SHOWCASE_FIGMA_HREF,
+                        caseStudy: "READ CASE STUDY",
+                      }}
                       workItem={workItem}
-                      techTags={row.techTags}
+                      techTags={workItem.tags as readonly TechTag[]}
                     />
                   </motion.div>
                 </div>

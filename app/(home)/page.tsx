@@ -26,7 +26,7 @@ export default async function Home() {
   const heroCarouselSlides = getResolvedHeroCarouselSlides();
 
   return (
-    <div className="min-h-screen w-full min-w-0 font-sans bg-background dark:bg-neutral-950">
+    <div className="min-h-screen w-full min-w-0 font-sans">
       <main className="flex w-full min-w-0 flex-col items-center">
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center gap-y-4 md:gap-y-6">
           <HeroSection heroCarouselSlides={heroCarouselSlides} />

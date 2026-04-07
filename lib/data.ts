@@ -221,7 +221,7 @@ export const workItems: WorkItem[] = [
   {
     type: "B2C SaaS · Tutoring Platform",
     title: "Ms. Maryam's Maths",
-    desc: "Tutoring platform for GCSE and A-Level maths built end-to-end: brand and UX designed in Figma, then coded into a production Next.js app with Clerk auth, PostgreSQL, and a fully automated deployment pipeline to a DigitalOcean VPS.",
+    desc: "A premium GCSE & A-level maths platform that helps students master topics, track progress, and improve exam performance through structured learning and personalised support.",
     tags: ["Next.js", "Clerk", "PostgreSQL", "DigitalOcean"],
     metric: "3 min deploy vs 20+ min",
     href: "https://www.msmaryamsmaths.com/",
