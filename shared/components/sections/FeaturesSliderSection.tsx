@@ -6,6 +6,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { HeroCarouselImageSlide } from "@/lib/hero-carousel-types";
 
+const HERO_SLIDE_VIDEO_EXT = /\.(webm|mp4)$/i;
+
 const projectCard = [
   {
     title: "EduFeedbackPro",
@@ -160,37 +162,52 @@ export default function FeaturesSliderSection({
             backgroundRepeat: "no-repeat",
           }}
         >
-          <Image
-            src={content.src}
-            alt={content.alt ?? content.title}
-            width={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
-            height={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
-            sizes={
-              axis === "y"
-                ? dense
-                  ? "(max-width: 1024px) 360px, 420px"
-                  : "(max-width: 1024px) 300px, 360px"
-                : dense
-                  ? "(max-width: 640px) 42vw, 240px"
-                  : "(max-width: 640px) 280px, 460px"
-            }
-            className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
-          />
+          {HERO_SLIDE_VIDEO_EXT.test(content.src) ? (
+            <video
+              src={content.src}
+              className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              aria-label={content.alt ?? content.title}
+            />
+          ) : (
+            <Image
+              src={content.src}
+              alt={content.alt ?? content.title}
+              width={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
+              height={axis === "y" ? (dense ? 420 : 320) : dense ? 240 : 380}
+              sizes={
+                axis === "y"
+                  ? dense
+                    ? "(max-width: 1024px) 360px, 420px"
+                    : "(max-width: 1024px) 300px, 360px"
+                  : dense
+                    ? "(max-width: 640px) 42vw, 240px"
+                    : "(max-width: 640px) 280px, 460px"
+              }
+              className="absolute inset-0 size-full object-contain opacity-95 transition-opacity duration-500 hover:opacity-100"
+              unoptimized={content.src.endsWith(".svg")}
+            />
+          )}
         </Card>
-        {showCaption && content.caption && (
-          <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
-            <span
-              className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
-              style={{ letterSpacing: "0.18em" }}
-            >
-              {content.caption[0]}
-            </span>
-            <span className="mx-1.5 text-white/40 text-[8px]">·</span>
-            <span className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference">
-              {content.caption[1]}
-            </span>
-          </div>
-        )}
+        {content.caption &&
+          (showCaption || HERO_SLIDE_VIDEO_EXT.test(content.src)) && (
+            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
+              <span
+                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
+                style={{ letterSpacing: "0.18em" }}
+              >
+                {content.caption[0]}
+              </span>
+              <span className="mx-1.5 text-white/40 text-[8px]">·</span>
+              <span className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference">
+                {content.caption[1]}
+              </span>
+            </div>
+          )}
       </div>
       {/* {content.description} */}
     </div>

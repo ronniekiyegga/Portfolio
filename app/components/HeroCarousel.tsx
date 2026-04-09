@@ -199,7 +199,6 @@ const HeroCarousel = ({ slides: initialSlides }: HeroCarouselProps) => {
             sectionId="hero-design-up"
             className="py-0"
             slides={slidesUp}
-            showCaption
           />
         </HeroCarouselColumnFade>
       </div>

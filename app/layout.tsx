@@ -91,9 +91,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const theme = localStorage.getItem('theme');
-                if (theme === 'light') document.documentElement.classList.remove('dark');
-                else document.documentElement.classList.add('dark');
+                var theme = localStorage.getItem('theme');
+                var root = document.documentElement;
+                if (theme === 'light') {
+                  root.classList.remove('dark');
+                  root.classList.add('light');
+                } else {
+                  root.classList.add('dark');
+                  root.classList.remove('light');
+                }
               })();
             `,
           }}

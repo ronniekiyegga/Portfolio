@@ -3,14 +3,28 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
+import SectionKicker from "@/shared/components/ui/section-kicker";
 import { cn } from "@/lib/utils";
-import { workItems } from "@/lib/data";
+import {
+  getWorkItemById,
+  PROJECT_CARD_SHOWCASE_FIGMA_HREF,
+  PROJECT_CARD_SHOWCASE_ROWS,
+  projectCardStackOffset,
+  type ProjectCardStackDef,
+  type ProjectCardStackFan,
+} from "@/lib/data";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 import { ProjectModal } from "@/shared/components/sections/ProjectModal";
-import SectionKicker from "@/shared/components/ui/section-kicker";
+import { TracingBeam } from "@/shared/components/ui/tracing-beam";
 import ProjectCardTextContent, {
   type TechTag,
 } from "./ui/ProjectCardTextContent";
+
+/** Set to `true` to resume auto-cycling the stacked mockup cards. */
+const PROJECT_CARD_STACK_ROTATION_ENABLED = false;
+
+const EDTECH_TUTORING_VIDEO_SRC =
+  "/images/projects/maths-tutoring/tutorial.webm";
 
 export const SparkIcon = ({
   className = "",
@@ -28,134 +42,15 @@ export const SparkIcon = ({
   </svg>
 );
 
-export type StackDef = {
-  id: number;
-  title?: string | null;
-  icon: "purple" | "teal" | null;
-  imageSrc: string;
-  imageAlt: string;
-};
-
-/** Figma “Project Files” — used for FIGMA FILE on every showcase row */
-const SHOWCASE_FIGMA_HREF =
-  "https://www.figma.com/design/Au6mJ4osdzMpUBlqojMYzm/Project-Files?node-id=0-1&t=52XXZclkPhzyBPFG-1";
-
-const STACK_ROW_1: StackDef[] = [
-  {
-    id: 1,
-    icon: "teal",
-    imageSrc: "/images/projects/edufeedbackpro/DMI_HERO.svg",
-    imageAlt: "EduFeedbackPro hero preview",
-  },
-  {
-    id: 2,
-    icon: "purple",
-    imageSrc: "/images/projects/edufeedbackpro/DMI.svg",
-    imageAlt: "EduFeedbackPro benefits preview",
-  },
-  {
-    id: 3,
-    icon: null,
-    imageSrc: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
-    imageAlt: "EduFeedbackPro support preview",
-  },
-];
-
-const STACK_ROW_2: StackDef[] = [
-  {
-    id: 1,
-    icon: "teal",
-    imageSrc: "/images/projects/maths-tutoring/Tutoring_hero.webp",
-    imageAlt: "Mathematics Tutoring hero preview",
-  },
-  {
-    id: 2,
-    icon: "purple",
-    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
-    imageAlt: "Mathematics Tutoring benefits preview",
-  },
-  {
-    id: 3,
-    icon: null,
-    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
-    imageAlt: "Mathematics Tutoring support preview",
-  },
-];
-
-const STACK_ROW_3: StackDef[] = [
-  {
-    id: 1,
-    icon: "purple",
-    imageSrc: "/images/projects/truefounders/TrueFounders_hero.webp",
-    imageAlt: "TrueFounders hero preview",
-  },
-  {
-    id: 2,
-    icon: "teal",
-    imageSrc: "/images/projects/truefounders/TrueFounders_benefits.svg",
-    imageAlt: "TrueFounders benefits preview",
-  },
-  {
-    id: 3,
-    icon: null,
-    imageSrc: "/images/projects/truefounders/TrueFounders_testimonial.svg",
-    imageAlt: "TrueFounders testimonials preview",
-  },
-];
-
-const SHOWCASE_ROWS: {
-  imageOnLeft: boolean;
-  watermark: string;
-  stack: StackDef[];
-  workItemTitle: string;
-}[] = [
-  {
-    imageOnLeft: true,
-    watermark: "PROJECT 1",
-    stack: STACK_ROW_1,
-    workItemTitle: "EduFeedbackPro",
-  },
-  {
-    imageOnLeft: false,
-    watermark: "PROJECT 2",
-    stack: STACK_ROW_2,
-    workItemTitle: "Ms. Maryam's Maths",
-  },
-  {
-    imageOnLeft: true,
-    watermark: "PROJECT 3",
-    stack: STACK_ROW_3,
-    workItemTitle: "TrueFounders",
-  },
-];
-
-function workItemByTitle(title: string) {
-  return workItems.find((w) => w.title === title) ?? workItems[0];
-}
-
-/** Offset between stacked layers (tighter than the wide fan, looser than the original). */
-const FAN_DX = 32;
-const FAN_DY = 28;
-
-/** se: front top-left, layers step down-right. sw: front top-right, layers step down-left (for visual-on-right rows). */
-type StackFan = "se" | "sw";
-
-function stackOffset(
-  index: number,
-  fan: StackFan,
-): { left: number; top: number } {
-  if (fan === "se") {
-    return { left: index * FAN_DX, top: index * FAN_DY };
-  }
-  return { left: (2 - index) * FAN_DX, top: index * FAN_DY };
-}
-
 function ProjectCardVisualStack({
   definitions,
   stackFan,
+  frontVideoSrc,
 }: {
-  definitions: StackDef[];
-  stackFan: StackFan;
+  definitions: ProjectCardStackDef[];
+  stackFan: ProjectCardStackFan;
+  /** When set, the front (index 0) card shows this video instead of its stack image. */
+  frontVideoSrc?: string;
 }) {
   const reduceMotion = useReducedMotion();
   const [isPaused, setIsPaused] = useState(false);
@@ -167,6 +62,7 @@ function ProjectCardVisualStack({
   }, []);
 
   useEffect(() => {
+    if (!PROJECT_CARD_STACK_ROTATION_ENABLED) return;
     if (prefersReducedMotion) return;
     if (isPaused) return;
     const id = window.setInterval(() => {
@@ -184,7 +80,7 @@ function ProjectCardVisualStack({
   return (
     <motion.div
       className={cn(
-        "relative z-10 w-full max-w-[520px] lg:w-[520px] mx-auto lg:mx-0",
+        "relative z-10 w-full max-w-[520px] lg:w-[520px] mx-auto lg:mx-0 ",
         stackFan === "sw" && "lg:ml-auto",
       )}
       initial={{ opacity: 0, x: slideX, filter: "blur(10px)" }}
@@ -202,7 +98,7 @@ function ProjectCardVisualStack({
           onMouseLeave={() => setIsPaused(false)}
         >
           {cards.map((def, index) => {
-            const { left, top } = stackOffset(index, stackFan);
+            const { left, top } = projectCardStackOffset(index, stackFan);
             return (
               <motion.div
                 key={def.id}
@@ -225,14 +121,27 @@ function ProjectCardVisualStack({
                 <div className="project-visual-card relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
                   <div className="relative grid min-h-0 flex-1 place-items-center">
                     <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px] bg-white/50 dark:bg-neutral-950/20">
-                      <Image
-                        src={def.imageSrc}
-                        alt={def.imageAlt}
-                        fill
-                        className="object-contain object-center"
-                        sizes="(max-width: 1024px) 96vw, 392px"
-                        unoptimized={def.imageSrc.endsWith(".svg")}
-                      />
+                      {index === 0 && frontVideoSrc ? (
+                        <video
+                          src={frontVideoSrc}
+                          className="absolute inset-0 size-full object-cover object-center"
+                          muted
+                          loop
+                          playsInline
+                          autoPlay
+                          preload="metadata"
+                          aria-label={def.imageAlt}
+                        />
+                      ) : (
+                        <Image
+                          src={def.imageSrc}
+                          alt={def.imageAlt}
+                          fill
+                          className="object-contain object-center"
+                          sizes="(max-width: 1024px) 96vw, 392px"
+                          unoptimized={def.imageSrc.endsWith(".svg")}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -250,65 +159,96 @@ export default function ProjectCard() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full min-w-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950">
+    <section className="w-full min-w-0 border-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950 dark:bg-[url('/images/backgrounds/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat">
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
-        <SectionKicker className="mb-10 md:mb-14">
+        <SectionKicker className="mb-10 md:mb-32">
           Things I&apos;ve Built
         </SectionKicker>
-        <div className="flex w-full min-w-0 flex-col gap-24 md:gap-32 lg:gap-40">
-          {SHOWCASE_ROWS.map((row) => {
-            const workItem = workItemByTitle(row.workItemTitle);
-            return (
-              <div
-                key={row.watermark}
-                className="relative isolate w-full min-w-0"
-              >
-                <div
-                  className={cn(
-                    "relative flex w-full min-w-0 flex-col items-center justify-center gap-10 lg:flex-row lg:items-center lg:gap-12",
-                    !row.imageOnLeft && "lg:flex-row-reverse",
-                  )}
-                >
-                  <ProjectCardVisualStack
-                    definitions={row.stack}
-                    stackFan={row.imageOnLeft ? "se" : "sw"}
-                  />
-                  <motion.div
-                    className={cn(
-                      "relative min-w-0 flex-1",
-                      row.imageOnLeft ? "lg:pl-4" : "lg:pr-4",
-                    )}
-                    initial={
-                      reduceMotion
-                        ? { opacity: 1, x: 0 }
-                        : { opacity: 0, x: row.imageOnLeft ? 36 : -36 }
-                    }
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{
-                      once: true,
-                      amount: 0.2,
-                      margin: "0px 0px -8% 0px",
-                    }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.72,
-                      ease: [0.22, 1, 0.36, 1],
-                      delay: reduceMotion ? 0 : 0.06,
-                    }}
+        {/* <LampWidget /> */}
+        <TracingBeam
+          className="max-w-none"
+          svgGradientId="tb-home-project-card"
+        >
+          {/* Keep generous left inset for the beam; eases right padding so copy isn’t squeezed */}
+          <div className="px-4 sm:px-6 lg:pl-20 lg:pr-6 xl:pr-8">
+            <div className="flex w-full min-w-0 flex-col gap-24 md:gap-32 lg:gap-36">
+              {PROJECT_CARD_SHOWCASE_ROWS.map((row) => {
+                const workItem = getWorkItemById(row.workItemId);
+                if (!workItem) {
+                  if (process.env.NODE_ENV === "development") {
+                    console.error(
+                      `[ProjectCard] Unknown workItemId "${row.workItemId}" — check PROJECT_CARD_SHOWCASE_ROWS and workItems in lib/data.ts`,
+                    );
+                  }
+                  return null;
+                }
+                return (
+                  <div
+                    key={row.watermark}
+                    className="relative isolate w-full min-w-0 "
                   >
-                    <ProjectCardTextContent
-                      project={{
-                        figmaHref: SHOWCASE_FIGMA_HREF,
-                        caseStudy: "READ CASE STUDY",
-                      }}
-                      workItem={workItem}
-                      techTags={workItem.tags as readonly TechTag[]}
-                    />
-                  </motion.div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                    <div
+                      className={cn(
+                        "relative grid w-full min-w-0 grid-cols-1 items-start justify-center justify-items-stretch gap-10 lg:items-start lg:gap-12",
+                        row.imageOnLeft
+                          ? "lg:grid-cols-[520px_minmax(0,1fr)]"
+                          : "lg:grid-cols-[minmax(0,1fr)_520px]",
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "w-full min-w-0",
+                          !row.imageOnLeft && "lg:order-2",
+                        )}
+                      >
+                        <ProjectCardVisualStack
+                          definitions={row.stack}
+                          stackFan={row.imageOnLeft ? "se" : "sw"}
+                          frontVideoSrc={
+                            row.workItemId === "edtech-tutoring"
+                              ? EDTECH_TUTORING_VIDEO_SRC
+                              : undefined
+                          }
+                        />
+                      </div>
+                      <motion.div
+                        className={cn(
+                          "relative w-full min-w-0 lg:pt-6",
+                          !row.imageOnLeft && "lg:order-1",
+                        )}
+                        initial={
+                          reduceMotion
+                            ? { opacity: 1, x: 0 }
+                            : { opacity: 0, x: row.imageOnLeft ? 36 : -36 }
+                        }
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{
+                          once: true,
+                          amount: 0.2,
+                          margin: "0px 0px -8% 0px",
+                        }}
+                        transition={{
+                          duration: reduceMotion ? 0 : 0.72,
+                          ease: [0.22, 1, 0.36, 1],
+                          delay: reduceMotion ? 0 : 0.06,
+                        }}
+                      >
+                        <ProjectCardTextContent
+                          project={{
+                            figmaHref: PROJECT_CARD_SHOWCASE_FIGMA_HREF,
+                            caseStudy: "read case study",
+                          }}
+                          workItem={workItem}
+                          techTags={workItem.tags as readonly TechTag[]}
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </TracingBeam>
       </div>
 
       <ProjectModal

@@ -129,7 +129,7 @@ export default function LampWidget() {
           flex flex-col items-center text-center z-15 gap-5
         "
       >
-        <AnimatedText />
+        {/* <AnimatedText /> */}
       </div>
     </section>
   );

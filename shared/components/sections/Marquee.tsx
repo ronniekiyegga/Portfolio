@@ -8,6 +8,7 @@ export default function Marquee() {
     "/images/marquee/Marquee_Folder.svg",
     "/images/branding/clients/BESKPOKE_GARMENTS_LIGHT.svg",
     "/images/projects/maths-tutoring/Tutoring_hero.webp",
+    "/images/projects/maths-tutoring/tutorial.webm",
     "/images/projects/truefounders/TrueFounders_hero.webp",
     "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
     "/images/branding/clients/BESKPOKE_GARMENTS_ABOUT_DARK.svg",

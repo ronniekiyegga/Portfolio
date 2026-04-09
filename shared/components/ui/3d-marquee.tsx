@@ -2,6 +2,53 @@
 
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+const VIDEO_EXT = /\.(webm|mp4)$/i;
+
+function MarqueeMedia({
+  src,
+  imageIndex,
+}: {
+  src: string;
+  imageIndex: number;
+}) {
+  const hoverMotion = {
+    whileHover: { y: -10 },
+    transition: { duration: 0.3, ease: "easeInOut" as const },
+  };
+  const className =
+    "aspect-970/700 object-cover ring ring-gray-950/5 hover:shadow-2xl";
+
+  if (VIDEO_EXT.test(src)) {
+    return (
+      <motion.video
+        {...hoverMotion}
+        src={src}
+        className={className}
+        width={970}
+        height={700}
+        muted
+        loop
+        playsInline
+        autoPlay
+        preload="metadata"
+        aria-label={`Video preview ${imageIndex + 1}`}
+      />
+    );
+  }
+
+  return (
+    <motion.img
+      {...hoverMotion}
+      src={src}
+      alt={`Image ${imageIndex + 1}`}
+      loading="lazy"
+      className={className}
+      width={970}
+      height={700}
+    />
+  );
+}
+
 export const ThreeDMarquee = ({
   images,
   className,
@@ -46,22 +93,7 @@ export const ThreeDMarquee = ({
                 {subarray.map((image, imageIndex) => (
                   <div className="relative" key={imageIndex + image}>
                     <GridLineHorizontal className="-top-4" offset="20px" />
-                    <motion.img
-                      whileHover={{
-                        y: -10,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeInOut",
-                      }}
-                      key={imageIndex + image}
-                      src={image}
-                      alt={`Image ${imageIndex + 1}`}
-                      loading="lazy"
-                      className="aspect-970/700 object-cover ring ring-gray-950/5 hover:shadow-2xl"
-                      width={970}
-                      height={700}
-                    />
+                    <MarqueeMedia src={image} imageIndex={imageIndex} />
                   </div>
                 ))}
               </motion.div>

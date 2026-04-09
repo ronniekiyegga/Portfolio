@@ -34,8 +34,8 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
 
   const heroImageClassName =
     item?.preview === "analytics"
-      ? "mx-auto w-full max-w-[920px] max-h-[420px] md:max-h-[460px] h-auto object-contain rounded-lg"
-      : "mx-auto w-full max-w-[920px] max-h-[420px] md:max-h-[480px] h-auto object-contain rounded-lg";
+      ? "mx-auto w-full max-w-[min(100%,680px)] max-h-[320px] md:max-h-[360px] h-auto object-contain rounded-lg"
+      : "mx-auto w-full max-w-[min(100%,680px)] max-h-[320px] md:max-h-[380px] h-auto object-contain rounded-lg";
 
   const startAutoScroll = useCallback((el: HTMLDivElement) => {
     isAnimatingRef.current = true;
@@ -219,7 +219,10 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                   containerRef={scrollRef}
                   src={item?.heroImage}
                   alt={item?.title ?? "Project"}
-                  minScale={item?.preview === "analytics" ? 0.6 : undefined}
+                  maxScale={1.06}
+                  scaleProgressSpan={0.22}
+                  minScale={item?.preview === "analytics" ? 0.9 : 1.1}
+                  className="max-w-3xl md:max-w-4xl"
                 />
                 <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
                   <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12 lg:gap-8">
@@ -259,7 +262,10 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                     </div>
 
                     {item?.insights && item.insights.length > 0 ? (
-                      <TracingBeam className="w-full max-w-none pl-20">
+                      <TracingBeam
+                        className="w-full max-w-none pl-20"
+                        svgGradientId="tb-project-modal"
+                      >
                         <div className="space-y-8">
                           <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4 py-6">
                             <Image

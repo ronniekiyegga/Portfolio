@@ -56,8 +56,14 @@ html {
   --invert: #fafafa;
   --invert-foreground: #171717;
   --Gradients-Emoji: rgba(62, 123, 250, 0.05);
-  --Gradients-Dark-Card: linear-gradient(134deg, rgba(0, 16, 37, 0.99) 17.35%, rgba(16, 8, 0, 0.61) 47.55%, #443890 69.8%, rgba(213, 24, 233, 0.26) 94.84%);
-  --Gradients-Light-Dark-BG: rgba(5, 5, 25, 0.00);
+  --Gradients-Dark-Card: linear-gradient(
+    134deg,
+    rgba(0, 16, 37, 0.99) 17.35%,
+    rgba(16, 8, 0, 0.61) 47.55%,
+    #443890 69.8%,
+    rgba(213, 24, 233, 0.26) 94.84%
+  );
+  --Gradients-Light-Dark-BG: rgba(5, 5, 25, 0);
   --Gradients-Pill-BG-Dark: linear-gradient(
     101deg,
     rgba(5, 5, 25, 0) 6.16%,
@@ -599,6 +605,34 @@ html.light .text-gradient-blue {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+/* Project showcase CTAs — muted default, same purple→cyan as .text-gradient-blue-static on hover/focus */
+.project-cta-link .project-cta-link-label {
+  color: #9d9e9f;
+}
+.dark .project-cta-link .project-cta-link-label {
+  color: #a3a3a3;
+}
+.project-cta-link:hover .project-cta-link-label,
+.project-cta-link:focus-visible .project-cta-link-label {
+  background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.project-cta-link--underline {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #9ca3af;
+}
+.dark .project-cta-link--underline {
+  text-decoration-color: #a3a3a3;
+}
+.project-cta-link--underline:hover,
+.project-cta-link--underline:focus-visible {
+  text-decoration-color: #0cd1cf;
 }
 
 /* WandSparkles icon - same shape, only colour changes (gradient when active, gray when inactive) */
@@ -1681,8 +1715,19 @@ html.light .work-card-v2:hover .wc-arrow {
    ================================================================ */
 .dark .project-visual-card {
   background:
-    radial-gradient(ellipse at 80% 90%, rgba(120, 40, 200, 0.7) 0%, rgba(60, 20, 120, 0.4) 35%, transparent 65%),
-    radial-gradient(ellipse at 100% 100%, #7B2FBE 0%, #3B1F6E 25%, #0F1B3D 55%, #0A1628 100%) !important;
+    radial-gradient(
+      ellipse at 80% 90%,
+      rgba(120, 40, 200, 0.7) 0%,
+      rgba(60, 20, 120, 0.4) 35%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 100% 100%,
+      #7b2fbe 0%,
+      #3b1f6e 25%,
+      #0f1b3d 55%,
+      #0a1628 100%
+    ) !important;
   border: none !important;
   box-shadow: 8px 20px 40px 0px rgba(219, 220, 230, 0.08) !important;
   border-radius: 12.14px !important;
