@@ -27,10 +27,9 @@ const HeroBio = ({ contactLiftTargetRef }: HeroBioProps = {}) => {
 
       <h1
         data-hero-name
-        className="font-cormorant leading-[0.95] tracking-[-0.02em] mb-5 whitespace-nowrap font-medium hero-name"
+        className="font-cormorant text-foreground leading-[0.95] tracking-[-0.02em] mb-5 whitespace-nowrap font-medium hero-name"
         style={{
           fontSize: "clamp(2.35rem, 4.6vw, 4rem)",
-          color: "var(--text)",
         }}
       >
         Ronnie{" "}

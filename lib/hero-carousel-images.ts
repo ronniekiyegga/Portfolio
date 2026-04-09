@@ -1,6 +1,9 @@
 import { existsSync, readdirSync, statSync } from "fs";
 import { join } from "path";
-import type { HeroCarouselImageSlide, HeroCarouselSlidesProp } from "./hero-carousel-types";
+import type {
+  HeroCarouselImageSlide,
+  HeroCarouselSlidesProp,
+} from "./hero-carousel-types";
 
 const CAROUSEL_DIR = join(process.cwd(), "public", "images", "carousel");
 const CAROUSEL_PUBLIC_PREFIX = "/images/carousel";
@@ -114,10 +117,22 @@ export function getHeroCarouselSlidesFromPublic(): {
   };
 }
 
+/** Looping tutorial clip — appended to the `up` column only (right stack on desktop). */
+const HERO_TUTORIAL_VIDEO_SLIDE: HeroCarouselImageSlide = {
+  src: "/images/projects/maths-tutoring/tutorial.webm",
+  title: "Tutoring tutorial",
+  alt: "Maths tutoring platform — tutorial preview",
+  caption: ["TUTORING", "TUTORIAL"],
+};
+
 /**
  * Resolves slides for `<HeroSection heroCarouselSlides={...} />`.
- * Sources slides from files in `public/images/carousel`.
+ * Merges `public/images/carousel` `*_up` / `*_down` files; adds tutorial video to `up` only.
  */
 export function getResolvedHeroCarouselSlides(): HeroCarouselSlidesProp {
-  return getHeroCarouselSlidesFromPublic();
+  const fromDisk = getHeroCarouselSlidesFromPublic();
+  return {
+    up: [...fromDisk.up, HERO_TUTORIAL_VIDEO_SLIDE],
+    down: fromDisk.down,
+  };
 }

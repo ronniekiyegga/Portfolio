@@ -22,9 +22,8 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
 
-import lanyardTexture from "./lanyard/lanyard.png";
-
 const CARD_GLB = "/lanyard/card.glb";
+const LANYARD_TEXTURE = "/lanyard/lanyard.png";
 const IDENTITY_ROTATION: [number, number, number] = [0, 0, 0];
 const SLIP_ROTATION: [number, number, number] = [Math.PI * 0.9, 0, 0];
 
@@ -264,9 +263,8 @@ function Band({
   const movingRef = useRef(false);
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
-  const texture = useTexture(
-    typeof lanyardTexture === "string" ? lanyardTexture : lanyardTexture.src,
-  );
+  // Use public path to avoid bundler/static-media edge cases in Three loaders.
+  const texture = useTexture(LANYARD_TEXTURE);
 
   const [curve] = useState(
     () =>

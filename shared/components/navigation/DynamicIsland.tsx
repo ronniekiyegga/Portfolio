@@ -66,16 +66,16 @@ export default function DynamicIsland() {
                 >
                   <div
                     className={cn(
-                      "flex size-10 items-center justify-center overflow-hidden rounded-full",
+                      "relative size-10 shrink-0 overflow-hidden rounded-full",
                       "bg-[#F9F9F9] dark:bg-[#0a0518]",
                     )}
                   >
                     <Image
-                      src="/images/profile/Avatar.svg"
+                      src="/lanyard/Ronnie.webp"
                       alt="Ronnie"
-                      width={40}
-                      height={40}
-                      className="size-full object-cover"
+                      fill
+                      sizes="40px"
+                      className="object-contain object-center"
                     />
                   </div>
                 </div>
@@ -101,7 +101,7 @@ export default function DynamicIsland() {
               )}
               style={{
                 borderRadius: "10.14463rem",
-                border: "1.116px solid var(--Gradients-Cream, #FFF)",
+
                 background:
                   "var(--Gradients-White-1, linear-gradient(180deg, #FBFBFB 38.73%, #F7F7F9 100%))",
               }}
@@ -109,7 +109,7 @@ export default function DynamicIsland() {
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className={cn(
-                  "min-w-0 shrink truncate text-[12px] font-medium leading-tight tracking-tight text-[#000626] sm:text-[13px]",
+                  "min-w-0 shrink truncate text-[12px] font-medium leading-tight tracking-tight text-[#000626] dark:text-white sm:text-[13px]",
                   "font-(family-name:--font-source-serif) hover:opacity-80 no-underline",
                 )}
               >
@@ -129,7 +129,10 @@ export default function DynamicIsland() {
                     className="inline-flex text-[#000626] transition-opacity hover:opacity-65"
                     aria-label={label}
                   >
-                    <Icon className="size-[14px] sm:size-[15px]" strokeWidth={1.5} />
+                    <Icon
+                      className="size-[14px] sm:size-[15px]"
+                      strokeWidth={1.5}
+                    />
                   </Link>
                 ))}
               </div>

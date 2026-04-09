@@ -106,7 +106,10 @@ export default function ProjectSection() {
       <div className="absolute inset-0 z-0 dark:hidden" />
       <div className="relative z-10">
         <LampWidget />
-        <TracingBeam className="w-full px-8 sm:px-20 lg:px-20 py-6 md:py-2">
+        <TracingBeam
+          className="w-full px-8 sm:px-20 lg:px-20 py-6 md:py-2"
+          svgGradientId="tb-project-section"
+        >
           <div
             ref={containerRef}
             className="mx-auto w-full antialiased relative"

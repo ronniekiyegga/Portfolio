@@ -20,11 +20,17 @@ export type ProjectCardTextContentProps = {
 
 const PC_VIEWPORT = { once: true, amount: 0.3 as const };
 
-function typeToCategoryAndTag(type: string, tag?: string): {
+function typeToCategoryAndTag(
+  type: string,
+  tag?: string,
+): {
   category?: string;
   tag: string;
 } {
-  const parts = type.split("·").map((p) => p.trim()).filter(Boolean);
+  const parts = type
+    .split("·")
+    .map((p) => p.trim())
+    .filter(Boolean);
   const category = parts[0]?.toUpperCase();
   const resolvedTag = tag ?? parts[1] ?? parts[0] ?? "";
   return { category, tag: resolvedTag };
@@ -37,7 +43,7 @@ const ProjectCardTextContent = ({
 }: ProjectCardTextContentProps) => {
   const { openModal } = useProjectContext();
   const reduceMotion = useReducedMotion();
-  const { category, tag } = typeToCategoryAndTag(workItem.type, workItem.tag);
+  const { tag } = typeToCategoryAndTag(workItem.type, workItem.tag);
 
   const staggerParent = reduceMotion
     ? {
@@ -54,11 +60,10 @@ const ProjectCardTextContent = ({
       };
 
   return (
-    <div className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-4 text-left">
+    <div className="relative z-10 flex min-w-0 flex-1 flex-col items-stretch gap-4 text-left">
       <ProjectCardItem
         index={0}
         title={workItem.title}
-        category={category}
         tag={tag}
         caseStudy={project.caseStudy}
         figmaHref={project.figmaHref}
@@ -68,22 +73,22 @@ const ProjectCardTextContent = ({
       />
 
       <motion.div
-        className="flex w-full flex-wrap items-center justify-start gap-2"
+        className="flex w-full flex-wrap items-center justify-start gap-1"
         variants={staggerParent}
         initial="hidden"
         whileInView="show"
         viewport={PC_VIEWPORT}
       >
-        {techTags.map((tag) => {
-          const base =
-            "text-[10.2px] font-semibold leading-[20.9px] text-black/60 dark:text-white/60 bg-gray-50 px-1 py-0.5 ";
-
-          return (
-            <span key={tag} className={` ${base} dark:bg-gray-600 rounded-sm`}>
-              {tag}
+        {techTags.map((techLabel) => (
+          <span
+            key={techLabel}
+            className="inline-flex rounded-full bg-gray-50 px-2 py-0.5 dark:bg-gray-800"
+          >
+            <span className="text-[8.5px] font-semibold leading-[20.9px]  bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-transparent">
+              {techLabel}
             </span>
-          );
-        })}
+          </span>
+        ))}
       </motion.div>
     </div>
   );

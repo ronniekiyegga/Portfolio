@@ -1,19 +1,31 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { IoPlay } from "react-icons/io5";
+import { useState } from "react";
 import { Rocket } from "lucide-react";
-import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { WorkItem } from "@/lib/data";
 
 const PC_VIEWPORT = { once: true, amount: 0.35 as const };
 const PC_EASE = [0.22, 1, 0.36, 1] as const;
 
+/** True Founders (coming soon) — cream pill, warm brown label */
+function SoonPillBadge() {
+  return (
+    <span
+      className="inline-flex items-center rounded-full bg-[#FDF6E9] px-2.5 py-1 dark:bg-[#2a2118] dark:ring-1 dark:ring-[#7B4A12]/35"
+      role="status"
+      aria-label="Coming soon"
+    >
+      <span className="font-sans text-[9px] font-bold uppercase tracking-[0.14em] text-[#7B4A12] dark:text-[#d4a574]">
+        Soon
+      </span>
+    </span>
+  );
+}
+
 interface ProjectCardItemProps {
   index: number;
   title: string;
-  category?: string;
   tag: string;
   figmaHref?: string;
   caseStudy: string;
@@ -25,7 +37,6 @@ interface ProjectCardItemProps {
 const ProjectCardItem = ({
   index,
   title,
-  category,
   tag,
   figmaHref,
   caseStudy,
@@ -33,14 +44,6 @@ const ProjectCardItem = ({
   workItem,
   openModal,
 }: ProjectCardItemProps) => {
-  const playGradientId = useMemo(() => {
-    // Deterministic id to avoid SSR/client hydration mismatches.
-    const slug = `${title}-${index}`
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-    return `play-gradient-${slug || "default"}`;
-  }, [title, index]);
   const reduceMotion = useReducedMotion();
   const [ctaHovered, setCtaHovered] = useState(false);
   const showRockets = ctaHovered && !reduceMotion;
@@ -57,10 +60,10 @@ const ProjectCardItem = ({
   return (
     <div
       key={`${title}-${index}`}
-      className="relative z-10 flex min-w-0 flex-1 flex-col items-start gap-4"
+      className="relative z-10 flex min-w-0 flex-1 flex-col items-stretch gap-2"
     >
       <motion.div
-        className="flex items-center gap-0.5"
+        className="flex self-start items-center gap-0.5"
         initial={hidden}
         whileInView={visible}
         viewport={PC_VIEWPORT}
@@ -69,14 +72,14 @@ const ProjectCardItem = ({
         <span className="inline-flex items-start rounded-full bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] p-[2.03px]">
           <span className="size-[2.69px] rounded-full bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] shadow-[0px_1.08px_8.62px_rgba(255,122,153,0.25)]" />
         </span>
-        <span className="ml-2 bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[10.9px] font-semibold leading-[16.3px] text-transparent">
-          {category}
+        <span className="ml-1 bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-transparent  text-[10px] font-semibold leading-[22.9px]  uppercase">
+          {tag}
         </span>
       </motion.div>
 
-      <div className="flex w-full min-w-0 flex-col gap-3">
+      <div className="flex w-full min-w-0 flex-col gap-2 lg:w-110">
         <motion.div
-          className="text-[28px] font-semibold leading-[31.5px] tracking-[-0.28px] text-[#000626] dark:text-white"
+          className="text-[26px] mb-2 font-semibold leading-[31.5px] tracking-[-0.28px] text-[#000626] dark:text-white "
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
@@ -86,17 +89,13 @@ const ProjectCardItem = ({
         </motion.div>
 
         <motion.div
-          className="flex flex-wrap items-center gap-2"
+          className="relative flex flex-wrap items-center gap-1"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
           transition={baseTransition(0.16)}
         >
-          <span className="text-[11.5px] font-medium leading-[22.9px] text-[rgba(186,188,205,1)]">
-            {tag}
-          </span>
-          <span className="size-[5.91px]">{/* <CircularDivider /> */}</span>
-          <span className="inline-flex items-center gap-2">
+          <span className="inline-flex items-center gap-0.5">
             {/* Order: CASE STUDY | DESIGN FILE • LIVE WEBSITE */}
             <motion.div
               className="relative inline-flex"
@@ -140,68 +139,43 @@ const ProjectCardItem = ({
               <button
                 type="button"
                 onClick={() => openModal(workItem)}
-                className="group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent hover:opacity-80 transition-opacity">
+                <span className="project-cta-link-label text-[11px] font-medium uppercase leading-[16.7px]">
                   {caseStudy}
                 </span>
-                <svg
-                  aria-hidden
-                  className="pointer-events-none absolute h-0 w-0 overflow-hidden"
-                >
-                  <defs>
-                    <linearGradient
-                      id={playGradientId}
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="rgb(102, 123, 246)" />
-                      <stop offset="100%" stopColor="rgb(38, 208, 206)" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <IoPlay
-                  aria-hidden
-                  className="h-[10px] w-[10px] shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-                  style={{ fill: `url(#${playGradientId})` }}
-                />
               </button>
             </motion.div>
 
-            <span className="mx-1.5 text-[rgba(186,188,205,1)]">|</span>
+            <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>
 
             <a
               href={effectiveFigmaHref}
               target="_blank"
               rel="noreferrer"
-              className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11.5px] font-semibold leading-[22.9px] text-transparent hover:opacity-80 transition-opacity"
+              className="project-cta-link project-cta-link--underline inline-flex items-center justify-center gap-1 text-[11px] font-medium uppercase leading-[22.9px] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              DESIGN FILE
+              <span className="project-cta-link-label">Figma Link</span>
             </a>
 
             <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>
 
-            {title.trim().toLowerCase() === "true founders" ? (
-              <span className="bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent">
-                COMING SOON
-              </span>
+            {workItem.id === "true-founders" ? (
+              <SoonPillBadge />
             ) : (
               <a
                 href={workItem.href}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 bg-[linear-gradient(45deg,rgba(102,123,246,1)_0%,rgba(38,208,206,1)_100%)] bg-clip-text text-[11px] font-semibold leading-[16.7px] text-transparent hover:opacity-80 transition-opacity"
+                className="project-cta-link project-cta-link--underline inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase leading-[16.7px] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <span>LIVE WEBSITE</span>
-                <HiArrowTopRightOnSquare className="h-4 w-4 text-[rgba(102,123,246,1)] dark:text-[rgba(38,208,206,1)]" />
+                <span className="project-cta-link-label">Link</span>
               </a>
             )}
           </span>
         </motion.div>
         <motion.p
-          className="text-sm leading-[20px] text-[rgba(0,9,51,0.65)] dark:text-white/60"
+          className="w-full max-w-full text-[14px] leading-[20px] text-[rgba(0,9,51,0.65)] dark:text-white/60 lg:text-[13.5px] lg:leading-5.5 lg:tracking-[-0.01em]"
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}

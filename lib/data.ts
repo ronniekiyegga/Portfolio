@@ -11,6 +11,11 @@ export interface ProjectSectionStat {
 }
 
 export interface WorkItem {
+  /**
+   * Stable key for linking cards/sections to this entry.
+   * Editing `title` or `desc` does not break lookups — keep this unchanged.
+   */
+  id: string;
   tag?: string;
   type: string;
   title: string;
@@ -26,6 +31,131 @@ export interface WorkItem {
   githubHref?: string;
   insights?: WorkItemInsight[];
   statistics?: ProjectSectionStat[];
+}
+
+export type ProjectCardStackDef = {
+  id: number;
+  title?: string | null;
+  icon: "purple" | "teal" | null;
+  imageSrc: string;
+  imageAlt: string;
+};
+
+export type ProjectCardShowcaseRow = {
+  imageOnLeft: boolean;
+  watermark: string;
+  stack: ProjectCardStackDef[];
+  /** Must match a `WorkItem.id` in `workItems` */
+  workItemId: string;
+};
+
+/** Figma “Project Files” — used for FIGMA FILE on every showcase row */
+export const PROJECT_CARD_SHOWCASE_FIGMA_HREF =
+  "https://www.figma.com/design/Au6mJ4osdzMpUBlqojMYzm/Project-Files?node-id=0-1&t=52XXZclkPhzyBPFG-1";
+
+export const PROJECT_CARD_STACK_ROW_1: ProjectCardStackDef[] = [
+  {
+    id: 1,
+    icon: "teal",
+    imageSrc: "/images/projects/edufeedbackpro/DMI_HERO.svg",
+    imageAlt: "EduFeedbackPro hero preview",
+  },
+  {
+    id: 2,
+    icon: "purple",
+    imageSrc: "/images/projects/edufeedbackpro/DMI.svg",
+    imageAlt: "EduFeedbackPro benefits preview",
+  },
+  {
+    id: 3,
+    icon: null,
+    imageSrc: "/images/projects/edufeedbackpro/EDUFEEDBACKPRO.svg",
+    imageAlt: "EduFeedbackPro support preview",
+  },
+];
+
+export const PROJECT_CARD_STACK_ROW_2: ProjectCardStackDef[] = [
+  {
+    id: 1,
+    icon: "teal",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_hero.webp",
+    imageAlt: "Mathematics Tutoring hero preview",
+  },
+  {
+    id: 2,
+    icon: "purple",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
+    imageAlt: "Mathematics Tutoring benefits preview",
+  },
+  {
+    id: 3,
+    icon: null,
+    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
+    imageAlt: "Mathematics Tutoring support preview",
+  },
+];
+
+export const PROJECT_CARD_STACK_ROW_3: ProjectCardStackDef[] = [
+  {
+    id: 1,
+    icon: "purple",
+    imageSrc: "/images/projects/truefounders/TrueFounders_hero.webp",
+    imageAlt: "TrueFounders hero preview",
+  },
+  {
+    id: 2,
+    icon: "teal",
+    imageSrc: "/images/projects/truefounders/TrueFounders_benefits.svg",
+    imageAlt: "TrueFounders benefits preview",
+  },
+  {
+    id: 3,
+    icon: null,
+    imageSrc: "/images/projects/truefounders/TrueFounders_testimonial.svg",
+    imageAlt: "TrueFounders testimonials preview",
+  },
+];
+
+export const PROJECT_CARD_SHOWCASE_ROWS: ProjectCardShowcaseRow[] = [
+  {
+    imageOnLeft: true,
+    watermark: "PROJECT 1",
+    stack: PROJECT_CARD_STACK_ROW_1,
+    workItemId: "edu-analytics-dashboard",
+  },
+  {
+    imageOnLeft: false,
+    watermark: "PROJECT 2",
+    stack: PROJECT_CARD_STACK_ROW_2,
+    workItemId: "edtech-tutoring",
+  },
+  {
+    imageOnLeft: true,
+    watermark: "PROJECT 3",
+    stack: PROJECT_CARD_STACK_ROW_3,
+    workItemId: "true-founders",
+  },
+];
+
+export type ProjectCardStackFan = "se" | "sw";
+
+export const PROJECT_CARD_FAN_DX = 32;
+export const PROJECT_CARD_FAN_DY = 28;
+
+export function projectCardStackOffset(
+  index: number,
+  fan: ProjectCardStackFan,
+): { left: number; top: number } {
+  if (fan === "se") {
+    return {
+      left: index * PROJECT_CARD_FAN_DX,
+      top: index * PROJECT_CARD_FAN_DY,
+    };
+  }
+  return {
+    left: (2 - index) * PROJECT_CARD_FAN_DX,
+    top: index * PROJECT_CARD_FAN_DY,
+  };
 }
 
 export interface DesignItem {
@@ -60,7 +190,29 @@ export interface ExperienceV1Item {
   techStack?: TechIconKey[];
 }
 
+export function getWorkItemById(id: string): WorkItem | undefined {
+  return workItems.find((w) => w.id === id);
+}
+
 export const experiencesV1: ExperienceV1Item[] = [
+  {
+    id: "Product Engineer",
+    organisation: "Independent Contractor",
+    role: "Product Engineer Consultant",
+    dates: "2023 - 2026",
+    responsibilities:
+      "Architected and accelerated MVP delivery",
+    techStack: [
+      "Figma",
+      "Nextjs",
+      "Python",
+      "TypeScript",
+      "Docker",
+      "Redis",
+      "Nginx",
+      "TensorFlow",
+    ],
+  },
   {
     id: "SRS",
     organisation: "The School Of Research Science",
@@ -80,8 +232,8 @@ export const experiencesV1: ExperienceV1Item[] = [
     ],
   },
   {
-    id: "Freelance",
-    organisation: "Freelance (Contract Work)",
+    id: "Software Engineer",
+    organisation: "Independent Contractor",
     role: "Software Engineer ",
     dates: "2020 - 2023",
     responsibilities:
@@ -94,26 +246,36 @@ export const experiencesV1: ExperienceV1Item[] = [
     role: "Software Engineer Intern ",
     dates: "2019 - 2019",
     responsibilities:
-      "Built interactive React dashboards with D3.js timeline visualizations for 3 fintech product teams, enabling self-serve reporting for non-technical stakeholders and significantly reducing analyst data retrieval time.",
+      "Reduced data retrieval latency by ~40% for institutional analyst teams by engineering automated Python/SQL ingestion pipelines spanning equities, FX, and fixed income datasets, accelerating time-to-insight for daily reporting workflows",
     techStack: ["React", "TypeScript", "Figma", "Slack", "Nodejs"],
   },
-  {
-    id: "Fitness",
-    organisation: "DW Fitness First Baker Street",
-    role: "Senior Strength & Conditioning Consultant",
-    dates: "2015 - 2019",
-    responsibilities:
-      "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
-    techStack: [],
-  },
+  // {
+  //   id: "Fitness",
+  //   organisation: "DW Fitness First Baker Street",
+  //   role: "Senior Strength & Conditioning Consultant",
+  //   dates: "2015 - 2019",
+  //   responsibilities:
+  //     "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
+  //   techStack: [],
+  // },
 ];
 
 export const workItems: WorkItem[] = [
   {
+    id: "edu-analytics-dashboard",
     type: "B2B SaaS · Analytics Platform",
-    title: "EduFeedbackPro",
+    title: "AI Powered Analytics Dashboard",
     desc: "An analytics platform that transforms student performance data into clear, actionable insights by helping educators instantly identify underperforming students and reduce workload by up to 60%.",
-    tags: ["Next.js", "BigQuery", "PostgreSQL", "Docker"],
+    tags: [
+      "TypeScript",
+      "Next.js",
+      "BigQuery",
+      "PostgreSQL",
+      "Docker",
+      "ElevenLabs",
+      "Neon",
+      "Playwright",
+    ],
     metric: "sub-50ms latency",
     href: "https://edu-feedback-pro-beta.vercel.app/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
@@ -189,7 +351,8 @@ export const workItems: WorkItem[] = [
     ],
   },
   {
-    type: "Brand Identity · Landing Page",
+    id: "true-founders",
+    type: "Brand Identity · Brand Identity",
     title: "True Founders",
     desc: "Brand identity and landing page concept for a women's life coaching business in Dubai, backed by competitive analysis, personas, and conversion-focused UX.",
     tags: [
@@ -218,11 +381,22 @@ export const workItems: WorkItem[] = [
       { value: "UX", label: "Audit" },
     ],
   },
+  // Tutoring Platform
   {
+    id: "edtech-tutoring",
     type: "B2C SaaS · Tutoring Platform",
-    title: "Ms. Maryam's Maths",
+    title: "EdTech Tutoring Platform",
     desc: "A premium GCSE & A-level maths platform that helps students master topics, track progress, and improve exam performance through structured learning and personalised support.",
-    tags: ["Next.js", "Clerk", "PostgreSQL", "DigitalOcean"],
+    tags: [
+      "TypeScript",
+      "Next.js",
+      "Tailwind",
+      "Clerk",
+      "PostgreSQL",
+      "DigitalOcean",
+      "Nginx",
+      "GitHub Actions",
+    ],
     metric: "3 min deploy vs 20+ min",
     href: "https://www.msmaryamsmaths.com/",
     gradient: "linear-gradient(160deg, #0a1628 0%, #0d2244 50%, #081830 100%)",
@@ -275,7 +449,9 @@ export const workItems: WorkItem[] = [
       { value: "7", label: "Marketing Sections" },
     ],
   },
+  // KNN Classifier
   {
+    id: "knn-classifier",
     type: "Educational Tool · ML Classifier",
     title: "KNN Image Classifier",
     desc: "On-device ML image classifier built with TensorFlow.js, enabling students to train and run models directly in the browser without server infrastructure.",
@@ -298,7 +474,9 @@ export const workItems: WorkItem[] = [
       { value: "BYOK", label: "AI Reviewer" },
     ],
   },
+  // Algo-pseudo
   {
+    id: "algo-pseudo",
     type: "Developer Tool · Open Source",
     title: "Algo-pseudo IDE",
     desc: "Browser-based pseudocode IDE for GCSE and A-Level students with real-time syntax validation and AI-assisted code review.",
@@ -375,7 +553,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[1],
+    workItem: workItems[2],
     badge: "B2C SAAS PLATFORM",
     links: {
       designFile:
@@ -406,7 +584,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[2],
+    workItem: workItems[3],
     badge: "EDUCATIONAL TOOL",
     links: { liveWebsite: "https://blissfulcoda.github.io/teachablemachine/" },
     features: [
@@ -433,7 +611,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[3],
+    workItem: workItems[4],
     badge: "DEVELOPER TOOL",
     links: { liveWebsite: "https://www.algo-pseudo.com/" },
     features: [
@@ -517,6 +695,24 @@ export const designItems: DesignItem[] = [
 ];
 
 export const experienceItems: ExperienceItem[] = [
+  {
+    initial: "S",
+    company: "Product Engineer Consultant",
+    role: "Product Engineer Consultant",
+    desc: "Built multiple internal EdTech platforms used across the school's computer science programme including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
+    tags: ["Next.js", "TypeScript", "TensorFlow.js", "Docker", "Redis"],
+    techStack: [
+      "Figma",
+      "Nextjs",
+      "Python",
+      "TypeScript",
+      "Docker",
+      "Redis",
+      "Nginx",
+      "TensorFlow",
+    ],
+    dates: "2023 — 2026",
+  },
   {
     initial: "S",
     company: "School of Research Science",
