@@ -199,7 +199,7 @@ export const experiencesV1: ExperienceV1Item[] = [
     id: "Product Engineer",
     organisation: "Independent Contractor",
     role: "Product Engineer Consultant",
-    dates: "2023 - 2026",
+    dates: "2026 - Present",
     responsibilities:
       "Architected and accelerated MVP delivery",
     techStack: [
