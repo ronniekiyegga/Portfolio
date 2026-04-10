@@ -45,8 +45,12 @@ const coursesLinks = [
   { name: "Tutorials", href: "#" },
 ];
 
-const pillBaseLeft = cn("backdrop-blur-sm pill-light pill-dark-left header-pill-bg");
-const pillBaseRight = cn("backdrop-blur-sm pill-light pill-dark-right header-pill-bg");
+const pillBaseLeft = cn(
+  "backdrop-blur-sm pill-light pill-dark-left header-pill-bg",
+);
+const pillBaseRight = cn(
+  "backdrop-blur-sm pill-light pill-dark-right header-pill-bg",
+);
 
 interface HeaderProps {
   isHeaderVisible: boolean;
@@ -186,7 +190,7 @@ export default function Header({
                                   scrollToHomeSection(id, pathname, setHash, e)
                                 }
                                 className={cn(
-                                  "block px-2.5 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent! lg:px-3",
+                                  "block px-2.5 py-2 text-base font-medium transition-colors hover:bg-transparent! focus:bg-transparent! lg:px-3",
                                   isHomeSectionActive(id, pathname, hash)
                                     ? "text-gradient-blue"
                                     : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
@@ -390,11 +394,7 @@ function MobileMenu({
                             window.location.pathname === "/"
                           ) {
                             e.preventDefault();
-                            scrollToHomeSection(
-                              item.sectionId,
-                              "/",
-                              () => {},
-                            );
+                            scrollToHomeSection(item.sectionId, "/", () => {});
                           }
                           onClose();
                         }}
