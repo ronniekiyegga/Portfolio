@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import React, {  } from "react";
+import React from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { RiMenu4Line } from "react-icons/ri";
@@ -24,6 +24,12 @@ import {
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import {
+  HOME_NAV_ITEMS,
+  HOME_SECTION_HASH_EVENT,
+  isHomeSectionActive,
+  scrollToHomeSection,
+} from "@/lib/home-nav";
 import MobileHeaderPill from "./MobileHeaderPill";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -62,15 +68,19 @@ export default function Header({
   const pathname = usePathname();
   const [hash, setHash] = React.useState("");
   React.useEffect(() => {
-    setHash(typeof window !== "undefined" ? window.location.hash.slice(1) : "");
-    const onHashChange = () => setHash(window.location.hash.slice(1));
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+    const syncFromUrl = () => setHash(window.location.hash.slice(1));
+    const onCustom = (ev: Event) => {
+      const id = (ev as CustomEvent<string>).detail;
+      if (typeof id === "string") setHash(id);
+    };
+    queueMicrotask(syncFromUrl);
+    window.addEventListener("hashchange", syncFromUrl);
+    window.addEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    return () => {
+      window.removeEventListener("hashchange", syncFromUrl);
+      window.removeEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    };
   }, [pathname]);
-  const isAboutActive =
-    pathname === "/" && hash !== "projects" && hash !== "design";
-  const isWorkActive = pathname === "/" && hash === "projects";
-  const isDesignActive = pathname === "/" && hash === "design";
 
   React.useEffect(() => {
     if (isMobileMenuOpen) {
@@ -166,80 +176,27 @@ export default function Header({
 
                   <nav className="flex items-center gap-0.5">
                     <NavigationMenu viewport={false}>
-                      <NavigationMenuList className="flex-none justify-start gap-6 border-0 bg-transparent p-0">
-                        <NavigationMenuItem value="about">
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/"
-                              className={cn(
-                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent!",
-                                isAboutActive
-                                  ? "text-gradient-blue"
-                                  : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
-                              )}
-                            >
-                              About
-                            </Link>
-                          </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem value="work">
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/#projects"
-                              onClick={(e) => {
-                                if (pathname === "/") {
-                                  e.preventDefault();
-                                  document
-                                    .getElementById("projects")
-                                    ?.scrollIntoView({ behavior: "smooth" });
-                                  window.history.replaceState(
-                                    null,
-                                    "",
-                                    "/#projects",
-                                  );
-                                  setHash("projects");
+                      <NavigationMenuList className="flex-none justify-start gap-4 border-0 bg-transparent p-0 lg:gap-6">
+                        {HOME_NAV_ITEMS.map(({ label, id }) => (
+                          <NavigationMenuItem key={id} value={id}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href={`/#${id}`}
+                                onClick={(e) =>
+                                  scrollToHomeSection(id, pathname, setHash, e)
                                 }
-                              }}
-                              className={cn(
-                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent!",
-                                isWorkActive
-                                  ? "text-gradient-blue"
-                                  : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
-                              )}
-                            >
-                              Work
-                            </Link>
-                          </NavigationMenuLink>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem value="design">
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href="/#design"
-                              onClick={(e) => {
-                                if (pathname === "/") {
-                                  e.preventDefault();
-                                  document
-                                    .getElementById("design")
-                                    ?.scrollIntoView({ behavior: "smooth" });
-                                  window.history.replaceState(
-                                    null,
-                                    "",
-                                    "/#design",
-                                  );
-                                  setHash("design");
-                                }
-                              }}
-                              className={cn(
-                                "block px-3 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent! hover:text-neutral-900 dark:hover:text-neutral-100",
-                                isDesignActive
-                                  ? "text-gradient-blue"
-                                  : "text-neutral-600 dark:text-neutral-400",
-                              )}
-                            >
-                              Design
-                            </Link>
-                          </NavigationMenuLink>
-                        </NavigationMenuItem>
+                                className={cn(
+                                  "block px-2.5 py-2 text-sm font-medium transition-colors hover:bg-transparent! focus:bg-transparent! lg:px-3",
+                                  isHomeSectionActive(id, pathname, hash)
+                                    ? "text-gradient-blue"
+                                    : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
+                                )}
+                              >
+                                {label}
+                              </Link>
+                            </NavigationMenuLink>
+                          </NavigationMenuItem>
+                        ))}
                       </NavigationMenuList>
                     </NavigationMenu>
                   </nav>
@@ -321,10 +278,15 @@ export default function Header({
   );
 }
 
+const exploreSectionLinks = HOME_NAV_ITEMS.map(({ label, id }) => ({
+  name: label,
+  href: `/#${id}`,
+  sectionId: id,
+}));
+
 const exploreLinks = [
-  { name: "About", href: "/#about" },
-  { name: "More", href: "#" },
-  { name: "Blog", href: "/blog" },
+  ...exploreSectionLinks,
+  { name: "Blog", href: "/blog" as const, sectionId: null as null },
 ];
 
 function MobileMenu({
@@ -421,7 +383,21 @@ function MobileMenu({
                       <Link
                         key={item.name}
                         href={item.href}
-                        onClick={onClose}
+                        onClick={(e) => {
+                          if (
+                            item.sectionId &&
+                            typeof window !== "undefined" &&
+                            window.location.pathname === "/"
+                          ) {
+                            e.preventDefault();
+                            scrollToHomeSection(
+                              item.sectionId,
+                              "/",
+                              () => {},
+                            );
+                          }
+                          onClose();
+                        }}
                         className={cn(
                           "w-full rounded-lg py-0.5 pr-3 text-lg font-bold text-neutral-900 dark:text-neutral-100",
                         )}

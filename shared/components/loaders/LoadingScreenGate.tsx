@@ -6,7 +6,7 @@ import LoadingScreen from "./LoadingScreen";
 
 function scrollToHero() {
   requestAnimationFrame(() => {
-    document.getElementById("hero-section")?.scrollIntoView({
+    document.getElementById("work")?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });

@@ -119,7 +119,7 @@ export default function Experiences() {
                             {item.organisation}
                           </span>
                         )}
-                        {/* {(item.techStack === undefined ||
+                        {(item.techStack === undefined ||
                           item.techStack.length > 0) && (
                           <>
                             {item.organisation && (
@@ -130,7 +130,7 @@ export default function Experiences() {
                               icons={item.techStack}
                             />
                           </>
-                        )} */}
+                        )}
                       </div>
                     </div>
                     <span className="shrink-0 text-xs text-neutral-500 dark:text-neutral-500">

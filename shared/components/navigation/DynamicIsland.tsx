@@ -2,41 +2,44 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Github, Linkedin, Mail } from "lucide-react";
 import { WiStars } from "react-icons/wi";
 import { AnimatedThemeToggler } from "@/shared/components/ui/animated-theme-toggler";
 import { useSplash } from "@/shared/contexts/SplashContext";
 import { useDynamicIslandVisibility } from "@/shared/hooks/useDynamicIslandVisibility";
+import {
+  HOME_NAV_ITEMS,
+  HOME_SECTION_HASH_EVENT,
+  isHomeSectionActive,
+  scrollToHomeSection,
+} from "@/lib/home-nav";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 import ButtonWidget from "@/shared/components/sections/ButtonWidget";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-const CONTACT_EMAIL = "kiyeggaronnie@gmail.com";
-
-const middlePillSocial = [
-  {
-    href: "https://www.linkedin.com/in/ronnie-kiyegga/",
-    label: "LinkedIn",
-    Icon: Linkedin,
-  },
-  {
-    href: "https://github.com/ronniekiyegga",
-    label: "GitHub",
-    Icon: Github,
-  },
-  {
-    href: `mailto:${CONTACT_EMAIL}`,
-    label: "Email",
-    Icon: Mail,
-  },
-] as const;
-
 export default function DynamicIsland() {
   const isVisible = useDynamicIslandVisibility();
   const { splashActive, setSplashActive } = useSplash();
+  const pathname = usePathname();
+  const [hash, setHash] = useState("");
+  useEffect(() => {
+    const syncFromUrl = () => setHash(window.location.hash.slice(1));
+    const onCustom = (ev: Event) => {
+      const id = (ev as CustomEvent<string>).detail;
+      if (typeof id === "string") setHash(id);
+    };
+    queueMicrotask(syncFromUrl);
+    window.addEventListener("hashchange", syncFromUrl);
+    window.addEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    return () => {
+      window.removeEventListener("hashchange", syncFromUrl);
+      window.removeEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    };
+  }, [pathname]);
 
   return (
     <AnimatePresence>
@@ -91,51 +94,50 @@ export default function DynamicIsland() {
             </div>
           </ButtonWidget>
 
-          {/* Middle pill — email + LinkedIn / GitHub / mail (hidden on mobile) */}
-
-          <ButtonWidget className="hidden md:flex max-w-[min(100vw-10rem,36rem)]">
+          {/* Middle pill — flex + uniform gap between labels (avoids wide cell after short “Work”) */}
+          <ButtonWidget className="hidden md:flex">
             <div
               className={cn(
-                "left-pill-inner lets-chat-inner flex min-h-12 w-full max-w-full items-center justify-between gap-4 rounded-full px-4 py-3.5 sm:px-6 sm:py-4",
-                "border border-white/10 dark:border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.18)]",
+                "island-middle-nav-pill flex min-h-11 items-center justify-center rounded-full border border-neutral-200/85 bg-white",
+                "px-4 pt-3 pb-1.5 shadow-[0_6px_28px_-6px_rgba(15,23,42,0.1),0_2px_10px_-2px_rgba(99,102,241,0.12)]",
+                "dark:border-white/10",
               )}
-              style={{
-                borderRadius: "10.14463rem",
-
-                background:
-                  "var(--Gradients-White-1, linear-gradient(180deg, #FBFBFB 38.73%, #F7F7F9 100%))",
-              }}
+              style={{ borderRadius: "10.14463rem" }}
             >
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className={cn(
-                  "min-w-0 shrink truncate text-[12px] font-medium leading-tight tracking-tight text-[#000626] dark:text-white sm:text-[13px]",
-                  "font-(family-name:--font-source-serif) hover:opacity-80 no-underline",
-                )}
+              <nav
+                className="flex shrink-0 flex-nowrap items-center justify-center gap-x-4 px-1 sm:gap-x-5 sm:px-2"
+                aria-label="On this page"
               >
-                {CONTACT_EMAIL}
-              </a>
-              <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
-                {middlePillSocial.map(({ href, label, Icon }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={
-                      href.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    className="inline-flex text-[#000626] transition-opacity hover:opacity-65"
-                    aria-label={label}
-                  >
-                    <Icon
-                      className="size-[14px] sm:size-[15px]"
-                      strokeWidth={1.5}
-                    />
-                  </Link>
-                ))}
-              </div>
+                {HOME_NAV_ITEMS.map(({ label, id }) => {
+                  const active = isHomeSectionActive(id, pathname, hash);
+                  return (
+                    <a
+                      key={id}
+                      href={`/#${id}`}
+                      onClick={(e) =>
+                        scrollToHomeSection(id, pathname, setHash, e)
+                      }
+                      className={cn(
+                        "flex shrink-0 flex-col items-center justify-center gap-0.5 text-center text-[11px] font-medium leading-none tracking-tight no-underline duration-200 ease-out",
+                        "transition-[color,opacity]",
+                        active
+                          ? "text-neutral-900 dark:text-white"
+                          : "text-neutral-400 hover:text-neutral-600 dark:text-white/55 dark:hover:text-white/85",
+                      )}
+                    >
+                      <span className="whitespace-nowrap">{label}</span>
+                      <span
+                        className={cn(
+                          "size-1 shrink-0 rounded-full bg-neutral-500 duration-200 ease-out dark:bg-neutral-300",
+                          "transition-opacity",
+                          active ? "opacity-100" : "opacity-0",
+                        )}
+                        aria-hidden
+                      />
+                    </a>
+                  );
+                })}
+              </nav>
             </div>
           </ButtonWidget>
 

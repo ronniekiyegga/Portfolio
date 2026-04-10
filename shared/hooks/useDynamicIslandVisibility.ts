@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const HERO_SECTION_ID = "hero-section";
+const HERO_SECTION_ID = "work";
 
 export function useDynamicIslandVisibility() {
   const [isVisible, setIsVisible] = useState(false);
