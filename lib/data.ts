@@ -197,11 +197,11 @@ export function getWorkItemById(id: string): WorkItem | undefined {
 export const experiencesV1: ExperienceV1Item[] = [
   {
     id: "Product Engineer",
-    organisation: "Independent Contractor",
+    organisation: "SaaS & EdTech",
     role: "Product Engineer Consultant",
     dates: "2026 - Present",
     responsibilities:
-      "Design & Delivered end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time",
+      "Design & Deliver end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time",
     techStack: ["Figma", "Nextjs", "TypeScript", "Docker", "Nodejs"],
   },
   {
