@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { BsStars } from "react-icons/bs";
 import { RiMenu4Fill } from "react-icons/ri";
@@ -8,6 +9,12 @@ import { AnimatedThemeToggler } from "@/shared/components/ui/animated-theme-togg
 import SplashCursor from "@/shared/components/effects/SplashCursor";
 import { useSplash } from "@/shared/contexts/SplashContext";
 import { useRef, useEffect, useState } from "react";
+import {
+  HOME_NAV_ITEMS,
+  HOME_SECTION_HASH_EVENT,
+  isHomeSectionActive,
+  scrollToHomeSection,
+} from "@/lib/home-nav";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
@@ -36,11 +43,6 @@ const navItemVariants = {
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-const navLinks = [
-  { label: "Work", href: "#projects" },
-  { label: "Design", href: "#design" },
-];
-
 interface NavV1Props {
   /** When true, nav hides (DynamicIsland is showing) */
   hideWhenBottomNav?: boolean;
@@ -48,8 +50,25 @@ interface NavV1Props {
 
 export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
   const { splashActive, setSplashActive } = useSplash();
+  const pathname = usePathname();
+  const [hash, setHash] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const syncFromUrl = () => setHash(window.location.hash.slice(1));
+    const onCustom = (ev: Event) => {
+      const id = (ev as CustomEvent<string>).detail;
+      if (typeof id === "string") setHash(id);
+    };
+    queueMicrotask(syncFromUrl);
+    window.addEventListener("hashchange", syncFromUrl);
+    window.addEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    return () => {
+      window.removeEventListener("hashchange", syncFromUrl);
+      window.removeEventListener(HOME_SECTION_HASH_EVENT, onCustom);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
@@ -62,16 +81,6 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
     document.addEventListener("mousedown", onClickOutside);
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
-
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <>
@@ -106,19 +115,29 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
 
           <motion.ul
             variants={navItemVariants}
-            className="hidden md:flex items-center gap-6 list-none shrink-0"
+            className="hidden md:flex list-none shrink-0 items-center gap-5 lg:gap-6"
           >
-            {navLinks.map((link) => (
-              <motion.li key={link.label} variants={navItemVariants}>
-                <Link
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-[13px] text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors no-underline tracking-[0.02em]"
-                >
-                  {link.label}
-                </Link>
-              </motion.li>
-            ))}
+            {HOME_NAV_ITEMS.map(({ label, id }) => {
+              const active = isHomeSectionActive(id, pathname, hash);
+              return (
+                <motion.li key={id} variants={navItemVariants}>
+                  <Link
+                    href={`/#${id}`}
+                    onClick={(e) =>
+                      scrollToHomeSection(id, pathname, setHash, e)
+                    }
+                    className={cn(
+                      "text-[11px] font-medium tracking-tight whitespace-nowrap no-underline transition-colors duration-200 ease-out",
+                      active
+                        ? "text-neutral-900 dark:text-white"
+                        : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100",
+                    )}
+                  >
+                    {label}
+                  </Link>
+                </motion.li>
+              );
+            })}
             <motion.li variants={navItemVariants}>
               <div className="rounded-full pill-outer-cream">
                 <div className="lets-chat-cream-wrapper">
@@ -268,18 +287,21 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
                 </svg>
               </button>
             </div>
-            <nav className="flex flex-col p-4 gap-1 flex-1 overflow-y-auto">
-              {navLinks.map((link) => (
+            <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-4">
+              {HOME_NAV_ITEMS.map(({ label, id }) => (
                 <Link
-                  key={link.label}
-                  href={link.href}
+                  key={id}
+                  href={`/#${id}`}
                   onClick={(e) => {
-                    handleNavClick(e, link.href);
+                    if (pathname === "/") {
+                      e.preventDefault();
+                      scrollToHomeSection(id, pathname, setHash);
+                    }
                     setMobileMenuOpen(false);
                   }}
-                  className="py-3 text-base text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors no-underline"
+                  className="py-3 text-base text-neutral-700 no-underline transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"
                 >
-                  {link.label}
+                  {label}
                 </Link>
               ))}
             </nav>

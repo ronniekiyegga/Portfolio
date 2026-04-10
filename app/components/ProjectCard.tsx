@@ -159,7 +159,10 @@ export default function ProjectCard() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full min-w-0 border-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950 dark:bg-[url('/images/backgrounds/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat">
+    <section
+      id="projects"
+      className="w-full min-w-0 border-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950 dark:bg-[url('/images/backgrounds/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat"
+    >
       <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
         <SectionKicker className="mb-10 md:mb-32">
           Things I&apos;ve Built

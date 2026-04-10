@@ -41,10 +41,11 @@ export default function Marquee() {
     "/images/marquee/Marquee_Theme_Toggle.svg",
   ];
   return (
-    <div
+    <section
+      id="design"
       className="relative w-full min-w-0 overflow-x-hidden bg-[#FDFBF7] dark:bg-neutral-950"
     >
       <ThreeDMarquee images={images} />
-    </div>
+    </section>
   );
 }

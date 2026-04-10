@@ -246,6 +246,20 @@ html {
   ) !important;
 }
 
+/* Dynamic island — middle section nav: same dark treatment as .dark .lets-chat-inner */
+.dark .island-middle-nav-pill {
+  background: linear-gradient(
+    90deg,
+    #1a0d6b 0%,
+    #0a0518 50%,
+    #000000 100%
+  ) !important;
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.55),
+    0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
 /* Right pill inner - unified white bg for Let's chat + icons (light mode), full pill roundness */
 .pill-right-inner {
   background: #fff;
@@ -533,7 +547,7 @@ body {
 
 /* Footer background - ensure dark mode applies when theme is toggled */
 .footer-section {
-  background-color: #ffffff;
+  background-color: #fdfbf7;
 }
 .dark .footer-section {
   background-color: #0a0a0a;

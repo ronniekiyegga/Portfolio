@@ -181,7 +181,7 @@ export default function HeroSection({
   return (
     <section
       ref={sectionRef}
-      id="hero-section"
+      id="work"
       className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32 bg-[#FDFBF7] dark:bg-neutral-950 relative"
     >
       {/* Clip beams only — section overflow was clipping the lanyard canvas on the right */}

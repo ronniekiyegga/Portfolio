@@ -201,17 +201,8 @@ export const experiencesV1: ExperienceV1Item[] = [
     role: "Product Engineer Consultant",
     dates: "2026 - Present",
     responsibilities:
-      "Architected and accelerated MVP delivery",
-    techStack: [
-      "Figma",
-      "Nextjs",
-      "Python",
-      "TypeScript",
-      "Docker",
-      "Redis",
-      "Nginx",
-      "TensorFlow",
-    ],
+      "Design & Delivered end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time",
+    techStack: ["Figma", "Nextjs", "TypeScript", "Docker", "Nodejs"],
   },
   {
     id: "SRS",
@@ -219,15 +210,13 @@ export const experiencesV1: ExperienceV1Item[] = [
     role: "Software Engineer",
     dates: "2023 - 2026",
     responsibilities:
-      "Built multiple internal EdTech platforms used across the school's computer science programme including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
+      "Built multiple internal EdTech platforms used across the departments school including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
     techStack: [
       "Figma",
       "Nextjs",
       "Python",
       "TypeScript",
       "Docker",
-      "Redis",
-      "Nginx",
       "TensorFlow",
     ],
   },
@@ -237,7 +226,7 @@ export const experiencesV1: ExperienceV1Item[] = [
     role: "Software Engineer ",
     dates: "2020 - 2023",
     responsibilities:
-      "Designed and built production-grade web products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video processing pipeline that cut media delivery costs by 40%.",
+      "Built full-stack applications using Next.js/Postgres, including a microservices-based e-commerce system handling 2k+ transactions with 100% consistency and 99.9% uptime, alongside a scalable API gateway and design system reducing delivery time by 33%",
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
   },
   {
