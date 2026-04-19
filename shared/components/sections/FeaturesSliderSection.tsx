@@ -8,95 +8,16 @@ import type { HeroCarouselImageSlide } from "@/lib/hero-carousel-types";
 
 const HERO_SLIDE_VIDEO_EXT = /\.(webm|mp4)$/i;
 
+/** The same purple→cyan gradient used on "Kiyegga" in the hero name */
+const KIYEGGA_GRADIENT = "linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%)";
+
 const projectCard = [
-  {
-    title: "EduFeedbackPro",
-    src: "/images/projects/edufeedbackpro/DMI.svg",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">
-            EduFeedback Pro
-          </strong>{" "}
-          with AI-powered suggestions, templates, and seamless collaboration for
-          faster communication.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "Maths Tutoring",
-    src: "/images/projects/maths-tutoring/MATHS_TUTORING.svg",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">
-            Ms.Maryam&apos;s Math
-          </strong>{" "}
-          with AI-powered suggestions, templates, and seamless collaboration for
-          faster communication.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "Google Teachable",
-    src: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">
-            Google Teachable Machine
-          </strong>{" "}
-          with AI-powered suggestions, templates, and seamless collaboration for
-          faster communication.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "AI-Pseudocode",
-    src: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">AI-Pseudocode</strong>{" "}
-          with AI-powered suggestions, templates, and seamless collaboration for
-          faster communication.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "TrueFounders",
-    src: "/images/projects/truefounders/TrueFounders_hero.webp",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">TrueFounders</strong>{" "}
-          Brand identity and landing page for a women&apos;s life coaching
-          business in Dubai. Competitive analysis across 12 competitors, persona
-          development for three audience segments, and a conversion-focused
-          landing page design.
-        </p>
-      </>
-    ),
-  },
-  {
-    title: "Github Finder",
-    src: "/images/projects/github-finder/GITHUB_FINDER.svg",
-    description: (
-      <>
-        <p className="text-muted-foreground text-balance">
-          <strong className="text-foreground font-medium">
-            Github Finders
-          </strong>{" "}
-          Desktop and mobile User interface designed to display GitHub user
-          profiles and repositories
-        </p>
-      </>
-    ),
-  },
+  { title: "EduFeedbackPro",  src: "/images/projects/edufeedbackpro/DMI.svg" },
+  { title: "Maths Tutoring",  src: "/images/projects/maths-tutoring/MATHS_TUTORING.svg" },
+  { title: "Google Teachable", src: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg" },
+  { title: "AI-Pseudocode",   src: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg" },
+  { title: "TrueFounders",    src: "/images/projects/truefounders/TrueFounders_hero.webp" },
+  { title: "Github Finder",   src: "/images/projects/github-finder/GITHUB_FINDER.svg" },
 ];
 
 interface FeaturesSliderSectionProps {
@@ -110,6 +31,7 @@ interface FeaturesSliderSectionProps {
   sectionId?: string;
   className?: string;
   slides?: HeroCarouselImageSlide[];
+  /** @deprecated captions now always render when caption data exists */
   showCaption?: boolean;
 }
 
@@ -124,7 +46,6 @@ export default function FeaturesSliderSection({
   sectionId,
   className,
   slides,
-  showCaption = false,
 }: FeaturesSliderSectionProps) {
   const resolvedId =
     sectionId ?? (direction === "right" ? "design-reverse" : "design");
@@ -132,11 +53,7 @@ export default function FeaturesSliderSection({
   const slideSources: HeroCarouselImageSlide[] =
     slides && slides.length > 0
       ? slides
-      : projectCard.map((c) => ({
-          src: c.src,
-          title: c.title,
-          alt: c.title,
-        }));
+      : projectCard.map((c) => ({ src: c.src, title: c.title, alt: c.title }));
 
   const cards = slideSources.map((content, index) => (
     <div
@@ -192,24 +109,44 @@ export default function FeaturesSliderSection({
               unoptimized={content.src.endsWith(".svg")}
             />
           )}
-        </Card>
-        {content.caption &&
-          (showCaption || HERO_SLIDE_VIDEO_EXT.test(content.src)) && (
-            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-start gap-0 px-3">
-              <span
-                className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference"
-                style={{ letterSpacing: "0.18em" }}
-              >
-                {content.caption[0]}
-              </span>
-              <span className="mx-1.5 text-white/40 text-[8px]">·</span>
-              <span className="font-jetbrains text-[8px] tracking-[0.18em] uppercase text-white/90 mix-blend-difference">
-                {content.caption[1]}
-              </span>
+
+          {/* Label pill — frosted pill, last segment gets the Kiyegga purple→cyan gradient */}
+          {content.caption && content.caption.length > 0 && (
+            <div className="absolute bottom-3 left-3 flex items-center rounded-full bg-white/80 px-2.5 py-1 backdrop-blur-sm dark:bg-black/60">
+              {content.caption.map((segment, i) => {
+                const isLast = i === content.caption!.length - 1;
+                return (
+                  <span key={i} className="flex items-center">
+                    {i > 0 && (
+                      <span className="mx-1 font-jetbrains text-[7px] leading-none text-neutral-400 dark:text-neutral-500">
+                        ·
+                      </span>
+                    )}
+                    {isLast ? (
+                      <span
+                        className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none font-semibold"
+                        style={{
+                          background: KIYEGGA_GRADIENT,
+                          WebkitBackgroundClip: "text",
+                          backgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          color: "transparent",
+                        }}
+                      >
+                        {segment}
+                      </span>
+                    ) : (
+                      <span className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none text-neutral-700 dark:text-neutral-200">
+                        {segment}
+                      </span>
+                    )}
+                  </span>
+                );
+              })}
             </div>
           )}
+        </Card>
       </div>
-      {/* {content.description} */}
     </div>
   ));
 
@@ -229,7 +166,6 @@ export default function FeaturesSliderSection({
     );
   }
 
-  // Hero mobile: horizontal marquee without DesignMarqueeSection chrome.
   if (axis === "x" && !showHeading) {
     return (
       <div className={cn("w-full min-h-0 overflow-hidden", className)}>

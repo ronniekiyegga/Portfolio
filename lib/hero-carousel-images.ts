@@ -14,7 +14,6 @@ function stripImageExtension(filename: string): string {
   return filename.replace(EXT_PATTERN, "");
 }
 
-/** Basename (no ext) must end with `_up` or `-up`, e.g. `TrueFounders_Choose_up.webp`. */
 function isUpCarouselFile(filename: string): boolean {
   const base = stripImageExtension(filename);
   const l = base.toLowerCase();
@@ -38,6 +37,32 @@ function isCarouselImageFile(filename: string): boolean {
   );
 }
 
+/**
+ * Hand-crafted captions per carousel filename (basename, no extension).
+ * Format: [PRODUCT NAME, DOMAIN, DATE LABEL]
+ * Last segment gets the KIYEGGA gradient treatment in the UI.
+ * - "REDESIGN" = visual redesign only, no engineering build
+ * - "DESIGN & CODE" = designed and engineered from scratch
+ */
+const CAPTION_MAP: Record<string, [string, string, string]> = {
+  // ── Up column ──────────────────────────────────────────────────────────────
+  Numerix__Theme_up:             ["NUMERIX AI",       "EDTECH",      "2026 DESIGN & CODE"],
+  Numerix_up:                    ["NUMERIX AI",       "EDTECH",      "2026 DESIGN & CODE"],
+  Spree_Clothing_up:             ["SPREE CLOTHING",   "ECOMMERCE",   "2023 DESIGN & CODE"],
+  Student_Files_up:              ["EDUFEEDBACKPRO",   "EDTECH",      "2026 DESIGN & CODE"],
+  TrueFounders_Choose_up:        ["TRUEFOUNDERS",     "BRAND",       "2026 REDESIGN"],
+  TrueFounders_Possibilities_up: ["TRUEFOUNDERS",     "BRAND",       "2026 REDESIGN"],
+  Tutoring_path_up:              ["MS MARYAM'S",      "EDTECH",      "2026 DESIGN & CODE"],
+
+  // ── Down column ────────────────────────────────────────────────────────────
+  Bespoke_garments_down:         ["BESPOKE GARMENTS", "ECOMMERCE",   "2022 DESIGN & CODE"],
+  John_Canary_down:              ["JOHN CANARY",      "MEDIA",       "2021 DESIGN & CODE"],
+  Tutoring_FAQ_down:             ["MS MARYAM'S",      "EDTECH",      "2026 DESIGN & CODE"],
+  Tutoring_benefits_down:        ["MS MARYAM'S",      "EDTECH",      "2026 DESIGN & CODE"],
+  Tutoring_lesson_down:          ["MS MARYAM'S",      "EDTECH",      "2026 DESIGN & CODE"],
+  Tutoring_testimonials_down:    ["MS MARYAM'S",      "EDTECH",      "2026 DESIGN & CODE"],
+};
+
 function labelFromCarouselFilename(filename: string): string {
   let base = stripImageExtension(filename);
   const l = base.toLowerCase();
@@ -52,10 +77,6 @@ function labelFromCarouselFilename(filename: string): string {
     .join(" ");
 }
 
-/**
- * Lists `public/images/carousel` images: `*_up.{webp,png,jpg}` → `up`,
- * `*_down.{webp,png,jpg}` → `down` (sorted).
- */
 export function getHeroCarouselSlidesFromPublic(): {
   up: HeroCarouselImageSlide[];
   down: HeroCarouselImageSlide[];
@@ -73,35 +94,22 @@ export function getHeroCarouselSlidesFromPublic(): {
     return a.localeCompare(b, undefined, { numeric: true });
   };
 
-  const upFiles = files
-    .filter((f) => isUpCarouselFile(f))
-    .sort(byNewestFirst);
-
-  const downFiles = files
-    .filter((f) => isDownCarouselFile(f))
-    .sort(byNewestFirst);
+  const upFiles = files.filter((f) => isUpCarouselFile(f)).sort(byNewestFirst);
+  const downFiles = files.filter((f) => isDownCarouselFile(f)).sort(byNewestFirst);
 
   const toSlide = (f: string): HeroCarouselImageSlide => {
     const title = labelFromCarouselFilename(f);
-    // Derive caption: strip suffix (_up/_down/_soon_up etc), split by _ or -, take first 2 words
-    let base = stripImageExtension(f);
-    // Detect status from filename convention: *_soon_up → coming-soon, else live
+    const base = stripImageExtension(f);
     const lBase = base.toLowerCase();
     const status: HeroCarouselImageSlide["status"] =
       lBase.includes("_soon") ? "coming-soon" : "live";
-    // Strip direction/status suffixes
-    base = base.replace(/_soon$/i, "").replace(/_live$/i, "");
-    base = base.replace(/_up$/i, "").replace(/-up$/i, "");
-    base = base.replace(/_down$/i, "").replace(/-down$/i, "");
-    const parts = base
-      .split(/[-_]+/)
-      .map((w) => w.trim())
-      .filter(Boolean)
-      .map((w) => w.toUpperCase());
-    const caption: [string, string] = [
-      parts[0] ?? title.split(" ")[0]?.toUpperCase() ?? "PROJECT",
-      parts[1] ?? parts[0] ?? "DESIGN",
+
+    const richCaption = CAPTION_MAP[base];
+    const caption: [string, ...string[]] = richCaption ?? [
+      base.split(/[-_]+/)[0]?.toUpperCase() ?? title.toUpperCase(),
+      "DESIGN & CODE",
     ];
+
     return {
       src: `${CAROUSEL_PUBLIC_PREFIX}/${f}`,
       title,
@@ -117,18 +125,14 @@ export function getHeroCarouselSlidesFromPublic(): {
   };
 }
 
-/** Looping tutorial clip — appended to the `up` column only (right stack on desktop). */
 const HERO_TUTORIAL_VIDEO_SLIDE: HeroCarouselImageSlide = {
   src: "/images/projects/maths-tutoring/tutorial.webm",
   title: "Tutoring tutorial",
   alt: "Maths tutoring platform — tutorial preview",
-  caption: ["TUTORING", "TUTORIAL"],
+  caption: ["MS MARYAM'S", "EDTECH", "2026 DESIGN & CODE"],
+  status: "live",
 };
 
-/**
- * Resolves slides for `<HeroSection heroCarouselSlides={...} />`.
- * Merges `public/images/carousel` `*_up` / `*_down` files; adds tutorial video to `up` only.
- */
 export function getResolvedHeroCarouselSlides(): HeroCarouselSlidesProp {
   const fromDisk = getHeroCarouselSlidesFromPublic();
   return {

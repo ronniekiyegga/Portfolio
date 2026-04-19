@@ -105,7 +105,7 @@ export default function Header({
         <motion.header
           key="header"
           role="banner"
-          className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-8 lg:pt-6 bg-[#FDFBF7] dark:bg-neutral-950"
+          className="fixed inset-x-0 top-0 z-50 px-4 pt-4 lg:px-8 lg:pt-6 bg-[#FDFBF7] dark:bg-transparent"
           initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}

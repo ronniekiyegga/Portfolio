@@ -80,7 +80,7 @@ export default function Experiences() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-full min-w-0 overflow-visible py-12 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950"
+      className="relative w-full min-w-0 overflow-visible py-12 md:py-40 bg-[#FDFBF7] dark:bg-transparent"
       suppressHydrationWarning
     >
       <div
