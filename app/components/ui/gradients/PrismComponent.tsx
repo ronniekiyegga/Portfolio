@@ -1,4 +1,4 @@
-import Prism from "../../Prism";
+import Prism from "@/shared/components/effects/Prism";
 
 const PrismComponent = () => {
   return (

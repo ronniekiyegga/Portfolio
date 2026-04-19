@@ -1,4 +1,4 @@
-import { LiquidChrome } from "@/app/components/LiquidChrome";
+import { LiquidChrome } from "@/shared/components/effects/LiquidChrome";
 
 const LiquidChromeComponent = () => {
   return (

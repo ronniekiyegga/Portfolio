@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Image from "next/image";
-import LogoLoop, { type LogoItem } from "@/app/components/LogoLoop";
+import LogoLoop, { type LogoItem } from "@/shared/components/media/LogoLoop";
 import { FaAws } from "react-icons/fa";
 
 const LOGO_SIZE = 28;

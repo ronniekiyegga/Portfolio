@@ -1,4 +1,4 @@
-import LightRays from "../../LightRays";
+import LightRays from "@/shared/components/effects/LightRays";
 
 const LightRaysComponent = () => {
   return (
