@@ -3,8 +3,7 @@ import HeroSection from "@/shared/components/sections/HeroSection";
 import { getResolvedHeroCarouselSlides } from "@/lib/hero-carousel-images";
 import ScrollAnimations from "@/shared/components/effects/ScrollAnimations";
 import DynamicIsland from "@/shared/components/navigation/DynamicIsland";
-import ProjectCard from "../components/ProjectCard";
-import ProjectSection from "@/shared/components/sections/ProjectSection";
+import ProjectCard from "../components/ProjectCard"; // Hidden — rebuilding project section
 import Experiences from "@/shared/components/sections/Experiences";
 
 /** Re-read `public/carousel` on each request (avoids stale empty slides after adding files). */
@@ -32,6 +31,7 @@ export default async function Home() {
       <main className="flex w-full min-w-0 flex-col items-center">
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center">
           <HeroSection heroCarouselSlides={heroCarouselSlides} />
+          {/* ProjectCard hidden — new feature-mosaic project section coming */}
           <ProjectCard />
           <Experiences />
           {/* <AnimatedLinks /> */}

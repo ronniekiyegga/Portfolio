@@ -14,7 +14,7 @@ const Lanyard = dynamic(() => import("@/shared/components/effects/Lanyard"), {
 });
 const LANYARD_DROP_HEIGHT = 2.2;
 const ENTRANCE_DELAY = 0.28;
-const LANYARD_DROP_TIME = 1.3; /* when els[5] finishes (0.7 + 0.6) */
+const LANYARD_DROP_TIME = 1.3;
 const STRING_GLASS_DELAY_MS = 6000;
 const STRING_GLASS_OPACITY = 1;
 
@@ -76,7 +76,6 @@ export default function HeroSection({
 
   React.useEffect(() => {
     if (hasAnimated.current) return;
-
     const root = sectionRef.current;
     if (!root) return;
 
@@ -106,12 +105,7 @@ export default function HeroSection({
     if (liftEl) gsap.set(liftEl, { opacity: 0, y: 20, force3D: true });
     const carouselEl = root.querySelector("[data-hero-carousel]");
     if (carouselEl) {
-      gsap.set(carouselEl, {
-        opacity: 0,
-        y: -48,
-        x: 0,
-        force3D: true,
-      });
+      gsap.set(carouselEl, { opacity: 0, y: -48, x: 0, force3D: true });
     }
     queueMicrotask(() => setHeroReady(true));
 
@@ -134,17 +128,7 @@ export default function HeroSection({
     const contactTweenTargets = [els[4], liftEl].filter(Boolean);
     tl.to(contactTweenTargets, { opacity: 1, y: 0, duration: 0.6 }, 0.6);
     if (carouselEl) {
-      tl.to(
-        carouselEl,
-        {
-          opacity: 1,
-          y: 0,
-          x: 0,
-          duration: 0.85,
-          ease: "power2.out",
-        },
-        0.42,
-      );
+      tl.to(carouselEl, { opacity: 1, y: 0, x: 0, duration: 0.85, ease: "power2.out" }, 0.42);
     }
 
     return () => {
@@ -159,18 +143,9 @@ export default function HeroSection({
   }, []);
 
   React.useEffect(() => {
-    if (!lanyardDrop) {
-      setAnimationsSettled(false);
-      return;
-    }
-    if (cardMoving) {
-      setAnimationsSettled(false);
-      return;
-    }
-    const t = setTimeout(
-      () => setAnimationsSettled(true),
-      STRING_GLASS_DELAY_MS,
-    );
+    if (!lanyardDrop) { setAnimationsSettled(false); return; }
+    if (cardMoving) { setAnimationsSettled(false); return; }
+    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
     return () => clearTimeout(t);
   }, [lanyardDrop, cardMoving]);
 
@@ -182,7 +157,7 @@ export default function HeroSection({
     <section
       ref={sectionRef}
       id="work"
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32 bg-[#FDFBF7] dark:bg-neutral-950 relative"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32 bg-[#FDFBF7] dark:bg-transparent relative"
     >
       {/* Clip beams only — section overflow was clipping the lanyard canvas on the right */}
       <div className="absolute inset-0 overflow-hidden">
@@ -202,9 +177,7 @@ export default function HeroSection({
         suppressHydrationWarning
       >
         <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-[minmax(0,600px)_1fr] lg:items-stretch lg:gap-8 ">
-          {/* Left: hero text + contact */}
           <HeroBio contactLiftTargetRef={contactLiftTargetRef} />
-          {/* Right: take full viewport height (within hero padding) */}
           <HeroCarousel slides={heroCarouselSlides} />
         </div>
       </div>
@@ -220,7 +193,6 @@ export default function HeroSection({
           transition: "none",
         }}
       >
-        {/* Hit-area: enables lanyard interaction without blocking contact UI */}
         <div
           className="pointer-events-auto absolute left-1/2 top-[18%] h-[520px] w-[520px] -translate-x-1/2 rounded-[28px]"
           onMouseEnter={() => setLanyardHitHover(true)}

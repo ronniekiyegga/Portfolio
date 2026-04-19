@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden min-h-screen bg-[#FDFBF7] dark:bg-neutral-950`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden min-h-screen bg-[#FDFBF7]`}
         suppressHydrationWarning
       >
         <Script
@@ -132,11 +132,26 @@ export default function RootLayout({
             </linearGradient>
           </defs>
         </svg>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
         >
+          {/*
+           * Dark mode global background — fixed so it covers every section
+           * as the user scrolls. hidden in light mode, always behind content.
+           * radial-gradient: black core at top-centre → purple at edges/bottom
+           */}
+          <div
+            aria-hidden
+            className="fixed inset-0 -z-10 hidden dark:block"
+            style={{
+              background:
+                "radial-gradient(125% 125% at 50% 10%, #000 40%, #63e 100%)",
+            }}
+          />
+
           <SplashProvider>{children}</SplashProvider>
         </ThemeProvider>
       </body>

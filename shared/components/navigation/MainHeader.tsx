@@ -89,7 +89,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
         animate="visible"
         variants={navVariants}
         className={cn(
-          "fixed top-0 left-0 border-b border-gray-200 dark:border-b-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 bg-[#FDFBF7] dark:bg-neutral-950/90 backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
+          "fixed top-0 left-0 border-b border-gray-200 dark:border-b-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 bg-[#FDFBF7] dark:bg-transparent backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
           hideWhenBottomNav &&
             "pointer-events-none invisible -translate-y-full",
         )}

@@ -3,8 +3,12 @@ export type HeroCarouselImageSlide = {
   src: string;
   title: string;
   alt?: string;
-  /** Two-word label derived from filename, e.g. ["TRUEFOUNDERS", "CHOOSE"] */
-  caption?: [string, string];
+  /**
+   * Rich label segments: [PROJECT, DOMAIN, SECTION, YEAR_TAG]
+   * The last segment receives the accent colour in the UI.
+   * Minimum one segment; typically four.
+   */
+  caption?: [string, ...string[]];
   /** Whether the project is live or coming soon */
   status?: "live" | "coming-soon";
 };
