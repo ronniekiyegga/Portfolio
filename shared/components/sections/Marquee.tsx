@@ -7,7 +7,6 @@ export default function Marquee() {
     "/images/marquee/Marquee_BIO.svg",
     "/images/marquee/Marquee_Folder.svg",
     "/images/branding/clients/BESKPOKE_GARMENTS_LIGHT.svg",
-    "/images/projects/maths-tutoring/Tutoring_hero.webp",
     "/images/projects/maths-tutoring/tutorial.webm",
     "/images/projects/truefounders/TrueFounders_hero.webp",
     "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
@@ -32,12 +31,10 @@ export default function Marquee() {
     "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
     "/images/projects/truefounders/TrueFounders_testimonial.svg",
     "/images/projects/truefounders/TrueFounders_testimonial.svg",
-    "/images/projects/truefounders/TrueFounders_testimonial.svg",
     "/images/projects/truefounders/TrueFounders_hero.webp",
     "/images/projects/edufeedbackpro/numerix-ai/Marquee_NumerixAI.svg",
     "/images/projects/github-finder/Marquee_GithubFinderProfiles.svg",
     "/images/marquee/Marquee_Folder.svg",
-    "/images/branding/clients/BESKPOKE_GARMENTS_DARK.svg",
     "/images/marquee/Marquee_Theme_Toggle.svg",
   ];
   return (
