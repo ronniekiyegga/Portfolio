@@ -1,4 +1,4 @@
-import LightPillar from "../../LightPillar";
+import LightPillar from "@/shared/components/effects/LightPillar";
 
 const LightPillarComponent = () => {
   return (

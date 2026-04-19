@@ -1,4 +1,4 @@
-import FloatingLines from "../../FloatingLines";
+import FloatingLines from "@/shared/components/effects/FloatingLines";
 
 const FloatingLinesComponent = () => {
   return (
