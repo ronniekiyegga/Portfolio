@@ -3,12 +3,12 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import {
-  HOME_NAV_ITEMS,
+  HOME_SCROLL_SECTION_IDS,
   HOME_SECTION_HASH_EVENT,
   type HomeSectionId,
 } from "@/lib/home-nav";
 
-const SECTION_IDS = HOME_NAV_ITEMS.map((i) => i.id);
+const SECTION_IDS = [...HOME_SCROLL_SECTION_IDS];
 
 /** “Reading line” from viewport top — slightly lower = calmer handoffs while scrolling. */
 const LINE_RATIO = 0.34;

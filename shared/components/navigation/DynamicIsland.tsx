@@ -26,6 +26,7 @@ export default function DynamicIsland() {
   const { splashActive, setSplashActive } = useSplash();
   const pathname = usePathname();
   const [hash, setHash] = useState("");
+
   useEffect(() => {
     const syncFromUrl = () => setHash(window.location.hash.slice(1));
     const onCustom = (ev: Event) => {
@@ -51,7 +52,7 @@ export default function DynamicIsland() {
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          {/* Left pill — Profile + Ronniè (dark: same bg as right pill via lets-chat-*, gradient ring on avatar) */}
+          {/* Left pill */}
           <ButtonWidget>
             <div className="left-pill-wrapper lets-chat-cream-wrapper">
               <div
@@ -94,7 +95,7 @@ export default function DynamicIsland() {
             </div>
           </ButtonWidget>
 
-          {/* Middle pill — flex + uniform gap between labels (avoids wide cell after short “Work”) */}
+          {/* Middle pill */}
           <ButtonWidget className="hidden md:flex">
             <div
               className={cn(
@@ -114,9 +115,7 @@ export default function DynamicIsland() {
                     <a
                       key={id}
                       href={`/#${id}`}
-                      onClick={(e) =>
-                        scrollToHomeSection(id, pathname, setHash, e)
-                      }
+                      onClick={(e) => scrollToHomeSection(id, pathname, setHash, e)}
                       className={cn(
                         "flex shrink-0 flex-col items-center justify-center gap-0.5 text-center text-[11px] font-medium leading-none tracking-tight no-underline duration-200 ease-out",
                         "transition-[color,opacity]",
@@ -141,7 +140,7 @@ export default function DynamicIsland() {
             </div>
           </ButtonWidget>
 
-          {/* Right pill — same button as header (pill-outer-cream + lets-chat-inner) */}
+          {/* Right pill */}
           <ButtonWidget>
             <div className="right-pill-wrapper lets-chat-cream-wrapper">
               <div className="lets-chat-inner flex items-center gap-0 overflow-hidden p-1">
@@ -160,11 +159,7 @@ export default function DynamicIsland() {
                   type="button"
                   onClick={() => setSplashActive((prev) => !prev)}
                   className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
-                  aria-label={
-                    splashActive
-                      ? "Disable fluid cursor"
-                      : "Enable fluid cursor"
-                  }
+                  aria-label={splashActive ? "Disable fluid cursor" : "Enable fluid cursor"}
                 >
                   <WiStars
                     className={cn(

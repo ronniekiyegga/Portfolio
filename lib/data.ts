@@ -183,11 +183,13 @@ export interface ExperienceItem {
 /** V1 Experiences component (expandable list) */
 export interface ExperienceV1Item {
   id: string;
-  organisation: string;
   role: string;
   dates: string;
   responsibilities: string;
-  techStack?: TechIconKey[];
+  /** Shown after role, separated by a middle dot — omit for title-only lines */
+  organisation?: string;
+  /** Appended after org, e.g. (Available for work) */
+  suffix?: string;
 }
 
 export function getWorkItemById(id: string): WorkItem | undefined {
@@ -197,46 +199,36 @@ export function getWorkItemById(id: string): WorkItem | undefined {
 export const experiencesV1: ExperienceV1Item[] = [
   {
     id: "Product Engineer",
-    organisation: "SaaS & EdTech",
-    role: "Product Engineer Consultant",
-    dates: "2026 - Present",
+    dates: "2026",
+    role: "Product Engineer",
+    organisation: "Freelance",
+    suffix: "(Available for work)",
     responsibilities:
-      "Design & Deliver end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time",
-    techStack: ["Figma", "Nextjs", "TypeScript", "Docker", "Nodejs"],
+      "Design & deliver end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time.",
   },
   {
     id: "SRS",
-    organisation: "The School Of Research Science",
-    role: "Software Engineer",
-    dates: "2023 - 2026",
+    dates: "2023–2026",
+    role: "Product Engineer",
+    organisation: "School Of Research Science",
     responsibilities:
       "Built multiple internal EdTech platforms used across the departments school including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
-    techStack: [
-      "Figma",
-      "Nextjs",
-      "Python",
-      "TypeScript",
-      "Docker",
-      "TensorFlow",
-    ],
   },
   {
-    id: "Software Engineer",
+    id: "fullstack-contract",
+    dates: "2020–2023",
+    role: "Full Stack Software Engineer",
     organisation: "Independent Contractor",
-    role: "Software Engineer ",
-    dates: "2020 - 2023",
     responsibilities:
-      "Built full-stack applications using Next.js/Postgres, including a microservices-based e-commerce system handling 2k+ transactions with 100% consistency and 99.9% uptime, alongside a scalable API gateway and design system reducing delivery time by 33%",
-    techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
+      "Built full-stack applications using Next.js/Postgres, including a microservices-based e-commerce system handling 2k+ transactions with 100% consistency and 99.9% uptime, alongside a scalable API gateway and design system reducing delivery time by 33%.",
   },
   {
     id: "Internship",
+    dates: "2019 – 2019",
+    role: "Software Engineer",
     organisation: "Adaptive",
-    role: "Software Engineer Intern ",
-    dates: "2019 - 2019",
     responsibilities:
-      "Reduced data retrieval latency by ~40% for institutional analyst teams by engineering automated Python/SQL ingestion pipelines spanning equities, FX, and fixed income datasets, accelerating time-to-insight for daily reporting workflows",
-    techStack: ["React", "TypeScript", "Figma", "Slack", "Nodejs"],
+      "Reduced data retrieval latency by ~40% for institutional analyst teams by engineering automated Python/SQL ingestion pipelines spanning equities, FX, and fixed income datasets, accelerating time-to-insight for daily reporting workflows.",
   },
   // {
   //   id: "Fitness",

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { CornerDownRight } from "lucide-react";
-import Integrations from "./integrations-one";
+import { ArrowRight, CornerDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { experiencesV1 } from "@/lib/data";
 
@@ -10,6 +9,21 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const RESUME_PDF_HREF =
+  "/documents/Ronnie_Kiyegga%20-%20SWE.pdf";
+
+/** Small circular separator (interpunct), vertically centered with text — matches case-study link row */
+function ExperienceMidDot() {
+  return (
+    <span
+      className="mx-2 inline-flex h-[1em] shrink-0 items-center justify-center select-none"
+      aria-hidden
+    >
+      <span className="size-[3px] rounded-full bg-neutral-400 dark:bg-neutral-500" />
+    </span>
+  );
+}
 
 export default function Experiences() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -85,14 +99,14 @@ export default function Experiences() {
     >
       <div
         ref={contentRef}
-        className="relative z-10 mx-auto max-w-5xl cursor-default px-4 lg:px-0"
+        className="relative z-10 mx-auto w-full max-w-3xl cursor-default px-6 sm:px-8 lg:px-10"
         suppressHydrationWarning
       >
-        <h2 className="mb-4 text-[12px] font-medium uppercase tracking-[0.13rem] text-neutral-400 dark:text-neutral-500 md:mb-8">
-          EXPERIENCES
+        <h2 className="mb-8 text-left text-base font-medium text-neutral-500 dark:text-neutral-400 md:mb-12">
+          Work Experience
         </h2>
 
-        <div className="flex flex-col gap-6 pl-4 md:pl-12">
+        <div className="flex flex-col gap-8 md:gap-10">
           {experiencesV1.map((item) => {
             const isOpen = hoveredId === item.id;
             return (
@@ -107,51 +121,44 @@ export default function Experiences() {
                 onMouseEnter={() => setHoveredId(item.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="flex flex-col items-start gap-0 py-2">
-                  <div className="flex w-full flex-row items-start justify-between gap-x-4">
-                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <span className="text-sm font-medium text-neutral-900 dark:text-neutral-50">
-                        {item.role}
-                      </span>
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        {item.organisation && (
-                          <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                            {item.organisation}
+                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-3 sm:grid-cols-[minmax(6rem,8rem)_minmax(0,1fr)] sm:gap-x-16 md:gap-x-20 lg:gap-x-24">
+                  <span className="text-sm tabular-nums text-neutral-500 dark:text-neutral-500">
+                    {item.dates}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="flex min-w-0 flex-wrap items-center text-sm leading-snug text-neutral-900 dark:text-neutral-50">
+                      <span className="font-medium">{item.role.trim()}</span>
+                      {item.organisation?.trim() ? (
+                        <>
+                          <ExperienceMidDot />
+                          <span className="font-medium">
+                            {item.organisation.trim()}
                           </span>
-                        )}
-                        {(item.techStack === undefined ||
-                          item.techStack.length > 0) && (
-                          <>
-                            {item.organisation && (
-                              <span className="text-neutral-400">•</span>
-                            )}
-                            <Integrations
-                              variant="inline"
-                              icons={item.techStack}
-                            />
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <span className="shrink-0 text-xs text-neutral-500 dark:text-neutral-500">
-                      {item.dates}
-                    </span>
+                        </>
+                      ) : null}
+                      {item.suffix?.trim() ? (
+                        <span className="ml-1 font-normal text-neutral-500 dark:text-neutral-400">
+                          {item.suffix.trim()}
+                        </span>
+                      ) : null}
+                    </p>
                   </div>
-                </div>
-                <div
-                  className={cn(
-                    "grid transition-all duration-500 ease-out",
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0",
-                  )}
-                >
-                  <div className="overflow-hidden">
-                    <div className="flex gap-2 pb-4 pl-0 pt-2">
-                      <CornerDownRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-neutral-500 transition-all duration-300 group-hover/exp:translate-x-0.5 group-hover/exp:text-neutral-600 dark:text-neutral-400 dark:group-hover/exp:text-neutral-500" />
-                      <p className="text-[13px] max-w-lg lg:max-w-3xl leading-relaxed text-neutral-600 dark:text-neutral-400">
-                        {item.responsibilities}
-                      </p>
+
+                  <div
+                    className={cn(
+                      "col-span-full grid transition-all duration-500 ease-out sm:col-span-1 sm:col-start-2 sm:row-start-2",
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0",
+                    )}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="mt-3 flex gap-2 pb-1">
+                        <CornerDownRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-neutral-500 transition-all duration-300 group-hover/exp:translate-x-0.5 group-hover/exp:text-neutral-600 dark:text-neutral-400 dark:group-hover/exp:text-neutral-500" />
+                        <p className="text-[13px] max-w-lg leading-relaxed text-neutral-600 lg:max-w-3xl dark:text-neutral-400">
+                          {item.responsibilities}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -159,6 +166,18 @@ export default function Experiences() {
             );
           })}
         </div>
+        <a
+          href={RESUME_PDF_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-14 inline-flex items-center gap-1.5 text-left text-sm text-neutral-500/55 underline-offset-[5px] transition-colors hover:text-neutral-700 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40 dark:text-neutral-400/50 dark:hover:text-neutral-200 dark:focus-visible:ring-neutral-500/40"
+        >
+          See full resume
+          <ArrowRight
+            className="size-3.5 shrink-0 opacity-80"
+            aria-hidden
+          />
+        </a>
       </div>
     </section>
   );
