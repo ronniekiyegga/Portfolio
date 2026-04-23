@@ -101,58 +101,62 @@ const ProjectCardItem = ({
           transition={baseTransition(0.28)}
         >
           <span className="inline-flex items-center gap-0.5">
-            {/* Order: CASE STUDY | DESIGN FILE • LIVE WEBSITE */}
-            <motion.div
-              className="relative inline-flex"
-              onHoverStart={() => setCtaHovered(true)}
-              onHoverEnd={() => setCtaHovered(false)}
-            >
-              <AnimatePresence>
-                {showRockets ? (
-                  <>
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{
-                          opacity: 0,
-                          scale: 0,
-                          x: 0,
-                          y: 0,
-                        }}
-                        animate={{
-                          opacity: [0, 1, 0],
-                          scale: [0, 1, 0],
-                          x: Math.cos((i * Math.PI) / 3) * 40,
-                          y: Math.sin((i * Math.PI) / 3) * 40,
-                        }}
-                        exit={{ opacity: 0 }}
-                        transition={{
-                          duration: 1,
-                          repeat: Number.POSITIVE_INFINITY,
-                          delay: i * 0.1,
-                          ease: "easeOut",
-                        }}
-                        className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-[#0CD1CF] [&_svg]:fill-[#0CD1CF] [&_svg]:stroke-[#0CD1CF]"
-                      >
-                        <Rocket className="h-3 w-3 -rotate-35 stroke-[#0CD1CF] fill-[#0CD1CF]" />
-                      </motion.div>
-                    ))}
-                  </>
-                ) : null}
-              </AnimatePresence>
+            {/* Order: [CASE STUDY] | DESIGN FILE • LIVE WEBSITE */}
+            {workItem.id !== "true-founders" ? (
+              <>
+                <motion.div
+                  className="relative inline-flex"
+                  onHoverStart={() => setCtaHovered(true)}
+                  onHoverEnd={() => setCtaHovered(false)}
+                >
+                  <AnimatePresence>
+                    {showRockets ? (
+                      <>
+                        {[...Array(6)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{
+                              opacity: 0,
+                              scale: 0,
+                              x: 0,
+                              y: 0,
+                            }}
+                            animate={{
+                              opacity: [0, 1, 0],
+                              scale: [0, 1, 0],
+                              x: Math.cos((i * Math.PI) / 3) * 40,
+                              y: Math.sin((i * Math.PI) / 3) * 40,
+                            }}
+                            exit={{ opacity: 0 }}
+                            transition={{
+                              duration: 1,
+                              repeat: Number.POSITIVE_INFINITY,
+                              delay: i * 0.1,
+                              ease: "easeOut",
+                            }}
+                            className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-[#0CD1CF] [&_svg]:fill-[#0CD1CF] [&_svg]:stroke-[#0CD1CF]"
+                          >
+                            <Rocket className="h-3 w-3 -rotate-35 stroke-[#0CD1CF] fill-[#0CD1CF]" />
+                          </motion.div>
+                        ))}
+                      </>
+                    ) : null}
+                  </AnimatePresence>
 
-              <button
-                type="button"
-                onClick={() => openModal(workItem)}
-                className="project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <span className="project-cta-link-label text-[11px] font-medium uppercase leading-[16.7px]">
-                  {caseStudy}
-                </span>
-              </button>
-            </motion.div>
+                  <button
+                    type="button"
+                    onClick={() => openModal(workItem)}
+                    className="project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <span className="project-cta-link-label text-[11px] font-medium uppercase leading-[16.7px]">
+                      {caseStudy}
+                    </span>
+                  </button>
+                </motion.div>
 
-            <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>
+                <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>
+              </>
+            ) : null}
 
             <a
               href={effectiveFigmaHref}
