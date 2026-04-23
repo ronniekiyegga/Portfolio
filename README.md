@@ -4,6 +4,14 @@
 
 A personal portfolio site — clean, modern, and built for showcasing projects and skills.
 
+## Featured projects
+
+### GCSE & A-Level Learning Platform
+
+A premium GCSE and A-level maths platform that helps students master topics, track progress, and improve exam performance through structured learning and personalised support.
+
+[msmaryamsmaths.com](https://www.msmaryamsmaths.com/)
+
 ## Tech stack
 
 - **Next.js** — React framework with App Router

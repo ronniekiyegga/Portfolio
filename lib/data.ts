@@ -246,8 +246,8 @@ export const workItems: WorkItem[] = [
   {
     id: "edu-analytics-dashboard",
     type: "B2B SaaS · Analytics Platform",
-    title: "AI Powered Analytics Dashboard",
-    desc: "An analytics platform that transforms student performance data into clear, actionable insights by helping educators instantly identify underperforming students and reduce workload by up to 60%.",
+    title: "EduFeedbackPro",
+    desc: "Analytics platform for student performance, focused on transforming fragmented data into actionable signals through structured data modelling and real-time aggregation.",
     tags: [
       "TypeScript",
       "Next.js",
@@ -364,7 +364,7 @@ export const workItems: WorkItem[] = [
     id: "subscription-api",
     type: "Backend · API Infrastructure",
     title: "Subscription API",
-    desc: "Backend system for authentication, access control, and subscription-style data. Structured around a service layer with validation, RBAC, and rate limiting enforced at the edge to keep behaviour predictable under load.",
+    desc: "Backend subscription management API with authentication, RBAC, and rate limiting, structured around a service layer to keep data access, business logic, and transport concerns decoupled.",
     tags: [
       "Node.js",
       "Express",
@@ -387,7 +387,7 @@ export const workItems: WorkItem[] = [
       {
         title: "Overview",
         content:
-          "HTTP API focused on authentication, RBAC, and subscription-shaped data. Work is organised behind a service layer with Zod-validated inputs, Prisma against Postgres, and rate limiting plus auth checks applied before route handlers run so failure modes stay consistent under load.",
+          "Backend subscription management API with authentication, RBAC, and rate limiting, structured around a service layer to keep data access, business logic, and transport concerns decoupled. Inputs are Zod-validated, persistence is Prisma on Postgres, and auth plus rate limits run before route handlers so failure modes stay consistent under load.",
       },
     ],
     statistics: [
@@ -431,8 +431,8 @@ export const workItems: WorkItem[] = [
   {
     id: "edtech-tutoring",
     type: "B2C SaaS · Tutoring Platform",
-    title: "EdTech Tutoring Platform",
-    desc: "A premium GCSE & A-level maths platform that helps students master topics, track progress, and improve exam performance through structured learning and personalised support.",
+    title: "Ms Maryam's Maths",
+    desc: "Full-stack learning platform for GCSE and A-level maths with real-time progress tracking, authentication, and a focus on performance and predictable user flows at scale.",
     tags: [
       "TypeScript",
       "Next.js",
@@ -731,11 +731,11 @@ export const designItems: DesignItem[] = [
   },
   {
     type: "Profile UI",
-    name: "Github Finder",
+    name: "GitHub Data Platform",
     gradient: "linear-gradient(160deg, #080818 0%, #120e30 50%, #0a0820 100%)",
     accentColor: "#a78bfa",
     label: "Gh",
-    sublabel: "GITHUB FINDER",
+    sublabel: "DATA PLATFORM",
     extras: "search",
   },
 ];
