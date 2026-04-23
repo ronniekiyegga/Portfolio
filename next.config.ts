@@ -18,6 +18,13 @@ const nextConfig: NextConfig = {
     "::1", // IPv6 localhost
   ],
   images: {
+    localPatterns: [
+      {
+        // `public/` is served at site root. Omit `search` so cache-bust query strings
+        // (e.g. `?v=20260423` on static assets) are allowed per Next image docs.
+        pathname: "/**",
+      },
+    ],
     remotePatterns: [
       {
         protocol: "https",

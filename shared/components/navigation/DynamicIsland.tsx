@@ -89,7 +89,7 @@ export default function DynamicIsland() {
                     styleScript.className,
                   )}
                 >
-                  Ronniè
+                  About
                 </span>
               </div>
             </div>
@@ -115,7 +115,9 @@ export default function DynamicIsland() {
                     <a
                       key={id}
                       href={`/#${id}`}
-                      onClick={(e) => scrollToHomeSection(id, pathname, setHash, e)}
+                      onClick={(e) =>
+                        scrollToHomeSection(id, pathname, setHash, e)
+                      }
                       className={cn(
                         "flex shrink-0 flex-col items-center justify-center gap-0.5 text-center text-[11px] font-medium leading-none tracking-tight no-underline duration-200 ease-out",
                         "transition-[color,opacity]",
@@ -159,7 +161,11 @@ export default function DynamicIsland() {
                   type="button"
                   onClick={() => setSplashActive((prev) => !prev)}
                   className="rounded-full p-1.5 text-white/90 transition-colors hover:bg-white/10"
-                  aria-label={splashActive ? "Disable fluid cursor" : "Enable fluid cursor"}
+                  aria-label={
+                    splashActive
+                      ? "Disable fluid cursor"
+                      : "Enable fluid cursor"
+                  }
                 >
                   <WiStars
                     className={cn(

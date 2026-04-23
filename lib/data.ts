@@ -105,8 +105,8 @@ export const PROJECT_CARD_STACK_ROW_3: ProjectCardStackDef[] = [
   {
     id: 2,
     icon: "teal",
-    imageSrc: "/images/projects/truefounders/TrueFounders_benefits.svg",
-    imageAlt: "TrueFounders benefits preview",
+    imageSrc: "/images/projects/truefounders/truefounders-2.webp",
+    imageAlt: "TrueFounders value proposition preview",
   },
   {
     id: 3,
@@ -201,7 +201,7 @@ export const experiencesV1: ExperienceV1Item[] = [
   {
     id: "Full Stack Software Engineer 2026",
     dates: "2026",
-    role: "Full Stack Engineer",
+    role: "Full Stack Software Engineer",
     organisation: "Independent Consultant",
     suffix: "",
     responsibilities: [
@@ -361,10 +361,46 @@ export const workItems: WorkItem[] = [
     ],
   },
   {
+    id: "subscription-api",
+    type: "Backend · API Infrastructure",
+    title: "Subscription API",
+    desc: "Backend system for authentication, access control, and subscription-style data. Structured around a service layer with validation, RBAC, and rate limiting enforced at the edge to keep behaviour predictable under load.",
+    tags: [
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "Prisma",
+      "Postgres",
+      "JWT",
+      "Zod",
+    ],
+    metric: "Edge validation · tenant isolation",
+    href: "#",
+    gradient: "linear-gradient(160deg, #12141a 0%, #1a1f2e 50%, #0f1118 100%)",
+    preview: "analytics",
+    heroImage:
+      "/images/projects/subscription-api/auth-middleware-1.webp?v=20260423",
+    modalDetailImage:
+      "/images/projects/subscription-api/router-boundary-2.webp",
+    githubHref: "https://github.com/BlissfulCoda",
+    insights: [
+      {
+        title: "Overview",
+        content:
+          "HTTP API focused on authentication, RBAC, and subscription-shaped data. Work is organised behind a service layer with Zod-validated inputs, Prisma against Postgres, and rate limiting plus auth checks applied before route handlers run so failure modes stay consistent under load.",
+      },
+    ],
+    statistics: [
+      { value: "RBAC", label: "Scopes" },
+      { value: "Edge", label: "Limits" },
+      { value: "Zod", label: "Validation" },
+    ],
+  },
+  {
     id: "true-founders",
     type: "Brand Identity · Brand Identity",
     title: "True Founders",
-    desc: "Brand identity and landing page concept for a women's life coaching business in Dubai, backed by competitive analysis, personas, and conversion-focused UX.",
+    desc: "A brand and landing concept for a women's life coaching practice in Dubai that turns twelve-competitor analysis and three audience personas into clearer positioning, stronger trust signals, and a direct path from discovery to enquiry.",
     tags: [
       "Figma",
       "UX Audit",
@@ -377,7 +413,7 @@ export const workItems: WorkItem[] = [
     gradient: "linear-gradient(160deg, #100e00 0%, #2a2200 50%, #181400 100%)",
     preview: "analytics",
     heroImage: "/images/projects/truefounders/TrueFounders_hero.webp",
-    modalDetailImage: "/images/projects/truefounders/TrueFounders_benefits.svg",
+    modalDetailImage: "/images/projects/truefounders/truefounders-2.webp",
     insights: [
       {
         title: "Overview",
@@ -539,7 +575,7 @@ export interface ProjectSectionItem {
 /** V1 project section items - derived from workItems, single source of truth */
 export const projectSectionItems: ProjectSectionItem[] = [
   {
-    workItem: workItems[0],
+    workItem: getWorkItemById("edu-analytics-dashboard")!,
     badge: "ANALYTICS PLATFORM",
     features: [
       {
@@ -563,7 +599,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[2],
+    workItem: getWorkItemById("edtech-tutoring")!,
     badge: "B2C SAAS PLATFORM",
     links: {
       designFile:
@@ -594,7 +630,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[3],
+    workItem: getWorkItemById("knn-classifier")!,
     badge: "EDUCATIONAL TOOL",
     links: { liveWebsite: "https://blissfulcoda.github.io/teachablemachine/" },
     features: [
@@ -621,7 +657,7 @@ export const projectSectionItems: ProjectSectionItem[] = [
     ],
   },
   {
-    workItem: workItems[4],
+    workItem: getWorkItemById("algo-pseudo")!,
     badge: "DEVELOPER TOOL",
     links: { liveWebsite: "https://www.algo-pseudo.com/" },
     features: [

@@ -13,6 +13,8 @@ import {
   PROJECT_CARD_SHOWCASE_FIGMA_HREF,
 } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import LogoLoop from "@/shared/components/media/LogoLoop";
+import type { LogoItem } from "@/shared/components/media/LogoLoop";
 import { TracingBeam } from "@/shared/components/ui/tracing-beam";
 
 const PROJECTS = [
@@ -28,11 +30,41 @@ const PROJECTS = [
     bottomTitle: "Student Workspace",
     bottomSubtitle: "Manage student data, uploads, and learning records",
     heroLabels: [
-      { title: "Student Dashboard", subtitle: "UI Design" },
-      { title: "Predictive Algorithms", subtitle: "2026" },
+      {
+        title: "Student Analytics Dashboard",
+        subtitle:
+          "Performance, risk signals, and cohort-level insights",
+      },
+      {
+        title: "Predictive Insights",
+        subtitle: "Early pattern detection to support faster intervention",
+      },
     ],
     /** Tighter padding on both stacked tiles so mockups read larger in the 390px column */
     stackedColumnImagePaddingClassName: "px-3 pt-3",
+  },
+  {
+    workItemId: "subscription-api",
+    badge: "API INFRASTRUCTURE",
+    bigImage:
+      "/images/projects/subscription-api/auth-middleware-1.webp?v=20260423",
+    topImage: "/images/projects/subscription-api/router-boundary-2.webp",
+    bottomImage: "/images/projects/subscription-api/structure-3.webp",
+    topLabel: "API surface",
+    topSublabel:
+      "Protected billing routes split between read paths and write actions",
+    bottomTitle: "Service layer",
+    bottomSubtitle:
+      "Subscription creation kept behind a small, stable business layer",
+    heroLabels: [
+      {
+        title: "Auth boundary",
+        subtitle:
+          "JWT verification and request-level access control before handlers run",
+      },
+    ],
+    stackedColumnImagePaddingClassName: "px-3 pt-3",
+    ctaVariant: "code-only" as const,
   },
   {
     workItemId: "edtech-tutoring",
@@ -41,9 +73,9 @@ const PROJECTS = [
     bigImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",
     topImage: "/images/projects/maths-tutoring/Tutoring-2.webp",
     bottomImage: "/images/projects/maths-tutoring/Tutoring-3.webp",
-    topLabel: "Marketing Experience",
+    topLabel: "Student Acquisition Funnel",
     topSublabel: "Conversion-focused landing pages for student acquisition",
-    bottomTitle: "Learning Platform UI",
+    bottomTitle: "Lesson & Dashboard Experience",
     bottomSubtitle: "Core interface for lessons, dashboards, and student interaction",
     heroLabels: [
       {
@@ -61,11 +93,11 @@ const PROJECTS = [
     badge: "BRAND IDENTITY",
     subtitle: "Competitive Analysis & UX Design",
     bigImage: "/images/projects/truefounders/TrueFounders_hero.webp",
-    topImage: "/images/projects/truefounders/TrueFounders_benefits.svg",
+    topImage: "/images/projects/truefounders/truefounders-2.webp",
     bottomImage: "/images/projects/truefounders/truefounders-3.webp",
     topLabel: "Value Proposition Design",
     topSublabel: "Clarifying the offer for a high-trust, private audience",
-    bottomTitle: "Marketing Experience",
+    bottomTitle: "Enquiry Journey",
     bottomSubtitle: "End-to-end user journey from first visit to enquiry",
     heroLabels: [
       {
@@ -79,6 +111,16 @@ const PROJECTS = [
     ],
   },
 ];
+
+const PROJECT_TECH_TAG_PILL_CLASS =
+  "inline-flex shrink-0 rounded-sm border border-neutral-200/90 bg-neutral-50/90 px-1 py-px text-[9px] font-medium leading-tight text-neutral-600 dark:border-white/10 dark:bg-white/4 dark:text-white/50";
+
+function workItemTagsToLogoItems(tags: readonly string[]): LogoItem[] {
+  return tags.map((tag) => ({
+    node: <span className={PROJECT_TECH_TAG_PILL_CLASS}>{tag}</span>,
+    ariaLabel: tag,
+  }));
+}
 
 const CTA_LINK_CLASS =
   "project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-left no-underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
@@ -256,6 +298,27 @@ function FigmaCta({ href }: { href: string }) {
   );
 }
 
+function ViewCodeCta({ href }: { href: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div className="relative inline-flex">
+      <RocketsBurst key={hovered ? "on" : "off"} show={hovered} />
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={CTA_LINK_CLASS}
+      >
+        <span className={CTA_LABEL_CLASS}>View Code</span>
+        <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
+      </a>
+    </div>
+  );
+}
+
 export default function ProjectCard() {
   const { openModal, modalOpen, setModalOpen, selectedItem } =
     useProjectContext();
@@ -329,19 +392,44 @@ export default function ProjectCard() {
                       {workItem.desc}
                     </p>
 
+                    {workItem.tags.length > 0 ? (
+                      <div className="max-w-[38ch] w-full overflow-hidden">
+                        <LogoLoop
+                          logos={workItemTagsToLogoItems(workItem.tags)}
+                          speed={20}
+                          direction="left"
+                          width="100%"
+                          logoHeight={18}
+                          gap={8}
+                          pauseOnHover
+                          fadeOut
+                          ariaLabel="Technologies used in this project"
+                          className="[--logoloop-fadeColor:var(--background)]"
+                        />
+                      </div>
+                    ) : null}
+
                     {/* CTAs */}
                     <div className="flex flex-wrap items-center gap-3">
-                      <ViewCaseStudyCta
-                        workItem={workItem}
-                        openModal={openModal}
-                      />
-                      <FigmaCta href={PROJECT_CARD_SHOWCASE_FIGMA_HREF} />
-                      {workItem.href && workItem.href !== "#" ? (
-                        <LiveDemoCta href={workItem.href} />
+                      {"ctaVariant" in p &&
+                      p.ctaVariant === "code-only" &&
+                      workItem.githubHref ? (
+                        <ViewCodeCta href={workItem.githubHref} />
                       ) : (
-                        <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
-                          Soon
-                        </span>
+                        <>
+                          <ViewCaseStudyCta
+                            workItem={workItem}
+                            openModal={openModal}
+                          />
+                          <FigmaCta href={PROJECT_CARD_SHOWCASE_FIGMA_HREF} />
+                          {workItem.href && workItem.href !== "#" ? (
+                            <LiveDemoCta href={workItem.href} />
+                          ) : (
+                            <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
+                              Soon
+                            </span>
+                          )}
+                        </>
                       )}
                     </div>
                   </motion.div>
@@ -364,14 +452,21 @@ export default function ProjectCard() {
                         mainImageOnRight && "lg:col-start-2 lg:row-start-1",
                       )}
                     >
-                      <div className="absolute inset-x-6 top-6 bottom-24 overflow-hidden rounded-sm bg-[#f9f9f9] dark:bg-white/[0.02]">
+                      <div
+                        className={cn(
+                          "absolute inset-x-6 top-6 bottom-24 overflow-hidden rounded-sm dark:bg-white/[0.02]",
+                          
+                        )}
+                      >
                         <Image
                           src={p.bigImage}
                           alt={workItem.title}
                           fill
                           className="object-contain object-center"
                           sizes="(max-width:1000px) 95vw, 620px"
-                          unoptimized={p.bigImage.endsWith(".svg")}
+                          unoptimized={
+                            p.bigImage.split("?")[0]?.endsWith(".svg") ?? false
+                          }
                           priority
                         />
                       </div>
@@ -385,7 +480,7 @@ export default function ProjectCard() {
                             <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
                               {lbl.title}
                             </span>
-                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                            <span className="text-[10px] text-[#636584] dark:text-white/40">
                               {lbl.subtitle}
                             </span>
                           </div>
@@ -424,7 +519,7 @@ export default function ProjectCard() {
                             <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
                               {p.topLabel}
                             </span>
-                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                            <span className="text-[10px] text-[#8d8fae] dark:text-white/40">
                               {p.topSublabel}
                             </span>
                           </div>
@@ -452,7 +547,7 @@ export default function ProjectCard() {
                             <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
                               {p.bottomTitle}
                             </span>
-                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                            <span className="text-[10px] text-[#8d8fae] dark:text-white/40">
                               {p.bottomSubtitle}
                             </span>
                           </div>
