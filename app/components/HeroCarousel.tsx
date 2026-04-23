@@ -19,9 +19,11 @@ function slidesSignature(s: HeroCarouselSlidesProp | null | undefined): string {
 
 /**
  * Vertical fade bar — tall enough to dissolve 1–2 full cards.
- * Light:  cream  #FDFBF7  (matches HeroSection bg-[#FDFBF7])
+ * Light:  white  (matches page / hero background)
  * Dark:   near-black #0a0a0a  (matches dark:bg-neutral-950)
  */
+const FADE_LIGHT = "#FFFFFF";
+const FADE_LIGHT_TRANSPARENT = "rgba(255,255,255,0)";
 const FADE_V = "pointer-events-none absolute inset-x-0 z-10 h-[clamp(80px,18%,180px)]";
 const FADE_H = "pointer-events-none absolute inset-y-0 z-10 w-[clamp(40px,12%,100px)]";
 const FADE_H_RIGHT = "pointer-events-none absolute inset-y-0 right-0 z-10 w-[clamp(32px,10%,80px)]";
@@ -30,11 +32,12 @@ function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
   return (
     <div className="relative isolate h-[calc(100vh-12rem)] min-h-[520px] overflow-hidden">
       {/* ── Top fade ── */}
-      {/* Light mode: cream */}
       <div
         aria-hidden
         className={cn(FADE_V, "top-0 block dark:hidden")}
-        style={{ background: "linear-gradient(to bottom, #FDFBF7 0%, rgba(253,251,247,0) 70%)" }}
+        style={{
+          background: `linear-gradient(to bottom, ${FADE_LIGHT} 0%, ${FADE_LIGHT_TRANSPARENT} 70%)`,
+        }}
       />
       {/* Dark mode: near-black */}
       <div
@@ -44,11 +47,12 @@ function HeroCarouselColumnFade({ children }: { children: ReactNode }) {
       />
 
       {/* ── Bottom fade ── */}
-      {/* Light mode: cream */}
       <div
         aria-hidden
         className={cn(FADE_V, "bottom-0 block dark:hidden")}
-        style={{ background: "linear-gradient(to top, #FDFBF7 0%, rgba(253,251,247,0) 85%)" }}
+        style={{
+          background: `linear-gradient(to top, ${FADE_LIGHT} 0%, ${FADE_LIGHT_TRANSPARENT} 85%)`,
+        }}
       />
       {/* Dark mode: near-black */}
       <div
@@ -69,7 +73,9 @@ function HeroCarouselMobileRowFade({ children }: { children: ReactNode }) {
       <div
         aria-hidden
         className={cn(FADE_H, "left-0 block dark:hidden")}
-        style={{ background: "linear-gradient(to right, #FDFBF7 0%, rgba(253,251,247,0) 100%)" }}
+        style={{
+          background: `linear-gradient(to right, ${FADE_LIGHT} 0%, ${FADE_LIGHT_TRANSPARENT} 100%)`,
+        }}
       />
       <div
         aria-hidden
@@ -81,7 +87,9 @@ function HeroCarouselMobileRowFade({ children }: { children: ReactNode }) {
       <div
         aria-hidden
         className={cn(FADE_H_RIGHT, "block dark:hidden")}
-        style={{ background: "linear-gradient(to left, #FDFBF7 0%, rgba(253,251,247,0) 100%)" }}
+        style={{
+          background: `linear-gradient(to left, ${FADE_LIGHT} 0%, ${FADE_LIGHT_TRANSPARENT} 100%)`,
+        }}
       />
       <div
         aria-hidden

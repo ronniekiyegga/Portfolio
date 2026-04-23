@@ -5,10 +5,13 @@ import { Rocket } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { WorkItem } from "@/lib/data";
 
-const PC_VIEWPORT = { once: true, amount: 0.35 as const };
-const PC_EASE = [0.22, 1, 0.36, 1] as const;
+const PC_VIEWPORT = {
+  once: true,
+  amount: 0.12 as const,
+  margin: "0px 0px -15% 0px",
+};
+const PC_EASE = [0.33, 1, 0.36, 1] as const;
 
-/** True Founders (coming soon) — cream pill, warm brown label */
 function SoonPillBadge() {
   return (
     <span
@@ -49,10 +52,12 @@ const ProjectCardItem = ({
   const showRockets = ctaHovered && !reduceMotion;
   const effectiveFigmaHref = figmaHref ?? "#";
 
-  const hidden = reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 };
-  const visible = { opacity: 1, y: 0 };
+  const hidden = reduceMotion
+    ? { opacity: 1, y: 0, filter: "blur(0px)" }
+    : { opacity: 0, y: 26, filter: "blur(8px)" };
+  const visible = { opacity: 1, y: 0, filter: "blur(0px)" };
   const baseTransition = (delay: number) => ({
-    duration: reduceMotion ? 0 : 0.52,
+    duration: reduceMotion ? 0 : 0.95,
     ease: PC_EASE,
     delay: reduceMotion ? 0 : delay,
   });
@@ -83,7 +88,7 @@ const ProjectCardItem = ({
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
-          transition={baseTransition(0.08)}
+          transition={baseTransition(0.14)}
         >
           {title}
         </motion.div>
@@ -93,7 +98,7 @@ const ProjectCardItem = ({
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
-          transition={baseTransition(0.16)}
+          transition={baseTransition(0.28)}
         >
           <span className="inline-flex items-center gap-0.5">
             {/* Order: CASE STUDY | DESIGN FILE • LIVE WEBSITE */}
@@ -179,7 +184,7 @@ const ProjectCardItem = ({
           initial={hidden}
           whileInView={visible}
           viewport={PC_VIEWPORT}
-          transition={baseTransition(0.24)}
+          transition={baseTransition(0.42)}
         >
           {description}
         </motion.p>

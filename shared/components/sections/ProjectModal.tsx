@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import {
   Dialog,
@@ -26,6 +26,25 @@ function easeOutCubic(t: number) {
 }
 
 const DESKTOP_SCROLL_CAP = 600;
+
+/** Wrap metrics in «value» in insight copy for tabular emphasis (e.g. «sub-50ms»). */
+function renderInsightRichText(text: string): ReactNode {
+  const segments = text.split(/(«[^»]+»)/g);
+  return segments.map((segment, i) => {
+    const inner = segment.match(/^«([^»]+)»$/);
+    if (inner) {
+      return (
+        <span
+          key={i}
+          className="whitespace-nowrap font-semibold tabular-nums text-foreground"
+        >
+          {inner[1]}
+        </span>
+      );
+    }
+    return segment ? <span key={i}>{segment}</span> : null;
+  });
+}
 
 export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -236,7 +255,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                       <h3 className="font-cormorant text-xl md:text-2xl font-normal leading-tight text-foreground wrap-break-word">
                         {item?.title}
                       </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
+                      <p className="max-w-prose text-[15px] leading-relaxed text-muted-foreground md:text-base">
                         {item?.desc}
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -266,7 +285,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                         className="w-full max-w-none pl-20"
                         svgGradientId="tb-project-modal"
                       >
-                        <div className="space-y-8">
+                        <div className="max-w-[min(100%,42rem)] space-y-14 md:space-y-16">
                           <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4 py-6">
                             <Image
                               src={
@@ -305,21 +324,21 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                             </div>
                           )}
                           {item.insights.map((insight, i) => (
-                            <div key={i} className="pb-8">
-                              <h4 className="font-semibold text-base text-foreground mb-3">
+                            <div
+                              key={i}
+                              className="border-b border-border/50 pb-12 last:border-b-0 last:pb-4 md:pb-14 md:last:pb-6"
+                            >
+                              <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                                 {insight.title}
                               </h4>
-                              <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed">
-                                {insight.content}
+                              <p className="max-w-prose text-[15px] leading-[1.65] text-foreground/90 md:text-base">
+                                {renderInsightRichText(insight.content)}
                               </p>
                               {insight.actions && insight.actions.length > 0 ? (
-                                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground dark:text-gray-400">
-                                  {insight.actions.map((action) => (
-                                    <li
-                                      key={action}
-                                      className="leading-relaxed"
-                                    >
-                                      {action}
+                                <ul className="mt-5 max-w-prose list-disc space-y-2.5 pl-5 text-[15px] leading-relaxed text-muted-foreground marker:text-muted-foreground/70 md:text-base dark:text-gray-400">
+                                  {insight.actions.map((action, j) => (
+                                    <li key={`${insight.title}-${j}`} className="pl-1">
+                                      {renderInsightRichText(action)}
                                     </li>
                                   ))}
                                 </ul>

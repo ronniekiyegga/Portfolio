@@ -44,7 +44,7 @@ export default function ProjectSection() {
         const cta = card.querySelector<HTMLElement>("[data-project-cta]");
         const els = [badge, title, content, cta].filter(Boolean);
 
-        gsap.set(els, { autoAlpha: 0, y: 10, force3D: true });
+        gsap.set(els, { autoAlpha: 0, y: 18, force3D: true });
 
         if (prefersReducedMotion) {
           gsap.set(els, { autoAlpha: 1, y: 0 });
@@ -54,7 +54,7 @@ export default function ProjectSection() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: card,
-            start: "top 82%",
+            start: "top 90%",
             toggleActions: "play none none none",
           },
         });
@@ -62,24 +62,24 @@ export default function ProjectSection() {
         tl.to(badge, {
           autoAlpha: 1,
           y: 0,
-          duration: 0.45,
-          ease: "expo.out",
+          duration: 0.78,
+          ease: "power3.out",
           force3D: true,
         })
           .to(
             title,
-            { autoAlpha: 1, y: 0, duration: 0.4, ease: "expo.out" },
-            "-=0.3",
+            { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out" },
+            "-=0.48",
           )
           .to(
             content,
-            { autoAlpha: 1, y: 0, duration: 0.4, ease: "expo.out" },
-            "-=0.28",
+            { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out" },
+            "-=0.44",
           )
           .to(
             cta,
-            { autoAlpha: 1, y: 0, duration: 0.35, ease: "expo.out" },
-            "-=0.25",
+            { autoAlpha: 1, y: 0, duration: 0.68, ease: "power3.out" },
+            "-=0.4",
           );
         cleanup.push({ st: tl.scrollTrigger ?? undefined, tl });
       });

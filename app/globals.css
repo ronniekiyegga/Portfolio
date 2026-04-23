@@ -547,7 +547,7 @@ body {
 
 /* Footer background - ensure dark mode applies when theme is toggled */
 .footer-section {
-  background-color: #fdfbf7;
+  background-color: #ffffff;
 }
 .dark .footer-section {
   background-color: #0a0a0a;
@@ -790,7 +790,7 @@ html.light [data-version="v2"] {
   background: var(--bg);
 }
 html.light .section-cream-bg {
-  background: #fdfbf7;
+  background: var(--bg);
 }
 /* Projects/Work section: black background in dark mode */
 .dark #work.section-cream-bg {
@@ -802,7 +802,7 @@ html.light .section-cream-bg {
   background: var(--process-bg);
 }
 html.light .section-process-bg {
-  background: #fdfbf7;
+  background: var(--bg);
 }
 
 /* Alias for Skills (kept for backwards compatibility) */
@@ -810,7 +810,7 @@ html.light .section-process-bg {
   background: var(--bg);
 }
 html.light .skills-cream-bg {
-  background: #fdfbf7;
+  background: var(--bg);
 }
 
 /* White background sections in light mode (Design, Hero, Marquee, CTA, Footer) */

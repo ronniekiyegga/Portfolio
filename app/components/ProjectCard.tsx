@@ -1,255 +1,468 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { ArrowUpRight, Rocket } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import SectionKicker from "@/shared/components/ui/section-kicker";
-import { cn } from "@/lib/utils";
-import {
-  getWorkItemById,
-  PROJECT_CARD_SHOWCASE_FIGMA_HREF,
-  PROJECT_CARD_SHOWCASE_ROWS,
-  projectCardStackOffset,
-  type ProjectCardStackDef,
-  type ProjectCardStackFan,
-} from "@/lib/data";
 import { useProjectContext } from "@/app/contexts/ProjectContext";
 import { ProjectModal } from "@/shared/components/sections/ProjectModal";
+import {
+  workItems,
+  type WorkItem,
+  PROJECT_CARD_SHOWCASE_FIGMA_HREF,
+} from "@/lib/data";
+import { cn } from "@/lib/utils";
 import { TracingBeam } from "@/shared/components/ui/tracing-beam";
-import ProjectCardTextContent, {
-  type TechTag,
-} from "./ui/ProjectCardTextContent";
 
-/** Set to `true` to resume auto-cycling the stacked mockup cards. */
-const PROJECT_CARD_STACK_ROTATION_ENABLED = false;
+const PROJECTS = [
+  {
+    workItemId: "edu-analytics-dashboard",
+    badge: "ANALYTICS PLATFORM",
+    subtitle: "User Repositories & Profiles",
+    bigImage: "/images/projects/edufeedbackpro/Edufeedbackpro-1.webp",
+    topImage: "/images/projects/edufeedbackpro/Edufeedbackpro-2.webp",
+    bottomImage: "/images/projects/edufeedbackpro/Edufeedbackpro-3.webp",
+    topLabel: "AI Study Assistant",
+    topSublabel: "Voice-powered interaction for guided learning and feedback",
+    bottomTitle: "Student Workspace",
+    bottomSubtitle: "Manage student data, uploads, and learning records",
+    heroLabels: [
+      { title: "Student Dashboard", subtitle: "UI Design" },
+      { title: "Predictive Algorithms", subtitle: "2026" },
+    ],
+    /** Tighter padding on both stacked tiles so mockups read larger in the 390px column */
+    stackedColumnImagePaddingClassName: "px-3 pt-3",
+  },
+  {
+    workItemId: "edtech-tutoring",
+    badge: "EDTECH PLATFORM",
+    subtitle: "Lessons, Tutor Profiles & Booking",
+    bigImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",
+    topImage: "/images/projects/maths-tutoring/Tutoring-2.webp",
+    bottomImage: "/images/projects/maths-tutoring/Tutoring-3.webp",
+    topLabel: "Marketing Experience",
+    topSublabel: "Conversion-focused landing pages for student acquisition",
+    bottomTitle: "Learning Platform UI",
+    bottomSubtitle: "Core interface for lessons, dashboards, and student interaction",
+    heroLabels: [
+      {
+        title: "Student Learning Dashboard",
+        subtitle: "Track progress, performance, and engagement across subjects",
+      },
+      {
+        title: "Course Experience",
+        subtitle: "Structured lessons, navigation, and learning flow design",
+      },
+    ],
+  },
+  {
+    workItemId: "true-founders",
+    badge: "BRAND IDENTITY",
+    subtitle: "Competitive Analysis & UX Design",
+    bigImage: "/images/projects/truefounders/TrueFounders_hero.webp",
+    topImage: "/images/projects/truefounders/TrueFounders_benefits.svg",
+    bottomImage: "/images/projects/truefounders/truefounders-3.webp",
+    topLabel: "Value Proposition Design",
+    topSublabel: "Clarifying the offer for a high-trust, private audience",
+    bottomTitle: "Marketing Experience",
+    bottomSubtitle: "End-to-end user journey from first visit to enquiry",
+    heroLabels: [
+      {
+        title: "Conversion-Focused Landing Page",
+        subtitle: "Designed to drive bookings and communicate trust clearly",
+      },
+      {
+        title: "Brand Identity System",
+        subtitle: "Visual direction, tone, and consistency across touchpoints",
+      },
+    ],
+  },
+];
 
-const EDTECH_TUTORING_VIDEO_SRC =
-  "/images/projects/maths-tutoring/tutorial.webm";
+const CTA_LINK_CLASS =
+  "project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-left no-underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-export const SparkIcon = ({
-  className = "",
-  variant = "purple",
-}: {
-  className?: string;
-  variant?: "purple" | "teal";
-}) => (
-  <svg viewBox="0 0 24 24" className={className} aria-hidden fill="none">
-    <path
-      d="M12 2l1.2 6.3a2.5 2.5 0 0 0 2 2l6.3 1.2-6.3 1.2a2.5 2.5 0 0 0-2 2L12 22l-1.2-6.3a2.5 2.5 0 0 0-2-2L2.5 12l6.3-1.2a2.5 2.5 0 0 0 2-2L12 2Z"
-      stroke={variant === "purple" ? "#3e7bfa" : "#26d0ce"}
-      strokeWidth="1.8"
-    />
-  </svg>
-);
+const CTA_LABEL_CLASS =
+  "project-cta-link-label text-[11px] font-medium uppercase leading-[16.7px]";
 
-function ProjectCardVisualStack({
-  definitions,
-  stackFan,
-  frontVideoSrc,
-}: {
-  definitions: ProjectCardStackDef[];
-  stackFan: ProjectCardStackFan;
-  /** When set, the front (index 0) card shows this video instead of its stack image. */
-  frontVideoSrc?: string;
-}) {
+const CTA_ARROW_CLASS =
+  "size-3.5 shrink-0 text-[#9d9e9f] transition-colors group-hover:text-[#0cd1cf] dark:text-[#a3a3a3] dark:group-hover:text-[#0cd1cf]";
+
+/** Soft long ease-out — reads smoother than short “snappy” curves at ~0.5s. */
+const SCROLL_EASE = [0.33, 1, 0.36, 1] as const;
+
+const SCROLL_VIEWPORT = {
+  once: true,
+  amount: 0.06,
+  margin: "0px 0px -18% 0px",
+} as const;
+
+function projectRowVariants(
+  mainImageOnRight: boolean,
+  reduceMotion: boolean | null,
+): {
+  card: Variants;
+  text: Variants;
+  visual: Variants;
+} {
+  if (reduceMotion) {
+    const idle: Variants = { hidden: {}, visible: {} };
+    return { card: idle, text: idle, visual: idle };
+  }
+
+  const drift = mainImageOnRight ? 22 : -22;
+
+  return {
+    card: {
+      hidden: { opacity: 0, y: 48, x: drift },
+      visible: {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        transition: {
+          duration: 1.2,
+          ease: SCROLL_EASE,
+          staggerChildren: 0.24,
+          delayChildren: 0.2,
+        },
+      },
+    },
+    text: {
+      hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
+      visible: {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        transition: { duration: 1, ease: SCROLL_EASE },
+      },
+    },
+    visual: {
+      hidden: { opacity: 0, y: 40, filter: "blur(6px)" },
+      visible: {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        transition: { duration: 1.1, ease: SCROLL_EASE },
+      },
+    },
+  };
+}
+
+function RocketsBurst({ show }: { show: boolean }) {
   const reduceMotion = useReducedMotion();
-  const [isPaused, setIsPaused] = useState(false);
-  const [cards, setCards] = useState(() => [...definitions]);
+  const showRockets = show && !reduceMotion;
 
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  }, []);
-
-  useEffect(() => {
-    if (!PROJECT_CARD_STACK_ROTATION_ENABLED) return;
-    if (prefersReducedMotion) return;
-    if (isPaused) return;
-    const id = window.setInterval(() => {
-      setCards((prev) => {
-        const next = [...prev];
-        next.unshift(next.pop()!);
-        return next;
-      });
-    }, 4800);
-    return () => window.clearInterval(id);
-  }, [prefersReducedMotion, isPaused]);
-
-  const slideX = stackFan === "se" ? -44 : 44;
+  if (!showRockets) return null;
 
   return (
-    <motion.div
-      className={cn(
-        "relative z-10 w-full max-w-[520px] lg:w-[520px] mx-auto lg:mx-0 ",
-        stackFan === "sw" && "lg:ml-auto",
-      )}
-      initial={{ opacity: 0, x: slideX, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.22, margin: "0px 0px -8% 0px" }}
-      transition={{
-        duration: reduceMotion ? 0 : 0.88,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
-      <div className="mt-4">
-        <div
-          className="relative min-h-[480px] w-full"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+    <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2">
+      {[...Array(6)].map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{
+            opacity: 0,
+            scale: 0,
+            x: 0,
+            y: 0,
+          }}
+          animate={{
+            opacity: [0, 1, 0],
+            scale: [0, 1, 0],
+            x: Math.cos((i * Math.PI) / 3) * 40,
+            y: Math.sin((i * Math.PI) / 3) * 40,
+          }}
+          transition={{
+            duration: 1,
+            repeat: Number.POSITIVE_INFINITY,
+            delay: i * 0.1,
+            ease: "easeOut",
+          }}
+          className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 text-[#0CD1CF] [&_svg]:fill-[#0CD1CF] [&_svg]:stroke-[#0CD1CF]"
         >
-          {cards.map((def, index) => {
-            const { left, top } = projectCardStackOffset(index, stackFan);
-            return (
-              <motion.div
-                key={def.id}
-                className="absolute inline-flex items-center gap-2 rounded-[7.63px] bg-white dark:bg-transparent will-change-transform"
-                style={{
-                  transformOrigin: stackFan === "se" ? "top left" : "top right",
-                }}
-                animate={{
-                  left,
-                  top,
-                  scale: 1 - index * 0.05,
-                  opacity: index === 2 ? 0.58 : 1,
-                  zIndex: 30 - index,
-                }}
-                transition={{
-                  duration: reduceMotion ? 0 : 1.1,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                <div className="project-visual-card relative flex h-[432.39px] w-[401.92px] shrink-0 flex-col overflow-hidden rounded-[11.61px] bg-[linear-gradient(135deg,#FFF_54.8%,rgba(251,233,217,0.59)_69.69%,#DEDAF9_86.6%,rgba(240,172,247,0.26)_97.21%)] px-[15.15px] pb-0 pt-[5.05px] shadow-[9.41px_23.53px_47.06px_rgba(219,220,230,0.5)]">
-                  <div className="relative grid min-h-0 flex-1 place-items-center">
-                    <div className="relative z-0 aspect-4/3 w-[96%] max-w-[392px] min-h-0 shrink-0 self-center justify-self-center overflow-hidden rounded-[10px] bg-white/50 dark:bg-neutral-950/20">
-                      {index === 0 && frontVideoSrc ? (
-                        <video
-                          src={frontVideoSrc}
-                          className="absolute inset-0 size-full object-cover object-center"
-                          muted
-                          loop
-                          playsInline
-                          autoPlay
-                          preload="metadata"
-                          aria-label={def.imageAlt}
-                        />
-                      ) : (
-                        <Image
-                          src={def.imageSrc}
-                          alt={def.imageAlt}
-                          fill
-                          className="object-contain object-center"
-                          sizes="(max-width: 1024px) 96vw, 392px"
-                          unoptimized={def.imageSrc.endsWith(".svg")}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </div>
-    </motion.div>
+          <Rocket className="h-3 w-3 -rotate-35 stroke-[#0CD1CF] fill-[#0CD1CF]" />
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+/** Matches `ProjectCardItem` case-study control: rockets on hover + `.project-cta-link` label styles */
+function ViewCaseStudyCta({
+  workItem,
+  openModal,
+}: {
+  workItem: WorkItem;
+  openModal: (item: WorkItem) => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div className="relative inline-flex">
+      <RocketsBurst key={hovered ? "on" : "off"} show={hovered} />
+      <button
+        type="button"
+        onClick={() => openModal(workItem)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={CTA_LINK_CLASS}
+      >
+        <span className={CTA_LABEL_CLASS}>View Case Study</span>
+        <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
+      </button>
+    </div>
+  );
+}
+
+function LiveDemoCta({ href }: { href: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div className="relative inline-flex">
+      <RocketsBurst key={hovered ? "on" : "off"} show={hovered} />
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={CTA_LINK_CLASS}
+      >
+        <span className={CTA_LABEL_CLASS}>Live Demo</span>
+        <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
+      </a>
+    </div>
+  );
+}
+
+function FigmaCta({ href }: { href: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div className="relative inline-flex">
+      <RocketsBurst key={hovered ? "on" : "off"} show={hovered} />
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={CTA_LINK_CLASS}
+      >
+        <span className={CTA_LABEL_CLASS}>Figma</span>
+        <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
+      </a>
+    </div>
   );
 }
 
 export default function ProjectCard() {
-  const { modalOpen, setModalOpen, selectedItem } = useProjectContext();
+  const { openModal, modalOpen, setModalOpen, selectedItem } =
+    useProjectContext();
   const reduceMotion = useReducedMotion();
 
   return (
     <section
       id="projects"
-      className="w-full min-w-0 border-0 py-20 md:py-40 bg-[#FDFBF7] dark:bg-neutral-950 dark:bg-[url('/images/backgrounds/BG_1.png')] dark:bg-cover dark:bg-center dark:bg-no-repeat"
+      className="relative w-full py-20 md:py-32  dark:bg-transparent"
     >
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
-        <SectionKicker className="mb-10 md:mb-32">
-          Things I&apos;ve Built
-        </SectionKicker>
-        {/* <LampWidget /> */}
-        <TracingBeam
-          className="max-w-none"
-          svgGradientId="tb-home-project-card"
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <motion.div
+          initial={
+            reduceMotion ? false : { opacity: 0, y: 32, filter: "blur(8px)" }
+          }
+          whileInView={
+            reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }
+          }
+          viewport={{ once: true, amount: 0.25, margin: "0px 0px -12% 0px" }}
+          transition={{ duration: 0.95, ease: SCROLL_EASE }}
         >
-          {/* Keep generous left inset for the beam; eases right padding so copy isn’t squeezed */}
-          <div className="px-4 sm:px-6 lg:pl-20 lg:pr-6 xl:pr-8">
-            <div className="flex w-full min-w-0 flex-col gap-24 md:gap-32 lg:gap-36">
-              {PROJECT_CARD_SHOWCASE_ROWS.map((row) => {
-                const workItem = getWorkItemById(row.workItemId);
-                if (!workItem) {
-                  if (process.env.NODE_ENV === "development") {
-                    console.error(
-                      `[ProjectCard] Unknown workItemId "${row.workItemId}" — check PROJECT_CARD_SHOWCASE_ROWS and workItems in lib/data.ts`,
-                    );
-                  }
-                  return null;
-                }
-                return (
-                  <div
-                    key={row.watermark}
-                    className="relative isolate w-full min-w-0 "
+          <SectionKicker className="mb-16 md:mb-24">
+            Things I&apos;ve Built
+          </SectionKicker>
+        </motion.div>
+
+        <TracingBeam className="w-full pl-4" svgGradientId="tb-project-card">
+          <div className="flex flex-col gap-28 md:gap-32 lg:w-[calc(100%+7rem)] lg:-mr-12">
+            {PROJECTS.map((p, index) => {
+              const workItem = workItems.find((w) => w.id === p.workItemId);
+              if (!workItem) return null;
+
+              const stackedImagePad =
+                "stackedColumnImagePaddingClassName" in p &&
+                p.stackedColumnImagePaddingClassName
+                  ? p.stackedColumnImagePaddingClassName
+                  : "px-6 pt-6";
+
+              /** Odd index: main hero right, stacked pair left (alternating layout) */
+              const mainImageOnRight = index % 2 === 1;
+              const v = projectRowVariants(mainImageOnRight, reduceMotion);
+
+              return (
+                <motion.div
+                  key={p.workItemId}
+                  className="flex flex-col gap-8"
+                  variants={v.card}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={SCROLL_VIEWPORT}
+                >
+                  {/* ── TEXT (top) ─────────────────────────────────────── */}
+                  <motion.div className="flex flex-col gap-5" variants={v.text}>
+                    {/* Badge */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="size-[5px] rounded-full bg-[linear-gradient(45deg,#667bf6,#26d0ce)]" />
+                      <span className="bg-[linear-gradient(45deg,#667bf6,#26d0ce)] bg-clip-text text-[10px] font-semibold uppercase tracking-[0.15em] text-transparent">
+                        {p.badge}
+                      </span>
+                    </div>
+
+                    {/* Title + subtitle */}
+                    <div>
+                      <h2 className="text-[24px] font-bold leading-[1.15] tracking-[-0.025em] text-neutral-900 dark:text-white lg:text-[28px]">
+                        {workItem.title}
+                      </h2>
+                    </div>
+
+                    {/* Description */}
+                    <p className="max-w-[52ch] text-[13px] leading-relaxed text-gray-500 dark:text-white/50">
+                      {workItem.desc}
+                    </p>
+
+                    {/* CTAs */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <ViewCaseStudyCta
+                        workItem={workItem}
+                        openModal={openModal}
+                      />
+                      <FigmaCta href={PROJECT_CARD_SHOWCASE_FIGMA_HREF} />
+                      {workItem.href && workItem.href !== "#" ? (
+                        <LiveDemoCta href={workItem.href} />
+                      ) : (
+                        <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
+                          Soon
+                        </span>
+                      )}
+                    </div>
+                  </motion.div>
+
+                  {/* ── IMAGE CONTAINER (bottom) — alternate wide column L/R per project ─ */}
+                  <motion.div
+                    className={cn(
+                      "grid grid-cols-1 gap-3",
+                      mainImageOnRight
+                        ? "lg:grid-cols-[390px_minmax(0,1fr)]"
+                        : "lg:grid-cols-[minmax(0,1fr)_390px]",
+                    )}
+                    style={{ height: "600px" }}
+                    variants={v.visual}
                   >
+                    {/* Big image */}
                     <div
                       className={cn(
-                        "relative grid w-full min-w-0 grid-cols-1 items-start justify-center justify-items-stretch gap-10 lg:items-start lg:gap-12",
-                        row.imageOnLeft
-                          ? "lg:grid-cols-[520px_minmax(0,1fr)]"
-                          : "lg:grid-cols-[minmax(0,1fr)_520px]",
+                        "relative h-full overflow-hidden rounded-sm bg-[#f9f9f9] dark:border-white/[0.08] dark:bg-white/[0.02]",
+                        mainImageOnRight && "lg:col-start-2 lg:row-start-1",
                       )}
                     >
-                      <div
-                        className={cn(
-                          "w-full min-w-0",
-                          !row.imageOnLeft && "lg:order-2",
-                        )}
-                      >
-                        <ProjectCardVisualStack
-                          definitions={row.stack}
-                          stackFan={row.imageOnLeft ? "se" : "sw"}
-                          frontVideoSrc={
-                            row.workItemId === "edtech-tutoring"
-                              ? EDTECH_TUTORING_VIDEO_SRC
-                              : undefined
-                          }
+                      <div className="absolute inset-x-6 top-6 bottom-24 overflow-hidden rounded-sm bg-[#f9f9f9] dark:bg-white/[0.02]">
+                        <Image
+                          src={p.bigImage}
+                          alt={workItem.title}
+                          fill
+                          className="object-contain object-center"
+                          sizes="(max-width:1000px) 95vw, 620px"
+                          unoptimized={p.bigImage.endsWith(".svg")}
+                          priority
                         />
                       </div>
-                      <motion.div
-                        className={cn(
-                          "relative w-full min-w-0 lg:pt-6",
-                          !row.imageOnLeft && "lg:order-1",
-                        )}
-                        initial={
-                          reduceMotion
-                            ? { opacity: 1, x: 0 }
-                            : { opacity: 0, x: row.imageOnLeft ? 36 : -36 }
-                        }
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{
-                          once: true,
-                          amount: 0.2,
-                          margin: "0px 0px -8% 0px",
-                        }}
-                        transition={{
-                          duration: reduceMotion ? 0 : 0.72,
-                          ease: [0.22, 1, 0.36, 1],
-                          delay: reduceMotion ? 0 : 0.06,
-                        }}
-                      >
-                        <ProjectCardTextContent
-                          project={{
-                            figmaHref: PROJECT_CARD_SHOWCASE_FIGMA_HREF,
-                            caseStudy: "read case study",
-                          }}
-                          workItem={workItem}
-                          techTags={workItem.tags as readonly TechTag[]}
-                        />
-                      </motion.div>
+                      {/* Labels at bottom */}
+                      <div className="absolute bottom-0 inset-x-0 z-10 flex items-end gap-8 p-5 bg-gradient-to-t from-[#fbfbfb] via-[#fbfbfb]/60 to-transparent dark:from-black/80 dark:via-black/20">
+                        {p.heroLabels.map((lbl) => (
+                          <div
+                            key={lbl.title}
+                            className="flex flex-col gap-0.5"
+                          >
+                            <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
+                              {lbl.title}
+                            </span>
+                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                              {lbl.subtitle}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+
+                    {/* Two stacked images (desktop only; main image alone on small screens) */}
+                    <div
+                      className={cn(
+                        "hidden h-full min-h-0 flex-col gap-3 lg:flex",
+                        mainImageOnRight && "lg:col-start-1 lg:row-start-1",
+                      )}
+                    >
+                      {/* Top image (caption bottom, same pattern as tile below) */}
+                      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-sm bg-[#f9f9f9] dark:bg-white/[0.04]">
+                        <div
+                          className={cn(
+                            "relative min-h-0 flex-1",
+                            stackedImagePad,
+                          )}
+                        >
+                          <div className="relative h-full min-h-px overflow-hidden rounded-sm">
+                            <Image
+                              src={p.topImage}
+                              alt={p.topLabel}
+                              fill
+                              className="object-contain object-top"
+                              sizes="350px"
+                              unoptimized={p.topImage.endsWith(".svg")}
+                            />
+                          </div>
+                        </div>
+                        <div className="shrink-0 px-3 pb-3 pt-1">
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
+                              {p.topLabel}
+                            </span>
+                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                              {p.topSublabel}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Bottom image — in-flow caption so the flex panel keeps a non-zero main size for fill+contain */}
+                      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-sm bg-[#f9f9f9] dark:bg-white/[0.04]">
+                        <div
+                          className={cn("relative min-h-0 flex-1", stackedImagePad)}
+                        >
+                          <div className="relative h-full min-h-[1px] overflow-hidden rounded-sm">
+                            <Image
+                              src={p.bottomImage}
+                              alt={p.bottomTitle}
+                              fill
+                              className="object-contain object-top"
+                              sizes="340px"
+                              unoptimized={p.bottomImage.endsWith(".svg")}
+                            />
+                          </div>
+                        </div>
+                        <div className="shrink-0 px-3 pb-3 pt-1">
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
+                              {p.bottomTitle}
+                            </span>
+                            <span className="text-[9px] text-[#8d8fae] dark:text-white/40">
+                              {p.bottomSubtitle}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </TracingBeam>
       </div>

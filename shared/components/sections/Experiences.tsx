@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, CornerDownRight } from "lucide-react";
+import { ArrowUpRight, CornerDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { experiencesV1 } from "@/lib/data";
 
@@ -10,8 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const RESUME_PDF_HREF =
-  "/documents/Ronnie_Kiyegga%20-%20SWE.pdf";
+const RESUME_PDF_HREF = "/documents/Ronnie_Kiyegga%20-%20SWE.pdf";
 
 /** Small circular separator (interpunct), vertically centered with text — matches case-study link row */
 function ExperienceMidDot() {
@@ -50,32 +49,32 @@ export default function Experiences() {
         return;
       }
 
-      gsap.set(els, { opacity: 0, y: 12, force3D: true });
+      gsap.set(els, { opacity: 0, y: 20, force3D: true });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top 82%",
-          end: "top 42%",
-          scrub: 0.85,
+          start: "top 88%",
+          end: "top 36%",
+          scrub: 1.35,
         },
       });
 
       tl.to(heading, {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        ease: "power2.out",
+        duration: 1,
+        ease: "power3.out",
       }).to(
         items,
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.06,
-          ease: "power2.out",
+          duration: 1.15,
+          stagger: 0.1,
+          ease: "power3.out",
         },
-        "-=0.5",
+        "-=0.65",
       );
 
       cleanupRef.current = () => {
@@ -94,7 +93,7 @@ export default function Experiences() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-full min-w-0 overflow-visible py-12 md:py-40 bg-[#FDFBF7] dark:bg-transparent"
+      className="relative w-full min-w-0 overflow-visible py-12 md:py-40 dark:bg-transparent"
       suppressHydrationWarning
     >
       <div
@@ -155,9 +154,17 @@ export default function Experiences() {
                     <div className="overflow-hidden">
                       <div className="mt-3 flex gap-2 pb-1">
                         <CornerDownRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-neutral-500 transition-all duration-300 group-hover/exp:translate-x-0.5 group-hover/exp:text-neutral-600 dark:text-neutral-400 dark:group-hover/exp:text-neutral-500" />
-                        <p className="text-[13px] max-w-lg leading-relaxed text-neutral-600 lg:max-w-3xl dark:text-neutral-400">
-                          {item.responsibilities}
-                        </p>
+                        <div className="min-w-0 max-w-lg text-[13px] leading-relaxed text-neutral-600 lg:max-w-3xl dark:text-neutral-400">
+                          {Array.isArray(item.responsibilities) ? (
+                            <ul className="list-disc space-y-2 pl-4 marker:text-neutral-400 dark:marker:text-neutral-500">
+                              {item.responsibilities.map((line, i) => (
+                                <li key={`${item.id}-${i}`}>{line}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p>{item.responsibilities}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -173,10 +180,7 @@ export default function Experiences() {
           className="mt-14 inline-flex items-center gap-1.5 text-left text-sm text-neutral-500/55 underline-offset-[5px] transition-colors hover:text-neutral-700 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40 dark:text-neutral-400/50 dark:hover:text-neutral-200 dark:focus-visible:ring-neutral-500/40"
         >
           See full resume
-          <ArrowRight
-            className="size-3.5 shrink-0 opacity-80"
-            aria-hidden
-          />
+          <ArrowUpRight className="size-3.5 shrink-0 opacity-80" aria-hidden />
         </a>
       </div>
     </section>
