@@ -6,7 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const EASE_SMOOTH = "power2.out";
+/** Long deceleration — closer to premium marketing sites (e.g. smooth section reveals). */
+const EASE_SECTION = "power3.out";
+const SECTION_DURATION = 1.45;
 
 interface ScrollAnimationsProps {
   children: ReactNode;
@@ -66,7 +68,7 @@ export default function ScrollAnimations({
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top 88%",
+            start: "top 92%",
             toggleActions: "play none none none",
             once: true,
           },
@@ -76,8 +78,8 @@ export default function ScrollAnimations({
           opacity: 1,
           visibility: "visible",
           y: 0,
-          duration: 0.9,
-          ease: EASE_SMOOTH,
+          duration: SECTION_DURATION,
+          ease: EASE_SECTION,
           force3D: true,
         });
 
@@ -106,7 +108,7 @@ export default function ScrollAnimations({
   return (
     <div
       ref={containerRef}
-      className={`${className} [&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0 [&>*:nth-child(n+2)]:translate-y-3.5 motion-reduce:[&>*:nth-child(n+2)]:visible motion-reduce:[&>*:nth-child(n+2)]:opacity-100 motion-reduce:[&>*:nth-child(n+2)]:translate-y-0`}
+      className={`${className} [&>*:nth-child(n+2)]:invisible [&>*:nth-child(n+2)]:opacity-0 [&>*:nth-child(n+2)]:translate-y-8 motion-reduce:[&>*:nth-child(n+2)]:visible motion-reduce:[&>*:nth-child(n+2)]:opacity-100 motion-reduce:[&>*:nth-child(n+2)]:translate-y-0`}
       suppressHydrationWarning
     >
       {children}

@@ -18,7 +18,11 @@ export type ProjectCardTextContentProps = {
   techTags: readonly TechTag[];
 };
 
-const PC_VIEWPORT = { once: true, amount: 0.3 as const };
+const PC_VIEWPORT = {
+  once: true,
+  amount: 0.12 as const,
+  margin: "0px 0px -15% 0px",
+};
 
 function typeToCategoryAndTag(
   type: string,
@@ -55,7 +59,7 @@ const ProjectCardTextContent = ({
     : {
         hidden: {},
         show: {
-          transition: { staggerChildren: 0.045, delayChildren: 0.3 },
+          transition: { staggerChildren: 0.12, delayChildren: 0.35 },
         },
       };
 

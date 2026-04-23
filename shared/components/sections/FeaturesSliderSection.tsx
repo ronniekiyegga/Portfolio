@@ -110,39 +110,48 @@ export default function FeaturesSliderSection({
             />
           )}
 
-          {/* Label pill — frosted pill, last segment gets the Kiyegga purple→cyan gradient */}
           {content.caption && content.caption.length > 0 && (
             <div className="absolute bottom-3 left-3 flex items-center rounded-full bg-white/80 px-2.5 py-1 backdrop-blur-sm dark:bg-black/60">
-              {content.caption.map((segment, i) => {
-                const isLast = i === content.caption!.length - 1;
-                return (
-                  <span key={i} className="flex items-center">
-                    {i > 0 && (
-                      <span className="mx-1 font-jetbrains text-[7px] leading-none text-neutral-400 dark:text-neutral-500">
-                        ·
-                      </span>
-                    )}
-                    {isLast ? (
-                      <span
-                        className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none font-semibold"
-                        style={{
-                          background: KIYEGGA_GRADIENT,
-                          WebkitBackgroundClip: "text",
-                          backgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          color: "transparent",
-                        }}
-                      >
-                        {segment}
-                      </span>
-                    ) : (
-                      <span className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none text-neutral-700 dark:text-neutral-200">
-                        {segment}
-                      </span>
-                    )}
-                  </span>
-                );
-              })}
+
+              {/* Mobile: project name only */}
+              <span className="sm:hidden font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none text-neutral-700 dark:text-neutral-200">
+                {content.caption[0]}
+              </span>
+
+              {/* sm+: all segments */}
+              <span className="hidden sm:flex items-center">
+                {content.caption.map((segment, i) => {
+                  const isLast = i === content.caption!.length - 1;
+                  return (
+                    <span key={i} className="flex items-center">
+                      {i > 0 && (
+                        <span className="mx-1 font-jetbrains text-[7px] leading-none text-neutral-400 dark:text-neutral-500">
+                          ·
+                        </span>
+                      )}
+                      {isLast ? (
+                        <span
+                          className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none font-semibold"
+                          style={{
+                            background: KIYEGGA_GRADIENT,
+                            WebkitBackgroundClip: "text",
+                            backgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            color: "transparent",
+                          }}
+                        >
+                          {segment}
+                        </span>
+                      ) : (
+                        <span className="font-jetbrains text-[7px] tracking-[0.16em] uppercase leading-none text-neutral-700 dark:text-neutral-200">
+                          {segment}
+                        </span>
+                      )}
+                    </span>
+                  );
+                })}
+              </span>
+
             </div>
           )}
         </Card>

@@ -13,17 +13,17 @@ export default function FooterSection() {
   return (
     <footer
       role="contentinfo"
-      className="footer-section bg-[#FDFBF7] flex w-full min-w-0 flex-col overflow-x-hidden pt-12 pb-4"
+      className="footer-section flex w-full min-w-0 flex-col overflow-x-hidden pt-12 pb-4"
     >
       {/* Main content area - CTA + faded text */}
       <div className="relative flex flex-col items-center justify-between px-6 py-16 md:px-12 lg:py-12 lg:px-16">
         {/* CTA block - centered */}
         <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
-          <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.12rem] text-gradient-blue-static">
+          <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.12rem] text-gradient-blue-static">
             Let&apos;s connect
           </p>
-          <h2 className="footer-cta-heading mb-2 max-w-4xl text-2xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[30px] dark:text-white">
-            <span className="font-(family-name:--font-source-serif) font-semibold">
+          <h2 className="footer-cta-heading mb-2 max-w-4xl text-xl font-semibold leading-tight text-neutral-800 sm:text-xl md:text-[30px] dark:text-white">
+            <span className="font-(family-name:--font-source-serif) font-medium">
               Have a project you want to bring to{" "}
             </span>
             <span className="font-(family-name:--font-style-script) text-gradient-blue-static pr-2">
@@ -31,10 +31,10 @@ export default function FooterSection() {
               life?
             </span>
           </h2>
-          <p className="footer-cta-paragraph mb-8 max-w-sm text-xs leading-relaxed text-[#595F7A] md:max-w-lg md:text-sm dark:text-white">
+          {/* <p className="footer-cta-paragraph mb-8 max-w-sm text-xs leading-relaxed text-[#595F7A] md:max-w-lg md:text-sm dark:text-white">
             I help turn ideas into real, high-quality products, from concept to
             launch.
-          </p>
+          </p> */}
           <Link
             href="mailto:kiyeggaronnie@gmail.com"
             className="flex w-40 items-stretch gap-[0.2rem] p-[0.14rem_0.16rem] transition-opacity hover:opacity-95"

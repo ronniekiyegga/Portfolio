@@ -25,6 +25,17 @@ export const HOME_NAV_ITEMS = [
 
 export type HomeNavItemId = (typeof HOME_NAV_ITEMS)[number]["id"];
 
+/** Hero uses id `work` but URL stays clean (`/`) — only deeper sections get `/#section`. */
+export function replaceHomeSectionHistory(sectionId: HomeSectionId) {
+  const url = new URL(window.location.href);
+  url.hash = sectionId === "work" ? "" : sectionId;
+  window.history.replaceState(
+    null,
+    "",
+    `${url.pathname}${url.search}${url.hash}`,
+  );
+}
+
 export function scrollToHomeSection(
   sectionId: HomeSectionId,
   pathname: string,
@@ -33,11 +44,12 @@ export function scrollToHomeSection(
 ) {
   e?.preventDefault();
   if (pathname !== "/") {
-    window.location.href = `/#${sectionId}`;
+    window.location.href =
+      sectionId === "work" ? "/" : `/#${sectionId}`;
     return;
   }
   document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-  window.history.replaceState(null, "", `/#${sectionId}`);
+  replaceHomeSectionHistory(sectionId);
   setHash(sectionId);
   window.dispatchEvent(
     new CustomEvent<HomeSectionId>(HOME_SECTION_HASH_EVENT, {

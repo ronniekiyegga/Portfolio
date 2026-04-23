@@ -183,7 +183,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-100 flex items-center justify-center bg-[#FDFBF7] dark:bg-neutral-950 overflow-hidden"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-white dark:bg-neutral-950 overflow-hidden"
       style={{
         backgroundImage: `radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px)`,
         backgroundSize: "20px 20px",

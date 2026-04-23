@@ -128,7 +128,11 @@ export default function HeroSection({
     const contactTweenTargets = [els[4], liftEl].filter(Boolean);
     tl.to(contactTweenTargets, { opacity: 1, y: 0, duration: 0.6 }, 0.6);
     if (carouselEl) {
-      tl.to(carouselEl, { opacity: 1, y: 0, x: 0, duration: 0.85, ease: "power2.out" }, 0.42);
+      tl.to(
+        carouselEl,
+        { opacity: 1, y: 0, x: 0, duration: 0.85, ease: "power2.out" },
+        0.42,
+      );
     }
 
     return () => {
@@ -143,9 +147,18 @@ export default function HeroSection({
   }, []);
 
   React.useEffect(() => {
-    if (!lanyardDrop) { setAnimationsSettled(false); return; }
-    if (cardMoving) { setAnimationsSettled(false); return; }
-    const t = setTimeout(() => setAnimationsSettled(true), STRING_GLASS_DELAY_MS);
+    if (!lanyardDrop) {
+      setAnimationsSettled(false);
+      return;
+    }
+    if (cardMoving) {
+      setAnimationsSettled(false);
+      return;
+    }
+    const t = setTimeout(
+      () => setAnimationsSettled(true),
+      STRING_GLASS_DELAY_MS,
+    );
     return () => clearTimeout(t);
   }, [lanyardDrop, cardMoving]);
 
@@ -157,7 +170,7 @@ export default function HeroSection({
     <section
       ref={sectionRef}
       id="work"
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32 bg-[#FDFBF7] dark:bg-transparent relative"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 sm:px-5 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32  dark:bg-transparent relative"
     >
       {/* Clip beams only — section overflow was clipping the lanyard canvas on the right */}
       <div className="absolute inset-0 overflow-hidden">

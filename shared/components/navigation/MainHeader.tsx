@@ -89,7 +89,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
         animate="visible"
         variants={navVariants}
         className={cn(
-          "fixed top-0 left-0 border-b border-gray-200 dark:border-b-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 bg-[#FDFBF7] dark:bg-transparent backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
+          "fixed top-0 left-0 border-b border-gray-200 dark:border-b-0 right-0 z-100 flex items-center justify-center px-4 sm:px-5 md:px-8 py-3 md:py-4 bg-white dark:bg-transparent backdrop-blur-xl transition-all duration-300 overflow-x-hidden",
           hideWhenBottomNav &&
             "pointer-events-none invisible -translate-y-full",
         )}
@@ -262,7 +262,7 @@ export default function MainHeader({ hideWhenBottomNav = false }: NavV1Props) {
             aria-hidden
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="absolute top-0 right-0 bottom-0 w-72 max-w-[85vw] bg-[#FDFBF7] dark:bg-neutral-950 border-l border-neutral-200 dark:border-neutral-700 shadow-xl flex flex-col">
+          <div className="absolute top-0 right-0 bottom-0 w-72 max-w-[85vw] bg-white dark:bg-neutral-950 border-l border-neutral-200 dark:border-neutral-700 shadow-xl flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
               <span className="font-jetbrains text-xs tracking-widest uppercase text-neutral-500 dark:text-neutral-400">
                 Menu

@@ -29,8 +29,8 @@ export default function Marquee() {
     "/images/branding/clients/BESKPOKE_GARMENTS_DARK.svg",
     "/images/marquee/Marquee_Theme_Toggle.svg",
     "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg",
-    "/images/projects/truefounders/TrueFounders_testimonial.svg",
-    "/images/projects/truefounders/TrueFounders_testimonial.svg",
+    "/images/projects/truefounders/truefounders-3.webp",
+    "/images/projects/truefounders/truefounders-3.webp",
     "/images/projects/truefounders/TrueFounders_hero.webp",
     "/images/projects/edufeedbackpro/numerix-ai/Marquee_NumerixAI.svg",
     "/images/projects/github-finder/Marquee_GithubFinderProfiles.svg",
@@ -40,7 +40,7 @@ export default function Marquee() {
   return (
     <section
       id="design"
-      className="relative w-full min-w-0 overflow-x-hidden bg-[#FDFBF7] dark:bg-neutral-950"
+      className="relative w-full min-w-0 overflow-x-hidden bg-white dark:bg-neutral-950"
     >
       <ThreeDMarquee images={images} />
     </section>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   HOME_SCROLL_SECTION_IDS,
   HOME_SECTION_HASH_EVENT,
+  replaceHomeSectionHistory,
   type HomeSectionId,
 } from "@/lib/home-nav";
 
@@ -65,7 +66,7 @@ export function useHomeSectionScrollSpy() {
     const emit = (id: HomeSectionId) => {
       if (lastEmitted.current === id) return;
       lastEmitted.current = id;
-      window.history.replaceState(null, "", `/#${id}`);
+      replaceHomeSectionHistory(id);
       window.dispatchEvent(
         new CustomEvent<HomeSectionId>(HOME_SECTION_HASH_EVENT, {
           detail: id,

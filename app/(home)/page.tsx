@@ -3,19 +3,12 @@ import HeroSection from "@/shared/components/sections/HeroSection";
 import { getResolvedHeroCarouselSlides } from "@/lib/hero-carousel-images";
 import ScrollAnimations from "@/shared/components/effects/ScrollAnimations";
 import DynamicIsland from "@/shared/components/navigation/DynamicIsland";
-import ProjectCard from "../components/ProjectCard"; // Hidden — rebuilding project section
+import ProjectCard from "../components/ProjectCard";
 import Experiences from "@/shared/components/sections/Experiences";
 
 /** Re-read `public/carousel` on each request (avoids stale empty slides after adding files). */
 export const dynamic = "force-dynamic";
 
-const AnimatedLinks = nextDynamic(
-  () =>
-    import("@/shared/components/sections/AnimatedBlogLinks").then((m) => ({
-      default: m.AnimatedBlogLinks,
-    })),
-  { loading: () => <section className="min-h-screen" aria-hidden /> },
-);
 const Marquee = nextDynamic(
   () => import("@/shared/components/sections/Marquee"),
   {
@@ -31,10 +24,8 @@ export default async function Home() {
       <main className="flex w-full min-w-0 flex-col items-center">
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center">
           <HeroSection heroCarouselSlides={heroCarouselSlides} />
-          {/* ProjectCard hidden — new feature-mosaic project section coming */}
           <ProjectCard />
           <Experiences />
-          {/* <AnimatedLinks /> */}
           <Marquee />
         </ScrollAnimations>
         <DynamicIsland />

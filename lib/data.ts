@@ -84,14 +84,14 @@ export const PROJECT_CARD_STACK_ROW_2: ProjectCardStackDef[] = [
   {
     id: 2,
     icon: "purple",
-    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
-    imageAlt: "Mathematics Tutoring benefits preview",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring-2.webp",
+    imageAlt: "Mathematics Tutoring marketing preview",
   },
   {
     id: 3,
     icon: null,
-    imageSrc: "/images/projects/maths-tutoring/Tutoring_benefits.png",
-    imageAlt: "Mathematics Tutoring support preview",
+    imageSrc: "/images/projects/maths-tutoring/Tutoring-3.webp",
+    imageAlt: "Mathematics Tutoring platform preview",
   },
 ];
 
@@ -111,8 +111,8 @@ export const PROJECT_CARD_STACK_ROW_3: ProjectCardStackDef[] = [
   {
     id: 3,
     icon: null,
-    imageSrc: "/images/projects/truefounders/TrueFounders_testimonial.svg",
-    imageAlt: "TrueFounders testimonials preview",
+    imageSrc: "/images/projects/truefounders/truefounders-3.webp",
+    imageAlt: "TrueFounders brand preview",
   },
 ];
 
@@ -185,7 +185,8 @@ export interface ExperienceV1Item {
   id: string;
   role: string;
   dates: string;
-  responsibilities: string;
+  /** Plain paragraph, or bullet lines (rendered as a list in Experiences) */
+  responsibilities: string | readonly string[];
   /** Shown after role, separated by a middle dot — omit for title-only lines */
   organisation?: string;
   /** Appended after org, e.g. (Available for work) */
@@ -198,47 +199,47 @@ export function getWorkItemById(id: string): WorkItem | undefined {
 
 export const experiencesV1: ExperienceV1Item[] = [
   {
-    id: "Product Engineer",
+    id: "Full Stack Software Engineer 2026",
     dates: "2026",
-    role: "Product Engineer",
-    organisation: "Freelance",
-    suffix: "(Available for work)",
-    responsibilities:
-      "Design & deliver end-to-end SaaS platforms using a Figma-first workflow and scoped MVP architecture, alongside CI/CD pipelines and containerised environments with focus on reducing deployment time.",
+    role: "Full Stack Engineer",
+    organisation: "Independent Consultant",
+    suffix: "",
+    responsibilities: [
+      "Building and shipping SaaS platforms (Next.js, Node.js, PostgreSQL) with a focus on fast iteration and stable deployment",
+      "Designing CI/CD pipelines and containerised environments (Docker, GitHub Actions) to streamline deployments",
+      "Contributing to open-source and exploring performance improvements in real-time systems",
+    ],
   },
   {
     id: "SRS",
     dates: "2023–2026",
-    role: "Product Engineer",
-    organisation: "School Of Research Science",
-    responsibilities:
-      "Built multiple internal EdTech platforms used across the departments school including a real-time student analytics platform, an AI-powered browser-based pseudocode IDE with semantic analysis, and a KNN image classifier for on-device ML inference.",
+    role: "Software Engineer",
+    organisation: "School of Research Science",
+    responsibilities: [
+      "Reduced ML latency by 70% (2s → 600ms) and saved £6K/year by shifting inference client-side (TensorFlow.js)",
+      "Improved release velocity by 50% by implementing CI/CD pipelines and canary deployments across a 3-engineer team",
+      "Built real-time EdTech platforms including student analytics dashboards and an AI-powered pseudocode IDE",
+    ],
   },
   {
     id: "fullstack-contract",
     dates: "2020–2023",
     role: "Full Stack Software Engineer",
     organisation: "Independent Contractor",
-    responsibilities:
-      "Built full-stack applications using Next.js/Postgres, including a microservices-based e-commerce system handling 2k+ transactions with 100% consistency and 99.9% uptime, alongside a scalable API gateway and design system reducing delivery time by 33%.",
+    responsibilities: [
+      "Architected a Next.js/PostgreSQL e-commerce platform processing 2k+ monthly transactions with 99.9% uptime and zero data loss",
+      "Built a low-latency API gateway (Node.js, Redis, RBAC) sustaining <40ms response times under load",
+      "Delivered a reusable React design system (30+ components) reducing frontend delivery time by 33%",
+    ],
   },
   {
     id: "Internship",
     dates: "2019 – 2019",
-    role: "Software Engineer",
+    role: "Engineering Intern",
     organisation: "Adaptive",
     responsibilities:
       "Reduced data retrieval latency by ~40% for institutional analyst teams by engineering automated Python/SQL ingestion pipelines spanning equities, FX, and fixed income datasets, accelerating time-to-insight for daily reporting workflows.",
   },
-  // {
-  //   id: "Fitness",
-  //   organisation: "DW Fitness First Baker Street",
-  //   role: "Senior Strength & Conditioning Consultant",
-  //   dates: "2015 - 2019",
-  //   responsibilities:
-  //     "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation, improving client performance, recovery, and retention.",
-  //   techStack: [],
-  // },
 ];
 
 export const workItems: WorkItem[] = [
@@ -265,64 +266,92 @@ export const workItems: WorkItem[] = [
     modalDetailImage: "/images/projects/edufeedbackpro/EFP_PNG.png",
     insights: [
       {
+        title: "Intro",
+        content:
+          "EduFeedbackPro is an internal analytics tool for secondary schools. The main issue I was dealing with was how fragmented the data was. It already existed, but it lived across exports, MIS systems, and spreadsheets, so staff had to piece things together manually. I built the UI and the data path from Postgres and BigQuery out to the browser, including real-time updates with SSE.",
+        actions: [
+          "Role-based access across departments",
+          "Single student/cohort model instead of manual reconciliation across systems",
+          "Next.js 15, Prisma, Neon Postgres, BigQuery, Docker, Playwright on critical paths",
+          "Runs in production, so performance and failure modes had to be handled properly",
+        ],
+      },
+      {
+        title: "Performance highlights",
+        content:
+          "The dashboards are used throughout the day, so I needed reads to stay fast without putting pressure on Postgres. I kept analytical queries in BigQuery so the main database could handle user-facing work without getting blocked.",
+        actions: [
+          "Target low-latency reads once caches are warm",
+          "No polling; updates are pushed via SSE when data changes",
+          "Notifications arrive shortly after changes are written",
+          "Postgres handles auth, enrolment, and writes; BigQuery handles heavier analytical queries",
+        ],
+      },
+      {
         title: "Problem",
         content:
-          "Schools rely on fragmented systems to track student performance: spreadsheets, exam board portals, and internal tools, resulting in delayed insight, inconsistent data, and a heavy reliance on manual processes. Staff spend significant time aggregating data across multiple sources, and even when the data is available, identifying at-risk students or performance trends requires additional effort. Interventions are typically reactive rather than proactive.",
+          "The core problem wasn't lack of data, it was how hard it was to use. Marks and cohort data were spread across different systems, and staff had to reconcile everything manually. That made it slow to spot issues, and most insights only showed up after the fact.",
+        actions: [
+          "Same student represented differently across sources, leading to duplication",
+          "Reports were batch-based, so insights arrived late",
+          "No shared signal for when something needed attention",
+          "Anything derived still had to map back to numbers people trusted",
+        ],
       },
       {
         title: "Solution",
         content:
-          "EduFeedbackPro consolidates student performance data and surfaces actionable insights through real-time dashboards and event-driven updates. The goal was to make existing data usable and timely rather than introduce more complexity. It focuses on:",
+          "I structured the system around how staff already think about the data: students, cohorts, and assessments, with dashboards built on top. Instead of relying on manual refresh, the server pushes updates when something changes.",
         actions: [
-          "Replacing manual reporting with real-time dashboards serving 600+ active users across 4 departments",
-          "Enabling faster intervention through at-risk student identification and cohort-level analytics",
-          "Reducing feedback latency with event-driven SSE notifications, eliminating polling entirely",
-          "Surfacing explainable insights that staff can act on without interpreting raw data",
+          "Dashboards surface patterns earlier instead of at the end of term",
+          "Server builds BigQuery queries from UI actions; no direct query access from the client",
+          "Voice input is optional; all workflows work without it",
+          "RBAC scoped by department to keep data isolated between groups",
         ],
       },
       {
-        title: "System Architecture",
+        title: "Real-time architecture",
         content:
-          "Dual-database architecture separates transactional and analytical concerns:",
+          "Most of the traffic is server to client, so I didn't need WebSockets. SSE was enough for pushing updates without adding extra complexity.",
         actions: [
-          "PostgreSQL (Neon) handles users, enrolments, notifications, and survey inputs",
-          "BigQuery handles analytical workloads: aggregations, performance trends, and large-scale queries",
-          "Server-Sent Events push updates only when data changes, no polling",
-          "In-memory pub/sub using a Map-based client registry; architected to migrate to Redis Pub/Sub for horizontal scaling",
-          "Stack: Next.js 15 App Router, next-auth, Prisma ORM, Neon Postgres, BigQuery, Docker, Sentry",
+          "Events emitted on domain changes (enrolment, assessment, notifications)",
+          "In-memory subscription layer, with a path to Redis if needed later",
+          "Reconnection and backoff tuned for unreliable networks",
+          "Heartbeats to keep long-lived connections alive",
         ],
       },
       {
-        title: "Key Engineering",
+        title: "System architecture",
         content:
-          "Engineering decisions that drive the platform's performance and reliability:",
+          "I split transactional and analytical workloads so they don't interfere with each other. Postgres handles user data and writes. BigQuery handles heavier analytical queries.",
         actions: [
-          "Event-driven architecture enables real-time updates across the platform without polling overhead",
-          "Analytical queries offloaded to BigQuery, reducing PostgreSQL load and improving query performance",
-          "Server-side query layer translates application interactions into efficient analytical queries",
-          "Voice querying interface via ElevenLabs API so staff can retrieve insights without writing SQL",
-          "Cohort-level analytics and student-level risk indicators built to support proactive decision-making",
+          "Next.js Route Handlers for APIs and SSE streams",
+          "Prisma on Postgres, with a clear boundary for BigQuery calls",
+          "Docker for consistent deploys; Sentry for production monitoring",
+          "Short TTL for notifications, longer TTL for expensive analytical reads",
         ],
       },
       {
-        title: "Performance",
+        title: "Key engineering decisions",
         content:
-          "SSE delivers updates only when data changes, eliminating continuous polling and hitting sub-50ms P99 response times. Analytical workloads isolated in BigQuery reduce PostgreSQL query load. TTL-based caching limits repeated queries while keeping data freshness within 10 seconds for notifications and 60 minutes for BigQuery responses.",
+          "Most decisions came down to keeping things simple while handling real-time updates and read-heavy traffic.",
+        actions: [
+          "Used SSE because updates are one-way; WebSockets weren't necessary",
+          "Split databases so analytical queries don't affect transactional performance",
+          "Kept query generation on the server instead of exposing SQL to clients",
+          "Treated voice as optional, not something required to use the system",
+        ],
       },
       {
         title: "Tradeoffs",
-        content: "Key tradeoffs made to keep the system simple and fast:",
-        actions: [
-          "SSE over WebSockets: lower overhead and simpler infrastructure, trade-off is one-way communication only",
-          "In-memory broadcaster: fast for a single instance, trade-off is no horizontal scaling without Redis",
-          "Dual-database setup improves read performance but increases coordination complexity",
-          "TTL caching reduces DB load at the cost of slight data staleness",
-        ],
-      },
-      {
-        title: "Product Thinking",
         content:
-          "Started in Figma, mapping out staff workflows and the key interactions before writing any code. The brief was clear: the platform should make existing data actionable, not introduce more to interpret. Design decisions were driven by reducing the number of steps between a data point and an intervention, with clarity and speed as the primary constraints.",
+          "Some of the simpler choices come with limits, especially around scaling and data freshness.",
+        actions: [
+          "In-memory pub/sub works for a single instance; scaling would require Redis",
+          "TTL caching reduces load but introduces some staleness",
+          "Postgres and BigQuery need consistent schemas; UI can't compensate for that",
+          "SSE is one-way; real-time collaboration would need a different approach",
+        ],
       },
     ],
     statistics: [

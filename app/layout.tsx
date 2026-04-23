@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden min-h-screen bg-[#FDFBF7]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden min-h-screen bg-white`}
         suppressHydrationWarning
       >
         <Script
