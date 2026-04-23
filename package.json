@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "dev:turbo": "next dev --turbopack",
     "clean:next": "node scripts/clean-next.cjs",
-    "dev:reset": "node scripts/clean-next.cjs && next dev --webpack",
+    "dev:reset": "node scripts/clean-next.cjs && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

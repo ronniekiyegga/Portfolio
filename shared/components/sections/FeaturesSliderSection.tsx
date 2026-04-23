@@ -13,11 +13,11 @@ const KIYEGGA_GRADIENT = "linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%)
 
 const projectCard = [
   { title: "EduFeedbackPro",  src: "/images/projects/edufeedbackpro/DMI.svg" },
-  { title: "Maths Tutoring",  src: "/images/projects/maths-tutoring/MATHS_TUTORING.svg" },
+  { title: "Ms Maryam's Maths",  src: "/images/projects/maths-tutoring/MATHS_TUTORING.svg" },
   { title: "Google Teachable", src: "/images/projects/knn-classifier/google-teachable/GOOGLE_TEACHABLE.svg" },
   { title: "AI-Pseudocode",   src: "/images/projects/algo-pseudo/AI_PSEUDOCODE.svg" },
   { title: "TrueFounders",    src: "/images/projects/truefounders/TrueFounders_hero.webp" },
-  { title: "Github Finder",   src: "/images/projects/github-finder/GITHUB_FINDER.svg" },
+  { title: "GitHub Data Platform",   src: "/images/projects/github-finder/GITHUB_FINDER.svg" },
 ];
 
 interface FeaturesSliderSectionProps {
