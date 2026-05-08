@@ -108,7 +108,7 @@ interface ExpandableFeatures4Props {
   detailsImage?: string;
   /** Per-card features (image + background). When provided, overrides the default. */
   features?: Feature[];
-  /** Optional project links: liveWebsite → "Live Website"/"Live Demo" button, designFile → "Design File" button */
+  /** Optional project links: liveWebsite → "Live Website" button, designFile → "Design File" button */
   links?: ProjectLinks;
   /** Optional WorkItem for opening a project modal */
   workItem?: WorkItem;

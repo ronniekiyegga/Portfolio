@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:auto": "node scripts/next-dev-free-port.cjs",
     "dev:turbo": "next dev --turbopack",
+    "dev:turbo:auto": "node scripts/next-dev-free-port.cjs --turbopack",
     "clean:next": "node scripts/clean-next.cjs",
     "dev:reset": "node scripts/clean-next.cjs && next dev",
     "build": "next build",

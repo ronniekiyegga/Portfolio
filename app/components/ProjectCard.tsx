@@ -256,7 +256,7 @@ function ViewCaseStudyCta({
   );
 }
 
-function LiveDemoCta({ href }: { href: string }) {
+function LiveWebsiteCta({ href }: { href: string }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -270,7 +270,7 @@ function LiveDemoCta({ href }: { href: string }) {
         onMouseLeave={() => setHovered(false)}
         className={CTA_LINK_CLASS}
       >
-        <span className={CTA_LABEL_CLASS}>Live Demo</span>
+        <span className={CTA_LABEL_CLASS}>Live Website</span>
         <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
       </a>
     </div>
@@ -419,7 +419,7 @@ export default function ProjectCard() {
                         <>
                           <FigmaCta href={PROJECT_CARD_SHOWCASE_FIGMA_HREF} />
                           {workItem.href && workItem.href !== "#" ? (
-                            <LiveDemoCta href={workItem.href} />
+                            <LiveWebsiteCta href={workItem.href} />
                           ) : (
                             <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
                               Soon
@@ -434,7 +434,7 @@ export default function ProjectCard() {
                           />
                           <FigmaCta href={PROJECT_CARD_SHOWCASE_FIGMA_HREF} />
                           {workItem.href && workItem.href !== "#" ? (
-                            <LiveDemoCta href={workItem.href} />
+                            <LiveWebsiteCta href={workItem.href} />
                           ) : (
                             <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
                               Soon
