@@ -506,7 +506,7 @@ export const workItems: WorkItem[] = [
     href: "https://blissfulcoda.github.io/teachablemachine/",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
-    heroImage: "/images/projects/knn-classifier/KNN_CLASSIFIER.png",
+    heroImage: "/images/projects/knn-classifier/KNN_CLASSIFIER.svg",
     githubHref: "https://github.com/BlissfulCoda/teachablemachine",
     insights: [
       {
@@ -610,14 +610,14 @@ export const projectSectionItems: ProjectSectionItem[] = [
       {
         title: "Design",
         description: "",
-        image: "/images/projects/maths-tutoring/MATHS_TUTORING_HERO.svg",
+        image: "/images/projects/maths-tutoring/Tutoring_hero.webp",
         background: "floatingLines",
         href: "https://www.figma.com/proto/uCGr0CmmdDMJ0ngspgtqDa/Sarah-s-Maths-School?page-id=6%3A113&node-id=49-6208&viewport=616%2C735%2C0.22&t=D4BguGiRPhyckL0L-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=49%3A6208",
       },
       {
         title: "Engineering",
         description: "",
-        image: "/images/projects/maths-tutoring/MATHS_TUTORING2.svg",
+        image: "/images/projects/maths-tutoring/Tutoring-2.webp",
         background: "prism",
         href: "https://www.msmaryamsmaths.com/",
       },

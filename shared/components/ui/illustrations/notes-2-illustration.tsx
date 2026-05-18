@@ -36,7 +36,7 @@ export const Notes2Illustration = () => {
                         </div>
                     </div>
                     <div className="space-y-3 text-sm">
-                        <p className="text-muted-foreground">Key decisions from today's marketing sync:</p>
+                        <p className="text-muted-foreground">Key decisions from today&apos;s marketing sync:</p>
                         <ul className="text-muted-foreground list-disc space-y-1.5 pl-4">
                             <li>
                                 <span className="text-foreground font-medium">Launch date confirmed:</span> Monday, March 18th at 9 AM EST

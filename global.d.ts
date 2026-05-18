@@ -11,8 +11,9 @@ declare module "*.png" {
 }
 
 declare module "meshline" {
-  export const MeshLineGeometry: any;
-  export const MeshLineMaterial: any;
+  import type { BufferGeometry, Material } from "three";
+  export class MeshLineGeometry extends BufferGeometry {}
+  export class MeshLineMaterial extends Material {}
 }
 
 declare module "react" {

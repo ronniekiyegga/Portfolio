@@ -22,7 +22,6 @@ export default function ScrollAnimations({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let rafId: number;
     let cleanup: (() => void) | null = null;
 
     const forceVisible = () => {
@@ -39,7 +38,7 @@ export default function ScrollAnimations({
 
     const fallbackTimer = setTimeout(forceVisible, 4000);
 
-    rafId = requestAnimationFrame(() => {
+    const rafId = requestAnimationFrame(() => {
       const container = containerRef.current;
       if (!container) return;
 

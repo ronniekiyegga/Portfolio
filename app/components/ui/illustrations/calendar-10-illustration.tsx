@@ -32,7 +32,7 @@ export const Calendar10Illustration = () => {
                                     <CalendarDays />
                                 </div>
                                 <div className="flex items-center justify-between text-emerald-700 dark:text-emerald-400">
-                                    <span className="text-sm font-semibold">New Year's Day</span>
+                                    <span className="text-sm font-semibold">New Year&apos;s Day</span>
                                 </div>
                             </div>
                             <div className="bg-purple-500/6.5 grid grid-cols-[auto_1fr] gap-1 rounded-full p-1 pr-2 text-sm font-medium">

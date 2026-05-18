@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" fill="none" role="img" aria-label="KNN image classifier in the browser">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a0a"/>
+      <stop offset="0.5" stop-color="#0d2e0d"/>
+      <stop offset="1" stop-color="#081808"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="200" y1="120" x2="1000" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4ade80"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect x="120" y="80" width="960" height="540" rx="24" fill="#020617" stroke="url(#accent)" stroke-width="2" opacity="0.95"/>
+  <rect x="120" y="80" width="960" height="56" rx="16" fill="#0f172a"/>
+  <circle cx="156" cy="108" r="10" fill="#f87171"/>
+  <circle cx="186" cy="108" r="10" fill="#fbbf24"/>
+  <circle cx="216" cy="108" r="10" fill="#34d399"/>
+  <rect x="280" y="96" width="360" height="24" rx="8" fill="#1e293b"/>
+  <!-- Preview + panel -->
+  <rect x="160" y="180" width="420" height="380" rx="16" fill="#022c12" stroke="#166534" stroke-width="1.5"/>
+  <rect x="200" y="220" width="340" height="260" rx="12" fill="#052e16"/>
+  <circle cx="370" cy="350" r="72" fill="#064e3b" stroke="#86efac" stroke-width="3" opacity="0.9"/>
+  <circle cx="370" cy="350" r="48" fill="#065f46"/>
+  <!-- Side panel -->
+  <rect x="620" y="180" width="420" height="380" rx="16" fill="#0f172a" stroke="#334155"/>
+  <text x="640" y="230" fill="#e2e8f0" font-family="ui-sans-serif,system-ui,sans-serif" font-size="22" font-weight="600">TensorFlow.js</text>
+  <text x="640" y="268" fill="#94a3b8" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15">k-NN � WebGL � No server</text>
+  <rect x="640" y="300" width="380" height="44" rx="10" fill="#14532d" stroke="#22c55e" stroke-opacity="0.6"/>
+  <text x="660" y="330" fill="#d1fae5" font-family="ui-monospace,monospace" font-size="15">prediction: class_B � 0.94</text>
+  <rect x="640" y="360" width="380" height="44" rx="10" fill="#1e293b"/>
+  <text x="660" y="390" fill="#cbd5e1" font-family="ui-monospace,monospace" font-size="15">latency: ~12ms (device)</text>
+  <rect x="640" y="420" width="380" height="44" rx="10" fill="#1e293b"/>
+  <text x="660" y="450" fill="#cbd5e1" font-family="ui-monospace,monospace" font-size="15">students: 400+ � $0 infra</text>
+  <!-- Footer title -->
+  <text x="600" y="660" text-anchor="middle" fill="#86efac" font-family="ui-sans-serif,system-ui,sans-serif" font-size="18" letter-spacing="0.12em" opacity="0.75">KNN IMAGE CLASSIFIER</text>
+</svg>

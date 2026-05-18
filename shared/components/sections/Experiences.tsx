@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, CornerDownRight } from "lucide-react";
+import { CornerDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { experiencesV1 } from "@/lib/data";
 
@@ -9,8 +9,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const RESUME_PDF_HREF = "/documents/Ronnie_Kiyegga%20-%20SWE.pdf";
 
 /** Small circular separator (interpunct), vertically centered with text — matches case-study link row */
 function ExperienceMidDot() {
@@ -173,15 +171,6 @@ export default function Experiences() {
             );
           })}
         </div>
-        <a
-          href={RESUME_PDF_HREF}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-14 inline-flex items-center gap-1.5 text-left text-sm text-neutral-500/55 underline-offset-[5px] transition-colors hover:text-neutral-700 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400/40 dark:text-neutral-400/50 dark:hover:text-neutral-200 dark:focus-visible:ring-neutral-500/40"
-        >
-          See full resume
-          <ArrowUpRight className="size-3.5 shrink-0 opacity-80" aria-hidden />
-        </a>
       </div>
     </section>
   );
