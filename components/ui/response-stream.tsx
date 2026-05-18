@@ -199,11 +199,13 @@ function useTextStream({
     setIsComplete(true)
   }, [])
 
+  const tickRef = useRef<(() => void) | undefined>(undefined)
+
   const tick = useCallback(() => {
     clearTimer()
 
     if (pausedRef.current) {
-      timeoutRef.current = setTimeout(tick, 50)
+      timeoutRef.current = setTimeout(() => tickRef.current?.(), 50)
       return
     }
 
@@ -215,7 +217,7 @@ function useTextStream({
         return
       }
 
-      timeoutRef.current = setTimeout(tick, getProcessingDelay())
+      timeoutRef.current = setTimeout(() => tickRef.current?.(), getProcessingDelay())
       return
     }
 
@@ -243,8 +245,10 @@ function useTextStream({
       return
     }
 
-    timeoutRef.current = setTimeout(tick, getProcessingDelay())
+    timeoutRef.current = setTimeout(() => tickRef.current?.(), getProcessingDelay())
   }, [applyDisplayedText, clearTimer, getChunkSize, getProcessingDelay, markComplete])
+
+  tickRef.current = tick
 
   const reset = useCallback(() => {
     clearTimer()

@@ -452,8 +452,9 @@ export default function ProjectCard() {
                       mainImageOnRight
                         ? "lg:grid-cols-[390px_minmax(0,1fr)]"
                         : "lg:grid-cols-[minmax(0,1fr)_390px]",
+                      // Shorter on small screens; full 600px from lg up (desktop stacked layout).
+                      "h-[300px] sm:h-[380px] md:h-[480px] lg:h-[600px]",
                     )}
-                    style={{ height: "600px" }}
                     variants={v.visual}
                   >
                     {/* Big image */}
@@ -465,8 +466,8 @@ export default function ProjectCard() {
                     >
                       <div
                         className={cn(
-                          "absolute inset-x-6 top-6 bottom-24 overflow-hidden rounded-sm dark:bg-white/[0.02]",
-                          
+                          "absolute inset-x-6 top-6 overflow-hidden rounded-sm dark:bg-white/[0.02]",
+                          "bottom-14 md:bottom-24",
                         )}
                       >
                         <Image
@@ -481,17 +482,17 @@ export default function ProjectCard() {
                           priority
                         />
                       </div>
-                      {/* Labels at bottom */}
-                      <div className="absolute bottom-0 inset-x-0 z-10 flex items-end gap-8 p-5 bg-gradient-to-t from-[#fbfbfb] via-[#fbfbfb]/60 to-transparent dark:from-black/80 dark:via-black/20">
+                      {/* Labels at bottom — titles only on mobile */}
+                      <div className="absolute bottom-0 inset-x-0 z-10 flex items-end gap-6 p-3 sm:gap-8 md:p-5 bg-gradient-to-t from-[#fbfbfb] via-[#fbfbfb]/60 to-transparent dark:from-black/80 dark:via-black/20">
                         {p.heroLabels.map((lbl) => (
                           <div
                             key={lbl.title}
-                            className="flex flex-col gap-0.5"
+                            className="flex min-w-0 flex-col gap-0.5"
                           >
-                            <span className="text-[11px] font-semibold text-[#1f202d] dark:text-white/90">
+                            <span className="text-[10px] font-semibold leading-snug text-[#1f202d] sm:text-[11px] dark:text-white/90">
                               {lbl.title}
                             </span>
-                            <span className="text-[10px] text-[#636584] dark:text-white/40">
+                            <span className="sr-only text-[10px] text-[#636584] md:not-sr-only md:inline dark:text-white/40">
                               {lbl.subtitle}
                             </span>
                           </div>
