@@ -379,7 +379,7 @@ export const workItems: WorkItem[] = [
     gradient: "linear-gradient(160deg, #12141a 0%, #1a1f2e 50%, #0f1118 100%)",
     preview: "analytics",
     heroImage:
-      "/images/projects/subscription-api/auth-middleware-1.webp?v=20260423",
+      "/images/projects/subscription-api/auth-middleware-1.webp",
     modalDetailImage:
       "/images/projects/subscription-api/router-boundary-2.webp",
     githubHref: "https://github.com/BlissfulCoda",
