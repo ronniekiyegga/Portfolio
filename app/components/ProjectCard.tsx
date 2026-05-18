@@ -46,8 +46,7 @@ const PROJECTS = [
   {
     workItemId: "subscription-api",
     badge: "API INFRASTRUCTURE",
-    bigImage:
-      "/images/projects/subscription-api/auth-middleware-1.webp?v=20260423",
+    bigImage: "/images/projects/subscription-api/auth-middleware-1.webp",
     topImage: "/images/projects/subscription-api/router-boundary-2.webp",
     bottomImage: "/images/projects/subscription-api/structure-3.webp",
     topLabel: "API surface",
