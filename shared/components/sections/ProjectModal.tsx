@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import {
   Dialog,
@@ -8,12 +8,10 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/shared/components/ui/dialog";
-import Image from "next/image";
-import { ImageIllustration } from "@/shared/components/ui/illustrations/image-illustration";
 import GradualBlur from "@/shared/components/effects/GradualBlur";
-import { TracingBeam } from "@/shared/components/ui/tracing-beam";
 import { ArrowUpRight, Bell, X } from "lucide-react";
 import type { WorkItem } from "@/lib/data";
+import { ProjectStudyContent } from "@/shared/components/sections/ProjectStudyContent";
 
 interface ProjectModalProps {
   item: WorkItem | null;
@@ -27,34 +25,10 @@ function easeOutCubic(t: number) {
 
 const DESKTOP_SCROLL_CAP = 600;
 
-/** Wrap metrics in «value» in insight copy for tabular emphasis (e.g. «sub-50ms»). */
-function renderInsightRichText(text: string): ReactNode {
-  const segments = text.split(/(«[^»]+»)/g);
-  return segments.map((segment, i) => {
-    const inner = segment.match(/^«([^»]+)»$/);
-    if (inner) {
-      return (
-        <span
-          key={i}
-          className="whitespace-nowrap font-semibold tabular-nums text-foreground"
-        >
-          {inner[1]}
-        </span>
-      );
-    }
-    return segment ? <span key={i}>{segment}</span> : null;
-  });
-}
-
 export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
-
-  const heroImageClassName =
-    item?.preview === "analytics"
-      ? "mx-auto w-full max-w-[min(100%,680px)] max-h-[320px] md:max-h-[360px] h-auto object-contain rounded-lg"
-      : "mx-auto w-full max-w-[min(100%,680px)] max-h-[320px] md:max-h-[380px] h-auto object-contain rounded-lg";
 
   const startAutoScroll = useCallback((el: HTMLDivElement) => {
     isAnimatingRef.current = true;
@@ -232,166 +206,15 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
             onScroll={handleScroll}
             className="flex-1 min-h-0 overflow-y-auto"
           >
-            <section>
-              <div className="pb-56 pt-56 lg:pt-150">
-                <ImageIllustration
-                  containerRef={scrollRef}
-                  src={item?.heroImage}
-                  alt={item?.title ?? "Project"}
-                  maxScale={1.06}
-                  scaleProgressSpan={0.22}
-                  minScale={item?.preview === "analytics" ? 0.9 : 1.1}
-                  className="max-w-3xl md:max-w-4xl"
-                />
-                <div className="mx-auto mt-20 max-w-6xl px-6 lg:mt-40 lg:px-12">
-                  <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:gap-12 lg:gap-8">
-                    <div className="flex flex-col gap-4 min-w-0 pr-20 md:pr-24">
-                      <p
-                        className="font-jetbrains text-[10px] tracking-widest uppercase"
-                        style={{ color: "var(--muted)" }}
-                      >
-                        {item?.type}
-                      </p>
-                      <h3 className="font-cormorant text-xl md:text-2xl font-normal leading-tight text-foreground wrap-break-word">
-                        {item?.title}
-                      </h3>
-                      <p className="max-w-prose text-[15px] leading-relaxed text-muted-foreground md:text-base">
-                        {item?.desc}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {item?.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-1 border rounded font-jetbrains text-[9px] tracking-widest uppercase"
-                            style={{
-                              borderColor: "var(--border)",
-                              color: "var(--muted)",
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <p
-                        className="font-cormorant text-2xl italic"
-                        style={{ color: "var(--metric-color)" }}
-                      >
-                        {item?.metric}
-                      </p>
-                    </div>
-
-                    {item?.insights && item.insights.length > 0 ? (
-                      <TracingBeam
-                        className="w-full max-w-none pl-20"
-                        svgGradientId="tb-project-modal"
-                      >
-                        <div className="max-w-[min(100%,42rem)] space-y-14 md:space-y-16">
-                          <div className="relative overflow-hidden rounded-xl bg-muted/30 px-4 py-6">
-                            <Image
-                              src={
-                                item?.modalDetailImage ?? item?.heroImage ?? ""
-                              }
-                              alt={item?.title ?? "Project"}
-                              width={1200}
-                              height={700}
-                              className={heroImageClassName}
-                            />
-                          </div>
-                          {item?.statistics && item.statistics.length > 0 && (
-                            <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
-                              {item.statistics.map((stat, i) => (
-                                <div
-                                  key={i}
-                                  className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3 text-center"
-                                >
-                                  <div
-                                    className="text-base sm:text-lg font-semibold tabular-nums"
-                                    style={{
-                                      background:
-                                        "linear-gradient(135deg, #3e7bfa 0%, #6600cc 100%)",
-                                      WebkitBackgroundClip: "text",
-                                      WebkitTextFillColor: "transparent",
-                                      backgroundClip: "text",
-                                    }}
-                                  >
-                                    {stat.value}
-                                  </div>
-                                  <div className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                                    {stat.label}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          {item.insights.map((insight, i) => (
-                            <div
-                              key={i}
-                              className="border-b border-border/50 pb-12 last:border-b-0 last:pb-4 md:pb-14 md:last:pb-6"
-                            >
-                              <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                                {insight.title}
-                              </h4>
-                              <p className="max-w-prose text-[15px] leading-[1.65] text-foreground/90 md:text-base">
-                                {renderInsightRichText(insight.content)}
-                              </p>
-                              {insight.actions && insight.actions.length > 0 ? (
-                                <ul className="mt-5 max-w-prose list-disc space-y-2.5 pl-5 text-[15px] leading-relaxed text-muted-foreground marker:text-muted-foreground/70 md:text-base dark:text-gray-400">
-                                  {insight.actions.map((action, j) => (
-                                    <li key={`${insight.title}-${j}`} className="pl-1">
-                                      {renderInsightRichText(action)}
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-                            </div>
-                          ))}
-                        </div>
-                      </TracingBeam>
-                    ) : (
-                      <div className="space-y-8">
-                        <div className="relative overflow-hidden rounded-xl bg-muted/30 p-6">
-                          <Image
-                            src={
-                              item?.modalDetailImage ?? item?.heroImage ?? ""
-                            }
-                            alt={item?.title ?? "Project"}
-                            width={1200}
-                            height={700}
-                            className={heroImageClassName}
-                          />
-                        </div>
-                        {item?.statistics && item.statistics.length > 0 && (
-                          <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
-                            {item.statistics.map((stat, i) => (
-                              <div
-                                key={i}
-                                className="rounded-lg bg-muted/40 px-3 py-2.5 sm:px-4 sm:py-3 text-center"
-                              >
-                                <div
-                                  className="text-base sm:text-lg font-semibold tabular-nums"
-                                  style={{
-                                    background:
-                                      "linear-gradient(135deg, #3e7bfa 0%, #6600cc 100%)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                  }}
-                                >
-                                  {stat.value}
-                                </div>
-                                <div className="mt-0.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                                  {stat.label}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
+            {item ? (
+              <ProjectStudyContent
+                item={item}
+                scrollContainerRef={
+                  scrollRef as React.RefObject<HTMLElement | null>
+                }
+                tracingBeamGradientId="tb-project-modal"
+              />
+            ) : null}
           </div>
 
           <GradualBlur

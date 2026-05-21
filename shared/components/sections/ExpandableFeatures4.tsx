@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   type ReactNode,
@@ -9,7 +10,6 @@ import {
   useRef,
   useCallback,
 } from "react";
-import NativeStartNow from "@/shared/components/ui/NativeButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LightPillarComponent from "@/shared/components/ui/gradients/LightPillarComponent";
@@ -17,6 +17,7 @@ import PrismComponent from "@/shared/components/ui/gradients/PrismComponent";
 import LightRaysComponent from "@/shared/components/ui/gradients/LightRaysComponent";
 import FloatingLinesComponent from "@/shared/components/ui/gradients/FloatingLinesComponent";
 import type { WorkItem } from "@/lib/data";
+import { projectCaseStudyHref } from "@/lib/project-routes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -318,15 +319,34 @@ export default function ExpandableFeatures4({
               className="opacity-0 flex flex-wrap items-center gap-0"
             >
               {workItem && onOpenProjectModal && (
-                <NativeStartNow
-                  variant="gradient"
-                  size="xs"
-                  label="Case Study"
-                  onStart={() => {
+                <Link
+                  href={projectCaseStudyHref(workItem.id)}
+                  prefetch
+                  scroll={false}
+                  onClick={(e) => {
+                    if (
+                      e.metaKey ||
+                      e.ctrlKey ||
+                      e.shiftKey ||
+                      e.altKey ||
+                      e.button !== 0
+                    ) {
+                      return;
+                    }
+                    e.preventDefault();
                     onOpenProjectModal(workItem);
-                    return Promise.resolve();
                   }}
-                />
+                  className={cn(
+                    "relative inline-flex h-8 items-center gap-2 overflow-hidden rounded-md border-0 px-3 text-xs font-semibold whitespace-nowrap text-white shadow-md",
+                    "bg-linear-to-r from-black via-neutral-900 to-black",
+                    "hover:shadow-lg hover:shadow-black/50",
+                  )}
+                >
+                  Case Study
+                  <span aria-hidden className="text-[0.95em]">
+                    →
+                  </span>
+                </Link>
               )}
             </div>
 
