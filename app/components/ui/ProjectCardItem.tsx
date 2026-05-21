@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { Rocket } from "lucide-react";
+import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { WorkItem } from "@/lib/data";
+import { projectCaseStudyHref } from "@/lib/project-routes";
 
 const PC_VIEWPORT = {
   once: true,
@@ -143,15 +145,29 @@ const ProjectCardItem = ({
                     ) : null}
                   </AnimatePresence>
 
-                  <button
-                    type="button"
-                    onClick={() => openModal(workItem)}
+                  <Link
+                    href={projectCaseStudyHref(workItem.id)}
+                    prefetch
+                    scroll={false}
+                    onClick={(e) => {
+                      if (
+                        e.metaKey ||
+                        e.ctrlKey ||
+                        e.shiftKey ||
+                        e.altKey ||
+                        e.button !== 0
+                      ) {
+                        return;
+                      }
+                      e.preventDefault();
+                      openModal(workItem);
+                    }}
                     className="project-cta-link group relative z-10 inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-left focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e7bfa]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   >
                     <span className="project-cta-link-label text-[11px] font-medium uppercase leading-[16.7px]">
                       {caseStudy}
                     </span>
-                  </button>
+                  </Link>
                 </motion.div>
 
                 <span className="mx-2 text-[rgba(186,188,205,1)]">•</span>

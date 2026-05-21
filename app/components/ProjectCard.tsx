@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEventHandler } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, Rocket } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import SectionKicker from "@/shared/components/ui/section-kicker";
@@ -12,6 +13,7 @@ import {
   type WorkItem,
   PROJECT_CARD_SHOWCASE_FIGMA_HREF,
 } from "@/lib/data";
+import { projectCaseStudyHref } from "@/lib/project-routes";
 import { cn } from "@/lib/utils";
 import LogoLoop from "@/shared/components/media/LogoLoop";
 import type { LogoItem } from "@/shared/components/media/LogoLoop";
@@ -237,20 +239,32 @@ function ViewCaseStudyCta({
   openModal: (item: WorkItem) => void;
 }) {
   const [hovered, setHovered] = useState(false);
+  const href = projectCaseStudyHref(workItem.id);
+
+  const handleNavigateClick: MouseEventHandler<HTMLAnchorElement> = (
+    e,
+  ) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
+      return;
+    e.preventDefault();
+    openModal(workItem);
+  };
 
   return (
     <div className="relative inline-flex">
       <RocketsBurst key={hovered ? "on" : "off"} show={hovered} />
-      <button
-        type="button"
-        onClick={() => openModal(workItem)}
+      <Link
+        href={href}
+        prefetch
+        scroll={false}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onClick={handleNavigateClick}
         className={CTA_LINK_CLASS}
       >
         <span className={CTA_LABEL_CLASS}>View Case Study</span>
         <ArrowUpRight className={CTA_ARROW_CLASS} aria-hidden />
-      </button>
+      </Link>
     </div>
   );
 }
