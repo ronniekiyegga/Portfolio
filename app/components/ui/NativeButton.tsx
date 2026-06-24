@@ -3,7 +3,7 @@
 import { NativeButton } from "./native-button-shadcnui";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Loader2, Rocket } from "lucide-react";
+import { Loader2, Rocket } from "lucide-react";
 import { ReactNode, useState } from "react";
 
 export interface NativeStartNowProps {
@@ -217,20 +217,6 @@ export default function NativeStartNow({
               className="flex items-center gap-2 relative z-10"
             >
               {label}
-              <motion.div
-                animate={{
-                  x: [0, 3, 0],
-                }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              >
-                <ArrowRight
-                  className={iconSizeVariants[size === "md" ? "md" : size]}
-                />
-              </motion.div>
             </motion.div>
           )}
 

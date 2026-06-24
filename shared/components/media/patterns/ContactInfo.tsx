@@ -37,7 +37,7 @@ const ContactInfo = () => {
         />
 
         <Link
-          href="https://github.com/BlissfulCoda"
+          href="https://github.com/ronniekiyegga"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center rounded-tr-2xl px-5 mr-4 py-3 text-sm text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"

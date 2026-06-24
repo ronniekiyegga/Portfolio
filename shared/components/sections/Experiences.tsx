@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { CornerDownRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { experiencesV1 } from "@/lib/data";
 
@@ -10,7 +9,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Small circular separator (interpunct), vertically centered with text — matches case-study link row */
+const KICKER_GRADIENT = "linear-gradient(45deg, #667bf6, #26d0ce)";
+const TITLE_GRADIENT = "linear-gradient(90deg, #4353ff 0%, #8b5cf6 100%)";
+
+/** Small circular separator (interpunct), vertically centered with text */
 function ExperienceMidDot() {
   return (
     <span
@@ -91,35 +93,63 @@ export default function Experiences() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative w-full min-w-0 overflow-visible py-12 md:py-40 dark:bg-transparent"
+      className="relative w-full min-w-0 overflow-visible py-16 md:py-32 dark:bg-transparent"
       suppressHydrationWarning
     >
       <div
         ref={contentRef}
-        className="relative z-10 mx-auto w-full max-w-3xl cursor-default px-6 sm:px-8 lg:px-10"
+        className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8"
         suppressHydrationWarning
       >
-        <h2 className="mb-8 text-left text-base font-medium text-neutral-500 dark:text-neutral-400 md:mb-12">
-          Work Experience
-        </h2>
+        <header className="mb-10 flex min-w-0 flex-col gap-4 md:mb-12">
+          <div className="flex items-center gap-1.5">
+            <span
+              className="size-[5px] shrink-0 rounded-full"
+              style={{ background: KICKER_GRADIENT }}
+              aria-hidden
+            />
+            <span
+              className="bg-clip-text text-[10px] font-semibold uppercase tracking-[0.15em] text-transparent"
+              style={{
+                background: KICKER_GRADIENT,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+              }}
+            >
+              Career
+            </span>
+          </div>
 
-        <div className="flex flex-col gap-8 md:gap-10">
+          <h2 className="font-cormorant text-[clamp(2.125rem,4.5vw,2.875rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-[#1a1a2e] dark:text-white">
+            Work{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: TITLE_GRADIENT,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+              }}
+            >
+              Experience
+            </span>
+          </h2>
+        </header>
+
+        <div className="flex max-w-3xl flex-col gap-8 md:gap-10">
           {experiencesV1.map((item) => {
             const isOpen = hoveredId === item.id;
+
             return (
               <div
                 key={item.id}
                 data-experience-id={item.id}
                 data-experience-item
-                className={cn(
-                  "group/exp cursor-pointer rounded-lg transition-all duration-300 ease-out",
-                  isOpen && " ",
-                )}
+                className="group/exp cursor-pointer rounded-lg transition-all duration-300 ease-out"
                 onMouseEnter={() => setHoveredId(item.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-3 sm:grid-cols-[minmax(6rem,8rem)_minmax(0,1fr)] sm:gap-x-16 md:gap-x-20 lg:gap-x-24">
-                  <span className="text-sm tabular-nums text-neutral-500 dark:text-neutral-500">
+                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-2 sm:grid-cols-[12.5rem_minmax(0,1fr)] sm:gap-x-10 md:gap-x-14">
+                  <span className="shrink-0 whitespace-nowrap text-sm tabular-nums text-neutral-500 dark:text-neutral-500">
                     {item.dates}
                   </span>
                   <div className="min-w-0">
@@ -150,11 +180,10 @@ export default function Experiences() {
                     )}
                   >
                     <div className="overflow-hidden">
-                      <div className="mt-3 flex gap-2 pb-1">
-                        <CornerDownRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-neutral-500 transition-all duration-300 group-hover/exp:translate-x-0.5 group-hover/exp:text-neutral-600 dark:text-neutral-400 dark:group-hover/exp:text-neutral-500" />
+                      <div className="mt-3 pb-1">
                         <div className="min-w-0 max-w-lg text-[13px] leading-relaxed text-neutral-600 lg:max-w-3xl dark:text-neutral-400">
                           {Array.isArray(item.responsibilities) ? (
-                            <ul className="list-disc space-y-2 pl-4 marker:text-neutral-400 dark:marker:text-neutral-500">
+                            <ul className="list-none space-y-2 pl-0">
                               {item.responsibilities.map((line, i) => (
                                 <li key={`${item.id}-${i}`}>{line}</li>
                               ))}

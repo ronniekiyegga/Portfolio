@@ -10,6 +10,7 @@ export const HOME_SECTION_HASH_EVENT = "portfolio:home-section-hash";
 export const HOME_SCROLL_SECTION_IDS = [
   "work",
   "projects",
+  "blog",
   "experience",
   "design",
 ] as const;
@@ -19,6 +20,7 @@ export type HomeSectionId = (typeof HOME_SCROLL_SECTION_IDS)[number];
 /** Header / DynamicIsland — no separate “Work”; Projects represents hero + project grid. */
 export const HOME_NAV_ITEMS = [
   { label: "Projects", id: "projects" },
+  { label: "Blog", id: "blog" },
   { label: "Experience", id: "experience" },
   { label: "Design", id: "design" },
 ] as const;

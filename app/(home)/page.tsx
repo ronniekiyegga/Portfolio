@@ -5,6 +5,7 @@ import ScrollAnimations from "@/shared/components/effects/ScrollAnimations";
 import DynamicIsland from "@/shared/components/navigation/DynamicIsland";
 import ProjectCard from "../components/ProjectCard";
 import Experiences from "@/shared/components/sections/Experiences";
+import EngineeringNotesSection from "@/shared/components/sections/EngineeringNotesSection";
 
 /** Re-read `public/carousel` on each request (avoids stale empty slides after adding files). */
 export const dynamic = "force-dynamic";
@@ -25,6 +26,7 @@ export default async function Home() {
         <ScrollAnimations className="flex w-full min-w-0 flex-col items-center">
           <HeroSection heroCarouselSlides={heroCarouselSlides} />
           <ProjectCard />
+          <EngineeringNotesSection />
           <Experiences />
           <Marquee />
         </ScrollAnimations>

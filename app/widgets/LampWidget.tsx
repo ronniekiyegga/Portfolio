@@ -105,7 +105,7 @@ export default function LampWidget() {
         `}
         style={{ top: `${BAR_Y - 48}px` }}
       >
-        <SectionKicker>Things I&apos;ve Built</SectionKicker>
+        <SectionKicker variant="muted">Things I&apos;ve Built</SectionKicker>
       </div>
 
       {/* ── Lamp bar ─────────────────────────────────────────── */}

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Hexagon, Search, ArrowRight } from "lucide-react";
+import { Hexagon, Search } from "lucide-react";
 import { Category, Post } from "@/types/post";
 import {
   CommandDialog,
@@ -94,7 +94,7 @@ export function BlogCommandDialog({
                   setOpen(false);
                 }}
               >
-                <ArrowRight className="not-in-data-[selected=true]:opacity-50" />
+                <Hexagon className="not-in-data-[selected=true]:opacity-50" />
                 <div className="flex flex-col">
                   <span className="line-clamp-1">{post.title}</span>
                   <span className="text-muted-foreground line-clamp-1 hidden text-xs">

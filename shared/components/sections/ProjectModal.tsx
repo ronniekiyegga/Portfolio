@@ -9,7 +9,7 @@ import {
   DialogClose,
 } from "@/shared/components/ui/dialog";
 import GradualBlur from "@/shared/components/effects/GradualBlur";
-import { ArrowUpRight, Bell, X } from "lucide-react";
+import { Bell, X } from "lucide-react";
 import type { WorkItem } from "@/lib/data";
 import { ProjectStudyContent } from "@/shared/components/sections/ProjectStudyContent";
 
@@ -158,7 +158,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                     fontSize: "0.78906rem",
                   }}
                 >
-                  LIVE <ArrowUpRight className="w-3.5 h-3.5" />
+                  LIVE
                 </a>
               ) : (
                 <span
@@ -169,7 +169,7 @@ export function ProjectModal({ item, open, onOpenChange }: ProjectModalProps) {
                   }}
                   aria-hidden
                 >
-                  LIVE <ArrowUpRight className="w-3.5 h-3.5" />
+                  LIVE
                 </span>
               )}
               <button

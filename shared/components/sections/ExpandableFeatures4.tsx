@@ -343,9 +343,6 @@ export default function ExpandableFeatures4({
                   )}
                 >
                   Case Study
-                  <span aria-hidden className="text-[0.95em]">
-                    →
-                  </span>
                 </Link>
               )}
             </div>

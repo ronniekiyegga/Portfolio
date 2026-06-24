@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
 import { workItems } from "@/lib/data";
 import { ProjectStudyContent } from "@/shared/components/sections/ProjectStudyContent";
 
@@ -18,7 +17,7 @@ export async function generateMetadata({
   const item = workItems.find((w) => w.id === slug);
   if (!item) return { title: "Project not found" };
   return {
-    title: `${item.title} — Case study`,
+    title: `${item.title} | Case study`,
     description: item.desc.slice(0, 160),
   };
 }
@@ -39,7 +38,7 @@ export default async function ProjectCaseStudyPage({
           href="/"
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
-          ← Back to home
+          Back to home
         </Link>
         {item.href && item.href !== "#" ? (
           <a
@@ -48,8 +47,7 @@ export default async function ProjectCaseStudyPage({
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
           >
-            Live site{" "}
-            <ArrowUpRight className="size-3.5" aria-hidden />
+            Live site
           </a>
         ) : null}
       </header>

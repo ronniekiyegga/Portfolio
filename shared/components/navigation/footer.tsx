@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 const footerLinks = [
   { title: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
-  { title: "Github", href: "https://github.com/BlissfulCoda" },
+  { title: "Github", href: "https://github.com/ronniekiyegga" },
   { title: "Email", href: "mailto:kiyeggaronnie@gmail.com" },
 ];
 

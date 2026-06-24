@@ -200,45 +200,52 @@ export function getWorkItemById(id: string): WorkItem | undefined {
 export const experiencesV1: ExperienceV1Item[] = [
   {
     id: "Full Stack Software Engineer 2026",
-    dates: "2026",
-    role: "Full Stack Software Engineer",
+    dates: "Jan 2026 – Present",
+    role: "Software Engineer",
     organisation: "Independent Consultant",
-    suffix: "",
+    suffix: "| SaaS, Analytics & EdTech",
     responsibilities: [
-      "Building and shipping SaaS platforms (Next.js, Node.js, PostgreSQL) with a focus on fast iteration and stable deployment",
-      "Designing CI/CD pipelines and containerised environments (Docker, GitHub Actions) to streamline deployments",
-      "Contributing to open-source and exploring performance improvements in real-time systems",
+      "Shipped 2 production SaaS platforms for paying clients using TypeScript, Next.js, Node.js, and PostgreSQL, owning data modelling, deployment, and production support",
+      "Designed a PostgreSQL and BigQuery analytics architecture separating transactional and reporting workloads, powering real-time dashboards over Server-Sent Events",
+      "Built Docker-based CI/CD pipelines with GitHub Actions, reducing hotfix rollout time from hours to under 15 minutes",
+      "Introduced conversational analytics workflows using ElevenLabs, Node.js, and PostgreSQL, enabling non-technical stakeholders to query operational data through natural language",
     ],
   },
   {
     id: "SRS",
-    dates: "2023–2026",
+    dates: "Aug 2023 – Jan 2026",
     role: "Software Engineer",
-    organisation: "School of Research Science",
+    organisation: "School Of Research Science",
     responsibilities: [
-      "Reduced ML latency by 70% (2s → 600ms) and saved £6K/year by shifting inference client-side (TensorFlow.js)",
-      "Improved release velocity by 50% by implementing CI/CD pipelines and canary deployments across a 3-engineer team",
-      "Built real-time EdTech platforms including student analytics dashboards and an AI-powered pseudocode IDE",
+      "Built TypeScript and Next.js assessment applications used by 1,000+ students, reducing assessment turnaround by 3+ hours per marking cycle",
+      "Architected a BYOK (Bring Your Own Key) architecture integrating OpenAI and Google Gemini via dedicated provider classes, reducing API costs by 65% while maintaining provider flexibility",
+      "Reduced on-device ML inference latency by 70% (2s to 600ms) across 600+ low-spec iPads by migrating model execution to TensorFlow.js",
+      "Halved release cycles (10 to 5 days) and cut PR turnaround from 48h to 18h with GitHub Actions CI/CD pipelines and Nginx canary deployments",
+      "Reduced educator report generation from 3 minutes to under 10 seconds with analytics and reporting platforms built on REST APIs and PostgreSQL",
     ],
   },
   {
     id: "fullstack-contract",
-    dates: "2020–2023",
-    role: "Full Stack Software Engineer",
+    dates: "Jun 2020 – Aug 2023",
+    role: "Software Engineer",
     organisation: "Independent Contractor",
+    suffix: "(Clients: Spree Clothing, John Canary, SpotOnEnterprise)",
     responsibilities: [
-      "Architected a Next.js/PostgreSQL e-commerce platform processing 2k+ monthly transactions with 99.9% uptime and zero data loss",
-      "Built a low-latency API gateway (Node.js, Redis, RBAC) sustaining <40ms response times under load",
-      "Delivered a reusable React design system (30+ components) reducing frontend delivery time by 33%",
+      "Architected a React, Node.js, and PostgreSQL e-commerce platform processing 2,000+ monthly Stripe transactions, integrating payments, inventory, and operational reporting across 18 months in production",
+      "Built a Node.js REST API gateway serving 4 production applications, sustaining P95 latency under 40ms via Redis caching, role-based access control, and rate limiting",
+      "Developed a shared React component library with 30+ components, Storybook documentation, and design tokens, reducing UI implementation effort across client projects",
+      "Built custom media storage providers on DigitalOcean, AWS S3, and Cloudinary, improving video delivery speed by 45% and reducing storage costs by 22%",
     ],
   },
   {
     id: "Internship",
-    dates: "2019 – 2019",
-    role: "Engineering Intern",
+    dates: "Aug 2019 – Dec 2019",
+    role: "Software Engineer Intern",
     organisation: "Adaptive",
-    responsibilities:
-      "Reduced data retrieval latency by ~40% for institutional analyst teams by engineering automated Python/SQL ingestion pipelines spanning equities, FX, and fixed income datasets, accelerating time-to-insight for daily reporting workflows.",
+    responsibilities: [
+      "Engineered automated Python and SQL ingestion pipelines spanning equities, FX, and fixed-income datasets, cutting data retrieval latency 40% and saving analysts 4 hours weekly",
+      "Built React and D3.js dashboards with timeline visualisations for 3 product teams, giving senior stakeholders interactive access to equities, FX, and fixed-income data",
+    ],
   },
 ];
 
@@ -259,7 +266,7 @@ export const workItems: WorkItem[] = [
       "Playwright",
     ],
     metric: "sub-50ms latency",
-    href: "https://edu-feedback-pro-beta.vercel.app/",
+    href: "https://www.edufeedbackpro.com/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
     heroImage: "/images/projects/edufeedbackpro/edufeedbackpro_hero.webp",
@@ -382,7 +389,7 @@ export const workItems: WorkItem[] = [
       "/images/projects/subscription-api/auth-middleware-1.webp",
     modalDetailImage:
       "/images/projects/subscription-api/router-boundary-2.webp",
-    githubHref: "https://github.com/BlissfulCoda",
+    githubHref: "https://github.com/ronniekiyegga/subscription-api",
     insights: [
       {
         title: "Overview",
@@ -538,7 +545,7 @@ export const workItems: WorkItem[] = [
       {
         title: "The Problem",
         content:
-          "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference—enabling 400+ students to practice exam-style pseudocode with instant feedback.",
+          "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference, enabling 400+ students to practice exam-style pseudocode with instant feedback.",
       },
     ],
     statistics: [
@@ -757,7 +764,7 @@ export const experienceItems: ExperienceItem[] = [
       "Nginx",
       "TensorFlow",
     ],
-    dates: "2023 — 2026",
+    dates: "2023 - 2026",
   },
   {
     initial: "S",
@@ -775,7 +782,7 @@ export const experienceItems: ExperienceItem[] = [
       "Nginx",
       "TensorFlow",
     ],
-    dates: "2023 — 2026",
+    dates: "2023 - 2026",
   },
   {
     initial: "F",
@@ -784,7 +791,7 @@ export const experienceItems: ExperienceItem[] = [
     desc: "Designed and built production-grade products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video pipeline that cut media costs by 40%.",
     tags: ["React", "Node.js", "AWS S3", "Stripe", "Figma"],
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
-    dates: "2020 — 2023",
+    dates: "2020 - 2023",
   },
   {
     initial: "A",
@@ -801,7 +808,7 @@ export const experienceItems: ExperienceItem[] = [
     role: "Senior Strength & Conditioning Consultant",
     desc: "Led delivery of performance and conditioning programs across multi-club teams, including FGT and Team GB Pro Athlete initiatives. Designed individualised training and nutrition plans while managing onboarding and trainer allocation.",
     tags: [],
-    dates: "2015 — 2019",
+    dates: "2015 - 2019",
   },
 ];
 

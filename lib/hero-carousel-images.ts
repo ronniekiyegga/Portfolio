@@ -113,7 +113,7 @@ export function getHeroCarouselSlidesFromPublic(): {
     return {
       src: `${CAROUSEL_PUBLIC_PREFIX}/${f}`,
       title,
-      alt: `${title} — design preview`,
+      alt: `${title}, design preview`,
       caption,
       status,
     };
@@ -128,7 +128,7 @@ export function getHeroCarouselSlidesFromPublic(): {
 const HERO_TUTORIAL_VIDEO_SLIDE: HeroCarouselImageSlide = {
   src: "/images/projects/maths-tutoring/tutorial.webm",
   title: "Tutoring tutorial",
-  alt: "Maths tutoring platform — tutorial preview",
+  alt: "Maths tutoring platform, tutorial preview",
   caption: ["MS MARYAM'S", "EDTECH", "2026 DESIGN & CODE"],
   status: "live",
 };
