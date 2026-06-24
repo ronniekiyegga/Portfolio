@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronRight, Clock } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { Post } from '@/types/post'
 import { formatDateOrdinal } from '@/shared/utils/format-date'
 
@@ -95,11 +95,6 @@ export function BlogPostGrid({ posts }: { posts: Post[] }) {
                     className="flex shrink-0 items-center gap-1 text-sm font-medium text-primary hover:text-primary/90"
                   >
                     Read
-                    <ChevronRight
-                      strokeWidth={2.5}
-                      aria-hidden
-                      className="size-4"
-                    />
                   </Link>
                 </div>
               </div>

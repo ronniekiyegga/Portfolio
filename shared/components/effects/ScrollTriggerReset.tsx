@@ -25,10 +25,13 @@ export default function ScrollTriggerReset() {
     // Reset scroll to top on load (handles refresh when browser might restore position)
     window.scrollTo(0, 0);
 
-    // Refresh ScrollTrigger when DOM is ready
+    // Refresh ScrollTrigger when DOM is ready, then reset scroll (refresh can jump position)
     const timer = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         ScrollTrigger.refresh();
+        if (!window.location.hash) {
+          window.scrollTo(0, 0);
+        }
       });
     });
 

@@ -5,7 +5,8 @@ import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga — Blog",
-  description: "Thoughts on full-stack engineering, TypeScript, and shipping products.",
+  description:
+    "Thoughts on full-stack engineering, TypeScript, and shipping products.",
 };
 
 export default function MarketingLayout({
@@ -17,10 +18,7 @@ export default function MarketingLayout({
     <>
       <ScrollTriggerReset />
       <NavV1Wrapper />
-      <main
-        role="main"
-        className="bg-background dark:[background-image:url(/images/backgrounds/BG_1.svg)] dark:[background-size:cover] dark:[background-position:center] dark:[background-repeat:no-repeat]"
-      >
+      <main role="main" className="bg-background">
         {children}
       </main>
       <FooterSection />

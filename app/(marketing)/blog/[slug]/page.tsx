@@ -1,149 +1,267 @@
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { PortableText } from '@portabletext/react'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/shared/components/ui/breadcrumb'
-import { formatDate } from '@/shared/utils/format-date'
-import { portableTextComponents } from '@/shared/components/sections/content-components'
-import { getPostBySlug, getAllPostSlugs } from '@/lib/actions'
-import { Slash } from 'lucide-react'
+import Link from "next/link";
+import Image from "next/image";
+import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
+import { PortableText } from "@portabletext/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/shared/components/ui/breadcrumb";
+import { formatDate } from "@/lib/format-date";
+import { portableTextComponents } from "@/shared/components/sections/content-components";
+import {
+  extractHeadings,
+  extractHeadingsFromSections,
+} from "@/lib/extract-headings";
+import { getPostBySlug, getAllPostSlugs } from "@/lib/actions";
+import {
+  getAllEngineeringArticleSlugs,
+  getEngineeringArticleBySlug,
+  usesCompactBlogHero,
+} from "@/lib/engineering-notes";
+import { BLOG_CATEGORIES } from "@/lib/blog-categories";
+import { EngineeringArticleBody } from "@/shared/components/sections/EngineeringArticleBody";
+import { BlogOnThisPage, BlogArticleScrollTop } from "@/shared/components/sections/BlogOnThisPage";
+
+function categoryTitle(slug: string): string {
+  return BLOG_CATEGORIES.find((category) => category.slug === slug)?.title ?? slug;
+}
 
 export async function generateStaticParams() {
-    const posts = await getAllPostSlugs()
-    return posts.map((post) => ({
-        slug: post.slug,
-    }))
+  const [sanitySlugs, engineeringSlugs] = await Promise.all([
+    getAllPostSlugs().catch(() => [] as { slug: string }[]),
+    Promise.resolve(getAllEngineeringArticleSlugs().map((slug) => ({ slug }))),
+  ]);
+
+  const seen = new Set<string>();
+  return [...engineeringSlugs, ...sanitySlugs].filter(({ slug }) => {
+    if (seen.has(slug)) return false;
+    seen.add(slug);
+    return true;
+  });
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params
-    const post = await getPostBySlug(slug)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const local = getEngineeringArticleBySlug(slug);
 
-    if (!post) {
-        return {
-            title: 'Post Not Found',
-        }
-    }
-
+  if (local) {
     return {
-        title: `${post.title} - Blog`,
-        description: post.description,
-        openGraph: {
-            title: `${post.title} - Blog`,
-            description: post.description,
-            images: [
-                {
-                    url: post.image,
-                    width: 1200,
-                    height: 675,
-                },
-            ],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: `${post.title} - Blog`,
-            description: post.description,
-            images: [
-                {
-                    url: post.image,
-                    width: 1200,
-                    height: 675,
-                },
-            ],
-        },
-        alternates: {
-            canonical: `/blog/${slug}`,
-        },
-    }
+      title: `${local.title} | Blog`,
+      description: local.description,
+      alternates: { canonical: `/blog/${slug}` },
+    };
+  }
+
+  const post = await getPostBySlug(slug);
+  if (!post) return { title: "Post Not Found" };
+
+  return {
+    title: `${post.title} | Blog`,
+    description: post.description,
+    alternates: { canonical: `/blog/${slug}` },
+  };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params
-    const post = await getPostBySlug(slug)
+type ArticleMeta = {
+  title: string;
+  description: string;
+  categorySlug: string;
+  categoryLabel: string;
+  image: string;
+  imageAlt: string;
+  authorName: string;
+  authorImage: string;
+  date: string;
+  readTime?: string;
+};
 
-    if (!post) {
-        notFound()
-    }
+function ArticleHeader({ meta }: { meta: ArticleMeta }) {
+  return (
+    <header className="mb-8 max-w-2xl">
+      <h1 className="text-foreground mb-6 text-balance text-3xl font-bold md:text-4xl md:leading-tight">
+        {meta.title}
+      </h1>
+
+      <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
+        {meta.description}
+      </p>
+
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="grid grid-cols-[auto_1fr] items-center gap-2">
+          <div className="ring-border-illustration bg-card aspect-square size-6 overflow-hidden rounded-md border border-transparent shadow-md shadow-black/15 ring-1">
+            <Image
+              src={meta.authorImage}
+              alt={meta.authorName}
+              width={24}
+              height={24}
+              className="size-full object-cover"
+            />
+          </div>
+          <span className="text-muted-foreground line-clamp-1 text-sm">
+            {meta.authorName}
+          </span>
+        </div>
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+          <time dateTime={meta.date}>{formatDate(meta.date)}</time>
+          {meta.readTime ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>{meta.readTime}</span>
+            </>
+          ) : null}
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function ArticleBodyLayout({
+  meta,
+  slug,
+  headings,
+  children,
+}: {
+  meta: ArticleMeta;
+  slug: string;
+  headings: ReturnType<typeof extractHeadings>;
+  children: ReactNode;
+}) {
+  const compactHero = usesCompactBlogHero({ slug });
+
+  return (
+    <div className="relative mx-auto max-w-5xl px-6">
+      <BlogArticleScrollTop />
+
+      <div className="flex items-start gap-12">
+        <div className="min-w-0 flex-1">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href={`/blog/category/${meta.categorySlug}`}>
+                  {meta.categoryLabel}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <article className="mt-12">
+            <ArticleHeader meta={meta} />
+
+            <div className="max-w-2xl">
+              {compactHero ? (
+                <div className="relative mb-12 aspect-video overflow-hidden rounded-xl bg-muted/30">
+                  <Image
+                    src={meta.image}
+                    alt={meta.imageAlt}
+                    fill
+                    className="object-contain p-3 sm:p-4"
+                    priority
+                    sizes="(min-width: 768px) 672px, 100vw"
+                  />
+                </div>
+              ) : (
+                <div className="relative mb-12 overflow-hidden rounded-xl">
+                  <Image
+                    src={meta.image}
+                    alt={meta.imageAlt}
+                    width={1200}
+                    height={675}
+                    className="aspect-video w-full object-cover"
+                    priority
+                  />
+                </div>
+              )}
+              {children}
+            </div>
+          </article>
+
+          <footer className="mt-12 border-t py-8">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <Link
+                href="/blog"
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              >
+                Back to blog
+              </Link>
+              <Link
+                href={`/blog/category/${meta.categorySlug}`}
+                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              >
+                More in {meta.categoryLabel}
+              </Link>
+            </div>
+          </footer>
+        </div>
+
+        <BlogOnThisPage headings={headings} />
+      </div>
+    </div>
+  );
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const local = getEngineeringArticleBySlug(slug);
+
+  if (local) {
+    const headings = extractHeadingsFromSections(local.sections);
+    const meta: ArticleMeta = {
+      title: local.title,
+      description: local.description,
+      categorySlug: local.categorySlug,
+      categoryLabel: categoryTitle(local.categorySlug),
+      image: local.image,
+      imageAlt: "",
+      authorName: local.authorName,
+      authorImage: local.authorImage,
+      date: local.date,
+      readTime: local.readTime,
+    };
 
     return (
-        <div className="relative mx-auto max-w-5xl px-6">
-            <article>
-                <header className="mx-auto mb-8 max-w-2xl text-center">
-                    <Breadcrumb>
-                        <BreadcrumbList className="justify-center gap-0.5 sm:gap-0.5">
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator>
-                                <Slash className="-rotate-16" />
-                            </BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    className="text-foreground"
-                                    href={`/blog/category/${post.category.slug}`}>
-                                    {post.category.title}
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+      <ArticleBodyLayout meta={meta} slug={slug} headings={headings}>
+        <EngineeringArticleBody sections={local.sections} />
+      </ArticleBodyLayout>
+    );
+  }
 
-                    <h1 className="text-foreground mt-6 text-balance text-3xl font-bold md:text-4xl md:leading-tight lg:text-5xl">{post.title}</h1>
-                </header>
+  const post = await getPostBySlug(slug);
+  if (!post) notFound();
 
-                <div className="relative overflow-hidden rounded-xl border shadow shadow-black/5">
-                    <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={1200}
-                        height={675}
-                        className="aspect-video w-full object-cover"
-                        priority
-                    />
-                </div>
+  const headings = extractHeadings(post.body);
+  const meta: ArticleMeta = {
+    title: post.title,
+    description: post.description,
+    categorySlug: post.category.slug,
+    categoryLabel: post.category.title,
+    image: post.image,
+    imageAlt: post.title,
+    authorName: post.authors[0]?.name ?? "Ronnie Kiyegga",
+    authorImage: post.authors[0]?.image ?? "/images/profile/Avatar.svg",
+    date: post.publishedAt,
+  };
 
-                <div className="mx-auto max-w-2xl">
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b py-6">
-                        <div className="flex flex-wrap items-center gap-4">
-                            {post.authors.map((author, index) => (
-                                <div
-                                    key={index}
-                                    className="grid grid-cols-[auto_1fr] items-center gap-2">
-                                    <div
-                                        className="shrink-0 rounded-full p-[2px]"
-                                        style={{
-                                            background: "linear-gradient(135deg, #FFF 54.8%, rgba(251, 233, 217, 0.59) 69.69%, #DEDAF9 86.6%, rgba(240, 172, 247, 0.76) 97.21%)",
-                                        }}
-                                    >
-                                        <div className="aspect-square size-6 overflow-hidden rounded-full bg-card">
-                                            <Image
-                                                src="/images/profile/Avatar.svg"
-                                                alt="Ronnie"
-                                                width={24}
-                                                height={24}
-                                                className="size-full object-cover"
-                                            />
-                                        </div>
-                                    </div>
-                                    <span className="text-foreground line-clamp-1 text-sm">Ronnie</span>
-                                </div>
-                            ))}
-                        </div>
-                        <time
-                            className="text-muted-foreground text-sm"
-                            dateTime={new Date(post.publishedAt).toISOString()}>
-                            {formatDate(post.publishedAt)}
-                        </time>
-                    </div>
-
-                    <p className="text-foreground my-16 text-xl md:text-2xl">{post.description}</p>
-
-                    <div className="prose prose-slate dark:prose-invert max-w-none">
-                        <PortableText
-                            value={post.body}
-                            components={portableTextComponents}
-                        />
-                    </div>
-                </div>
-            </article>
-        </div>
-    )
+  return (
+    <ArticleBodyLayout meta={meta} slug={slug} headings={headings}>
+      <div className="prose prose-neutral dark:prose-invert max-w-none">
+        <PortableText value={post.body} components={portableTextComponents} />
+      </div>
+    </ArticleBodyLayout>
+  );
 }
