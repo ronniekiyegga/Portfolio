@@ -29,7 +29,7 @@ const PROJECT_TECH_TAG_PILL_CLASS =
   "inline-flex h-[25px] shrink-0 items-center justify-center gap-[5px] rounded-[1.10181rem] bg-white px-[10px] text-[10px] font-normal leading-none text-[#6b7280] [background-image:linear-gradient(114deg,rgba(62,123,250,0.02)_20.34%,rgba(102,0,204,0.04)_36.8%,rgba(102,0,204,0)_56.12%,rgba(62,123,250,0.02)_76.52%)] dark:bg-white/6 dark:text-white/50";
 
 const METRIC_PILL_CLASS =
-  "inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-3.5 py-1.5 text-[11px] leading-none shadow-[0_4px_14px_rgba(0,0,0,0.06)] dark:bg-white/8 dark:shadow-none";
+  "inline-flex shrink-0 items-center gap-1 rounded-full bg-white px-3.5 py-2.5 text-[11px] leading-none shadow-[0_4px_14px_rgba(0,0,0,0.06)] dark:bg-white/8 dark:shadow-none";
 
 const METRIC_PILL_LABEL_CLASS = "font-normal text-[#a3a3a3] dark:text-white/40";
 
@@ -604,11 +604,11 @@ export default function ProjectCard() {
                       <ProjectListingTags tags={tags} />
 
                       <div className="flex flex-wrap items-center gap-4">
-                        <ProjectListingCtas
-                          listing={listing}
-                          workItem={workItem}
-                          openModal={openModal}
-                        />
+                      <ProjectListingCtas
+                        listing={listing}
+                        workItem={workItem}
+                        openModal={openModal}
+                      />
                       </div>
                     </div>
                   </motion.header>

@@ -1,9 +1,21 @@
 import { slugify } from "@/lib/slugify";
 
+export type EngineeringArticleTable = {
+  headers: readonly string[];
+  rows: readonly (readonly string[])[];
+};
+
 export type EngineeringArticleSection = {
   heading?: string;
   paragraphs?: readonly string[];
   bullets?: readonly string[];
+  table?: EngineeringArticleTable;
+  image?: string;
+  imageAlt?: string;
+  /** Insert image after this paragraph index (0-based). Defaults to 0. */
+  imageAfterParagraph?: number;
+  /** Visually distinct aside for short production notes */
+  variant?: "default" | "callout";
 };
 
 export type EngineeringArticle = {
@@ -25,6 +37,10 @@ export function usesCompactBlogHero(article: {
   slug: string;
 }): boolean {
   return article.slug === BYOK_ARTICLE_SLUG;
+}
+
+export function isDiagramBlogImage(image: string): boolean {
+  return image.endsWith(".svg");
 }
 
 export const ENGINEERING_ARTICLES: readonly EngineeringArticle[] = [
@@ -73,33 +89,100 @@ export const ENGINEERING_ARTICLES: readonly EngineeringArticle[] = [
     categorySlug: "engineering",
     title: "SSE vs WebSockets: the boring choice that survived school firewalls",
     description:
-      "Why one-directional push over plain HTTP beat the obvious answer for real-time dashboards, and where it breaks at 100x scale.",
-    readTime: "9 min read",
-    image: "/images/projects/edufeedbackpro/edufeedbackpro_hero.webp",
+      "Why one-directional push over plain HTTP beat the obvious answer for real-time dashboards, and why the network, not the protocol, made the decision.",
+    readTime: "14 min read",
+    image: "/images/blog/architecture/sse-vs-websockets.svg",
     date: "2026-01-08",
     authorName: "Ronnie Kiyegga",
     authorImage: "/images/profile/Avatar.svg",
     sections: [
       {
-        heading: "The constraint was the network, not the dashboard",
         paragraphs: [
-          "School networks routinely block long-lived WebSocket upgrades or throttle them unpredictably. Our dashboards only needed server-to-client updates: new submissions, aggregate score shifts, and report-ready signals.",
-          "Server-Sent Events over HTTP matched the data flow, reused existing load balancers, and worked through proxies that treated WebSockets as suspicious.",
+          "Every engineer eventually reaches the point where a product needs to update in real time. At first, the decision feels straightforward: pick a protocol, stream the updates and move on.",
+          "In practice, that decision sits on top of several layers of networking. IP moves packets between machines. TCP provides reliable, ordered delivery. HTTP carries application traffic. From there you begin choosing higher-level protocols such as REST, Server-Sent Events (SSE), WebSockets or WebRTC depending on how your application communicates. It's tempting to think those choices are mostly about performance, but in production they're usually about constraints.",
+          "We learnt that lesson while deploying an operational analytics platform into schools.",
         ],
       },
       {
-        heading: "What SSE gave us in production",
-        bullets: [
-          "Automatic reconnect semantics with Last-Event-ID for missed events during brief drops",
-          "Standard HTTP observability: request logs, CDN rules, and Nginx timeouts we already understood",
-          "Lower operational surface than maintaining sticky sessions for WebSocket fan-out on a single VPS",
+        heading: "Networking context",
+        paragraphs: [
+          "Before comparing SSE and WebSockets, it's worth understanding where they sit.",
+        ],
+        table: {
+          headers: ["Layer", "Responsibility", "Examples"],
+          rows: [
+            ["Layer 3", "Routing packets between hosts", "IP"],
+            ["Layer 4", "Reliable transport", "TCP, UDP, QUIC"],
+            [
+              "Layer 7",
+              "Application protocols",
+              "HTTP, REST, SSE, WebSockets, gRPC, WebRTC",
+            ],
+          ],
+        },
+      },
+      {
+        heading: "Production starts where local development ends",
+        paragraphs: [
+          "The product itself wasn't particularly unusual. Teachers used a dashboard throughout the day to monitor student submissions, assessment progress and intervention alerts, and whenever something changed the dashboard needed to update automatically without requiring users to refresh the page. On paper, WebSockets looked like the obvious answer: framework support was mature, every tutorial recommended them, and they promised low-latency bidirectional communication through a single abstraction. Updates were event-driven rather than continuous. Most dashboards sat idle for long periods before receiving a burst of activity when classes submitted work simultaneously, and that distinction mattered more than raw protocol performance.",
+          "That assumption lasted until we deployed into schools. The problem stopped being about protocols almost immediately. Unlike a developer laptop connected to reliable home broadband, schools operate on heavily managed networks where hundreds of devices share the same wireless infrastructure. Requests pass through content filters, SSL inspection appliances, safeguarding policies and managed proxies designed primarily for security rather than application performance. Teachers move between classrooms throughout the day, forcing devices to roam between wireless access points, while some schools aggressively terminate long-lived connections and others proxy almost every outbound request.",
+          "None of those constraints appeared during development. Every one of them appeared in production. That forced us to stop asking which protocol was theoretically faster and start asking a much more practical question: **which protocol survives this environment?**",
         ],
       },
       {
-        heading: "Where I would reach for WebSockets instead",
+        heading: "Looking at the data instead of the protocol",
         paragraphs: [
-          "Bidirectional collaboration, typing indicators, or sub-100ms game-style interactions need full duplex. At 100x scale, SSE connection counts become their own problem; you will want a dedicated event bus and horizontal fan-out.",
-          "For analytics dashboards on constrained school networks, SSE was the boring choice that kept shipping.",
+          "Once we started looking at the data instead of the protocol we noticed something uncomfortable about the problem we were solving. Although the dashboard looked like a collaborative workspace to users, nothing we monitored actually required collaboration. There were no shared cursors, no live messaging between users and no requirement for clients to constantly stream state back to the server.",
+          "Instead, almost all movement was one-directional: server to client whenever something in the system changed. A student submitted work. A teacher marked an assessment. A report finished generating. The dashboard simply needed to reflect those events as quickly as possible. That distinction matters architecturally. Bidirectional communication is powerful, but it also introduces complexity you only need when both sides are continuously exchanging state. Our workload wasn't really \"real-time communication\", it was server-to-client notifications.",
+        ],
+      },
+      {
+        heading: "Why not polling?",
+        paragraphs: [
+          "One question naturally follows: if the dashboard only required server-to-client updates, why not simply poll the API every few seconds? Polling would have worked, and for a small number of users it would have been the fastest thing to ship.",
+          "The problem is what happens once dashboards stay open all day. Every connected client would continue generating requests even when nothing had changed. The workload was event-driven rather than time-driven, so most requests would simply return \"nothing new\". Server-Sent Events allowed the server to remain silent until there was actually something worth sending, which kept idle connections cheap without sacrificing responsiveness when activity spiked.",
+        ],
+        image: "/images/blog/architecture/polling-vs-sse.svg",
+        imageAlt: "Polling sends repeated requests while idle versus SSE pushing events only when data changes",
+        imageAfterParagraph: 0,
+      },
+      {
+        heading: "The boring option won",
+        paragraphs: [
+          "That leaves Server-Sent Events, a technology that appears almost boring compared to WebSockets but matched our workload perfectly. Because SSE operates over ordinary HTTP, we didn't need to redesign our infrastructure. Authentication already behaved exactly as every other request, existing load balancers continued working without special configuration, reverse proxies treated connections like normal HTTP traffic and our logging and monitoring remained unchanged. We didn't have to introduce an entirely different operational model just because updates happened in real time.",
+          "Notification state remained in PostgreSQL as the source of truth. The client hydrated from the database first whenever it loaded or reconnected, while SSE only pushed incremental updates afterwards. That meant a dropped connection could delay an update, but it would not make the application lose state. SSE was an enhancement layer, not the system of record.",
+          "Perhaps the biggest advantage only became obvious once teachers started using the system. When someone walked between classrooms and briefly lost Wi-Fi, the browser automatically re-established the connection without them thinking about transport protocols or connection state. Nobody celebrated that feature because nobody noticed it, and that's usually a sign you've made the right infrastructure decision.",
+        ],
+      },
+      {
+        heading: "Security and operational simplicity mattered too",
+        paragraphs: [
+          "Schools introduce another constraint that rarely appears in architecture diagrams: student data. Every additional component handling live traffic becomes another surface that needs monitoring, securing and maintaining, particularly when you're dealing with sensitive information.",
+          "By continuing to operate over HTTP, our authentication model remained consistent with the rest of the application. Existing middleware, logging, reverse proxies and infrastructure policies continued working exactly as before without introducing an entirely separate communication stack. Sometimes reducing operational surface area creates more long-term value than introducing additional capability, particularly when your users never needed that capability in the first place.",
+        ],
+      },
+      {
+        heading: "Production note: proxy buffering",
+        variant: "callout",
+        paragraphs: [
+          "Reverse proxies such as Nginx can buffer HTTP responses by default, which breaks streaming by holding events until an internal buffer fills. For SSE, proxy buffering needs to be disabled so events flush to the browser immediately. In Nginx this can be handled with headers such as `X-Accel-Buffering: no`.",
+          "At larger scale, the challenge shifts from choosing SSE versus WebSockets to distributing events across multiple application instances. Once clients are connected to different servers, an event produced on one instance needs to reach every instance that may be holding active SSE connections. That usually means introducing Redis Pub/Sub or a dedicated message bus so events can be fanned out regardless of where they originated. We did not need that layer on day one, but it is the next scaling concern once a single node stops being enough.",
+        ],
+      },
+      {
+        heading: "When I would absolutely choose WebSockets",
+        paragraphs: [
+          "None of this means WebSockets are the wrong technology. If I were building Slack, Figma, Google Docs or a multiplayer game, I'd reach for them without hesitation because those products genuinely depend on bidirectional communication. Typing indicators, presence updates, collaborative editing, shared cursors and game-state synchronisation all require clients and servers to exchange information continuously.",
+          "Our dashboard simply didn't have those requirements. Choosing the more powerful technology would have increased operational complexity without solving a real problem. Engineering isn't about choosing the technology with the longest feature list; it's about choosing the one that matches the workload you're actually building.",
+        ],
+      },
+      {
+        heading: "The engineering lesson",
+        paragraphs: [
+          "Looking back, I don't think this story is really about Server-Sent Events. It's about engineering judgement under real constraints. As engineers, we naturally compare technologies: PostgreSQL versus MongoDB, Redis versus Memcached, REST versus GraphQL, React versus Vue or SSE versus WebSockets, but those comparisons rarely determine the architecture on their own. They're useful for understanding trade-offs, yet production systems are almost never built in isolation.",
+          "The environment usually decides for you. In our case, the deciding factor wasn't latency, browser support or theoretical scalability. It wasn't even the protocol itself. It was the reality of deploying software into hundreds of classrooms running on networks we didn't control. Once we accepted that constraint, the architectural decision almost made itself.",
+          'That\'s a lesson I\'ve found applies far beyond networking. The best engineering decisions rarely come from asking, *"Which technology is the most capable?"* They come from asking, *"What constraints does this environment impose, and which solution fits them best?"* More often than not, that question leads you towards something simpler than you originally expected. Choosing the boring option is sometimes the most senior decision you can make when it matches the workload and the environment you actually operate in.',
+          "The best technology isn't usually the one with the longest feature list. It's the one that quietly survives production. Every technology decision eventually becomes an infrastructure decision.",
         ],
       },
     ],
@@ -111,7 +194,7 @@ export const ENGINEERING_ARTICLES: readonly EngineeringArticle[] = [
     description:
       "Halving release cycles without Kubernetes: weighted upstreams, health checks, and the rollback path that made Friday ships boring.",
     readTime: "7 min read",
-    image: "/images/carousel/John_Canary_down.webp",
+    image: "/images/blog/architecture/canary-nginx.svg",
     date: "2025-11-22",
     authorName: "Ronnie Kiyegga",
     authorImage: "/images/profile/Avatar.svg",
@@ -148,7 +231,7 @@ export const ENGINEERING_ARTICLES: readonly EngineeringArticle[] = [
     description:
       "Splitting OLTP and OLAP at the storage boundary so reporting workloads never starve writes during peak school hours.",
     readTime: "8 min read",
-    image: "/images/projects/edufeedbackpro/DMI.png",
+    image: "/images/blog/architecture/postgres-bigquery.svg",
     date: "2025-10-03",
     authorName: "Ronnie Kiyegga",
     authorImage: "/images/profile/Avatar.svg",

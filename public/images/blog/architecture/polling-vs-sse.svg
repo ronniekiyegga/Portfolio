@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" fill="none" role="img" aria-label="Polling repeated requests versus SSE event-driven push">
+
+  <text x="400" y="36" text-anchor="middle" fill="#111827" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600">Polling vs Server-Sent Events</text>
+  <text x="400" y="60" text-anchor="middle" fill="#6B7280" font-family="system-ui, -apple-system, sans-serif" font-size="13">Time-driven requests versus event-driven push</text>
+
+  <line x1="400" y1="80" x2="400" y2="468" stroke="#E5E7EB" stroke-width="1.5"/>
+
+  <!-- ── Polling panel ── -->
+  <g transform="translate(32 88)">
+    <rect x="0" y="0" width="352" height="380" rx="14" fill="#FAFAFA" stroke="#E5E7EB" stroke-width="1.5"/>
+
+    <rect x="16" y="16" width="72" height="24" rx="12" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="52" y="32" text-anchor="middle" fill="#6B7280" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Polling</text>
+
+    <!-- Dashboard icon -->
+    <g transform="translate(48 48)">
+      <rect x="0" y="0" width="56" height="40" rx="6" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.25"/>
+      <rect x="6" y="6" width="44" height="26" rx="3" fill="#F9FAFB"/>
+      <rect x="18" y="40" width="20" height="4" rx="1" fill="#D1D5DB"/>
+    </g>
+    <text x="76" y="106" text-anchor="middle" fill="#374151" font-family="system-ui, sans-serif" font-size="11" font-weight="600">Dashboard</text>
+
+    <!-- API icon -->
+    <g transform="translate(248 44)">
+      <rect x="0" y="0" width="56" height="48" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1.25"/>
+      <rect x="14" y="8" width="10" height="28" rx="2" fill="#CBD5E1"/>
+      <rect x="26" y="4" width="12" height="32" rx="2" fill="#94A3B8"/>
+      <rect x="40" y="8" width="10" height="28" rx="2" fill="#CBD5E1"/>
+      <circle cx="28" cy="42" r="2.5" fill="#34D399"/>
+    </g>
+    <text x="276" y="106" text-anchor="middle" fill="#374151" font-family="system-ui, sans-serif" font-size="11" font-weight="600">API</text>
+
+    <!-- Lifelines (start below labels) -->
+    <line x1="76" y1="118" x2="76" y2="318" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <line x1="276" y1="118" x2="276" y2="318" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+    <!-- Poll cycle 1 -->
+    <line x1="76" y1="142" x2="276" y2="142" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#poll-req)"/>
+    <rect x="118" y="128" width="116" height="18" rx="9" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="176" y="140" text-anchor="middle" fill="#6B7280" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5">GET /updates</text>
+
+    <line x1="276" y1="166" x2="76" y2="166" stroke="#D1D5DB" stroke-width="1.5" marker-end="url(#poll-res)"/>
+    <rect x="108" y="152" width="136" height="18" rx="9" fill="#F9FAFB" stroke="#E5E7EB"/>
+    <text x="176" y="164" text-anchor="middle" fill="#9CA3AF" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5">204 · nothing new</text>
+
+    <!-- Poll cycle 2 -->
+    <line x1="76" y1="198" x2="276" y2="198" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#poll-req)"/>
+    <rect x="118" y="184" width="116" height="18" rx="9" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="176" y="196" text-anchor="middle" fill="#6B7280" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5">GET /updates</text>
+
+    <line x1="276" y1="222" x2="76" y2="222" stroke="#D1D5DB" stroke-width="1.5" marker-end="url(#poll-res)"/>
+    <rect x="108" y="208" width="136" height="18" rx="9" fill="#F9FAFB" stroke="#E5E7EB"/>
+    <text x="176" y="220" text-anchor="middle" fill="#9CA3AF" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5">204 · nothing new</text>
+
+    <!-- Ellipsis -->
+    <text x="176" y="254" text-anchor="middle" fill="#D1D5DB" font-family="system-ui, sans-serif" font-size="18" letter-spacing="2">···</text>
+    <text x="176" y="274" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="10">repeats every few seconds</text>
+
+    <!-- Footer -->
+    <rect x="24" y="328" width="304" height="32" rx="8" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="176" y="348" text-anchor="middle" fill="#6B7280" font-family="system-ui, sans-serif" font-size="11">Requests on a fixed interval, even when idle</text>
+  </g>
+
+  <!-- ── SSE panel ── -->
+  <g transform="translate(416 88)">
+    <rect x="0" y="0" width="352" height="380" rx="14" fill="#FAFAFA" stroke="#C7D2FE" stroke-width="1.5"/>
+
+    <rect x="16" y="16" width="132" height="24" rx="12" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="82" y="32" text-anchor="middle" fill="#4F46E5" font-family="system-ui, sans-serif" font-size="12" font-weight="600">Server-Sent Events</text>
+
+    <!-- Dashboard icon -->
+    <g transform="translate(48 48)">
+      <rect x="0" y="0" width="56" height="40" rx="6" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.25"/>
+      <rect x="6" y="6" width="44" height="26" rx="3" fill="#F5F3FF"/>
+      <rect x="18" y="40" width="20" height="4" rx="1" fill="#C7D2FE"/>
+    </g>
+    <text x="76" y="106" text-anchor="middle" fill="#374151" font-family="system-ui, sans-serif" font-size="11" font-weight="600">Dashboard</text>
+
+    <!-- API icon -->
+    <g transform="translate(248 44)">
+      <rect x="0" y="0" width="56" height="48" rx="8" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.25"/>
+      <rect x="14" y="8" width="10" height="28" rx="2" fill="#C7D2FE"/>
+      <rect x="26" y="4" width="12" height="32" rx="2" fill="#818CF8"/>
+      <rect x="40" y="8" width="10" height="28" rx="2" fill="#C7D2FE"/>
+      <circle cx="28" cy="42" r="2.5" fill="#34D399"/>
+    </g>
+    <text x="276" y="106" text-anchor="middle" fill="#374151" font-family="system-ui, sans-serif" font-size="11" font-weight="600">API</text>
+
+    <!-- Lifelines (start below labels) -->
+    <line x1="76" y1="118" x2="76" y2="318" stroke="#C7D2FE" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <line x1="276" y1="118" x2="276" y2="318" stroke="#C7D2FE" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+    <!-- Open stream -->
+    <line x1="76" y1="142" x2="276" y2="142" stroke="#374151" stroke-width="1.75" marker-end="url(#sse-open)"/>
+    <rect x="108" y="128" width="136" height="18" rx="9" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <text x="176" y="140" text-anchor="middle" fill="#374151" font-family="system-ui, sans-serif" font-size="10" font-weight="500">Open SSE stream</text>
+
+    <!-- Persistent connection bar -->
+    <rect x="172" y="162" width="8" height="64" rx="4" fill="#EEF2FF" stroke="#C7D2FE"/>
+
+    <!-- Idle state (below open stream, clear of labels) -->
+    <rect x="96" y="178" width="160" height="44" rx="10" fill="#FFFFFF" stroke="#E5E7EB" stroke-dasharray="5 4"/>
+    <text x="176" y="196" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="10.5" font-weight="500">Connection open</text>
+    <text x="176" y="210" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="10">Server silent · no traffic</text>
+
+    <!-- Events -->
+    <line x1="276" y1="248" x2="76" y2="248" stroke="#6366F1" stroke-width="1.75" marker-end="url(#sse-event)"/>
+    <rect x="88" y="234" width="176" height="18" rx="9" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="176" y="246" text-anchor="middle" fill="#4F46E5" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="500">event: submission received</text>
+
+    <line x1="276" y1="280" x2="76" y2="280" stroke="#6366F1" stroke-width="1.75" marker-end="url(#sse-event)"/>
+    <rect x="96" y="266" width="160" height="18" rx="9" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="176" y="278" text-anchor="middle" fill="#4F46E5" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9.5" font-weight="500">event: report ready</text>
+
+    <!-- Footer -->
+    <rect x="24" y="328" width="304" height="32" rx="8" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="176" y="348" text-anchor="middle" fill="#4338CA" font-family="system-ui, sans-serif" font-size="11">Push only when something worth sending</text>
+  </g>
+
+  <defs>
+    <marker id="poll-req" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill="#9CA3AF"/>
+    </marker>
+    <marker id="poll-res" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <path d="M7 0 L0 3.5 L7 7 Z" fill="#D1D5DB"/>
+    </marker>
+    <marker id="sse-open" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill="#374151"/>
+    </marker>
+    <marker id="sse-event" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <path d="M7 0 L0 3.5 L7 7 Z" fill="#6366F1"/>
+    </marker>
+  </defs>
+</svg>

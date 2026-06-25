@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { cn } from "@/lib/utils";
 import { PortableText } from "@portabletext/react";
 import {
   Breadcrumb,
@@ -20,6 +21,7 @@ import { getPostBySlug, getAllPostSlugs } from "@/lib/actions";
 import {
   getAllEngineeringArticleSlugs,
   getEngineeringArticleBySlug,
+  isDiagramBlogImage,
   usesCompactBlogHero,
 } from "@/lib/engineering-notes";
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
@@ -90,7 +92,7 @@ function ArticleHeader({ meta }: { meta: ArticleMeta }) {
         {meta.title}
       </h1>
 
-      <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
+      <p className="text-muted-foreground mb-8 text-lg italic leading-relaxed">
         {meta.description}
       </p>
 
@@ -135,6 +137,8 @@ function ArticleBodyLayout({
   children: ReactNode;
 }) {
   const compactHero = usesCompactBlogHero({ slug });
+  const diagramHero = isDiagramBlogImage(meta.image);
+  const containedHero = compactHero || diagramHero;
 
   return (
     <div className="relative mx-auto max-w-5xl px-6">
@@ -160,14 +164,23 @@ function ArticleBodyLayout({
             <ArticleHeader meta={meta} />
 
             <div className="max-w-2xl">
-              {compactHero ? (
-                <div className="relative mb-12 aspect-video overflow-hidden rounded-xl bg-muted/30">
+              {containedHero ? (
+                <div
+                  className={cn(
+                    "relative mb-12 aspect-video overflow-hidden rounded-xl",
+                    diagramHero ? "bg-transparent" : "bg-muted/30",
+                  )}
+                >
                   <Image
                     src={meta.image}
                     alt={meta.imageAlt}
                     fill
-                    className="object-contain p-3 sm:p-4"
+                    className={cn(
+                      "object-contain",
+                      compactHero ? "p-2 sm:p-3" : "p-1 sm:p-2",
+                    )}
                     priority
+                    unoptimized={diagramHero}
                     sizes="(min-width: 768px) 672px, 100vw"
                   />
                 </div>

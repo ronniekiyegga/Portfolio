@@ -56,6 +56,13 @@ export function BlogOnThisPage({ headings }: { headings: readonly Heading[] }) {
         }
       }
 
+      const nearBottom =
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 48;
+      if (nearBottom && headings.length > 0) {
+        current = headings[headings.length - 1].slug;
+      }
+
       if (current) setActiveSlug(current);
     };
 
@@ -115,12 +122,13 @@ export function BlogOnThisPage({ headings }: { headings: readonly Heading[] }) {
                       event.preventDefault();
                       scrollToHeading(heading.slug);
                     }}
+                    aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "block transition-colors duration-200",
+                      "block leading-snug transition-opacity duration-200",
                       heading.level === 3 && "pl-4",
                       isActive
-                        ? "font-medium text-foreground"
-                        : "text-muted-foreground hover:text-foreground/80",
+                        ? "text-gradient-blue-static font-semibold opacity-100"
+                        : "text-foreground opacity-60 hover:opacity-80",
                     )}
                   >
                     {heading.text}
