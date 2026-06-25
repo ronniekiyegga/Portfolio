@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef } from "react";
 import { experiencesV1 } from "@/lib/data";
 
 import gsap from "gsap";
@@ -25,7 +24,6 @@ function ExperienceMidDot() {
 }
 
 export default function Experiences() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
@@ -136,69 +134,38 @@ export default function Experiences() {
         </header>
 
         <div className="flex max-w-3xl flex-col gap-8 md:gap-10">
-          {experiencesV1.map((item) => {
-            const isOpen = hoveredId === item.id;
-
-            return (
-              <div
-                key={item.id}
-                data-experience-id={item.id}
-                data-experience-item
-                className="group/exp cursor-pointer rounded-lg transition-all duration-300 ease-out"
-                onMouseEnter={() => setHoveredId(item.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-2 sm:grid-cols-[12.5rem_minmax(0,1fr)] sm:gap-x-10 md:gap-x-14">
-                  <span className="shrink-0 whitespace-nowrap text-sm tabular-nums text-neutral-500 dark:text-neutral-500">
-                    {item.dates}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="flex min-w-0 flex-wrap items-center text-sm leading-snug text-neutral-900 dark:text-neutral-50">
-                      <span className="font-medium">{item.role.trim()}</span>
-                      {item.organisation?.trim() ? (
-                        <>
-                          <ExperienceMidDot />
-                          <span className="font-medium">
-                            {item.organisation.trim()}
-                          </span>
-                        </>
-                      ) : null}
-                      {item.suffix?.trim() ? (
-                        <span className="ml-1 font-normal text-neutral-500 dark:text-neutral-400">
-                          {item.suffix.trim()}
+          {experiencesV1.map((item) => (
+            <div
+              key={item.id}
+              data-experience-id={item.id}
+              data-experience-item
+              className="rounded-lg"
+            >
+              <div className="grid grid-cols-1 items-start gap-x-6 gap-y-2 sm:grid-cols-[12.5rem_minmax(0,1fr)] sm:gap-x-10 md:gap-x-14">
+                <span className="shrink-0 whitespace-nowrap text-sm tabular-nums text-neutral-500 dark:text-neutral-500">
+                  {item.dates}
+                </span>
+                <div className="min-w-0">
+                  <p className="flex min-w-0 flex-wrap items-center text-sm leading-snug text-neutral-900 dark:text-neutral-50">
+                    <span className="font-medium">{item.role.trim()}</span>
+                    {item.organisation?.trim() ? (
+                      <>
+                        <ExperienceMidDot />
+                        <span className="font-medium">
+                          {item.organisation.trim()}
                         </span>
-                      ) : null}
-                    </p>
-                  </div>
-
-                  <div
-                    className={cn(
-                      "col-span-full grid transition-all duration-500 ease-out sm:col-span-1 sm:col-start-2 sm:row-start-2",
-                      isOpen
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0",
-                    )}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="mt-3 pb-1">
-                        <div className="min-w-0 max-w-lg text-[13px] leading-relaxed text-neutral-600 lg:max-w-3xl dark:text-neutral-400">
-                          {Array.isArray(item.responsibilities) ? (
-                            <ul className="list-none space-y-2 pl-0">
-                              {item.responsibilities.map((line, i) => (
-                                <li key={`${item.id}-${i}`}>{line}</li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <p>{item.responsibilities}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      </>
+                    ) : null}
+                    {item.suffix?.trim() ? (
+                      <span className="ml-1 font-normal text-neutral-500 dark:text-neutral-400">
+                        {item.suffix.trim()}
+                      </span>
+                    ) : null}
+                  </p>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>

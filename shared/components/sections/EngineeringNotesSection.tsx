@@ -10,19 +10,18 @@ import {
   FEATURED_ENGINEERING_NOTES,
   type EngineeringNote,
 } from "@/lib/featured-engineering-posts";
-import { usesCompactBlogHero } from "@/lib/engineering-notes";
+import {
+  isDiagramBlogImage,
+  usesCompactBlogHero,
+} from "@/lib/engineering-notes";
 
 const NOTES_GRADIENT = "linear-gradient(90deg, #4353ff 0%, #8b5cf6 100%)";
 const KICKER_GRADIENT = "linear-gradient(45deg, #667bf6, #26d0ce)";
 
 type BlogFilter = "all" | string;
 
-function isDiagramImage(src: string): boolean {
-  return src.endsWith(".svg");
-}
-
 function postImageProps(note: EngineeringNote) {
-  const isDiagram = isDiagramImage(note.image);
+  const isDiagram = isDiagramBlogImage(note.image);
   const isCompact = usesCompactBlogHero(note);
 
   return {
@@ -30,10 +29,28 @@ function postImageProps(note: EngineeringNote) {
     className: cn(
       "transition-transform duration-300 group-hover:scale-[1.02]",
       isCompact && "object-contain p-4 sm:p-5 lg:p-6",
-      isDiagram && !isCompact && "object-contain p-5 sm:p-6",
+      isDiagram && !isCompact && "object-contain p-2 sm:p-3",
       !isDiagram && !isCompact && "object-cover",
     ),
   };
+}
+
+function postImageContainerClass(image: string) {
+  return cn(
+    "relative block overflow-hidden rounded-lg",
+    isDiagramBlogImage(image)
+      ? "aspect-[16/10] bg-transparent"
+      : "aspect-[16/10] bg-[#f6f6f7] dark:bg-white/5",
+  );
+}
+
+function featuredImageContainerClass(image: string) {
+  return cn(
+    "group relative block overflow-hidden rounded-lg",
+    isDiagramBlogImage(image)
+      ? "aspect-[4/3] bg-transparent"
+      : "aspect-[4/3] bg-[#f6f6f7] dark:bg-white/5",
+  );
 }
 
 function formatPostDate(dateString: string): string {
@@ -89,7 +106,7 @@ function FeaturedPost({ note }: { note: EngineeringNote }) {
     <article className="grid gap-8 border-b border-[#eeeeee] pb-12 lg:grid-cols-2 lg:items-center lg:gap-12 dark:border-white/10">
       <Link
         href={note.href}
-        className="group relative block aspect-[4/3] overflow-hidden rounded-lg bg-[#f6f6f7] dark:bg-white/5"
+        className={featuredImageContainerClass(note.image)}
       >
         <Image
           src={note.image}
@@ -119,10 +136,7 @@ function FeaturedPost({ note }: { note: EngineeringNote }) {
 function PostCard({ note }: { note: EngineeringNote }) {
   return (
     <article className="group flex min-w-0 flex-col gap-2.5">
-      <Link
-        href={note.href}
-        className="relative block aspect-[16/10] overflow-hidden rounded-lg bg-[#f6f6f7] dark:bg-white/5"
-      >
+      <Link href={note.href} className={postImageContainerClass(note.image)}>
         <Image
           src={note.image}
           alt=""
@@ -282,9 +296,10 @@ export default function EngineeringNotesSection({
             </h2>
           </div>
 
-          <p className="max-w-md text-[13px] leading-[1.65] text-[#666666] dark:text-white/55 lg:pb-1">
-            System design decisions from production work: what was chosen, what
-            it cost, and what I&apos;d do differently.
+          <p className="max-w-lg text-[13px] leading-[1.65] text-[#666666] dark:text-white/55 lg:pb-1">
+            Engineering Decisions, Production notes on architecture, APIs,
+            operational analytics, distributed systems, and the trade-offs
+            behind the software I build.
           </p>
         </div>
 

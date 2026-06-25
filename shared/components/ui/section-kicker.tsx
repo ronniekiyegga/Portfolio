@@ -12,9 +12,9 @@ const TEXT_GRADIENT = "linear-gradient(to bottom, #69eacb, #6654f1)";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-/** Muted kicker — matches Figma / devtools spec */
-const MUTED_TEXT_COLOR = "oklab(0.249818 0.00100637 -0.00475857)";
-const MUTED_LINE_COLOR = "#e0e0e0";
+/** Muted kicker — soft gray label + hairline dividers */
+const MUTED_TEXT_COLOR = "#9ca3af";
+const MUTED_LINE_COLOR = "#f0f0f0";
 const MUTED_DEFAULT_LINE_WIDTH = 56;
 const GRADIENT_DEFAULT_LINE_WIDTH = 120;
 
@@ -73,10 +73,7 @@ function SparkleIcon({
   );
 }
 
-/**
- * Reusable section kicker: horizontal lines + sparkle icon + label text.
- * Renders above section titles.
- */
+
 export default function SectionKicker({
   children,
   className,
@@ -106,7 +103,7 @@ export default function SectionKicker({
       <div
         className={cn(
           "shrink-0",
-          muted ? "h-px dark:bg-white/15" : "h-0.5 opacity-10 dark:opacity-20",
+          muted ? "h-px bg-[#f0f0f0] dark:bg-white/10" : "h-0.5 opacity-10 dark:opacity-20",
         )}
         style={
           muted
@@ -119,7 +116,7 @@ export default function SectionKicker({
       <div
         className={cn(
           "flex shrink-0 items-center",
-          muted ? "gap-2" : "gap-2 px-2 pb-px",
+          muted ? "gap-2 text-[#9ca3af] dark:text-neutral-500" : "gap-2 px-2 pb-px",
         )}
         style={muted ? { color: MUTED_TEXT_COLOR } : undefined}
       >
@@ -134,7 +131,7 @@ export default function SectionKicker({
           )}
           style={
             muted
-              ? { color: MUTED_TEXT_COLOR }
+              ? undefined
               : {
                   background: TEXT_GRADIENT,
                   backgroundClip: "text",
@@ -151,7 +148,7 @@ export default function SectionKicker({
       <div
         className={cn(
           "shrink-0",
-          muted ? "h-px dark:bg-white/15" : "h-0.5 opacity-5 dark:opacity-15",
+          muted ? "h-px bg-[#f0f0f0] dark:bg-white/10" : "h-0.5 opacity-5 dark:opacity-15",
         )}
         style={
           muted

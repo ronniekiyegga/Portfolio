@@ -203,49 +203,4 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
       },
     ],
   },
-  {
-    workItemId: "true-founders",
-    badge: "BRAND IDENTITY",
-    listingDesc:
-      "Brand and landing concept for a women's life coaching practice in Dubai. Twelve-competitor analysis and three personas turned into clearer positioning, trust signals, and a direct path from discovery to enquiry.",
-    metricPills: [
-      { value: "12", suffix: "competitors" },
-      { value: "3", suffix: "personas" },
-      { value: "UX audit" },
-    ],
-    architecturalDecisions: [
-      {
-        title: "Competitive Analysis as Structure",
-        description:
-          "Twelve competitor audits informed page hierarchy and messaging gaps. Layout decisions came from what the market already proved, not from generic landing-page templates.",
-      },
-      {
-        title: "Persona-Led Page Flow",
-        description:
-          "Three audience segments mapped to distinct trust signals and enquiry paths. Each section answers a specific objection surfaced in research rather than filling a standard template.",
-      },
-      {
-        title: "Enquiry-First Conversion",
-        description:
-          "The page optimises for a high-trust, private audience: clarity of offer, social proof placement, and a single primary action from first visit through to enquiry.",
-      },
-    ],
-    bigImage: "/images/projects/truefounders/TrueFounders_hero.webp",
-    topImage: "/images/projects/truefounders/truefounders-2.webp",
-    bottomImage: "/images/projects/truefounders/truefounders-3.webp",
-    topLabel: "Value Proposition Design",
-    topSublabel: "Clarifying the offer for a high-trust, private audience",
-    bottomTitle: "Enquiry Journey",
-    bottomSubtitle: "End-to-end user journey from first visit to enquiry",
-    heroLabels: [
-      {
-        title: "Conversion-Focused Landing Page",
-        subtitle: "Designed to drive bookings and communicate trust clearly",
-      },
-      {
-        title: "Brand Identity System",
-        subtitle: "Visual direction, tone, and consistency across touchpoints",
-      },
-    ],
-  },
 ];

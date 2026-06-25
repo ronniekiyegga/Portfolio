@@ -4,7 +4,7 @@ import FooterSection from "@/shared/components/navigation/footer";
 import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
 
 export const metadata: Metadata = {
-  title: "Ronnie Kiyegga — Blog",
+  title: "Ronnie Kiyegga | Blog",
   description:
     "Thoughts on full-stack engineering, TypeScript, and shipping products.",
 };
