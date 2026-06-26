@@ -272,8 +272,10 @@ function ArchitecturalDecisionRow({
 
 function ArchitecturalDecisionsPanel({
   decisions,
+  sectionTitle = "Architectural Decisions",
 }: {
   decisions: readonly ProjectArchitecturalDecision[];
+  sectionTitle?: string;
 }) {
   const [featured, ...rest] = decisions;
 
@@ -281,7 +283,7 @@ function ArchitecturalDecisionsPanel({
     <div className="flex w-full min-w-0 flex-col gap-2 lg:max-w-none">
       <div className="flex items-center self-stretch py-0.5">
         <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-[#595f7a] dark:text-white/45 sm:text-[10px]">
-          Architectural Decisions
+          {sectionTitle}
         </span>
       </div>
 
@@ -634,6 +636,7 @@ export default function ProjectCard() {
                     <div className="min-w-0 w-full lg:flex-6 lg:max-w-[480px]">
                       <ArchitecturalDecisionsPanel
                         decisions={listing.architecturalDecisions}
+                        sectionTitle={listing.decisionsSectionTitle}
                       />
                     </div>
                   </motion.div>

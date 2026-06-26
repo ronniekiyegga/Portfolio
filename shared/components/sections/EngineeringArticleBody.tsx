@@ -157,6 +157,13 @@ export function EngineeringArticleBody({
                 </div>
               );
             })}
+            {section.blockquote ? (
+              <blockquote className="my-6 border-l-2 border-[#e5e7eb] pl-5 dark:border-white/15">
+                <p className="text-foreground text-base font-semibold leading-relaxed">
+                  {renderRichText(section.blockquote)}
+                </p>
+              </blockquote>
+            ) : null}
             {section.table ? <ArticleTable table={section.table} /> : null}
             {section.bullets && section.bullets.length > 0 ? (
               <ul className="text-muted-foreground mb-4 ml-6 list-disc space-y-2">

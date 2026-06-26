@@ -9,6 +9,7 @@ export type EngineeringArticleSection = {
   heading?: string;
   paragraphs?: readonly string[];
   bullets?: readonly string[];
+  blockquote?: string;
   table?: EngineeringArticleTable;
   image?: string;
   imageAlt?: string;
@@ -47,39 +48,75 @@ export const ENGINEERING_ARTICLES: readonly EngineeringArticle[] = [
   {
     slug: BYOK_ARTICLE_SLUG,
     categorySlug: "engineering",
-    title: "BYOK: shipping AI features when you can't pay for inference",
+    title:
+      "Machine learning on school iPads: engineering around the real constraints",
     description:
-      "Routing LLM requests through user-supplied keys for 600+ users: the key-handling boundary, rate-limit design, and the failure modes nobody warns you about.",
-    readTime: "12 min read",
+      "Why deploying computer vision into classrooms became an infrastructure problem long before it became a machine learning problem.",
+    readTime: "14 min read",
     image: "/images/blog/architecture/teachable-machine-ai.webp",
     date: "2026-02-14",
     authorName: "Ronnie Kiyegga",
     authorImage: "/images/profile/Avatar.svg",
     sections: [
       {
-        heading: "Why BYOK was the only viable model",
         paragraphs: [
-          "At 600+ active users, centrally funded inference would have consumed the product budget within weeks. The product still needed AI-assisted feedback, but paying for every token on behalf of users was not sustainable.",
-          "Bring Your Own Key (BYOK) moved cost to the institution while keeping the feature available. The trade-off was operational: we had to design a boundary where user keys never leaked into logs, support tooling, or cross-tenant caches.",
+          "When most engineers think about deploying machine learning, they think about models, GPUs or inference infrastructure. Those things certainly mattered. However, when your end users aren't software developers with modern MacBooks or powerful desktop GPUs, but instead hundreds of students using school-provided iPads inside a heavily managed school environment, the problem starts to look very different.",
+          "The application itself was relatively straightforward. Students could upload images, train a simple computer vision model and then test it against new images, giving feedback whenever the prediction was incorrect. Conceptually, it was very similar to Google's Teachable Machine. The goal wasn't to build a state-of-the-art machine learning platform; it was to make machine learning approachable enough that a Year 8 student could understand how image classification actually worked.",
+          "The deployment environment, however, quickly became the real challenge. Every student was using a school-managed iPad running Safari under Mobile Device Management (MDM) policies. Those devices came with limited RAM, older GPUs, inconsistent classroom WiFi and browser restrictions that simply don't exist on a modern desktop machine. On top of that, the application needed to comply with strict UAE regulations around children's data and personal images, meaning photographs could never become just another piece of data stored on a server.",
+          'At that point, the project stopped being about machine learning. It became an infrastructure problem. The question was no longer "How do we build a computer vision application?" It became something much more practical:',
+        ],
+        blockquote:
+          "**Can every student have the same reliable experience every lesson, regardless of which classroom they're sitting in?**",
+      },
+      {
+        heading: "The classroom decides the architecture",
+        paragraphs: [
+          "One of the biggest mistakes engineers can make is assuming that the development environment resembles production. It rarely does.",
+          "Modern laptops hide a huge number of infrastructure problems. They have plenty of memory, reliable processors, fast internet connections and browsers that comfortably handle demanding JavaScript applications. A classroom full of ageing school iPads offers none of those guarantees.",
+          "Some devices had less available memory than others. Safari aggressively reclaimed memory whenever it came under pressure, particularly on older hardware. WiFi quality varied from one classroom to the next as students moved between access points, while MDM policies restricted parts of the browser environment that would normally be taken for granted during development.",
+          "Individually, none of those constraints seemed especially significant. Together, they dictated almost every architectural decision that followed.",
         ],
       },
       {
-        heading: "The key-handling boundary",
+        heading: "The obvious architecture wasn't the right one",
         paragraphs: [
-          "Keys are encrypted at rest, scoped per organisation, and injected only at the provider router layer. Application logs record request metadata (latency, model, token counts) but never key material or raw prompts containing credentials.",
-        ],
-        bullets: [
-          "Dedicated provider classes for OpenAI and Google Gemini with shared retry and timeout policy",
-          "Per-org rate limits independent of provider quotas",
-          "Automatic key validation on save with a clear error surface for educators",
-          "Fallback routing when a provider returns 401/429 without exposing key state to the client",
+          "The first instinct was the same one most engineers would have today: run inference on the server. At first glance, it seems like the safest option. Every student uploads an image, the backend performs inference, returns the prediction and stores whatever is required for future improvements. It's a familiar architecture that centralises compute and keeps clients relatively lightweight.",
+          "Unfortunately, almost every classroom constraint worked against that approach. Every prediction depended on network quality. Every uploaded image introduced additional privacy considerations. Every request increased infrastructure costs. Most importantly, every classroom became dependent on a reliable internet connection before a lesson could even begin.",
+          "That wasn't the experience teachers wanted. If the WiFi slowed down or briefly disappeared, the lesson shouldn't stop. The architecture needed to assume that classrooms would occasionally be imperfect.",
         ],
       },
       {
-        heading: "Failure modes worth planning for",
+        heading: "Moving machine learning to the edge",
         paragraphs: [
-          "BYOK shifts support burden: users blame the product when their key expires, even if the app behaved correctly. We added health indicators on the settings screen and structured error copy that distinguishes auth failures from model errors.",
-          "The pattern works when your users are technical enough to manage keys and your margins cannot absorb inference. It breaks when you need uniform UX guarantees across tenants without configuration.",
+          "Once those constraints became clear, the architectural direction became surprisingly obvious. Rather than sending images to the server for inference, both training and prediction moved entirely into the browser using TensorFlow.js. Images never needed to leave the student's device, eliminating an entire class of privacy concerns before they even existed.",
+          "This decision wasn't primarily about performance, although inference became noticeably faster. It simplified compliance, reduced infrastructure costs and removed network latency from the prediction path. More importantly, it meant the application continued working even when classroom connectivity wasn't perfect.",
+          "The browser became both the training environment and the inference engine. The server became responsible for orchestration rather than prediction. That's a very different system.",
+        ],
+      },
+      {
+        heading: "Privacy wasn't a feature. It was a constraint.",
+        paragraphs: [
+          "Working with photographs of children changes how you think about architecture. The application wasn't designed for hobby projects or public image datasets. Students often trained models using photographs of themselves, classmates or objects around the classroom. Under UAE regulations, that immediately raised important questions about where those images lived, how long they persisted and who could access them.",
+          "The simplest solution turned out to be the strongest one: don't store them.",
+          "By keeping image processing entirely inside the browser, the platform avoided maintaining a central repository of photographs altogether. The backend never needed to receive raw images because it never participated in inference. From both an engineering and compliance perspective, removing the problem proved significantly easier than securing it.",
+          "Sometimes the best security boundary is the one you never have to defend.",
+        ],
+      },
+      {
+        heading: "Reliability matters more than benchmarks",
+        paragraphs: [
+          "Machine learning discussions often revolve around model accuracy, benchmark scores and inference latency. Those metrics are important, but they weren't the metrics that determined whether this project succeeded.",
+          "The real measure of success was whether a teacher could begin a lesson without worrying about which classroom they had been allocated, whether the WiFi happened to be behaving that morning or whether a particular iPad was slightly older than the rest. If every student could collect images, train a model and receive predictions without thinking about the underlying infrastructure, the architecture had done its job.",
+          "Students didn't care where inference happened. Teachers certainly didn't. They simply wanted the lesson to work.",
+        ],
+      },
+      {
+        heading: "The engineering lesson",
+        paragraphs: [
+          "Looking back, I don't think this project was really about machine learning. It was about understanding that production environments impose constraints that architecture cannot ignore.",
+          "As engineers, it's easy to become fascinated by frameworks, models and new technologies. TensorFlow.js happened to be an excellent fit for this project, but it wasn't the reason the application succeeded. The deployment environment made most of the important decisions long before a single line of machine learning code was written.",
+          'Once the question changed from "How do we build a computer vision platform?" to "How do we guarantee every student the same reliable experience every lesson?", the architecture almost designed itself.',
+          "I've found that's true of far more engineering problems than machine learning. The best systems aren't the ones with the most impressive technology stack. They're the ones that quietly disappear into the background and allow people to focus on what they were trying to do in the first place.",
         ],
       },
     ],

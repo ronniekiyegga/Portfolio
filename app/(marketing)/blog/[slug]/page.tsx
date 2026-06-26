@@ -9,6 +9,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb";
 import { formatDate } from "@/lib/format-date";
@@ -27,6 +28,7 @@ import {
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
 import { EngineeringArticleBody } from "@/shared/components/sections/EngineeringArticleBody";
 import { BlogOnThisPage, BlogArticleScrollTop } from "@/shared/components/sections/BlogOnThisPage";
+import { HOME_BLOG_SECTION_HREF } from "@/lib/home-nav";
 
 function categoryTitle(slug: string): string {
   return BLOG_CATEGORIES.find((category) => category.slug === slug)?.title ?? slug;
@@ -149,13 +151,11 @@ function ArticleBodyLayout({
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+                <BreadcrumbLink href={HOME_BLOG_SECTION_HREF}>Blog</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href={`/blog/category/${meta.categorySlug}`}>
-                  {meta.categoryLabel}
-                </BreadcrumbLink>
+                <BreadcrumbPage>{meta.categoryLabel}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -201,20 +201,12 @@ function ArticleBodyLayout({
           </article>
 
           <footer className="mt-12 border-t py-8">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <Link
-                href="/blog"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                Back to blog
-              </Link>
-              <Link
-                href={`/blog/category/${meta.categorySlug}`}
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                More in {meta.categoryLabel}
-              </Link>
-            </div>
+            <Link
+              href={HOME_BLOG_SECTION_HREF}
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+            >
+              Back to blog
+            </Link>
           </footer>
         </div>
 
