@@ -28,6 +28,8 @@ export type ProjectCardListing = {
   /** Tags in the listing row; falls back to workItem.tags when omitted. */
   listingTags?: string[];
   architecturalDecisions: ProjectArchitecturalDecision[];
+  /** Panel heading above decision cards; defaults to Architectural Decisions */
+  decisionsSectionTitle?: string;
   ctaVariant?: "code-only";
   bigImage: string;
   topImage: string;
@@ -44,9 +46,9 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
   {
     workItemId: "edu-analytics-dashboard",
     badge: "ANALYTICS PLATFORM",
-    listingTitle: "Edufeedbackpro",
+    listingTitle: "EduFeedbackPro",
     listingDesc:
-      "Operational analytics for a 1,000+ student institution, built around one constraint: educators check data between lessons, not in meetings. Every decision below falls out of that.",
+      "Operational analytics platform for a 1,000+ student institution. Teachers needed answers in the five minutes between lessons, not after a weekly reporting meeting, so the architecture prioritised fast operational workflows over perfectly fresh reporting.",
     metricPills: [
       { prefix: "reports", value: "3min to <10sec" },
       { prefix: "release", value: "10 to 5 days" },
@@ -62,30 +64,27 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
       "Docker",
       "Redis",
     ],
+    decisionsSectionTitle: "Engineering Decisions",
     architecturalDecisions: [
       {
-        title: "Operational vs Analytical Data",
+        title: "Data should reflect how people actually use it",
         description:
-          "PostgreSQL handles operational state; BigQuery serves reporting workloads, preventing analytics queries from impacting transactional performance.",
-        emphasisTerms: ["PostgreSQL", "BigQuery"],
+          "Teachers needed operational insight between lessons, not analytical reports. PostgreSQL handled operational state while BigQuery served reporting workloads.",
       },
       {
-        title: "Server-Sent Events over WebSockets",
+        title: "Architecture should follow communication patterns",
         description:
-          "Reporting updates are one-directional. SSE reduced infrastructure complexity while remaining compatible with restrictive school networks.",
-        emphasisTerms: ["SSE", "school networks"],
+          "Updates only flowed from the server to the browser. One-way communication made Server-Sent Events the simplest architecture.",
       },
       {
-        title: "Capability-Based Access",
+        title: "Permissions should model capability, not hierarchy",
         description:
-          "Membership capabilities replace fixed role hierarchies, avoiding role explosion across multi-tenant organisations.",
-        emphasisTerms: ["Membership capabilities", "multi-tenant"],
+          "Responsibilities change faster than job titles. Capabilities scale; rigid role hierarchies don't.",
       },
       {
-        title: "Eventual Consistency for Reporting",
+        title: "Consistency is a product decision",
         description:
-          "Eventual consistency was traded for predictable write performance and responsive operational workflows during peak usage.",
-        emphasisTerms: ["Eventual consistency", "predictable write performance"],
+          "Reporting could tolerate eventual consistency. Protecting write performance mattered more than perfectly fresh analytical data.",
       },
     ],
     bigImage: "/images/projects/edufeedbackpro/Edufeedbackpro-1.webp",
@@ -155,32 +154,33 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
     workItemId: "edtech-tutoring",
     badge: "EDTECH PLATFORM",
     listingDesc:
-      "B2C maths platform for GCSE and A-Level students, designed in Figma first, then shipped as a marketing site, authenticated dashboard, and six-course catalogue on a self-hosted VPS with a zero-touch deploy pipeline.",
+      "Solo-built B2C maths platform for GCSE and A-Level students. Owned end to end: Figma-validated workflows, marketing site, authenticated dashboard, six-course catalogue, and automated deployment on a self-hosted VPS.",
     metricPills: [
       { prefix: "deploy", value: "20+min to <3min" },
       { value: "6", suffix: "course types" },
       { value: "7", suffix: "marketing sections" },
     ],
+    decisionsSectionTitle: "Engineering Decisions",
     architecturalDecisions: [
       {
-        title: "Figma-First, Then Code",
+        title: "Ship product before writing code",
         description:
-          "Flows and components were locked in Figma before code, so build decisions tracked tutor workflows instead of mid-sprint rework.",
+          "Validating workflows in Figma first reduced implementation churn and made engineering decisions product-led rather than design-led.",
       },
       {
-        title: "Clerk + Postgres Sync Pattern",
+        title: "Remove friction from releases",
         description:
-          "Clerk handles auth; a checkUser sync keeps identities and enrolment aligned on sign-in. Marketing stays public; dashboards stay gated.",
+          "Automated deployments replaced manual SSH releases, allowing changes to reach production in under three minutes.",
       },
       {
-        title: "Sidecar for Out-of-Band Logic",
+        title: "Separate public from authenticated systems",
         description:
-          "Express on port 3001 runs out-of-band server work, keeping App Router handlers focused on request-scoped logic.",
+          "Marketing and learning evolved independently without coupling content updates to authenticated application releases.",
       },
       {
-        title: "GitHub Actions to VPS Deploy",
+        title: "Build for iteration",
         description:
-          "Every push to main builds, verifies, and SCPs to DigitalOcean, replacing 20+ minute manual SSH deploys with a sub-three-minute pipeline.",
+          "Features were designed around extensibility so the platform could grow without repeatedly restructuring the application.",
       },
     ],
     bigImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",

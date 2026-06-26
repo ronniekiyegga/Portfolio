@@ -25,6 +25,7 @@ import {
 } from "@/shared/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import {
+  HOME_BLOG_SECTION_HREF,
   HOME_NAV_ITEMS,
   HOME_SECTION_HASH_EVENT,
   isHomeSectionActive,
@@ -214,7 +215,7 @@ export default function Header({
                   )}
                 >
                   <Link
-                    href="/blog"
+                    href={HOME_BLOG_SECTION_HREF}
                     className="relative text-[13px] mx-2 font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                   >
                     Blog
@@ -288,10 +289,7 @@ const exploreSectionLinks = HOME_NAV_ITEMS.map(({ label, id }) => ({
   sectionId: id,
 }));
 
-const exploreLinks = [
-  ...exploreSectionLinks,
-  { name: "Blog", href: "/blog" as const, sectionId: null as null },
-];
+const exploreLinks = exploreSectionLinks;
 
 function MobileMenu({
   isOpen,
@@ -482,7 +480,7 @@ function MobileMenu({
                 <div className="flex w-full mx-auto items-center justify-center gap-4 pl-1 pb-8 pt-4">
                   <div className="flex items-center gap-4 text-sm font-medium text-neutral-900 dark:text-neutral-100">
                     <Link
-                      href="/blog"
+                      href={HOME_BLOG_SECTION_HREF}
                       onClick={onClose}
                       className="flex items-center gap-1.5 relative"
                     >

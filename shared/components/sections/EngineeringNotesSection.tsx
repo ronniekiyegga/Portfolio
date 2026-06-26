@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { BLOG_CATEGORIES } from "@/lib/blog-categories";
+import { HOME_BLOG_SECTION_HREF } from "@/lib/home-nav";
 import {
   categoriesWithPosts,
   FEATURED_ENGINEERING_NOTES,
@@ -197,7 +198,7 @@ function CategoryNav({
           aria-hidden
         />
         <Link
-          href="/blog"
+          href={HOME_BLOG_SECTION_HREF}
           className="text-[13px] font-medium text-[#666666] transition-colors hover:text-[#1a1a2e] dark:text-white/55 dark:hover:text-white"
         >
           View blog
@@ -329,7 +330,7 @@ export default function EngineeringNotesSection({
 
         <div className="mt-8 sm:hidden">
           <Link
-            href="/blog"
+            href={HOME_BLOG_SECTION_HREF}
             className="text-[13px] font-medium text-[#4353ff] hover:underline"
           >
             View all posts

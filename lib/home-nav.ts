@@ -27,6 +27,9 @@ export const HOME_NAV_ITEMS = [
 
 export type HomeNavItemId = (typeof HOME_NAV_ITEMS)[number]["id"];
 
+/** Homepage Engineering Notes anchor — blog index is hidden until the listing is ready. */
+export const HOME_BLOG_SECTION_HREF = "/#blog" as const;
+
 /** Hero uses id `work` but URL stays clean (`/`) — only deeper sections get `/#section`. */
 export function replaceHomeSectionHistory(sectionId: HomeSectionId) {
   const url = new URL(window.location.href);
