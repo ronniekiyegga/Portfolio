@@ -52,7 +52,7 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
     metricPills: [
       { prefix: "reports", value: "3min to <10sec" },
       { prefix: "release", value: "10 to 5 days" },
-      { value: "1,000", suffix: "students" },
+      { value: "1,000+", suffix: "students" },
     ],
     listingTags: [
       "TypeScript",
@@ -64,27 +64,27 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
       "Docker",
       "Redis",
     ],
-    decisionsSectionTitle: "Engineering Decisions",
+    decisionsSectionTitle: "Architectural Decisions",
     architecturalDecisions: [
       {
-        title: "Data should reflect how people actually use it",
+        title: "Postgres for ops state, BigQuery for reporting",
         description:
-          "Teachers needed operational insight between lessons, not analytical reports. PostgreSQL handled operational state while BigQuery served reporting workloads.",
+          "Dashboard aggregations were degrading write latency during peak marking windows. Splitting the workloads bought predictable writes; reports became eventually consistent, usually within minutes, which teachers never noticed.",
       },
       {
-        title: "Architecture should follow communication patterns",
+        title: "SSE over WebSockets",
         description:
-          "Updates only flowed from the server to the browser. One-way communication made Server-Sent Events the simplest architecture.",
+          "Updates only flowed server to browser. SSE rides plain HTTP, survives school proxies, and reconnects natively; WebSockets would have added a second operational surface for bidirectional capability nothing used.",
       },
       {
-        title: "Permissions should model capability, not hierarchy",
+        title: "Capabilities over role hierarchy",
         description:
-          "Responsibilities change faster than job titles. Capabilities scale; rigid role hierarchies don't.",
+          "Staff responsibilities changed faster than job titles. Modelling permissions as capabilities made access changes data updates rather than code changes.",
       },
       {
-        title: "Consistency is a product decision",
+        title: "Inference moved on-device",
         description:
-          "Reporting could tolerate eventual consistency. Protecting write performance mattered more than perfectly fresh analytical data.",
+          "Server round-trips on 600+ low-spec iPads cost 2s per prediction. Moving model execution to TensorFlow.js in the browser cut it to 600ms and removed the network from the prediction path entirely.",
       },
     ],
     bigImage: "/images/projects/edufeedbackpro/Edufeedbackpro-1.webp",
@@ -158,29 +158,29 @@ export const PROJECT_CARD_LISTINGS: ProjectCardListing[] = [
     metricPills: [
       { prefix: "deploy", value: "20+min to <3min" },
       { value: "6", suffix: "course types" },
-      { value: "7", suffix: "marketing sections" },
+      { prefix: "CI/CD", value: "on every push" },
     ],
-    decisionsSectionTitle: "Engineering Decisions",
+    decisionsSectionTitle: "Architectural Decisions",
     architecturalDecisions: [
       {
-        title: "Ship product before writing code",
+        title: "Figma validation before code",
         description:
-          "Validating workflows in Figma first reduced implementation churn and made engineering decisions product-led rather than design-led.",
+          "Marketing sections and the course structure were validated in Figma before implementation, so build effort went into flows that had already survived design scrutiny rather than speculative UI.",
       },
       {
-        title: "Remove friction from releases",
+        title: "Automated deploys over manual SSH",
         description:
-          "Automated deployments replaced manual SSH releases, allowing changes to reach production in under three minutes.",
+          "GitHub Actions builds, transfers, and reloads PM2 behind Nginx on every push. Releases went from 20+ minutes of manual steps to under 3, repeatable by anyone.",
       },
       {
         title: "Separate public from authenticated systems",
         description:
-          "Marketing and learning evolved independently without coupling content updates to authenticated application releases.",
+          "The marketing site and the learning platform deploy independently, so content changes never risk the authenticated application and each side evolves on its own release cadence.",
       },
       {
-        title: "Build for iteration",
+        title: "One VPS, no Kubernetes",
         description:
-          "Features were designed around extensibility so the platform could grow without repeatedly restructuring the application.",
+          "Single-tenant product, single node. Docker and Nginx gave zero-downtime container swaps without a cluster to operate, and the scaling triggers that would change this are documented, not guessed at.",
       },
     ],
     bigImage: "/images/projects/maths-tutoring/Tutoring_hero.webp",
