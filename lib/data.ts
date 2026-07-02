@@ -218,7 +218,7 @@ export const experiencesV1: ExperienceV1Item[] = [
     organisation: "School Of Research Science",
     responsibilities: [
       "Built TypeScript and Next.js assessment applications used by 1,000+ students, reducing assessment turnaround by 3+ hours per marking cycle",
-      "Architected a BYOK (Bring Your Own Key) architecture integrating OpenAI and Google Gemini via dedicated provider classes, reducing API costs by 65% while maintaining provider flexibility",
+      "Designed a Node.js BYOK (Bring Your Own Key) architecture for 600+ users, integrating OpenAI and Google Gemini via dedicated provider classes, eliminating platform-side AI infrastructure costs while preserving AI-assisted learning features",
       "Reduced on-device ML inference latency by 70% (2s to 600ms) across 600+ low-spec iPads by migrating model execution to TensorFlow.js",
       "Halved release cycles (10 to 5 days) and cut PR turnaround from 48h to 18h with GitHub Actions CI/CD pipelines and Nginx canary deployments",
       "Reduced educator report generation from 3 minutes to under 10 seconds with analytics and reporting platforms built on REST APIs and PostgreSQL",
@@ -265,7 +265,7 @@ export const workItems: WorkItem[] = [
       "Neon",
       "Playwright",
     ],
-    metric: "sub-50ms latency",
+    metric: "reports 3min to <10s",
     href: "https://www.edufeedbackpro.com/",
     gradient: "linear-gradient(160deg, #0d0d1f 0%, #1a0d2e 50%, #120820 100%)",
     preview: "analytics",
@@ -362,9 +362,9 @@ export const workItems: WorkItem[] = [
       },
     ],
     statistics: [
-      { value: "50ms", label: "P95" },
-      { value: "<10s", label: "SSE Updates" },
-      { value: "0", label: "Polling" },
+      { value: "<10s", label: "Reports" },
+      { value: "-70%", label: "ML Inference" },
+      { value: "1,000+", label: "Students" },
     ],
   },
   {
@@ -509,7 +509,7 @@ export const workItems: WorkItem[] = [
     title: "KNN Image Classifier",
     desc: "On-device ML image classifier built with TensorFlow.js, enabling students to train and run models directly in the browser without server infrastructure.",
     tags: ["TensorFlow.js", "React", "On-device AI"],
-    metric: "400+ students, zero infra cost",
+    metric: "600+ iPads, zero infra cost",
     href: "https://blissfulcoda.github.io/teachablemachine/",
     gradient: "linear-gradient(160deg, #0a1a0a 0%, #0d2e0d 50%, #081808 100%)",
     preview: "knn",
@@ -519,11 +519,11 @@ export const workItems: WorkItem[] = [
       {
         title: "The Problem",
         content:
-          "iPad classrooms couldn't use Google Teachable Machine due to browser restrictions and network requirements. Students needed a way to train and run ML classifiers entirely in the browser, with no server infrastructure. The solution: real-time client-side inference with TensorFlow.js, enabling 400+ students to use the tool with zero infrastructure cost.",
+          "iPad classrooms couldn't use Google Teachable Machine due to browser restrictions and network requirements. Students needed a way to train and run ML classifiers entirely in the browser, with no server infrastructure. The solution: real-time client-side inference with TensorFlow.js, running entirely on-device across the school's 600+ iPads with zero infrastructure cost.",
       },
     ],
     statistics: [
-      { value: "400+", label: "Students" },
+      { value: "600+", label: "iPads" },
       { value: "BYOK", label: "AI Reviewer" },
     ],
   },
@@ -545,11 +545,11 @@ export const workItems: WorkItem[] = [
       {
         title: "The Problem",
         content:
-          "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference, enabling 400+ students to practice exam-style pseudocode with instant feedback.",
+          "Students preparing for Cambridge IGCSE and A-Level Computer Science exams needed a way to write and run pseudocode that matched the exam specification exactly. Existing tools were either too generic or required local installation. PseudoLab IDE provides a browser-based environment with real-time execution, syntax highlighting, and a built-in reference, enabling students to practice exam-style pseudocode with instant feedback.",
       },
     ],
     statistics: [
-      { value: "400+", label: "Students" },
+      { value: "Cambridge", label: "Exam Spec" },
       { value: "BYOK", label: "AI Reviewer" },
     ],
   },
@@ -788,7 +788,7 @@ export const experienceItems: ExperienceItem[] = [
     initial: "F",
     company: "Freelance ",
     role: "Independent Software Engineer",
-    desc: "Designed and built production-grade products for clients, including a 30+ component design system across 8 storefronts, a microservices e-commerce platform with 99.9% uptime, and a video pipeline that cut media costs by 40%.",
+    desc: "Designed and built production-grade products for clients, including a 30+ component design system with Storybook documentation, an e-commerce platform processing 2,000+ monthly Stripe transactions, and a custom media pipeline enabling adaptive HLS streaming.",
     tags: ["React", "Node.js", "AWS S3", "Stripe", "Figma"],
     techStack: ["Figma", "React", "Python", "TypeScript", "Nginx", "Nodejs"],
     dates: "2020 - 2023",
