@@ -7,6 +7,8 @@ import { InterfacesSection } from "./_features/interfaces/InterfacesSection";
 import { SelectedDesignSection } from "./_features/selected-design/SelectedDesignSection";
 import { ToolsSection } from "./_features/tools/ToolsSection";
 
+export const revalidate = 60;
+
 export default function Home() {
   return (
     <div className="page home">

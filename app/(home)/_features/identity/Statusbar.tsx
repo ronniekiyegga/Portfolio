@@ -4,7 +4,7 @@ import Link from "next/link";
 import { socialLinks } from "@/lib/constants";
 
 import { SplashCursorToggle } from "./SplashCursorToggle";
-import { VisitorCount } from "./VisitorCount";
+import { LiveVisitorCount } from "./LiveVisitorCount";
 
 type StatusbarProps = {
   visitorCount?: number | null;
@@ -28,7 +28,7 @@ export function Statusbar({ visitorCount = null }: StatusbarProps) {
         ))}
       </p>
       <div className="statusMeta">
-        <VisitorCount count={visitorCount} />
+        <LiveVisitorCount initialCount={visitorCount} />
         <SplashCursorToggle />
       </div>
     </div>
