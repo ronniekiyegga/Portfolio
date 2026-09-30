@@ -1,9 +1,5 @@
-import NavV1Wrapper from "@/shared/components/navigation/NavV1Wrapper";
-import V1Cursors from "@/shared/components/effects/V1Cursors";
-import FooterSection from "@/shared/components/navigation/footer";
-import ScrollTriggerReset from "@/shared/components/effects/ScrollTriggerReset";
-import { ScrollReveal } from "@/shared/components/effects/ScrollReveal";
 import { ProjectContextProvider } from "@/app/contexts/ProjectContext";
+import { PortfolioShell } from "@/shared/components/portfolio/PortfolioShell";
 
 export default function V1Layout({
   children,
@@ -11,13 +7,8 @@ export default function V1Layout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <ScrollTriggerReset />
-      <ScrollReveal />
-      <NavV1Wrapper />
-      <V1Cursors />
-      <ProjectContextProvider>{children}</ProjectContextProvider>
-      <FooterSection />
-    </>
+    <ProjectContextProvider>
+      <PortfolioShell>{children}</PortfolioShell>
+    </ProjectContextProvider>
   );
 }

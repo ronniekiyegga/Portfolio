@@ -13,10 +13,6 @@ interface MobileHeaderPillProps {
   setSplashActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-/**
- * Single consolidated pill for mobile header.
- * Contains: Let's chat | wand | theme toggle
- */
 export default function MobileHeaderPill({
   splashActive,
   setSplashActive,

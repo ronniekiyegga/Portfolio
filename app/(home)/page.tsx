@@ -1,37 +1,25 @@
-import nextDynamic from "next/dynamic";
-import HeroSection from "@/shared/components/sections/HeroSection";
-import { getResolvedHeroCarouselSlides } from "@/lib/hero-carousel-images";
-import ScrollAnimations from "@/shared/components/effects/ScrollAnimations";
-import DynamicIsland from "@/shared/components/navigation/DynamicIsland";
-import ProjectCard from "../components/ProjectCard";
-import Experiences from "@/shared/components/sections/Experiences";
-import EngineeringNotesSection from "@/shared/components/sections/EngineeringNotesSection";
+import { AboutSection } from "./_features/about/AboutSection";
+import { EducationSection } from "./_features/education/EducationSection";
+import { ExperienceSection } from "./_features/experience/ExperienceSection";
+import { FeaturedThoughtsSection } from "./_features/featured-thoughts/FeaturedThoughtsSection";
+import { IdentitySection } from "./_features/identity/IdentitySection";
+import { InterfacesSection } from "./_features/interfaces/InterfacesSection";
+import { SelectedDesignSection } from "./_features/selected-design/SelectedDesignSection";
+import { ToolsSection } from "./_features/tools/ToolsSection";
 
-/** Re-read `public/carousel` on each request (avoids stale empty slides after adding files). */
-export const dynamic = "force-dynamic";
-
-const Marquee = nextDynamic(
-  () => import("@/shared/components/sections/Marquee"),
-  {
-    loading: () => <section className="min-h-[200px]" aria-hidden />,
-  },
-);
-
-export default async function Home() {
-  const heroCarouselSlides = getResolvedHeroCarouselSlides();
-
+export default function Home() {
   return (
-    <div className="min-h-screen w-full min-w-0 font-sans">
-      <main className="flex w-full min-w-0 flex-col items-center">
-        <ScrollAnimations className="flex w-full min-w-0 flex-col items-center">
-          <HeroSection heroCarouselSlides={heroCarouselSlides} />
-          <ProjectCard />
-          <EngineeringNotesSection />
-          <Experiences />
-          <Marquee />
-        </ScrollAnimations>
-        <DynamicIsland />
-      </main>
+    <div className="page home">
+      <div className="homeIntro">
+        <IdentitySection />
+        <FeaturedThoughtsSection />
+      </div>
+      <AboutSection />
+      <ToolsSection />
+      <ExperienceSection />
+      <SelectedDesignSection />
+      <EducationSection />
+      <InterfacesSection />
     </div>
   );
 }

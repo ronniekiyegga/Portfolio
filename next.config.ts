@@ -1,7 +1,15 @@
+import path from "node:path";
 import type { NextConfig } from "next";
+
+// A lockfile higher up the filesystem makes Next infer the wrong workspace root.
+const projectRoot = path.resolve(__dirname);
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
+  outputFileTracingRoot: projectRoot,
+  turbopack: {
+    root: projectRoot,
+  },
   async redirects() {
     return [];
   },
