@@ -68,8 +68,9 @@ POST/GET /api/visits ──▶ visitor-store ──▶ Upstash Redis
   `useLiveVisitorCount` → `VisitorCount`. Replaces the earlier `VisitTracker`
   idea, since tracking and display now share one lifecycle.
 - **`VisitorCount`** — stays presentational (format, pluralise, hide on
-  `null`). Adds a CSS-only tick: the old number slides out, the new one slides
-  in. Under `prefers-reduced-motion: reduce` the number swaps instantly. No
+  `null`). Adds a CSS-only tick: each new number rises and fades
+  into place (the number span is keyed by count, so a change replays the
+  animation). Only changes after page load animate. Under `prefers-reduced-motion: reduce` the number swaps instantly. No
   `aria-live`: announcing the count every poll would be noise.
 - **`IdentitySection`** — reads the count through a cached function
   (`revalidate: 60`) and passes it to `Statusbar` as the initial count.
