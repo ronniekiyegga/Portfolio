@@ -3790,7 +3790,6 @@ p.thoughtArticleCopy {
   z-index: 90;
   background: rgb(244 244 245 / 32%);
   backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 .designLightbox {
