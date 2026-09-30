@@ -3,6 +3,7 @@ import Script from "next/script";
 import {
   Geist,
   Geist_Mono,
+  Playfair_Display,
   Source_Serif_4,
   Style_Script,
   Bodoni_Moda,
@@ -10,6 +11,7 @@ import {
   JetBrains_Mono,
   Outfit,
   David_Libre,
+  Italianno,
 } from "next/font/google";
 import "./globals.css";
 import { SplashProvider } from "@/shared/contexts/SplashContext";
@@ -20,6 +22,12 @@ const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-source-serif",
   weight: ["400", "600", "700"],
+});
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
 });
 const styleScript = Style_Script({
   weight: "400",
@@ -62,6 +70,11 @@ const davidLibre = David_Libre({
   weight: ["400", "500", "700"],
   variable: "--font-david-libre",
 });
+const italianno = Italianno({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-italianno",
+});
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga | Full Stack Software Engineer",
@@ -80,9 +93,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden dark" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="overflow-x-hidden dark"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} antialiased overflow-x-hidden min-h-screen bg-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${playfairDisplay.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} ${italianno.variable} antialiased overflow-x-hidden min-h-screen bg-[#FAFAFA]`}
         suppressHydrationWarning
       >
         <Script

@@ -94,8 +94,13 @@ export default function SplashCursor({
       TRANSPARENT,
     };
 
-    const { gl, ext } = getWebGLContext(canvas);
-    if (!gl || !ext) return;
+    let context: ReturnType<typeof getWebGLContext>;
+    try {
+      context = getWebGLContext(canvas);
+    } catch {
+      return;
+    }
+    const { gl, ext } = context;
 
     if (!ext.supportLinearFiltering) {
       config.DYE_RESOLUTION = 256;
@@ -1006,14 +1011,18 @@ export default function SplashCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
 
+    let frameId = 0;
+    let disposed = false;
+
     function updateFrame() {
+      if (disposed) return;
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
       applyInputs();
       step(dt);
       render(null);
-      requestAnimationFrame(updateFrame);
+      frameId = requestAnimationFrame(updateFrame);
     }
 
     function calcDeltaTime() {
@@ -1433,13 +1442,20 @@ export default function SplashCursor({
       return ((value - min) % range) + min;
     }
 
-    window.addEventListener("mousedown", (e) => {
-      const pointer = pointers[0];
-      const posX = scaleByPixelRatio(e.clientX);
-      const posY = scaleByPixelRatio(e.clientY);
-      updatePointerDownData(pointer, -1, posX, posY);
-      clickSplat(pointer);
-    });
+    const listeners = new AbortController();
+    const { signal } = listeners;
+
+    window.addEventListener(
+      "mousedown",
+      (e) => {
+        const pointer = pointers[0];
+        const posX = scaleByPixelRatio(e.clientX);
+        const posY = scaleByPixelRatio(e.clientY);
+        updatePointerDownData(pointer, -1, posX, posY);
+        clickSplat(pointer);
+      },
+      { signal },
+    );
 
     function handleFirstMouseMove(e: MouseEvent) {
       const pointer = pointers[0];
@@ -1450,15 +1466,21 @@ export default function SplashCursor({
       updatePointerMoveData(pointer, posX, posY, color);
       document.body.removeEventListener("mousemove", handleFirstMouseMove);
     }
-    document.body.addEventListener("mousemove", handleFirstMouseMove);
-
-    window.addEventListener("mousemove", (e) => {
-      const pointer = pointers[0];
-      const posX = scaleByPixelRatio(e.clientX);
-      const posY = scaleByPixelRatio(e.clientY);
-      const color = pointer.color;
-      updatePointerMoveData(pointer, posX, posY, color);
+    document.body.addEventListener("mousemove", handleFirstMouseMove, {
+      signal,
     });
+
+    window.addEventListener(
+      "mousemove",
+      (e) => {
+        const pointer = pointers[0];
+        const posX = scaleByPixelRatio(e.clientX);
+        const posY = scaleByPixelRatio(e.clientY);
+        const color = pointer.color;
+        updatePointerMoveData(pointer, posX, posY, color);
+      },
+      { signal },
+    );
 
     function handleFirstTouchStart(e: TouchEvent) {
       const touches = e.targetTouches;
@@ -1471,7 +1493,9 @@ export default function SplashCursor({
       }
       document.body.removeEventListener("touchstart", handleFirstTouchStart);
     }
-    document.body.addEventListener("touchstart", handleFirstTouchStart);
+    document.body.addEventListener("touchstart", handleFirstTouchStart, {
+      signal,
+    });
 
     window.addEventListener(
       "touchstart",
@@ -1484,7 +1508,7 @@ export default function SplashCursor({
           updatePointerDownData(pointer, touches[i].identifier, posX, posY);
         }
       },
-      { passive: true },
+      { passive: true, signal },
     );
 
     window.addEventListener(
@@ -1498,16 +1522,27 @@ export default function SplashCursor({
           updatePointerMoveData(pointer, posX, posY, pointer.color);
         }
       },
-      { passive: true },
+      { passive: true, signal },
     );
 
-    window.addEventListener("touchend", (e) => {
-      const touches = e.changedTouches;
-      const pointer = pointers[0];
-      for (let i = 0; i < touches.length; i++) {
-        updatePointerUpData(pointer);
-      }
-    });
+    window.addEventListener(
+      "touchend",
+      (e) => {
+        const touches = e.changedTouches;
+        const pointer = pointers[0];
+        for (let i = 0; i < touches.length; i++) {
+          updatePointerUpData(pointer);
+        }
+      },
+      { signal },
+    );
+
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frameId);
+      listeners.abort();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+    };
   }, [
     SIM_RESOLUTION,
     DYE_RESOLUTION,

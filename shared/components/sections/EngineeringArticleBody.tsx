@@ -105,7 +105,7 @@ export function EngineeringArticleBody({
   sections: readonly EngineeringArticleSection[];
 }) {
   return (
-    <div className="prose prose-neutral dark:prose-invert max-w-none">
+    <div className="thoughtArticleCopy prose prose-neutral dark:prose-invert max-w-none">
       {sections.map((section, index) => {
         const headingSlug = section.heading
           ? slugify(section.heading)
@@ -144,9 +144,7 @@ export function EngineeringArticleBody({
 
               return (
                 <div key={paragraph}>
-                  <p className="text-muted-foreground mb-4 text-base leading-relaxed">
-                    {renderRichText(paragraph)}
-                  </p>
+                  <p>{renderRichText(paragraph)}</p>
                   {section.image &&
                   paragraphIndex === imageInsertIndex ? (
                     <ArticleSectionImage
@@ -166,7 +164,7 @@ export function EngineeringArticleBody({
             ) : null}
             {section.table ? <ArticleTable table={section.table} /> : null}
             {section.bullets && section.bullets.length > 0 ? (
-              <ul className="text-muted-foreground mb-4 ml-6 list-disc space-y-2">
+              <ul className="mb-4 ml-6 list-disc space-y-2">
                 {section.bullets.map((item) => (
                   <li key={item} className="leading-relaxed">
                     {item}

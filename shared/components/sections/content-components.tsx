@@ -52,7 +52,7 @@ export const portableTextComponents: PortableTextComponents = {
             )
         },
         h4: ({ children }) => <h4 className="text-foreground mb-3 mt-6 text-lg font-semibold">{children}</h4>,
-        normal: ({ children }) => <p className="text-muted-foreground mb-4 text-base leading-relaxed">{children}</p>,
+        normal: ({ children }) => <p className="thoughtArticleCopy">{children}</p>,
         blockquote: ({ children }) => <blockquote className="border-muted *:last:not-first:text-muted-foreground *:last:not-first:text-sm my-8 border-l-4 pl-4 text-xl *:block *:space-y-4">{children}</blockquote>,
     },
     list: {
