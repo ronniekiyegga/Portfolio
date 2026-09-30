@@ -18,10 +18,11 @@ describe("VisitorCount", () => {
     expect(container.textContent).toBe("1 visitor");
   });
 
-  it("renders nothing when the count is unknown", () => {
+  it("keeps the visitor status visible while the count is loading", () => {
     const { container } = render(<VisitorCount count={null} />);
 
-    expect(container.innerHTML).toBe("");
+    expect(container.textContent).toBe("… visitors");
+    expect(screen.getByRole("status").getAttribute("aria-busy")).toBe("true");
   });
 
   it("marks the count as ticked only when asked", () => {
