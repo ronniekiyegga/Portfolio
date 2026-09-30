@@ -47,9 +47,7 @@ export function SelectedDesignSection() {
           <h2 id="design-heading">
             <strong>Products I&apos;ve designed &amp; built</strong>
           </h2>
-          <p>
-            Taken from requirements through to delivery.
-          </p>
+          <p>Taken from requirements through to delivery.</p>
         </div>
         <Link href="/design" className="clientWorkLink">
           View product &amp; interface design <span aria-hidden="true">↗</span>

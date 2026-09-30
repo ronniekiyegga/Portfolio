@@ -83,6 +83,7 @@ function GalleryImage({
       alt=""
       fill
       sizes={sizes}
+      quality={100}
       loading={eager ? "eager" : "lazy"}
       data-loaded={isLoaded || undefined}
       onLoad={() => setIsLoaded(true)}

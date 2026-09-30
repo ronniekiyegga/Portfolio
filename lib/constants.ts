@@ -21,10 +21,10 @@ export type ToolDefinition = {
 };
 
 export const sectionLinks = [
-  { label: "About", href: "#about-heading", figure: "book" },
-  { label: "Experience", href: "#experience-heading", figure: "analytics" },
-  { label: "Education", href: "#education-heading", figure: "graduate" },
-  { label: "Design Case Studies", href: "#interfaces-heading", figure: "usecases" },
+  { label: "About", href: "#about-heading", figure: "book", hideOnMobile: false },
+  { label: "Experience", href: "#experience-heading", figure: "analytics", hideOnMobile: false },
+  { label: "Education", href: "#education-heading", figure: "graduate", hideOnMobile: false },
+  { label: "Design Case Studies", href: "#interfaces-heading", figure: "usecases", hideOnMobile: true },
 ] as const;
 
 export const GITHUB_URL =
