@@ -6,12 +6,18 @@ type VisitorCountProps = {
 };
 
 export function VisitorCount({ count, ticked = false }: VisitorCountProps) {
-  if (count === null) return null;
+  const isLoading = count === null;
 
   return (
-    <span className="visitorCount" data-ticked={ticked || undefined}>
-      <span key={count} className="visitorCountValue">
-        {visitorCountFormat.format(count)}
+    <span
+      className="visitorCount"
+      data-ticked={ticked || undefined}
+      role="status"
+      aria-live="polite"
+      aria-busy={isLoading || undefined}
+    >
+      <span key={count ?? "loading"} className="visitorCountValue">
+        {isLoading ? "…" : visitorCountFormat.format(count)}
       </span>{" "}
       {count === 1 ? "visitor" : "visitors"}
     </span>

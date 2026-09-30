@@ -2348,9 +2348,11 @@ p.thoughtArticleCopy {
 }
 
 .visitorCount {
+  min-width: 4.75rem;
   color: var(--text-gray);
   font-size: 0.75rem;
   line-height: 1;
+  text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
