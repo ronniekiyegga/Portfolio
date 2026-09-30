@@ -13,11 +13,11 @@ export function AboutSection() {
           overlap. I care about how something feels to use just as much as how
           it behaves when things go wrong.
         </p>
-        <p className="socialLine">
+        {/* <p className="socialLine">
           You can find me on{" "}
           <Link href="https://linkedin.com/in/ronniekiyegga" target="_blank" rel="noreferrer">LinkedIn</Link>,{" "}
           <span>Instagram</span> and <span>Apple</span>
-        </p>
+        </p> */}
         <p>
           Most of my work has involved building products end-to-end, from
           interfaces and design systems to APIs, databases and real-time
