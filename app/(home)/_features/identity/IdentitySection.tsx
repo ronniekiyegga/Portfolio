@@ -4,6 +4,7 @@ import { UserRoundPlus } from "lucide-react";
 
 import { SpecularPill } from "@/app/components/SpecularButton";
 import { sectionLinks } from "@/lib/constants";
+import { getVisitorCount } from "@/lib/visitors/visitor-store";
 
 import {
   AnalyticsMark,
@@ -21,11 +22,13 @@ const profileNavMarks = {
   usecases: UseCasesMark,
 } as const;
 
-export function IdentitySection() {
+export async function IdentitySection() {
+  const visitorCount = await getVisitorCount();
+
   return (
     <header className="identity reveal">
       <IdentityShader />
-      <Statusbar />
+      <Statusbar visitorCount={visitorCount} />
       <div className="identityRow">
         <Image
           src="/images/profile/Ronnie-suit.jpg"
