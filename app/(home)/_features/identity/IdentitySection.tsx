@@ -53,7 +53,11 @@ export async function IdentitySection() {
           {sectionLinks.map((item) => {
             const Mark = profileNavMarks[item.figure];
             return (
-              <Link href={item.href} key={item.label}>
+              <Link
+                className={item.hideOnMobile ? "mobileHidden" : undefined}
+                href={item.href}
+                key={item.label}
+              >
                 <Mark />
                 {item.label}
               </Link>

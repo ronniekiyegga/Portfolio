@@ -1,3 +1,8 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { FigmaMark } from "../tools/ToolMarks";
@@ -10,37 +15,64 @@ type StudyEmphasis = "side" | "center";
 type InterfaceStudy = {
   id: string;
   title: string;
-  kind: string;
-};
-
-const commandCentre: InterfaceStudy = {
-  id: "command-centre",
-  title: "Command Centre",
-  kind: "Command Centre",
-};
-
-const commandPalette: InterfaceStudy = {
-  id: "command-palette",
-  title: "Command Palette",
-  kind: "Command Palette",
-};
-
-const insightPanel: InterfaceStudy = {
-  id: "insight-panel",
-  title: "Insight Panel",
-  kind: "Insight Panel",
+  description: string;
+  src: string;
+  alt: string;
+  objectPosition?: string;
 };
 
 const interfaceRows: (InterfaceStudy & { emphasis: StudyEmphasis })[][] = [
   [
-    { ...insightPanel, emphasis: "side" },
-    { ...commandCentre, emphasis: "center" },
-    { ...commandPalette, emphasis: "side" },
+    {
+      id: "truefounders",
+      title: "TrueFounders",
+      description: "Natural, focused interactions",
+      src: "/images/design/professional-support.webp",
+      alt: "Video support interface with live translation controls",
+      emphasis: "side",
+    },
+    {
+      id: "design-collection",
+      title: "Student workspace",
+      description: "A connected learning workspace",
+      src: "/images/design/design-collection.webp",
+      alt: "Student portfolio, AI assistant and file upload interfaces",
+      emphasis: "center",
+    },
+    {
+      id: "curriculum-folders",
+      title: "Curriculum folders",
+      description: "Clear content organisation",
+      src: "/images/design/folder-curriculum.webp",
+      alt: "Layered curriculum folders for IB, A levels and GCSE",
+      emphasis: "side",
+    },
   ],
   [
-    { ...commandPalette, emphasis: "side" },
-    { ...insightPanel, emphasis: "center" },
-    { ...commandCentre, emphasis: "side" },
+    {
+      id: "command-student-bio",
+      title: "Command & profile",
+      description: "Fast access to key actions",
+      src: "/images/design/command-home.webp",
+      alt: "Light and dark command search interfaces",
+      emphasis: "side",
+    },
+    {
+      id: "student-journeys",
+      title: "Student journeys",
+      description: "Stories that build trust",
+      src: "/images/design/testimonials.webp",
+      alt: "Student success stories and testimonial cards",
+      emphasis: "center",
+    },
+    {
+      id: "learning-navigation",
+      title: "Learning navigation",
+      description: "Scalable product navigation",
+      src: "/images/design/navigation.webp",
+      alt: "Responsive navigation concepts for a learning dashboard",
+      emphasis: "side",
+    },
   ],
 ];
 
@@ -95,7 +127,10 @@ function StudyArrow() {
 
 function InterfaceStudyCard({
   title,
-  kind,
+  description,
+  src,
+  alt,
+  objectPosition,
   emphasis,
   gradientId,
 }: InterfaceStudy & {
@@ -106,12 +141,29 @@ function InterfaceStudyCard({
     <article className={`interfaceStudy is-${emphasis}`}>
       <div className="interfaceStudyBlur">
         <div className="interfaceStudyFrame">
-          <Link className="interfaceStudyCard" href="/design">
-            <div className="interfaceStudyInner" />
+          <Link
+            className="interfaceStudyCard"
+            href="/design"
+            aria-label={`View ${title} in the design archive`}
+          >
+            <div className="interfaceStudyInner">
+              <Image
+                className="interfaceStudyImage"
+                src={src}
+                alt={alt}
+                fill
+                sizes="(max-width: 672px) 19rem, 306px"
+                quality={100}
+                style={{ objectPosition }}
+              />
+            </div>
           </Link>
         </div>
         <div className="interfaceStudyMeta">
-          <p>{kind}</p>
+          <div className="interfaceStudyText">
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </div>
           <Link
             className="interfaceStudyMark"
             href="/design"
@@ -122,6 +174,73 @@ function InterfaceStudyCard({
         </div>
       </div>
     </article>
+  );
+}
+
+function MobileInterfaceCarousel() {
+  const items = interfaceRows.flat();
+  const [viewportRef, carouselApi] = useEmblaCarousel({
+    align: "center",
+    loop: true,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const syncSelection = useCallback(() => {
+    if (carouselApi) setSelectedIndex(carouselApi.selectedScrollSnap());
+  }, [carouselApi]);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    carouselApi.on("select", syncSelection);
+    carouselApi.on("reInit", syncSelection);
+
+    return () => {
+      carouselApi.off("select", syncSelection);
+      carouselApi.off("reInit", syncSelection);
+    };
+  }, [carouselApi, syncSelection]);
+
+  return (
+    <div
+      className="interfaceMobileCarousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Interface and component designs"
+    >
+      <div className="interfaceMobileViewport" ref={viewportRef}>
+        <div className="interfaceMobileTrack">
+          {items.map((item, itemIndex) => (
+            <div
+              className={`interfaceMobileSlide${
+                itemIndex === selectedIndex ? " is-active" : ""
+              }`}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${itemIndex + 1} of ${items.length}`}
+              key={`mobile-${item.id}`}
+            >
+              <InterfaceStudyCard
+                {...item}
+                emphasis="center"
+                gradientId={`mobile-study-star-${item.id}`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="interfaceMobileDots" aria-label="Choose a design">
+        {items.map((item, itemIndex) => (
+          <button
+            type="button"
+            key={`dot-${item.id}`}
+            className={itemIndex === selectedIndex ? "is-active" : undefined}
+            aria-label={`Show ${item.title}`}
+            aria-current={itemIndex === selectedIndex ? "true" : undefined}
+            onClick={() => carouselApi?.scrollTo(itemIndex)}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -164,7 +283,7 @@ export function InterfacesSection() {
         </div>
       </div>
 
-      <div className="interfaceBoard">
+      <div className="interfaceBoard interfaceDesktopBoard">
         {interfaceRows.map((row, rowIndex) => (
           <div className="interfaceRow" key={rowIndex}>
             {row.map((item, itemIndex) => (
@@ -177,6 +296,7 @@ export function InterfacesSection() {
           </div>
         ))}
       </div>
+      <MobileInterfaceCarousel />
     </section>
   );
 }

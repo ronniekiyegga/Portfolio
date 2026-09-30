@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
     "::1", // IPv6 localhost
   ],
   images: {
+    qualities: [75, 90, 100],
     localPatterns: [
       {
         // `public/` is served at site root. Omit `search` so cache-bust query strings
