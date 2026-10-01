@@ -17,7 +17,7 @@ const clientWork: DepthCarouselItem[] = [
     alt: "Provenant agent evidence platform website",
   },
   {
-    image: "/images/editorial/client-work/footer.webp",
+    image: "/images/editorial/client-work/Footer.webp",
     alt: "Mathematics tutoring newsletter and footer design",
   },
   {
@@ -65,10 +65,10 @@ export function SelectedDesignSection() {
           cardWidth={560}
           cardHeight={395}
           radius={0}
-          depth={10}
+          depth={45}
           spread={-200}
           verticalSpread={-28}
-          tilt={-50}
+          tilt={-44}
           rotation={0}
           rotateX={-10}
           skewX={0}
