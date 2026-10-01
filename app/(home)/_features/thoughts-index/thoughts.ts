@@ -86,12 +86,12 @@ export const gridThoughts: ThoughtPost[] = [
   {
     slug: "hicks-law",
     category: "design",
-    overlayTitle: "The Cost of Choice",
+    overlayTitle: "Hick’s Law",
     date: "2 Sept 2026",
     dateTime: "2026-09-02",
-    title: "Why more choices made the dashboard slower to use",
+    title: "Why fewer choices are not always the answer",
     description:
-      "Reducing options, default paths and the cost of deciding under time pressure",
+      "Using hierarchy, defaults and progressive disclosure to make decisions easier",
     tags: ["usability", "defaults", "decision-making"],
     href: thoughtPath("hicks-law"),
   },

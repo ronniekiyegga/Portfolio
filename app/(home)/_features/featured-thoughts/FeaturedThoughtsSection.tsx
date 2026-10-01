@@ -20,7 +20,7 @@ const featuredInvestigationHref = thoughtPath(featuredInvestigationSlug);
 const supportingThoughts = [
   {
     category: "Design",
-    title: "Hicks Law",
+    title: "Hick’s Law",
     tag: "Usability & Accessibility",
     date: "2 Sept 2026",
     description: "Designing interfaces for people who don't know your product",

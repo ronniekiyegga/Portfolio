@@ -38,7 +38,7 @@ const experiences: ExperienceItem[] = [
     organisationHref: "https://srsdubai.ae/",
     mark: "srs",
     description:
-      "Built assessment, analytics and operational tools used across a school of more than 1,000 students.",
+      "Built internal assessment, booking and reporting products used across a 1,000+ student organisation.",
   },
   {
     id: "contractor-2020",
@@ -47,7 +47,7 @@ const experiences: ExperienceItem[] = [
     connector: "·",
     organisation: "Client Projects",
     description:
-      "Built web products for clients, working across React interfaces, APIs, payments and production infrastructure.",
+      "Delivered customer-facing ecommerce, media and operational products across long-term client engagements.",
   },
   {
     id: "adaptive",
@@ -58,7 +58,7 @@ const experiences: ExperienceItem[] = [
     organisationHref: "https://weareadaptive.com/",
     mark: "adaptive",
     description:
-      "Worked on financial data tooling and visualisation for equities, FX and fixed-income datasets.",
+      "Built data visualisation and ingestion tooling for financial-data workflows.",
   },
 ];
 
