@@ -5027,6 +5027,34 @@ p.thoughtArticleCopy {
 }
 
 @media (max-width: 42rem) {
+  .footer {
+    align-items: center;
+    gap: clamp(1rem, 5vw, 2rem);
+  }
+
+  .footerCredit {
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+
+  .footerName {
+    white-space: nowrap;
+  }
+
+  .footerLinks {
+    min-width: max-content;
+    flex: 1 0 auto;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .footerEmail,
+  .footerEmailSep {
+    display: none;
+  }
+
   .cvLink,
   .profileNav .mobileHidden {
     display: none;
@@ -5118,7 +5146,10 @@ p.thoughtArticleCopy {
   }
 
   .thoughtsGridCard {
-    min-height: 200px;
+    width: 100%;
+    max-width: none;
+    min-height: 220px;
+    aspect-ratio: 415 / 195;
     padding: 1.7rem 1.65rem;
   }
 
