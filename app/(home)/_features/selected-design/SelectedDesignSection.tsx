@@ -9,27 +9,27 @@ const DepthCarousel = dynamic(() => import("./DepthCarousel"), {
 
 const clientWork: DepthCarouselItem[] = [
   {
-    image: "/images/editorial/client-work/ms-maryams-maths.jpg",
+    image: "/images/editorial/client-work/ms-maryams-maths.webp",
     alt: "Ms Maryam's Maths tutoring website",
   },
   {
-    image: "/images/editorial/client-work/provenant.jpg",
+    image: "/images/editorial/client-work/provenant.webp",
     alt: "Provenant agent evidence platform website",
   },
   {
-    image: "/images/editorial/client-work/footer.jpg",
+    image: "/images/editorial/client-work/footer.webp",
     alt: "Mathematics tutoring newsletter and footer design",
   },
   {
-    image: "/images/editorial/client-work/edufeedbackpro.jpg",
+    image: "/images/editorial/client-work/edufeedbackpro.webp",
     alt: "EduFeedbackPro school intelligence dashboard website",
   },
   {
-    image: "/images/editorial/client-work/john-canary.jpg",
+    image: "/images/editorial/client-work/john-canary.webp",
     alt: "John Canary cleaning services website",
   },
   {
-    image: "/images/editorial/client-work/true-founders.jpg",
+    image: "/images/editorial/client-work/true-founders.webp",
     alt: "True Founders coaching website",
   },
 ];
@@ -65,7 +65,7 @@ export function SelectedDesignSection() {
           cardWidth={560}
           cardHeight={395}
           radius={0}
-          depth={0}
+          depth={10}
           spread={-200}
           verticalSpread={-28}
           tilt={-50}

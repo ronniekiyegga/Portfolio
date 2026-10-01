@@ -14,6 +14,13 @@ export type ThoughtArticleBlock =
   | { type: "p"; text: string }
   | { type: "list"; items: string[] }
   | { type: "code"; language: string; code: string }
+  | {
+      type: "image";
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+    }
   | { type: "diagram"; label: string; text: string };
 
 export type ThoughtArticleSection = {
@@ -82,23 +89,65 @@ const sections: Record<string, ThoughtArticleSection[]> = {
   ],
   "hicks-law": [
     {
-      heading: "Choice has a cost",
-      paragraphs: [
-        "Hick’s Law is usually taught as a psychology slide. In a dashboard it is a latency problem. Every extra control is another decision the user has to make before they can do the thing they opened the page for.",
-        "I have watched a “more complete” settings panel make a team slower, not smarter. The interface was accurate. It was also expensive to parse under time pressure.",
+      heading: "The delay is in the decision",
+      blocks: [
+        {
+          type: "p",
+          text: "Hick’s Law describes a simple pattern: as the number and complexity of choices increase, deciding generally takes longer. I find it useful because it shifts the question from “Can we fit another option here?” to “What decision are we asking someone to make?”",
+        },
+        {
+          type: "p",
+          text: "A long list is not automatically bad. The problem appears when several options look equally important, use similar language, or require someone to understand the product before they can continue. That is when a small interaction starts feeling like work.",
+        },
+        {
+          type: "image",
+          src: "/images/editorial/hicks-law/options-comparison.png",
+          alt: "Two versions of a mood selector: a focused four-option menu and a longer eight-option menu.",
+          width: 1200,
+          height: 1500,
+        },
       ],
     },
     {
-      heading: "Default paths beat option lists",
-      paragraphs: [
-        "If 80% of sessions take the same path, that path should not compete with the other 20%. Put the common action first. Hide the rest behind a progressive disclosure that still works with a keyboard.",
-        "Reducing options is not dumbing the product down. It is deciding what the product is for, then making that decision visible.",
+      heading: "Reducing friction is not the same as removing choice",
+      blocks: [
+        {
+          type: "p",
+          text: "I do not use Hick’s Law as an excuse to remove useful controls. Sometimes the right answer is a better default. Sometimes it is grouping related actions, using clearer labels, or revealing advanced choices only when they become relevant.",
+        },
+        {
+          type: "p",
+          text: "The goal is not the smallest possible interface. It is an interface where the next step is understandable. If every action is given the same visual weight, the user has to create the hierarchy themselves.",
+        },
+        {
+          type: "image",
+          src: "/images/editorial/hicks-law/decision-time-curve.png",
+          alt: "A Hick’s Law graph showing decision time increasing as the number of choices grows.",
+          width: 736,
+          height: 736,
+        },
       ],
     },
     {
-      heading: "Measure time-to-intent",
-      paragraphs: [
-        "Clicks are a weak metric here. Time from landing to first meaningful action tells you whether the extra choices are helping. If that number rises after you add a filter, the filter is not a feature yet.",
+      heading: "How I use it in practice",
+      blocks: [
+        {
+          type: "p",
+          text: "When I review a screen, I start with the task rather than the component. What did someone come here to do? Which action should be obvious without explanation? Which choices can wait until the user has more context?",
+        },
+        {
+          type: "list",
+          items: [
+            "Give the most common action a clear visual priority.",
+            "Group related choices instead of presenting one flat list.",
+            "Use sensible defaults, but keep them easy to change.",
+            "Move specialist options behind progressive disclosure rather than deleting them.",
+          ],
+        },
+        {
+          type: "p",
+          text: "I would then watch whether people reach the intended action without pausing, backtracking, or opening several controls first. Hick’s Law is not a rule that tells me exactly how many options to show. It is a reminder that every choice has a cost, and the interface should make that cost worthwhile.",
+        },
       ],
     },
   ],

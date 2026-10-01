@@ -50,6 +50,24 @@ function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
           );
         }
 
+        if (block.type === "image") {
+          return (
+            <figure
+              key={index}
+              className="my-8 overflow-hidden rounded-xl border border-[#e6e8ef] bg-[#f4f4f2] shadow-sm shadow-black/5"
+            >
+              <Image
+                src={block.src}
+                alt={block.alt}
+                width={block.width}
+                height={block.height}
+                sizes="(max-width: 768px) calc(100vw - 2rem), 672px"
+                className="h-auto w-full"
+              />
+            </figure>
+          );
+        }
+
         return (
           <pre
             key={index}
