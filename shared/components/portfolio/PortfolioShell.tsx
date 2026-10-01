@@ -5,9 +5,21 @@ import { PortfolioMain } from "./PortfolioMain";
 import { PortfolioNavigation } from "./PortfolioNavigation";
 
 const footerLinks = [
-  { label: "kiyeggaronnie@gmail.com", href: "mailto:kiyeggaronnie@gmail.com" },
-  { label: "Github", href: "https://github.com/ronniekiyegga" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
+  {
+    label: "kiyeggaronnie@gmail.com",
+    href: "mailto:kiyeggaronnie@gmail.com",
+    mobileHidden: true,
+  },
+  {
+    label: "Github",
+    href: "https://github.com/ronniekiyegga",
+    mobileHidden: false,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/ronniekiyegga",
+    mobileHidden: false,
+  },
 ] as const;
 
 export function PortfolioShell({ children }: { children: React.ReactNode }) {
@@ -23,17 +35,18 @@ export function PortfolioShell({ children }: { children: React.ReactNode }) {
             <span className="footerYear">2026</span>
           </div>
           <div className="footerLinks">
-            {footerLinks.map(({ label, href }, index) => (
+            {footerLinks.map(({ label, href, mobileHidden }, index) => (
               <Fragment key={label}>
                 {index > 0 ? (
-                  <span className="footerSep" aria-hidden="true">
+                  <span
+                    className={`footerSep${index === 1 ? " footerEmailSep" : ""}`}
+                    aria-hidden="true"
+                  >
                     /
                   </span>
                 ) : null}
                 <Link
-                  className={
-                    href.startsWith("mailto:") ? undefined : "footerSocial"
-                  }
+                  className={mobileHidden ? "footerEmail" : "footerSocial"}
                   href={href}
                   target={href.startsWith("mailto:") ? undefined : "_blank"}
                   rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
