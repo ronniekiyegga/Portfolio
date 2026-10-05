@@ -37,7 +37,7 @@ const supportingThoughts = [
   },
   {
     category: "Product",
-    title: "Great Products",
+    title: "When product memory becomes surveillance",
     tag: "Customer-focused",
     date: "28 Jul 2026",
     description: "Building and enhancing features that solve end-user problems",
