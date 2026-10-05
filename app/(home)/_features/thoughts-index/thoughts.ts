@@ -46,11 +46,11 @@ export const featuredThoughts: FeaturedThought[] = [
     slug: "responsive-ten-thousand-records",
     category: "system-design",
     overlayTitle:
-      "How do you debug a stall that only appears when traffic hits its peak?",
+      "When traffic peaks and the system stalls, find where work is waiting",
     overlayLines: [
-      "How do you debug a stall",
-      "that only appears when",
-      "traffic hits its peak?",
+      "When traffic peaks and the",
+      "system stalls, find where",
+      "work is waiting",
     ],
     date: "24 Sept 2026",
     dateTime: "2026-09-24",
@@ -98,10 +98,11 @@ export const gridThoughts: ThoughtPost[] = [
   {
     slug: "burst-traffic",
     category: "system-design",
-    overlayTitle: "Queueing Under Load",
+    overlayTitle:
+      "Why adding servers does not automatically survive a traffic spike",
     date: "19 Aug 2026",
     dateTime: "2026-08-19",
-    title: "Queueing, shedding load and keeping writes honest",
+    title: "Why adding servers does not automatically survive a traffic spike",
     description: "What breaks first when traffic is not a smooth line",
     tags: ["queues", "backpressure", "retries"],
     href: thoughtPath("burst-traffic"),
@@ -109,7 +110,7 @@ export const gridThoughts: ThoughtPost[] = [
   {
     slug: "memory-inclusion",
     category: "product",
-    overlayTitle: "Remembering Just Enough",
+    overlayTitle: "When product memory becomes surveillance",
     date: "28 Jul 2026",
     dateTime: "2026-07-28",
     title: "Keeping context without making the product feel haunted",
@@ -124,10 +125,10 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "visual-hierarchy",
     category: "design",
-    overlayTitle: "Visual hierarchy is deciding what gets noticed first",
+    overlayTitle: "Why making it bigger does not create visual hierarchy",
     date: "Sept 22 2026",
     dateTime: "2026-09-22",
-    title: "Visual hierarchy is deciding what gets noticed first",
+    title: "Why making it bigger does not create visual hierarchy",
     description: "If everything asks for attention, nothing gets priority.",
     tags: ["hierarchy", "typography", "layout"],
     href: thoughtPath("visual-hierarchy"),
@@ -135,10 +136,10 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "idempotency-matters",
     category: "system-design",
-    overlayTitle: "The bug that got me why idempotency matters",
+    overlayTitle: "Why disabling the button did not stop the duplicate request",
     date: "Sept 15 2026",
     dateTime: "2026-09-15",
-    title: "The bug that got me why idempotency matters",
+    title: "Why disabling the button did not stop the duplicate request",
     description: "Postgres or DynamoDB?",
     tags: ["concurrency", "idempotency", "databases"],
     href: thoughtPath("idempotency-matters"),
@@ -146,10 +147,11 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "spacing-information-architecture",
     category: "design",
-    overlayTitle: "Spacing is part of the information architecture",
+    overlayTitle:
+      "Why adding more whitespace does not fix an unclear interface",
     date: "Sept 8 2026",
     dateTime: "2026-09-08",
-    title: "Spacing is part of the information architecture",
+    title: "Why adding more whitespace does not fix an unclear interface",
     description: "Proximity can explain structure before a border ever does.",
     tags: ["spacing", "grouping", "layout"],
     href: thoughtPath("spacing-information-architecture"),
@@ -169,10 +171,11 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "burst-traffic",
     category: "system-design",
-    overlayTitle: "Handling Burst Traffic",
+    overlayTitle:
+      "Why adding servers does not automatically survive a traffic spike",
     date: "Aug 19 2026",
     dateTime: "2026-08-19",
-    title: "Handling Burst Traffic",
+    title: "Why adding servers does not automatically survive a traffic spike",
     description: "Postgres or DynamoDB?",
     tags: ["queues", "backpressure", "retries"],
     href: thoughtPath("burst-traffic"),
@@ -180,10 +183,10 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "empty-state-first",
     category: "product",
-    overlayTitle: "Designing the empty state before the happy state",
+    overlayTitle: "Why the empty state should come before the happy path",
     date: "Aug 14 2026",
     dateTime: "2026-08-14",
-    title: "Designing the empty state before the happy state",
+    title: "Why the empty state should come before the happy path",
     description: "A dashboard isn't finished when the mock data looks good.",
     tags: ["empty states", "error handling", "ux writing"],
     href: thoughtPath("empty-state-first"),
@@ -191,10 +194,10 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "10000-concurrent-database-connections",
     category: "system-design",
-    overlayTitle: "How to handle 10,000 concurrent database connections",
+    overlayTitle: "Why 10,000 database connections is not a database setting",
     date: "Jul 30 2026",
     dateTime: "2026-07-30",
-    title: "How to handle 10,000 concurrent database connections",
+    title: "Why 10,000 database connections is not a database setting",
     description: "Postgres or DynamoDB?",
     tags: ["connection pooling", "postgres", "dynamodb"],
     href: thoughtPath("10000-concurrent-database-connections"),
@@ -202,10 +205,11 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "responsive-not-shrinking",
     category: "design",
-    overlayTitle: "Responsive design isn't shrinking the desktop",
+    overlayTitle:
+      "Why shrinking the desktop does not make a design responsive",
     date: "Jul 16 2026",
     dateTime: "2026-07-16",
-    title: "Responsive design isn't shrinking the desktop",
+    title: "Why shrinking the desktop does not make a design responsive",
     description: "Smaller screens force you to decide what actually matters.",
     tags: ["responsive", "breakpoints", "layout"],
     href: thoughtPath("responsive-not-shrinking"),
@@ -213,10 +217,11 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "rate-limiter-1m-rps",
     category: "system-design",
-    overlayTitle: "Building a rate-limiter for 1M requests/second",
+    overlayTitle:
+      "Why “100 requests per minute” is not a rate-limiting strategy",
     date: "Jun 25 2026",
     dateTime: "2026-06-25",
-    title: "Building a rate-limiter for 1M requests/second",
+    title: "Why “100 requests per minute” is not a rate-limiting strategy",
     description: "Postgres or DynamoDB?",
     tags: ["rate limiting", "scalability", "caching"],
     href: thoughtPath("rate-limiter-1m-rps"),
@@ -224,10 +229,10 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "design-systems-remove-decisions",
     category: "design",
-    overlayTitle: "Design systems should remove decisions, not create paperwork",
+    overlayTitle: "Why a component library can make product delivery slower",
     date: "Jun 9 2026",
     dateTime: "2026-06-09",
-    title: "Design systems should remove decisions, not create paperwork",
+    title: "Why a component library can make product delivery slower",
     description:
       "Reuse is useful when the underlying decision is actually the same.",
     tags: ["design systems", "components", "consistency"],
@@ -236,10 +241,11 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "debug-peak-traffic",
     category: "system-design",
-    overlayTitle: "How do you debug a bug that appears at peak traffic",
+    overlayTitle:
+      "Why increasing the timeout made the peak-traffic incident worse",
     date: "May 21 2026",
     dateTime: "2026-05-21",
-    title: "How do you debug a bug that appears at peak traffic",
+    title: "Why increasing the timeout made the peak-traffic incident worse",
     description: "Postgres or DynamoDB?",
     tags: ["debugging", "profiling", "incidents"],
     href: thoughtPath("debug-peak-traffic"),
@@ -247,10 +253,12 @@ export const listedThoughts: ThoughtPost[] = [
   {
     slug: "aggregate-logs-10000-servers",
     category: "system-design",
-    overlayTitle: "How to aggregate logs from 10,000 servers without data loss",
+    overlayTitle:
+      "Why buffering every log can make an incident worse",
     date: "Apr 30 2026",
     dateTime: "2026-04-30",
-    title: "How to aggregate logs from 10,000 servers without data loss",
+    title:
+      "Why buffering every log can make an incident worse",
     description: "Postgres or DynamoDB?",
     tags: ["logging", "observability", "backpressure"],
     href: thoughtPath("aggregate-logs-10000-servers"),

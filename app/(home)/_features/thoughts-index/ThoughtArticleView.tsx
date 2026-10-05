@@ -16,6 +16,121 @@ import { thoughtCategoryTitle } from "./thoughts";
 import { ThoughtCodeBlock } from "./ThoughtCodeBlock";
 import { ThoughtOnThisPage } from "./ThoughtOnThisPage";
 
+function ThoughtEditorialBlock({ text }: { text: string }) {
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  const rows: Array<
+    | { type: "text"; text: string }
+    | { type: "relation"; from: string; to: string }
+    | { type: "down" }
+  > = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const nextLine = lines[index + 1];
+
+    if (/^[↓↘↙↖↗]+$/.test(line)) {
+      rows.push({ type: "down" });
+      continue;
+    }
+
+    if (line.startsWith("→")) {
+      rows.push({
+        type: "relation",
+        from: "",
+        to: line.replace(/^→\s*/, ""),
+      });
+      continue;
+    }
+
+    if (nextLine?.startsWith("→")) {
+      rows.push({
+        type: "relation",
+        from: line,
+        to: nextLine.replace(/^→\s*/, ""),
+      });
+      index += 1;
+      continue;
+    }
+
+    const inlineArrowIndex = line.indexOf("→");
+    if (inlineArrowIndex > 0) {
+      rows.push({
+        type: "relation",
+        from: line.slice(0, inlineArrowIndex).trim(),
+        to: line.slice(inlineArrowIndex + 1).trim(),
+      });
+      continue;
+    }
+
+    rows.push({ type: "text", text: line });
+  }
+
+  return (
+    <figure className="thoughtEditorialBlock">
+      {rows.map((row, index) => {
+        if (row.type === "down") {
+          return (
+            <span
+              key={index}
+              className="thoughtEditorialTableDown"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 20 20">
+                <path d="M10 3v12m-4-4 4 4 4-4" />
+              </svg>
+            </span>
+          );
+        }
+
+        if (row.type === "relation") {
+          return (
+            <div
+              key={index}
+              className="thoughtEditorialTableRow thoughtEditorialTableRelation"
+            >
+              <span>{row.from}</span>
+              <svg viewBox="0 0 24 20" aria-hidden="true">
+                <path d="M3 10h16m-5-5 5 5-5 5" />
+              </svg>
+              <span>{row.to}</span>
+            </div>
+          );
+        }
+
+        return (
+          <div key={index} className="thoughtEditorialTableRow">
+            {row.text}
+          </div>
+        );
+      })}
+    </figure>
+  );
+}
+
+function isStandaloneQuote(text: string) {
+  const value = text.trim();
+  return (
+    (value.startsWith("“") && value.endsWith("”")) ||
+    (value.startsWith('"') && value.endsWith('"'))
+  );
+}
+
+function ArticleParagraph({ text }: { text: string }) {
+  if (text.trim() === "*") {
+    return null;
+  }
+
+  if (isStandaloneQuote(text)) {
+    return <blockquote className="thoughtArticleQuote">{text}</blockquote>;
+  }
+
+  return <p>{text}</p>;
+}
+
 function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
   const blocks =
     section.blocks ??
@@ -25,9 +140,7 @@ function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
     <>
       {blocks.map((block, index) => {
         if (block.type === "p") {
-          return (
-            <p key={index}>{block.text}</p>
-          );
+          return <ArticleParagraph key={index} text={block.text} />;
         }
 
         if (block.type === "list") {
@@ -41,6 +154,10 @@ function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
         }
 
         if (block.type === "code") {
+          if (block.language === "text") {
+            return <ThoughtEditorialBlock key={index} text={block.code} />;
+          }
+
           return (
             <ThoughtCodeBlock
               key={index}
@@ -54,7 +171,7 @@ function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
           return (
             <figure
               key={index}
-              className="my-8 overflow-hidden rounded-xl border border-[#e6e8ef] bg-[#f4f4f2] shadow-sm shadow-black/5"
+              className="my-6 overflow-hidden rounded-xl border border-[#e6e8ef] bg-[#f4f4f2] shadow-sm shadow-black/5"
             >
               <Image
                 src={block.src}
@@ -88,9 +205,9 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
   const categoryTitle = thoughtCategoryTitle(article.category);
 
   return (
-    <div className="relative mx-auto w-full max-w-5xl px-0">
-      <Breadcrumb>
-        <BreadcrumbList className="text-[#595F7A]">
+    <div className="relative mx-auto w-full max-w-6xl px-0">
+      <Breadcrumb className="flex justify-center">
+        <BreadcrumbList className="justify-center text-[#595F7A]">
           <BreadcrumbItem>
             <BreadcrumbLink
               href="/thoughts"
@@ -111,17 +228,17 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <article className="mt-8">
-        <header className="mb-8 max-w-2xl">
-          <h1 className="mb-6 text-balance font-[family-name:var(--font-geist-sans)] text-3xl font-bold text-[#212225] md:text-4xl md:leading-tight">
+      <article className="mt-10">
+        <header className="mx-auto mb-10 max-w-3xl text-center">
+          <h1 className="mb-6 text-balance text-4xl font-bold text-[#0c0d10] md:text-5xl md:leading-tight">
             {article.overlayTitle}
           </h1>
           {article.title !== article.overlayTitle ? (
-            <p className="mb-8 text-lg leading-relaxed text-[#595F7A]">
+            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-[#595F7A]">
               {article.title}
             </p>
           ) : null}
-          <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <div className="grid grid-cols-[auto_1fr] items-center gap-2">
               <div className="aspect-square size-6 overflow-hidden rounded-md border border-transparent bg-white shadow-md shadow-black/15 ring-1 ring-[#e6e8ef]">
                 <Image
@@ -129,41 +246,47 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
                   alt={article.authorName}
                   width={460}
                   height={460}
-                  className="size-full object-cover"
+                  className="size-full object-cover rounded-full"
                 />
               </div>
               <span className="line-clamp-1 text-sm text-[#595F7A]">
                 {article.authorName}
               </span>
             </div>
-            <time className="text-sm text-[#595F7A]" dateTime={article.dateTime}>
+            <time
+              className="text-sm text-[#595F7A]"
+              dateTime={article.dateTime}
+            >
               {formatDate(article.dateTime)}
             </time>
           </div>
         </header>
 
-        <div className="max-w-2xl">
-          <div className="relative mb-12 overflow-hidden rounded-xl border border-[#e6e8ef] shadow shadow-black/5">
-            <Image
-              src={article.image}
-              alt=""
-              width={1200}
-              height={675}
-              className="aspect-video w-full object-cover"
-              priority
-            />
-          </div>
+        <div className="relative mx-auto mb-12 w-full max-w-4xl overflow-hidden rounded-lg border border-[#e6e8ef] shadow shadow-black/5">
+          <Image
+            src={article.image}
+            alt=""
+            width={1600}
+            height={900}
+            sizes="(max-width: 768px) calc(100vw - 2rem), 896px"
+            className="aspect-video w-full object-cover"
+            priority
+          />
+        </div>
 
-          <div className="thoughtArticleCopy max-w-none">
+        <div className="mx-auto max-w-2xl">
+          <div className="thoughtArticleCopy max-w-none space-y-12">
             {article.lede?.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+              <ArticleParagraph key={paragraph} text={paragraph} />
             ))}
             {article.sections.map((section, index) => (
               <section key={section.heading}>
                 <h2
                   id={slugify(section.heading)}
-                  className={`mb-4 scroll-mt-20 text-2xl font-semibold text-[#212225] ${
-                    index === 0 && !article.lede?.length ? "mt-0" : "mt-16"
+                  className={`thoughtArticleSectionTitle mb-4 scroll-mt-20 text-2xl font-semibold leading-snug text-[#131620] md:mb-3 ${
+                    index === 0 && !article.lede?.length
+                      ? "mt-0"
+                      : "mt-8 md:mt-8"
                   }`}
                 >
                   {section.heading}

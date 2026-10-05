@@ -1,6 +1,18 @@
 import { slugify } from "@/lib/slugify";
 
+import {
+  finalArticleLede,
+  finalArticleSections,
+} from "./final-article-rewrites";
 import { productJudgementSections } from "./product-judgement-articles";
+import {
+  suppliedArticleLede,
+  suppliedArticleSections,
+} from "./supplied-articles";
+import {
+  remainingArticleLede,
+  remainingArticleSections,
+} from "./remaining-article-rewrites";
 import {
   allThoughts,
   blueCover,
@@ -553,9 +565,15 @@ const visibleRows = virtualizer.getVirtualItems();`,
     },
   ],
   ...productJudgementSections,
+  ...suppliedArticleSections,
+  ...finalArticleSections,
+  ...remainingArticleSections,
 };
 
 const articleLede: Partial<Record<string, string[]>> = {
+  ...suppliedArticleLede,
+  ...finalArticleLede,
+  ...remainingArticleLede,
   "what-10000-rows-actually-means": [
     "10,000 records is not particularly unusual for an application. Rendering 10,000 rows in the browser is a different problem.",
     "An analytics endpoint can return quickly and the page can still feel slow. Once the data reaches the client, React still has to render it, and the browser has to create, layout and paint the resulting DOM.",
