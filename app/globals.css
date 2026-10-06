@@ -1850,18 +1850,23 @@ html.light .work-card-v2:hover .wc-arrow {
   padding-block: 0;
 }
 
+/*
+ * Default heading typography. h2 defaults are wrapped in :where() so they
+ * carry zero specificity — any component rule (e.g. `.sectionIntro h2`)
+ * overrides them without a specificity fight.
+ */
 .page h1,
-.page h2 {
+:where(.page h2) {
   font-family: var(--font-playfair-display), serif;
   letter-spacing: -0.025em;
 }
 
 .page h1,
-.page h2:not(.thoughtArticleSectionTitle) {
+:where(.page h2:not(.thoughtArticleSectionTitle)) {
   font-weight: 400;
 }
 
-.page h2:not(.thoughtArticleSectionTitle) {
+:where(.page h2:not(.thoughtArticleSectionTitle)) {
   margin: 0 0 1.75rem;
   font-size: clamp(1.15rem, 2vw, 1.45rem);
 }
@@ -2654,8 +2659,8 @@ p.thoughtArticleCopy {
 .featuredCopy h2 {
   margin: 0.55rem 0 0.75rem;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(1.35rem, 3.1vw, 1.85rem);
-  font-weight: 500;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 600;
   line-height: 1.12;
   letter-spacing: -0.035em;
 }
@@ -2663,7 +2668,7 @@ p.thoughtArticleCopy {
 .featuredCopy > p:not(.articleMeta) {
   margin: 0;
   color: #303030;
-  font-size: 0.68rem;
+  font-size: 0.69rem;
   line-height: 1.55;
 }
 
@@ -2700,7 +2705,7 @@ p.thoughtArticleCopy {
 
 .readButton {
   min-height: 1.55rem;
-  margin-top: 0.95rem;
+  margin-top: 0.35rem;
   padding-inline: 0.65rem;
   font-size: 0.56rem;
 }
@@ -4187,10 +4192,10 @@ p.thoughtArticleCopy {
 }
 
 .allPosts h2 {
-  margin: 1rem 0 1.25rem;
+  margin: 0 0 1.75rem;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(1.35rem, 3.1vw, 1.85rem);
-  font-weight: 500;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.035em;
 }
@@ -4673,31 +4678,22 @@ p.thoughtArticleCopy {
   gap: 1.5rem;
 }
 
-.clientWorkCopy h2 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3em;
+/* Title + supporting line shared by the home section headers; matches /Education. */
+.sectionIntro h2 {
   margin: 0;
   color: var(--text-strong);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 13px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.clientWorkCopy h2 strong {
   font-weight: 600;
+  letter-spacing: 0;
+  line-height: 22px;
 }
 
-.clientWorkCopy h2 span,
-.clientWorkCopy p {
+.sectionIntro p {
+  margin: 0;
   color: var(--text-weak);
-}
-
-.clientWorkCopy p {
-  margin: 0.35rem 0 0;
   font-size: 12px;
+  font-weight: 400;
   line-height: 18px;
 }
 
@@ -4763,25 +4759,6 @@ p.thoughtArticleCopy {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1.5rem;
-}
-
-.interfaceCopy h2 {
-  margin: 0;
-  color: #212225;
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 22px;
-}
-
-.interfaceCopy p {
-  margin: 4px 0 0;
-  max-width: 28rem;
-  color: #595f7a;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 18px;
 }
 
 .interfaceViewLink {
@@ -5125,25 +5102,31 @@ p.thoughtArticleCopy {
     gap: 1.5rem;
   }
 
+  /* Stacked featured intro — follows the mobile design: 16px meta,
+   * 42px semibold heading (fluid so it never clips), 17/24 body. */
   .featuredCopy h2 {
-    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-    line-height: 1.08;
+    margin: 1rem 0;
+    font-size: clamp(1.75rem, 9vw, 2.625rem);
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -0.03em;
   }
 
   .featuredCopy > p:not(.articleMeta) {
-    max-width: 48rem;
-    font-size: clamp(0.9rem, 2.1vw, 1.05rem);
-    line-height: 1.55;
+    max-width: 23rem;
+    font-size: 17px;
+    line-height: 24px;
   }
 
   .articleMeta {
-    font-size: clamp(0.72rem, 1.8vw, 0.85rem);
+    font-size: 16px;
   }
 
-  .readButton {
+  .featuredCopy .readButton {
     min-height: 2.25rem;
+    margin-top: 2.25rem;
     padding-inline: 0.9rem;
-    font-size: 0.75rem;
+    font-size: 13px;
   }
 
   .featuredCard h3 {
@@ -5348,7 +5331,7 @@ p.thoughtArticleCopy {
   .clientWorkHeader {
     align-items: flex-start;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.75rem;
   }
 
   .clientWorkLink {
