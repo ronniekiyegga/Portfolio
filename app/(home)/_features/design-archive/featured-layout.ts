@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 
 import type { DesignWork } from "./design-work";
 
-/** Pixel rectangle measured from the 1200px-wide Figma grid export. */
 type FeaturedRect = { x: number; y: number; width: number; height: number };
 
 export type FeaturedDesignWork = {
@@ -14,10 +13,6 @@ export type FeaturedDesignWork = {
 
 export const FEATURED_FRAME = { width: 1200, height: 2347 } as const;
 
-/*
- * `sizes` breakpoints mirror the gallery CSS: the grid is capped at 1200px
- * from a 1232px viewport, pinned above 56rem, then 2 and 1 masonry columns.
- */
 const PINNED_MIN_VIEWPORT = "(min-width: 897px)";
 const CAPPED_MIN_VIEWPORT = "(min-width: 1232px)";
 const MOBILE_SIZES = "(min-width: 673px) 50vw, 100vw";
@@ -28,11 +23,6 @@ const REVEAL_STAGGER_MS = 60;
 const REVEAL_STAGGER_COLUMN_PX = 300;
 const ABOVE_THE_FOLD_Y = 10;
 
-/*
- * Positions are kept absolute rather than snapped to a grid because the
- * design's gutters vary between 1px and 4px. Insertion order is reading
- * order, which drives lightbox navigation.
- */
 const featuredRects = new Map<DesignWork["id"], FeaturedRect>([
   ["curriculum-teacher", { x: 0, y: 1, width: 462, height: 311 }],
   ["folder-curriculum", { x: 465, y: 1, width: 287, height: 311 }],
@@ -64,7 +54,6 @@ const featuredRects = new Map<DesignWork["id"], FeaturedRect>([
 
 const percentOf = (value: number, total: number) => `${(value / total) * 100}%`;
 
-/** Cards sharing a row reveal left to right instead of all at once. */
 function revealStagger(x: number) {
   return `${Math.round(x / REVEAL_STAGGER_COLUMN_PX) * REVEAL_STAGGER_MS}ms`;
 }

@@ -1,6 +1,6 @@
 export function AboutSection() {
   return (
-    <section className="section about reveal" aria-labelledby="about-heading">
+    <section className="section about reveal lg:mb-4" aria-labelledby="about-heading">
       <p className="sectionLabel">/ About</p>
       <div className="sectionContent aboutCopy">
         <h2 className="sr-only" id="about-heading">

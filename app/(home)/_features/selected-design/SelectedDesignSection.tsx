@@ -44,8 +44,11 @@ export function SelectedDesignSection() {
       <p className="sectionLabel">/ Selected Work</p>
       <div className="clientWorkHeader">
         <div className="sectionIntro">
-          <h2 id="design-heading">Products I&apos;ve designed &amp; built</h2>
-          <p>Taken from requirements through to delivery.</p>
+          <h2 id="design-heading">From product problem to working software</h2>
+          <p>
+            A selection of products I’ve designed and built, connecting user
+            needs, interface design and the engineering behind them.
+          </p>
         </div>
         <Link href="/design" className="clientWorkLink">
           View product &amp; interface design <span aria-hidden="true">↗</span>
@@ -59,18 +62,18 @@ export function SelectedDesignSection() {
         </p>
         <DepthCarousel
           items={clientWork}
-          ariaLabel="Products designed and built"
+          ariaLabel="Products and systems I've taken from requirements through implementation and delivery."
           cardWidth={560}
           cardHeight={395}
           radius={0}
           depth={45}
           spread={-200}
-          verticalSpread={-28}
-          tilt={-44}
+          verticalSpread={-20}
+          tilt={-45}
           rotation={0}
-          rotateX={-10}
+          rotateX={-5}
           skewX={0}
-          skewY={-5}
+          skewY={-2}
           tiltDirection="left"
           perspective={3800}
           visibleCards={6}

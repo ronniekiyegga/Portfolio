@@ -13,7 +13,6 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      // React Compiler extras: valid mount / media-query / embla patterns are flagged as errors.
       "react-hooks/set-state-in-effect": "warn",
       "react-hooks/refs": "warn",
       "react-hooks/immutability": "warn",

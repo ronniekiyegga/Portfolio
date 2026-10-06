@@ -276,7 +276,7 @@ non-essential enrichment`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

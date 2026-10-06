@@ -9,10 +9,7 @@ export function EducationSection() {
         <h2 className="sr-only" id="education-heading">
           Education
         </h2>
-        <p className="educationSchool">
-          King&apos;s College London{" "}
-          <span className="educationDates">2017 - 2020</span>
-        </p>
+        <p className="educationSchool">King&apos;s College London</p>
         <p className="educationDegree">BSc in Computer Science</p>
       </div>
     </section>

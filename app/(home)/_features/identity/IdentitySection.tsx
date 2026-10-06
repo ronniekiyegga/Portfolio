@@ -4,7 +4,7 @@ import { UserRoundPlus } from "lucide-react";
 
 import { SpecularPill } from "@/app/components/SpecularButton";
 import { sectionLinks } from "@/lib/constants";
-import { getVisitorCount } from "@/lib/visitors/visitor-store";
+import { cn } from "@/lib/utils";
 
 import {
   AnalyticsMark,
@@ -22,13 +22,11 @@ const profileNavMarks = {
   usecases: UseCasesMark,
 } as const;
 
-export async function IdentitySection() {
-  const visitorCount = await getVisitorCount();
-
+export function IdentitySection() {
   return (
     <header className="identity reveal">
       <IdentityShader />
-      <Statusbar visitorCount={visitorCount} />
+      <Statusbar />
       <div className="identityRow">
         <Image
           src="/images/profile/Ronnie-suit.jpg"
@@ -54,7 +52,10 @@ export async function IdentitySection() {
             const Mark = profileNavMarks[item.figure];
             return (
               <Link
-                className={item.hideOnMobile ? "mobileHidden" : undefined}
+                className={cn(
+                  item.hideOnMobile && "mobileHidden",
+                  item.label === "About" && "is-active",
+                )}
                 href={item.href}
                 key={item.label}
               >
@@ -66,7 +67,7 @@ export async function IdentitySection() {
         </nav>
         <SpecularPill
           className="cvLink"
-          href="/Ronnie-Kiyegga-CV.pdf"
+          href="/Ronnie-Kiyegga-Software_Engineer.pdf"
           download
         >
           <UserRoundPlus aria-hidden size={13} strokeWidth={1.7} />

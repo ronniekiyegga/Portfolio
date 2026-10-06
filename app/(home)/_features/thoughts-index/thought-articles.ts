@@ -47,6 +47,34 @@ export function getAllThoughtArticleSlugs() {
     .map((thought) => ({ slug: thought.slug }));
 }
 
+function seededRandom(seed: string) {
+  let state = 2166136261;
+  for (const char of seed) {
+    state = Math.imul(state ^ char.charCodeAt(0), 16777619);
+  }
+  return () => {
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+export function getRelatedThoughts(slug: string, count = 3): ThoughtPost[] {
+  const random = seededRandom(slug);
+  const candidates = allThoughts.filter(
+    (thought) =>
+      thought.slug !== slug && thoughtArticleContent.has(thought.slug),
+  );
+
+  for (let i = candidates.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
+    [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+  }
+
+  return candidates.slice(0, count);
+}
+
 export function getThoughtArticleHeadings(article: ThoughtArticle) {
   return article.sections
     .filter((section) => section.heading.trim().length > 0)

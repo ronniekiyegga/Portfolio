@@ -4,13 +4,8 @@ import Link from "next/link";
 import { socialLinks } from "@/lib/constants";
 
 import { SplashCursorToggle } from "./SplashCursorToggle";
-import { LiveVisitorCount } from "./LiveVisitorCount";
 
-type StatusbarProps = {
-  visitorCount?: number | null;
-};
-
-export function Statusbar({ visitorCount = null }: StatusbarProps) {
+export function Statusbar() {
   return (
     <div className="statusBar">
       <p className="contextLine">
@@ -28,7 +23,6 @@ export function Statusbar({ visitorCount = null }: StatusbarProps) {
         ))}
       </p>
       <div className="statusMeta">
-        {/* <LiveVisitorCount initialCount={visitorCount} /> */}
         <Link className="contextLine" href="mailto:kiyeggaronnie@gmail.com">
           <span aria-hidden className="pulseDot ping">
             ●

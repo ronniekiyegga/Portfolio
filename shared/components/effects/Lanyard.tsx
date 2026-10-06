@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 "use client";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
@@ -49,11 +48,9 @@ interface LanyardProps {
   angularDamping?: number;
   linearDamping?: number;
   verticalDropStart?: boolean;
-  /** When true with initialDropHeight, rope+card start bunched at top, then slip down into place */
   slipFromTop?: boolean;
   onCardHover?: (hovered: boolean) => void;
   onCardMotionChange?: (moving: boolean) => void;
-  /** When true, canvas accepts pointer events (drag/hover). When false, it won't block UI clicks underneath. */
   interactive?: boolean;
 }
 
@@ -243,7 +240,6 @@ function Band({
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
-  // Heavy-card physics: lower damping = more swing/bounce; higher mass = more inertia
   const HEAVY_CARD_ANGULAR_DAMPING = 1.2;
   const HEAVY_CARD_LINEAR_DAMPING = 1.6;
   const segmentProps: any = {
@@ -254,7 +250,6 @@ function Band({
     linearDamping: linearDampingProp ?? HEAVY_CARD_LINEAR_DAMPING,
   };
 
-  // Drag inertia: card lags behind pointer (heavier feel)
   const dragLerpRef = useRef(new THREE.Vector3());
   const prevTargetRef = useRef(new THREE.Vector3());
   const hasPrevTargetRef = useRef(false);
@@ -263,7 +258,6 @@ function Band({
   const movingRef = useRef(false);
 
   const { nodes, materials } = useGLTF(CARD_GLB) as any;
-  // Use public path to avoid bundler/static-media edge cases in Three loaders.
   const texture = useTexture(LANYARD_TEXTURE);
 
   const [curve] = useState(
@@ -308,7 +302,6 @@ function Band({
       const targetZ = vec.z - dragged.z;
       dir.set(targetX, targetY, targetZ);
 
-      // Track pointer velocity for release throw (skip first frame to avoid spike)
       const dt = Math.max(delta, 0.001);
       if (card.current && hasPrevTargetRef.current) {
         releaseVelocityRef.current = releaseVelocityRef.current ?? new THREE.Vector3();
@@ -322,7 +315,6 @@ function Band({
       hasPrevTargetRef.current = true;
 
       [card, j1, j2, j3, fixed].forEach((ref) => ref.current?.wakeUp());
-      // Light inertia: card follows pointer quickly (minimal resistance)
       const lerpFactor = Math.min(1, delta * 14);
       dragLerpRef.current.lerp(dir, lerpFactor);
       card.current?.setNextKinematicTranslation({
@@ -332,10 +324,9 @@ function Band({
       });
       wasDraggingRef.current = true;
     } else {
-      // Apply release velocity when transitioning from drag to free
       if (wasDraggingRef.current && card.current && releaseVelocityRef.current) {
         const v = releaseVelocityRef.current;
-        const throwScale = 0.4; // Slight throw in drag direction
+        const throwScale = 0.4;
         card.current.setLinvel({
           x: v.x * throwScale,
           y: v.y * throwScale,
@@ -345,7 +336,6 @@ function Band({
       }
       wasDraggingRef.current = false;
       hasPrevTargetRef.current = false;
-      // Reset lerp when not dragging so next drag starts from current pos
       if (card.current) {
         const t = card.current.translation();
         dragLerpRef.current.set(t.x, t.y, t.z);
@@ -431,7 +421,6 @@ function Band({
 
   const useVerticalStart = verticalDropStart && initialDropHeight != null;
   const useSlipFromTop = slipFromTop && initialDropHeight != null && !useVerticalStart;
-  // Slip from top: rope angled left from anchor (hidden at top-left), card swings down in an arc
   const j1Pos: [number, number, number] = useSlipFromTop
     ? [-0.9, 3.7, 0]
     : useVerticalStart

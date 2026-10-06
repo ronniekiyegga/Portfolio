@@ -251,7 +251,7 @@ Do not submit again; we will update this page when confirmation arrives.`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

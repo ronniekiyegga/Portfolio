@@ -256,7 +256,7 @@ Personal information not needed for diagnosis`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

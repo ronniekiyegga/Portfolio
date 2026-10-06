@@ -376,7 +376,7 @@ Failed because a dependency was unavailable`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

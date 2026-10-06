@@ -16,7 +16,6 @@ import {
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
-/* ── V1 fonts ─────────────────────────────────────────────── */
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-source-serif",
@@ -47,7 +46,6 @@ const bodoniModa = Bodoni_Moda({
   weight: ["400", "700"],
 });
 
-/* ── V2 fonts ─────────────────────────────────────────────── */
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "600"],
@@ -134,7 +132,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* SVG gradient for pill icons (light mode) */}
         <svg width="0" height="0" aria-hidden>
           <defs>
             <linearGradient
@@ -155,11 +152,6 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem={false}
         >
-          {/*
-           * Dark mode global background — fixed so it covers every section
-           * as the user scrolls. hidden in light mode, always behind content.
-           * radial-gradient: black core at top-centre → purple at edges/bottom
-           */}
           <div
             aria-hidden
             className="fixed inset-0 -z-10 hidden dark:block"

@@ -5,7 +5,6 @@ import type { CSSProperties } from "react";
 import { DesignGalleryMedia } from "./DesignGalleryMedia";
 import { designCategoryLabels, type DesignWork } from "./design-work";
 
-/** Dense grids reveal nearer the fold than text so the screen never looks empty. */
 const GRID_REVEAL_LINE = 0.85;
 
 function CardMeta({ item }: { item: DesignWork }) {
