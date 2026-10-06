@@ -4,15 +4,12 @@ import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Style_Script } from "next/font/google";
 
-/** Gradient 1: blue to cyan - used for icon and lines */
 const GRADIENT_1 = "linear-gradient(77deg, #3A07F2 10.26%, #0CD1CF 98.05%)";
 
-/** Text gradient: teal to purple */
 const TEXT_GRADIENT = "linear-gradient(to bottom, #69eacb, #6654f1)";
 
 const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
-/** Muted kicker — soft gray label + hairline dividers */
 const MUTED_TEXT_COLOR = "#9ca3af";
 const MUTED_LINE_COLOR = "#f0f0f0";
 const MUTED_DEFAULT_LINE_WIDTH = 56;
@@ -24,9 +21,7 @@ const SPARKLE_PATH =
 export interface SectionKickerProps {
   children: React.ReactNode;
   className?: string;
-  /** Width of each horizontal line in px (default 120) */
   lineWidth?: number;
-  /** Gradient script style (default) or muted gray sans-serif */
   variant?: "gradient" | "muted";
 }
 

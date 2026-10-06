@@ -16,7 +16,6 @@ function isOnScreen(el: Element) {
   return rect.bottom > 0 && rect.top < window.innerHeight;
 }
 
-/** Elements may opt into a lower trigger line via `data-reveal-line` (0–1). */
 function readingLine(el: HTMLElement) {
   const line = Number(el.dataset.revealLine);
   return line > 0 && line <= 1 ? line : READING_LINE;

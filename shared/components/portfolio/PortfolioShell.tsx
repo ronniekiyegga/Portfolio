@@ -1,25 +1,15 @@
 import Link from "next/link";
 import { Fragment } from "react";
+
+import { LiveVisitorCount } from "@/app/(home)/_features/visitor-count/LiveVisitorCount";
+
 import { MobilePortfolioNavigation } from "./MobilePortfolioNavigation";
 import { PortfolioMain } from "./PortfolioMain";
 import { PortfolioNavigation } from "./PortfolioNavigation";
 
 const footerLinks = [
-  {
-    label: "kiyeggaronnie@gmail.com",
-    href: "mailto:kiyeggaronnie@gmail.com",
-    mobileHidden: true,
-  },
-  {
-    label: "Github",
-    href: "https://github.com/ronniekiyegga",
-    mobileHidden: false,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/ronniekiyegga",
-    mobileHidden: false,
-  },
+  { label: "Github", href: "https://github.com/ronniekiyegga" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
 ] as const;
 
 export function PortfolioShell({ children }: { children: React.ReactNode }) {
@@ -35,21 +25,22 @@ export function PortfolioShell({ children }: { children: React.ReactNode }) {
             <span className="footerYear">2026</span>
           </div>
           <div className="footerLinks">
-            {footerLinks.map(({ label, href, mobileHidden }, index) => (
+            <span className="footerVisitors">
+              <LiveVisitorCount initialCount={null} />
+            </span>
+            {footerLinks.map(({ label, href }, index) => (
               <Fragment key={label}>
-                {index > 0 ? (
-                  <span
-                    className={`footerSep${index === 1 ? " footerEmailSep" : ""}`}
-                    aria-hidden="true"
-                  >
-                    /
-                  </span>
-                ) : null}
+                <span
+                  className={`footerSep${index === 0 ? " footerVisitorsSep" : ""}`}
+                  aria-hidden="true"
+                >
+                  /
+                </span>
                 <Link
-                  className={mobileHidden ? "footerEmail" : "footerSocial"}
+                  className="footerSocial"
                   href={href}
-                  target={href.startsWith("mailto:") ? undefined : "_blank"}
-                  rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   {label}
                 </Link>

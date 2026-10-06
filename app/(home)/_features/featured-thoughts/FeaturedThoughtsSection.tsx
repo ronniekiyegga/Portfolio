@@ -448,19 +448,14 @@ export function FeaturedThoughtsSection({
       aria-labelledby="featured-thoughts-heading"
     >
       <div className="featuredThought">
-        <div className="featuredCopy">
+        <div className="featuredCopy lg:pt-2">
           <p className="articleMeta">
-            <strong>Engineering</strong>
-            <span>•</span>
-            Recently explored
+            <strong >Engineering</strong>
           </p>
-          <h2 id="featured-thoughts-heading">
-            Problems I&apos;ve been thinking about lately
-          </h2>
+          <h2 id="featured-thoughts-heading">What I’m exploring</h2>
           <p>
-            Recent investigations into performance, real-time systems, product
-            decisions and the engineering trade-offs behind software that has to
-            work in production.
+            Notes on performance, product decisions and the trade-offs that
+            shape reliable software.
           </p>
           <SpecularPill className="readButton" href={exploreHref}>
             Explore the work <span aria-hidden>▸</span>
