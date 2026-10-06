@@ -3,6 +3,13 @@ import type { ThoughtArticleSection } from "./thought-articles";
 export const suppliedArticleSections: Record<string, ThoughtArticleSection[]> = {
   "10000-concurrent-database-connections": [
     {
+      heading: "The capacity model",
+      blocks: [
+        { type: "p", text: "The number is useful because it exposes a common modelling mistake: concurrent users are not long-lived database connections." },
+        { type: "p", text: "The relevant variables are connection-pool size, application-instance concurrency, transaction duration, query cost, and the database’s ability to perform useful concurrent work." },
+      ],
+    },
+    {
       heading: "The obvious solution: increase the connection limit",
       blocks: [
         { type: "p", text: "Most databases expose a setting for the number of connections they will accept. Increasing it can feel like the direct fix:" },

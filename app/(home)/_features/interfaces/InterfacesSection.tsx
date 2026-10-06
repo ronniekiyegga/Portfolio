@@ -260,7 +260,7 @@ export function InterfacesSection() {
               A selection of dashboards, search tools and interface details
               I&apos;ve designed.
               <br />
-              Product work along side independent studies
+              Product work alongside independent studies
             </p>
           </div>
           <div className="interfaceLinks">

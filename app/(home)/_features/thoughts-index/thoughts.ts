@@ -40,6 +40,7 @@ export function thoughtPath(slug: string) {
 export const featuredInvestigationSlug = "what-10000-rows-actually-means";
 export const blueCover = "/images/editorial/darkblue-card.jpg";
 export const tealCover = "/images/editorial/darkblue-green-card.jpg";
+export const renderingHero = "/images/editorial/react-rendering-hero.png";
 
 export const featuredThoughts: FeaturedThought[] = [
   {
@@ -86,10 +87,10 @@ export const gridThoughts: ThoughtPost[] = [
   {
     slug: "hicks-law",
     category: "design",
-    overlayTitle: "Hick’s Law",
+    overlayTitle: "Why more options can make a simple task feel harder",
     date: "2 Sept 2026",
     dateTime: "2026-09-02",
-    title: "Why fewer choices are not always the answer",
+    title: "Why more options can make a simple task feel harder",
     description:
       "Using hierarchy, defaults and progressive disclosure to make decisions easier",
     tags: ["usability", "defaults", "decision-making"],
@@ -140,7 +141,8 @@ export const listedThoughts: ThoughtPost[] = [
     date: "Sept 15 2026",
     dateTime: "2026-09-15",
     title: "Why disabling the button did not stop the duplicate request",
-    description: "Postgres or DynamoDB?",
+    description:
+      "Retries, duplicate delivery and the invariant the server must protect.",
     tags: ["concurrency", "idempotency", "databases"],
     href: thoughtPath("idempotency-matters"),
   },
@@ -176,7 +178,8 @@ export const listedThoughts: ThoughtPost[] = [
     date: "Aug 19 2026",
     dateTime: "2026-08-19",
     title: "Why adding servers does not automatically survive a traffic spike",
-    description: "Postgres or DynamoDB?",
+    description:
+      "Finding the constrained resource before scaling the application tier.",
     tags: ["queues", "backpressure", "retries"],
     href: thoughtPath("burst-traffic"),
   },
@@ -198,7 +201,8 @@ export const listedThoughts: ThoughtPost[] = [
     date: "Jul 30 2026",
     dateTime: "2026-07-30",
     title: "Why 10,000 database connections is not a database setting",
-    description: "Postgres or DynamoDB?",
+    description:
+      "Connection pools, transaction time and where excess work should wait.",
     tags: ["connection pooling", "postgres", "dynamodb"],
     href: thoughtPath("10000-concurrent-database-connections"),
   },
@@ -222,7 +226,8 @@ export const listedThoughts: ThoughtPost[] = [
     date: "Jun 25 2026",
     dateTime: "2026-06-25",
     title: "Why “100 requests per minute” is not a rate-limiting strategy",
-    description: "Postgres or DynamoDB?",
+    description:
+      "Admission control begins with resource, identity, cost and recovery.",
     tags: ["rate limiting", "scalability", "caching"],
     href: thoughtPath("rate-limiter-1m-rps"),
   },
@@ -239,18 +244,6 @@ export const listedThoughts: ThoughtPost[] = [
     href: thoughtPath("design-systems-remove-decisions"),
   },
   {
-    slug: "debug-peak-traffic",
-    category: "system-design",
-    overlayTitle:
-      "Why increasing the timeout made the peak-traffic incident worse",
-    date: "May 21 2026",
-    dateTime: "2026-05-21",
-    title: "Why increasing the timeout made the peak-traffic incident worse",
-    description: "Postgres or DynamoDB?",
-    tags: ["debugging", "profiling", "incidents"],
-    href: thoughtPath("debug-peak-traffic"),
-  },
-  {
     slug: "aggregate-logs-10000-servers",
     category: "system-design",
     overlayTitle:
@@ -259,7 +252,8 @@ export const listedThoughts: ThoughtPost[] = [
     dateTime: "2026-04-30",
     title:
       "Why buffering every log can make an incident worse",
-    description: "Postgres or DynamoDB?",
+    description:
+      "Delivery guarantees, bounded buffers and protecting the primary workload.",
     tags: ["logging", "observability", "backpressure"],
     href: thoughtPath("aggregate-logs-10000-servers"),
   },

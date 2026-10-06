@@ -16,6 +16,31 @@ import { thoughtCategoryTitle } from "./thoughts";
 import { ThoughtCodeBlock } from "./ThoughtCodeBlock";
 import { ThoughtOnThisPage } from "./ThoughtOnThisPage";
 
+const operationalContextSlugs = new Set([
+  "what-10000-rows-actually-means",
+  "idempotency-matters",
+  "burst-traffic",
+  "10000-concurrent-database-connections",
+  "rate-limiter-1m-rps",
+  "streaming-windows",
+  "aggregate-logs-10000-servers",
+  "responsive-ten-thousand-records",
+]);
+
+function ThoughtContextNote() {
+  return (
+    <aside className="thoughtArticleContextNote" aria-label="Context note">
+      <strong>Context note</strong>
+      <p>
+        Client and system details have been generalised to protect
+        confidentiality. Metrics are included only where their scope and
+        measurement method can be stated. Examples are marked illustrative
+        where they are not measurements from a specific incident.
+      </p>
+    </aside>
+  );
+}
+
 function ThoughtEditorialBlock({ text }: { text: string }) {
   const lines = text
     .split("\n")
@@ -67,6 +92,34 @@ function ThoughtEditorialBlock({ text }: { text: string }) {
     }
 
     rows.push({ type: "text", text: line });
+  }
+
+  const isVerticalFlow =
+    rows.some((row) => row.type === "down") &&
+    rows.every((row) => row.type === "text" || row.type === "down");
+
+  if (isVerticalFlow) {
+    return (
+      <figure className="thoughtEditorialFlow">
+        {rows.map((row, index) =>
+          row.type === "down" ? (
+            <span
+              key={index}
+              className="thoughtEditorialFlowArrow"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 20 20">
+                <path d="M10 3v12m-4-4 4 4 4-4" />
+              </svg>
+            </span>
+          ) : (
+            <div key={index} className="thoughtEditorialFlowStep">
+              {row.text}
+            </div>
+          ),
+        )}
+      </figure>
+    );
   }
 
   return (
@@ -240,7 +293,7 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
           ) : null}
           <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <div className="grid grid-cols-[auto_1fr] items-center gap-2">
-              <div className="aspect-square size-6 overflow-hidden rounded-md border border-transparent bg-white shadow-md shadow-black/15 ring-1 ring-[#e6e8ef]">
+              <div className="aspect-square size-6 overflow-hidden rounded-full border border-transparent bg-white shadow-md shadow-black/15 ring-1 ring-[#e6e8ef]">
                 <Image
                   src={article.authorImage}
                   alt={article.authorName}
@@ -262,19 +315,22 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
           </div>
         </header>
 
-        <div className="relative mx-auto mb-12 w-full max-w-4xl overflow-hidden rounded-lg border border-[#e6e8ef] shadow shadow-black/5">
+        <div className="relative mx-auto mb-12 w-full overflow-hidden rounded-xl border border-[#e6e8ef] shadow shadow-black/5">
           <Image
             src={article.image}
             alt=""
             width={1600}
             height={900}
-            sizes="(max-width: 768px) calc(100vw - 2rem), 896px"
-            className="aspect-video w-full object-cover"
+            sizes="(max-width: 768px) calc(100vw - 2rem), 1152px"
+            className="aspect-video w-full object-cover md:aspect-[2/1]"
             priority
           />
         </div>
 
         <div className="mx-auto max-w-2xl">
+          {operationalContextSlugs.has(article.slug) ? (
+            <ThoughtContextNote />
+          ) : null}
           <div className="thoughtArticleCopy max-w-none space-y-12">
             {article.lede?.map((paragraph) => (
               <ArticleParagraph key={paragraph} text={paragraph} />

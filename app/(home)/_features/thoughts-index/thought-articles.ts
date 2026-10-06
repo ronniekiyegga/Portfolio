@@ -15,10 +15,7 @@ import {
 } from "./remaining-article-rewrites";
 import {
   allThoughts,
-  blueCover,
-  featuredInvestigationSlug,
-  featuredThoughts,
-  tealCover,
+  renderingHero,
   type ThoughtPost,
 } from "./thoughts";
 
@@ -150,10 +147,11 @@ const sections: Record<string, ThoughtArticleSection[]> = {
         {
           type: "list",
           items: [
-            "Give the most common action a clear visual priority.",
-            "Group related choices instead of presenting one flat list.",
-            "Use sensible defaults, but keep them easy to change.",
-            "Move specialist options behind progressive disclosure rather than deleting them.",
+            "Does this choice change the outcome now?",
+            "Can it wait until the user has more context?",
+            "Is there a safe default that remains easy to change?",
+            "Does the user understand how the options differ?",
+            "Is this needed by most people or only a specialist case?",
           ],
         },
         {
@@ -230,6 +228,12 @@ const sections: Record<string, ThoughtArticleSection[]> = {
     },
   ],
   "what-10000-rows-actually-means": [
+    {
+      heading: "Context",
+      paragraphs: [
+        "This article uses a representative 10,000-record scenario to explain the boundary between data retrieval and browser rendering. The useful threshold is not the number 10,000 itself: row complexity, device class, browser, update frequency, and interaction design determine the actual cost.",
+      ],
+    },
     {
       heading: "Ten thousand is a rendering problem",
       blocks: [
@@ -581,12 +585,182 @@ const articleLede: Partial<Record<string, string[]>> = {
   ],
 };
 
-function coverFor(slug: string) {
-  const isBlueCard =
-    slug === featuredInvestigationSlug ||
-    featuredThoughts.some((thought) => thought.slug === slug);
+const rewrittenArticleSlugs = new Set([
+  ...Object.keys(suppliedArticleSections),
+  ...Object.keys(finalArticleSections),
+  ...Object.keys(remainingArticleSections),
+]);
 
-  return isBlueCard ? blueCover : tealCover;
+function isStandaloneEditorialQuote(text: string) {
+  const value = text.trim();
+  return (
+    (value.startsWith("“") && value.endsWith("”")) ||
+    (value.startsWith('"') && value.endsWith('"'))
+  );
+}
+
+function wordCount(text: string) {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function joinShortSentence(first: string, second: string) {
+  if (!first.endsWith(".") || wordCount(first) > 10) {
+    return null;
+  }
+
+  const stem = first.slice(0, -1);
+
+  if (/\bis not to\b/i.test(stem) && /^It is to\s+/.test(second)) {
+    return `${stem}, but to ${second.replace(/^It is to\s+/, "")}`;
+  }
+
+  if (/^The difficult part is not\b/i.test(stem) && /^It is\s+/.test(second)) {
+    return `${stem}, but ${second.replace(/^It is\s+/, "")}`;
+  }
+
+  if (/\bnot\b/i.test(stem) && /^It is\s+/.test(second)) {
+    return `${stem}, but it is ${second.replace(/^It is\s+/, "")}`;
+  }
+
+  if (/^It is not\s+/.test(second)) {
+    return `${stem}, but it is not ${second.replace(/^It is not\s+/, "")}`;
+  }
+
+  if (/\b(not|similar)\b/i.test(stem) && /^They\s+/.test(second)) {
+    return `${stem}, but they ${second.replace(/^They\s+/, "")}`;
+  }
+
+  if (
+    /^They\s+/.test(first) &&
+    !stem.includes(" and ") &&
+    /^They\s+/.test(second)
+  ) {
+    return `${stem} and ${second.replace(/^They\s+/, "")}`;
+  }
+
+  const joins: Array<[RegExp, string]> = [
+    [/^But\s+/, ", but "],
+    [/^And\s+/, ", and "],
+    [/^It\s+/, ", and it "],
+    [/^They\s+/, ", and they "],
+    [/^This\s+/, "; this "],
+    [/^That\s+/, "; that "],
+    [/^These\s+/, "; these "],
+    [/^Those\s+/, "; those "],
+    [/^A\s+/, "; a "],
+    [/^An\s+/, "; an "],
+    [/^The\s+/, "; the "],
+    [/^Some\s+/, "; some "],
+    [/^Sometimes\s+/, "; sometimes "],
+    [/^If\s+/, "; if "],
+    [/^When\s+/, "; when "],
+  ];
+
+  for (const [pattern, connector] of joins) {
+    if (pattern.test(second)) {
+      return `${stem}${connector}${second.replace(pattern, "")}`;
+    }
+  }
+
+  if (
+    !stem.includes(";") &&
+    wordCount(second) <= 12 &&
+    /^[A-Z][a-z]/.test(second)
+  ) {
+    return `${stem}; ${second[0].toLowerCase()}${second.slice(1)}`;
+  }
+
+  return null;
+}
+
+function smoothSentenceCadence(text: string) {
+  const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z“])/);
+  const smoothed: string[] = [];
+
+  for (const sentence of sentences) {
+    const previous = smoothed.at(-1);
+    const joined = previous ? joinShortSentence(previous, sentence) : null;
+
+    if (joined) {
+      smoothed[smoothed.length - 1] = joined;
+    } else {
+      smoothed.push(sentence);
+    }
+  }
+
+  return smoothed.join(" ");
+}
+
+function shapeProse(fragments: string[]) {
+  const paragraphs: string[] = [];
+  let current = "";
+
+  const flush = () => {
+    if (current) {
+      paragraphs.push(current);
+      current = "";
+    }
+  };
+
+  for (const fragment of fragments) {
+    const text = smoothSentenceCadence(fragment.trim());
+
+    if (isStandaloneEditorialQuote(text)) {
+      flush();
+      paragraphs.push(text);
+      continue;
+    }
+
+    if (!current) {
+      current = text;
+      continue;
+    }
+
+    if (wordCount(current) + wordCount(text) > 95) {
+      flush();
+      current = text;
+      continue;
+    }
+
+    const joined = joinShortSentence(current, text);
+    current = joined ?? `${current} ${text}`;
+  }
+
+  flush();
+  return paragraphs;
+}
+
+function shapeArticleSection(section: ThoughtArticleSection) {
+  if (section.paragraphs) {
+    return { ...section, paragraphs: shapeProse(section.paragraphs) };
+  }
+
+  if (!section.blocks) {
+    return section;
+  }
+
+  const blocks: ThoughtArticleBlock[] = [];
+  let prose: string[] = [];
+
+  const flushProse = () => {
+    blocks.push(
+      ...shapeProse(prose).map((text) => ({ type: "p" as const, text })),
+    );
+    prose = [];
+  };
+
+  for (const block of section.blocks) {
+    if (block.type === "p") {
+      prose.push(block.text);
+      continue;
+    }
+
+    flushProse();
+    blocks.push(block);
+  }
+
+  flushProse();
+  return { ...section, blocks };
 }
 
 export function getThoughtArticle(slug: string): ThoughtArticle | undefined {
@@ -597,14 +771,19 @@ export function getThoughtArticle(slug: string): ThoughtArticle | undefined {
     return undefined;
   }
 
+  const shouldShapeProse = rewrittenArticleSlugs.has(slug);
+
   return {
     ...thought,
     ...author,
-    image:
-      featuredThoughts.find((item) => item.slug === thought.slug)?.image ??
-      coverFor(slug),
-    lede: articleLede[slug],
-    sections: articleSections,
+    image: renderingHero,
+    lede:
+      shouldShapeProse && articleLede[slug]
+        ? shapeProse(articleLede[slug])
+        : articleLede[slug],
+    sections: shouldShapeProse
+      ? articleSections.map(shapeArticleSection)
+      : articleSections,
   };
 }
 
