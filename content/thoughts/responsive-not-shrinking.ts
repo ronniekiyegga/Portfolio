@@ -225,7 +225,7 @@ What can be revealed on demand?`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

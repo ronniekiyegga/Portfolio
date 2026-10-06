@@ -44,7 +44,6 @@ export default function LampWidget() {
         relative md:w-full h-[400px] overflow-hidden md:mb-20 
       `}
     >
-      {/* ── Light group ─────────────────────────────────────── */}
       <div
         className={`
           ${styles.lightWrap}
@@ -56,7 +55,6 @@ export default function LampWidget() {
           height: `${SQ + 500}px`,
         }}
       >
-        {/* Left cone — rotate(-90deg), right edge slightly past centre to eliminate seam */}
         <div
           className={`${styles.cone} absolute top-0`}
           style={{
@@ -68,7 +66,6 @@ export default function LampWidget() {
           }}
         />
 
-        {/* Right cone — scaleX(-1) rotate(-90deg), left edge slightly past centre to overlap */}
         <div
           className={`${styles.cone} absolute top-0`}
           style={{
@@ -80,7 +77,6 @@ export default function LampWidget() {
           }}
         />
 
-        {/* Floor glow — Figma Ellipse 1: #001278, blur(188px) */}
         <div
           className={`
             ${styles.floorGlow}
@@ -96,7 +92,6 @@ export default function LampWidget() {
         />
       </div>
 
-      {/* ── Exploration label (above bar) ───────────────────── */}
       <div
         className={`
           ${styles.labelWrap}
@@ -108,7 +103,6 @@ export default function LampWidget() {
         <SectionKicker variant="muted">Things I&apos;ve Built</SectionKicker>
       </div>
 
-      {/* ── Lamp bar ─────────────────────────────────────────── */}
       <div
         className={`
           ${styles.lampBarWrap}
@@ -122,14 +116,12 @@ export default function LampWidget() {
         />
       </div>
 
-      {/* ── Hero text ────────────────────────────────────────── */}
       <div
         className="
           absolute bottom-0 left-0 right-0 pb-[50px]
           flex flex-col items-center text-center z-15 gap-5
         "
       >
-        {/* <AnimatedText /> */}
       </div>
     </section>
   );

@@ -223,7 +223,7 @@ Try again in 42 minutes, or narrow the report before exporting.`,
       ],
     },
     {
-      heading: "The practical lesson",
+      heading: "Final thoughts",
       blocks: [
         {
           type: "p",

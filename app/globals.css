@@ -1,10 +1,8 @@
 @import "tailwindcss";
 @import "dither-plugin";
 
-/* Use class-based dark mode (add .dark to html) instead of prefers-color-scheme */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Ensure scroll works - explicit overflow prevents capture from blocking scroll */
 html {
   overflow-x: hidden;
   overflow-y: auto;
@@ -14,10 +12,30 @@ html {
   scroll-padding-top: 80px;
 }
 
+/*
+ * Desktop scale: render everything 10% larger — the equivalent of 110%
+ * browser zoom. Starts at 52rem × 1.1, the width at which 110% zoom would
+ * switch to the mobile layout, so phones and narrow windows are unchanged.
+ *
+ * CSS zoom also multiplies viewport units, which browser zoom does not, so
+ * vw/vh values outside mobile-only media queries divide by --page-zoom.
+ * Desktop breakpoints above this threshold are written pre-multiplied by
+ * 1.1 (e.g. 82.5rem = 75rem × 1.1) to switch where 110% zoom would.
+ */
+:root {
+  --page-zoom: 1;
+}
+
+@media (min-width: 57.2rem) {
+  :root {
+    --page-zoom: 1.1;
+    zoom: var(--page-zoom);
+  }
+}
+
 :root {
   --background: #fafafa;
   --foreground: #171717;
-  /* ReUI semantic tokens - for destructive, info, success, warning, invert states */
   --destructive-foreground: #ffffff;
   --info: #0ea5e9;
   --info-foreground: #ffffff;
@@ -78,7 +96,6 @@ html {
   --Pill-Box-Shadow-Right: 2.353px 11.764px 23.528px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Header pills: match HeroSection #FEFBF1 in light mode */
 .header-pill-bg {
   background: #fefbf1 !important;
 }
@@ -86,7 +103,6 @@ html {
   background: var(--Gradients-Pill-BG-Dark) !important;
 }
 
-/* Light mode pill styles - header and DynamicIsland */
 .pill-light {
   border-radius: var(--Corner-Full, 62.5rem);
   border: var(--Pill-Light-Border);
@@ -94,7 +110,6 @@ html {
   box-shadow: var(--Pill-Light-Shadow);
 }
 
-/* Dark mode - left pill (header left, DynamicIsland left/middle) */
 .dark .pill-dark-left {
   border-radius: 36.76213rem;
   border: 0.588px solid var(--Gradients-Emoji);
@@ -102,7 +117,6 @@ html {
   box-shadow: var(--Pill-Box-Shadow-Left);
 }
 
-/* Dark mode - right pill (header right, DynamicIsland right) */
 .dark .pill-dark-right {
   border-radius: 36.76213rem;
   border: 0.588px solid var(--Gradients-Emoji);
@@ -110,7 +124,6 @@ html {
   box-shadow: var(--Pill-Box-Shadow-Right);
 }
 
-/* DynamicIsland / Pill styles */
 :root {
   --Corner-radius-32: 2rem;
   --Gradients-Cream-Buttons: linear-gradient(
@@ -125,7 +138,6 @@ html {
   --Gradients-Cream: #fff;
   --Gradients-White-1: linear-gradient(180deg, #fbfbfb 38.73%, #f7f7f9 100%);
   --BG-Black-2: #1a1a1a;
-  /* Let's chat cream gradient (light mode) */
   --Gradients-Cream-Chat: linear-gradient(
     135deg,
     #fff 54.8%,
@@ -136,7 +148,6 @@ html {
   --Pill-Icon-Gradient: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
-/* Middle pill (email) - cream gradient border/glow */
 .middle-pill-outer {
   border-radius: 48px;
   padding: 2px;
@@ -164,14 +175,12 @@ html {
     0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Right pill outer - frosted cream gradient (light), solid dark (dark mode). Padding matches left pill (p-1.5). */
-/* Layout: padding, border, border-radius must match light/dark to prevent shift on theme toggle */
 .pill-outer-cream {
   border-radius: var(--Corner-radius-32, 2rem);
   background: var(--Gradients-Cream-Buttons);
-  padding: 0.375rem; /* 6px - matches left pill p-1.5 */
+  padding: 0.375rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  border: 0 solid transparent; /* explicit - matches dark's border: none for layout */
+  border: 0 solid transparent;
 }
 .dark .pill-outer-cream {
   background: #252530;
@@ -179,10 +188,9 @@ html {
     0 0 1px 0 rgba(255, 255, 255, 0.06) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.04),
     0 4px 12px rgba(0, 0, 0, 0.4);
-  border: 0 solid transparent; /* same as light - no layout shift */
+  border: 0 solid transparent;
 }
 
-/* Let's chat wrapper - white bg (light), transparent (dark). Layout props must match both modes. */
 .lets-chat-cream-wrapper {
   border-radius: 1.22406rem;
   padding: 2px;
@@ -193,12 +201,11 @@ html {
 }
 .dark .lets-chat-cream-wrapper {
   padding: 2px;
-  border-radius: 1.22406rem; /* same as light */
+  border-radius: 1.22406rem;
   background: transparent;
   box-shadow: none;
 }
 
-/* Let's chat inner - dark pill. border-radius must match light/dark to prevent layout shift. */
 .lets-chat-inner {
   border-radius: calc(1.22406rem - 2px);
   background: var(--BG-Black-2);
@@ -217,13 +224,12 @@ html {
     #0a0518 50%,
     #000000 100%
   ) !important;
-  border-radius: calc(1.22406rem - 2px); /* same as light - prevents shift */
+  border-radius: calc(1.22406rem - 2px);
   box-shadow:
     0 0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Right pill (DynamicIsland): fully rounded so pill stays round with extra padding */
 .right-pill-wrapper.lets-chat-cream-wrapper {
   border-radius: 9999px;
 }
@@ -231,7 +237,6 @@ html {
   border-radius: 9999px;
 }
 
-/* Left pill (DynamicIsland): more rounded, white bg in light mode, same as right pill in dark */
 .left-pill-wrapper.lets-chat-cream-wrapper {
   border-radius: 2.5rem;
 }
@@ -248,7 +253,6 @@ html {
   ) !important;
 }
 
-/* Dynamic island — middle section nav: same dark treatment as .dark .lets-chat-inner */
 .dark .island-middle-nav-pill {
   background: linear-gradient(
     90deg,
@@ -262,7 +266,6 @@ html {
     0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Right pill inner - unified white bg for Let's chat + icons (light mode), full pill roundness */
 .pill-right-inner {
   background: #fff;
   border-radius: 9999px;
@@ -272,7 +275,6 @@ html {
   background: transparent;
 }
 
-/* Right pill icons section - white bg in light mode, full pill roundness */
 .pill-icons-white {
   background: #fff;
   border-radius: 9999px;
@@ -281,7 +283,6 @@ html {
   background: transparent;
 }
 
-/* Icons with blue-to-cyan gradient (light mode) - use fill/stroke on SVG */
 .pill-icon-gradient svg,
 .pill-icon-gradient svg path,
 .pill-icon-gradient svg circle {
@@ -295,7 +296,6 @@ html {
   stroke: currentColor;
 }
 
-/* Right pill: keep gradient on icons in dark mode (per design) */
 .dark .pill-icon-gradient-keep svg,
 .dark .pill-icon-gradient-keep svg path,
 .dark .pill-icon-gradient-keep svg circle {
@@ -303,7 +303,6 @@ html {
   stroke: url(#pillIconGradient);
 }
 
-/* Theme toggle icon - plain white (no gradient) */
 .pill-icon-white svg,
 .pill-icon-white svg path,
 .pill-icon-white svg circle {
@@ -311,7 +310,6 @@ html {
   stroke: white;
 }
 
-/* DynamicIsland V2 - dark mode (solid pills, no gradient on outer borders) */
 .dark .dynamic-island-left-outer {
   background: #0f0f18 !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
@@ -324,7 +322,6 @@ html {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Avatar gradient ring - left pill only (dark mode) */
 .dark .dynamic-island-avatar-ring {
   background:
     linear-gradient(#0a0a12, #0a0a12) padding-box,
@@ -337,7 +334,6 @@ html {
   border: 2px solid transparent !important;
 }
 
-/* "then code" gradient text - light mode only (Design section) */
 .text-gradient-design {
   background: linear-gradient(136deg, #52d17c 11.31%, #22918b 81.69%);
   -webkit-background-clip: text;
@@ -351,7 +347,6 @@ html {
   color: var(--accent);
 }
 
-/* "in production" gradient text - light mode only */
 .text-gradient-production {
   background: linear-gradient(144deg, #ff3b3b 3.63%, #60c 94.05%);
   -webkit-background-clip: text;
@@ -365,7 +360,6 @@ html {
   color: var(--accent);
 }
 
-/* Version dropdown - light mode (white outer, gradient inner) */
 .version-dropdown {
   background: var(--dropdown-bg);
   border-color: var(--border);
@@ -388,7 +382,6 @@ html.light .version-dropdown-desc {
   color: #6f6f6f;
 }
 
-/* Version dropdown icon - gradient ring (Version 2) */
 .version-icon-v2-ring {
   background:
     linear-gradient(#fbfbfb, #e1e7fb) padding-box,
@@ -412,8 +405,6 @@ html.dark .version-icon-v2-ring {
   border: 2px solid transparent;
 }
 
-/* Let's Chat button inner - dark gradient (indigo to black) (V1) */
-/* border-radius matches first .lets-chat-inner to prevent layout shift on theme toggle */
 .lets-chat-inner {
   background: linear-gradient(
     90deg,
@@ -427,7 +418,6 @@ html.dark .version-icon-v2-ring {
     0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Right pill inner content - dark mode gradient background */
 .dark .pill-inner-dark {
   background: linear-gradient(
     79deg,
@@ -442,7 +432,6 @@ html.dark .version-icon-v2-ring {
     0 4px 16px rgba(59, 7, 242, 0.25);
 }
 
-/* Theme toggle button on right pill - outer/inner structure (transparent) */
 .theme-toggle-outer {
   border-radius: 1.89169rem;
   background: transparent;
@@ -464,7 +453,6 @@ html.dark .version-icon-v2-ring {
   overflow: hidden;
 }
 
-/* Compact theme toggle for mobile pill (transparent) */
 .theme-toggle-outer-mobile {
   border-radius: 1.5rem;
   background: transparent;
@@ -492,19 +480,15 @@ html.dark .version-icon-v2-ring {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* V2 fonts */
   --font-cormorant: var(--font-cormorant), serif;
   --font-jetbrains: var(--font-jetbrains), monospace;
   --font-outfit: var(--font-outfit), sans-serif;
 
-  /* Brand Gradients (also in :root for use in utility classes) */
   --gradient-fade-right: linear-gradient(to right, #fcfcfc, transparent);
   --gradient-fade-left: linear-gradient(to left, white, transparent);
 
-  /* Spotlight animation */
   --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
 
-  /* Accordion animations */
   --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.87, 0, 0.13, 1);
   --animate-accordion-up: accordion-up 0.3s cubic-bezier(0.87, 0, 0.13, 1);
 }
@@ -537,7 +521,6 @@ html.dark .version-icon-v2-ring {
   }
 }
 
-/* Theme fixed to light; removed prefers-color-scheme so it doesn't follow system */
 html {
   scrollbar-gutter: stable;
 }
@@ -547,7 +530,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Footer background - ensure dark mode applies when theme is toggled */
 .footer-section {
   background-color: #ffffff;
 }
@@ -559,14 +541,12 @@ body {
   background-repeat: no-repeat;
 }
 
-/* Footer CTA text - force white in dark mode */
 .dark .footer-section .footer-cta-heading,
 .dark .footer-section .footer-cta-heading span:not([class*="gradient"]),
 .dark .footer-section .footer-cta-paragraph {
   color: #ffffff !important;
 }
 
-/* Footer "DESIGN ENGINEER" watermark - Bodoni 72 Oldstyle / Bodoni Moda, light vs dark gradient */
 .footer-design-engineer {
   font-family:
     "Bodoni 72 Oldstyle", var(--font-bodoni-moda), "Bodoni Moda", serif;
@@ -590,7 +570,6 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Hero name "Ronnie Kiyegga" - soft diffused shadow for depth (floating/raised effect) */
 .hero-name {
   text-shadow:
     2px 4px 20px rgba(0, 0, 0, 0.12),
@@ -602,7 +581,6 @@ body {
     1px 2px 12px rgba(0, 0, 0, 0.25);
 }
 
-/* Gradient text using --gradient-blue */
 .text-gradient-blue {
   background: var(--gradient-blue);
   -webkit-background-clip: text;
@@ -614,7 +592,6 @@ html.light .text-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
-/* Gradient blue text — always purple-to-cyan (no light-mode green override) */
 .text-gradient-blue-static {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
   -webkit-background-clip: text;
@@ -623,7 +600,6 @@ html.light .text-gradient-blue {
   color: transparent;
 }
 
-/* Project showcase CTAs — muted default, same purple→cyan as .text-gradient-blue-static on hover/focus */
 .project-cta-link .project-cta-link-label {
   color: #9d9e9f;
 }
@@ -651,7 +627,6 @@ html.light .text-gradient-blue {
   text-decoration-color: #0cd1cf;
 }
 
-/* WandSparkles icon - same shape, only colour changes (gradient when active, gray when inactive) */
 .icon-wand-sparkles {
   -webkit-mask: var(--wand-sparkles-mask) center/contain no-repeat;
   mask: var(--wand-sparkles-mask) center/contain no-repeat;
@@ -666,13 +641,11 @@ html.light .icon-gradient-blue {
   background: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
 }
 
-/* Tracing beam gradient border - matches tracing-beam.tsx stroke colors */
 .border-tracing-gradient {
   border-image: var(--gradient-tracing-beam) 1;
   border-style: solid;
 }
 
-/* Sharp diagonal cut-off corners: top-right and bottom-left */
 .corner-cut-tr-bl {
   clip-path: polygon(
     0 0,
@@ -691,11 +664,6 @@ html.light .icon-gradient-blue {
   mix-blend-mode: normal;
 }
 
-/* ================================================================
-   V2 DESIGN TOKENS
-   ================================================================ */
-
-/* :root fallback — dark values so first paint is never unstyled */
 :root {
   --bg: #080808;
   --surface: #111111;
@@ -721,7 +689,6 @@ html.light .icon-gradient-blue {
   --accent-border: #d4ff47;
 }
 
-/* Dark mode (default) */
 html.dark {
   --bg: #080808;
   --surface: #111111;
@@ -747,7 +714,6 @@ html.dark {
   --accent-border: #d4ff47;
 }
 
-/* Light mode — accent uses #A3D500 (V1) */
 html.light {
   --gradient-blue: #a3d500;
   --bg: #ffffff;
@@ -774,7 +740,6 @@ html.light {
   --accent-border: rgba(15, 20, 50, 0.12);
 }
 
-/* Light mode — V2 only: gradient-blue (purple to cyan) */
 html.light [data-version="v2"] {
   --gradient-blue: linear-gradient(77deg, #3a07f2 10.26%, #0cd1cf 98.05%);
   --accent: #6344f5;
@@ -787,19 +752,16 @@ html.light [data-version="v2"] {
   --available-dot: #6344f5;
 }
 
-/* Cream background sections: light mode only (Work, Experience, Skills) */
 .section-cream-bg {
   background: var(--bg);
 }
 html.light .section-cream-bg {
   background: var(--bg);
 }
-/* Projects/Work section: black background in dark mode */
 .dark #work.section-cream-bg {
   background: #000000;
 }
 
-/* Process section: original dark mode (process-bg), cream in light to match Selected Work */
 .section-process-bg {
   background: var(--process-bg);
 }
@@ -807,7 +769,6 @@ html.light .section-process-bg {
   background: var(--bg);
 }
 
-/* Alias for Skills (kept for backwards compatibility) */
 .skills-cream-bg {
   background: var(--bg);
 }
@@ -815,7 +776,6 @@ html.light .skills-cream-bg {
   background: var(--bg);
 }
 
-/* White background sections in light mode (Design, Hero, Marquee, CTA, Footer) */
 .section-white-bg {
   background: var(--bg);
 }
@@ -823,7 +783,6 @@ html.light .section-white-bg {
   background: #ffffff !important;
 }
 
-/* Light mode: borders keep original dark color (no gradient) */
 html.light [style*="border"][style*="var(--accent)"],
 html.light [class*="border-[var(--accent)]"],
 html.light [style*="borderBottom"][style*="var(--accent)"] {
@@ -833,7 +792,6 @@ html.light [style*="borderBottom"][style*="var(--accent)"] {
   border-bottom-color: var(--accent-border) !important;
 }
 
-/* Light mode: accent color for elements using accent/tag/stat/metric as color (V1: green) */
 html.light [style*="color: var(--accent)"]:not(:has(svg)),
 html.light [style*="color:var(--accent)"]:not(:has(svg)),
 html.light [style*="color: var(--tag-color)"],
@@ -848,7 +806,6 @@ html.light [style*="color:var(--metric-color)"] {
   color: transparent !important;
 }
 
-/* Light mode V2 only: gradient-blue for accent text */
 html.light [data-version="v2"] [style*="color: var(--accent)"]:not(:has(svg)),
 html.light [data-version="v2"] [style*="color:var(--accent)"]:not(:has(svg)),
 html.light [data-version="v2"] [style*="color: var(--tag-color)"],
@@ -863,7 +820,6 @@ html.light [data-version="v2"] [style*="color:var(--metric-color)"] {
   color: transparent !important;
 }
 
-/* Light mode: icons (elements with SVG) use solid accent — gradient doesn't work for SVG fill */
 html.light [style*="color: var(--accent)"]:has(svg),
 html.light [style*="color:var(--accent)"]:has(svg) {
   color: var(--accent-solid) !important;
@@ -901,7 +857,6 @@ html.light [style*="color:var(--accent)"]:has(svg) {
     transform: none;
     transition: none;
   }
-  /* Hero sections: ensure content visible when JS has not run */
   [data-hero-badge],
   [data-hero-name],
   [data-hero-role],
@@ -937,7 +892,6 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   animation: cycleWords 6s steps(1) infinite;
 }
 
-/* Design carousel infinite scroll - left to right; calc for exact 1/3 (triple items, seamless loop) */
 @keyframes design-scroll {
   from {
     transform: translateX(0);
@@ -974,10 +928,6 @@ html.light [style*="color:var(--accent)"]:has(svg) {
   animation: pulse-dot-anim 2s ease-in-out infinite;
 }
 
-/* ================================================================
-   V2 WORK CARD — Flipped: image+label+title default, text slides from left on hover
-   Default: image fills card with label+title overlay. Hover: text slides in from left, image shrinks right.
-   ================================================================ */
 .work-card-v2 {
   display: block;
   min-height: 300px;
@@ -992,7 +942,6 @@ html.light .work-card-v2:hover {
   background: var(--surface2) !important;
 }
 
-/* Image panel — default full width, shrinks to right on hover */
 .wc-image {
   position: absolute;
   top: 0;
@@ -1007,7 +956,6 @@ html.light .work-card-v2:hover {
   width: 46%;
 }
 
-/* Gradient from text panel into image (left edge of image) */
 .wc-image::before {
   content: "";
   position: absolute;
@@ -1023,7 +971,6 @@ html.light .wc-image::before {
   background: linear-gradient(to right, var(--surface2), transparent);
 }
 
-/* Dark mode: unified #161616 background for all work cards */
 html:not(.light) [data-version="v2"] .work-card-v2 {
   background: #161616 !important;
 }
@@ -1033,12 +980,10 @@ html:not(.light) [data-version="v2"] .work-card-v2:hover {
 html:not(.light) [data-version="v2"] .wc-image-bg {
   background: #161616 !important;
 }
-/* Dark mode: remove left-edge gradient to prevent visible divide on hover */
 html:not(.light) [data-version="v2"] .wc-image::before {
   background: linear-gradient(to right, #161616, transparent) !important;
 }
 
-/* Light theme: remove dark overlay on work card preview */
 html.light [data-version="v2"] .wc-image-bg {
   background: linear-gradient(
     160deg,
@@ -1047,7 +992,6 @@ html.light [data-version="v2"] .wc-image-bg {
     #fafbf9 100%
   ) !important;
 }
-/* Remove shadow from work card device mockups - both themes */
 [data-version="v2"] .wc-image-inner .screen,
 html.light [data-version="v2"] .wc-image-inner .screen {
   box-shadow: none !important;
@@ -1076,12 +1020,10 @@ html.light [data-version="v2"] .wc-image-inner .screen {
   box-shadow: none !important;
   filter: none !important;
 }
-/* Remove baked-in background/shadow from PNG mockups — blend light areas with card */
 .wc-image-inner .screen img.work-card-img {
   mix-blend-mode: multiply;
 }
 
-/* Label + title — default state only, hidden on hover (replaced by text panel) */
 .wc-image-label {
   position: absolute;
   bottom: 0;
@@ -1107,7 +1049,6 @@ html.light .wc-image-label {
   );
 }
 
-/* Text panel — slides in from left on hover, fully hidden by default */
 .wc-text {
   padding: 40px 36px;
   display: flex;
@@ -1217,7 +1158,6 @@ html.light .work-card-v2:hover .wc-arrow {
   color: var(--accent-text) !important;
 }
 
-/* Touch devices: always show text panel (hover doesn't work) — desktop/tablet only */
 @media (hover: none) and (min-width: 769px) {
   .work-card-v2 .wc-text {
     width: 54%;
@@ -1234,7 +1174,6 @@ html.light .work-card-v2:hover .wc-arrow {
   }
 }
 
-/* Mobile: full image visible, label at bottom below image */
 @media (max-width: 768px) {
   .work-card-v2 {
     display: flex;
@@ -1276,7 +1215,6 @@ html.light .work-card-v2:hover .wc-arrow {
   }
 }
 
-/* Screen mockups (from work-cards-hover-right.html) */
 .wc-image-inner .screen {
   max-width: 520px;
 }
@@ -1702,9 +1640,6 @@ html.light .work-card-v2:hover .wc-arrow {
   color: #555;
 }
 
-/* ================================================================
-   V2 DESIGN CAROUSEL
-   ================================================================ */
 .light .design-fade::after {
   background: linear-gradient(
     to top,
@@ -1713,9 +1648,6 @@ html.light .work-card-v2:hover .wc-arrow {
   );
 }
 
-/* ================================================================
-   V2 NOISE TEXTURE (subtle grain)
-   ================================================================ */
 .v2-noise::before {
   content: "";
   position: fixed;
@@ -1726,18 +1658,11 @@ html.light .work-card-v2:hover .wc-arrow {
   z-index: 9997;
 }
 
-/* ================================================================
-   V2 TRACING BEAM — full width override
-   ================================================================ */
 .v2-tracing-beam > div {
   max-width: 100% !important;
   padding-left: 0 !important;
 }
 
-/* ================================================================
-   PROJECT VISUAL CARD — dark mode gradient override only
-   Light mode uses the inline Tailwind class (cream gradient)
-   ================================================================ */
 .dark .project-visual-card {
   background:
     radial-gradient(
@@ -1758,9 +1683,6 @@ html.light .work-card-v2:hover .wc-arrow {
   border-radius: 12.14px !important;
 }
 
-/* ================================================================
-   CUSTOM CURSOR (dot + ring)
-   ================================================================ */
 .custom-cursor-active,
 .custom-cursor-active * {
   cursor: none !important;
@@ -1789,14 +1711,13 @@ html.light .work-card-v2:hover .wc-arrow {
   background: transparent;
 }
 
-/* Phase 2 editorial portfolio shell */
 .shell {
   --portfolio-paper: #fafafa;
   --text-strong: #212225;
   --text-weak: #595f7a;
   --text-gray: rgb(100 100 100 / 70%);
   --portfolio-line: #ececeb;
-  min-height: 100vh;
+  min-height: calc(100vh / var(--page-zoom));
   overflow-x: clip;
   background: var(--portfolio-paper);
   color: var(--text-strong);
@@ -1811,7 +1732,7 @@ html.light .work-card-v2:hover .wc-arrow {
 
 .page {
   padding-block: 120px;
-  border-inline: 0.3px solid rgba(107, 114, 128, 0.2);
+  border-inline: 0.3px solid rgba(107, 114, 128, 0.15);
   padding: 120px 4px;
 }
 
@@ -1850,11 +1771,6 @@ html.light .work-card-v2:hover .wc-arrow {
   padding-block: 0;
 }
 
-/*
- * Default heading typography. h2 defaults are wrapped in :where() so they
- * carry zero specificity — any component rule (e.g. `.sectionIntro h2`)
- * overrides them without a specificity fight.
- */
 .page h1,
 :where(.page h2) {
   font-family: var(--font-playfair-display), serif;
@@ -1868,13 +1784,13 @@ html.light .work-card-v2:hover .wc-arrow {
 
 :where(.page h2:not(.thoughtArticleSectionTitle)) {
   margin: 0 0 1.75rem;
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-size: clamp(1.15rem, calc(2vw / var(--page-zoom)), 1.45rem);
 }
 
 .sideNav {
   position: fixed;
   top: 220px;
-  left: max(1.5rem, calc(50vw - 658px));
+  left: max(1.5rem, calc(calc(50vw / var(--page-zoom)) - 658px));
   z-index: 40;
   display: flex;
   width: 168px;
@@ -1888,7 +1804,7 @@ html.light .work-card-v2:hover .wc-arrow {
 .thoughtOnThisPage {
   position: fixed;
   top: 220px;
-  right: max(1.5rem, calc(50vw - 658px));
+  right: max(1.5rem, calc(calc(50vw / var(--page-zoom)) - 658px));
   z-index: 40;
   display: flex;
   width: 168px;
@@ -2528,8 +2444,8 @@ p.thoughtArticleCopy {
 }
 
 .portrait {
-  width: clamp(5rem, 8vw, 7rem);
-  height: clamp(5rem, 8vw, 7rem);
+  width: clamp(5rem, calc(8vw / var(--page-zoom)), 7rem);
+  height: clamp(5rem, calc(8vw / var(--page-zoom)), 7rem);
   border-radius: 999px;
   object-fit: cover;
 }
@@ -2537,7 +2453,7 @@ p.thoughtArticleCopy {
 .identity h1,
 .pageHeader h1 {
   margin: 0;
-  font-size: clamp(1.65rem, 3vw, 2rem);
+  font-size: clamp(1.65rem, calc(3vw / var(--page-zoom)), 2rem);
   line-height: 1;
 }
 
@@ -2582,9 +2498,9 @@ p.thoughtArticleCopy {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.125rem 0.75rem;
-  border-radius: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.1875rem;
+  border-radius: 0.625rem;
   background: #f4f4f4a5;
 }
 
@@ -2592,21 +2508,29 @@ p.thoughtArticleCopy {
 .profileNav .is-static {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
   border-radius: 0.5rem;
   color: rgb(89 95 122 / 80%);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 400;
   white-space: nowrap;
   text-decoration: none;
 }
 
+.profileNav a.is-active {
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.06),
+    0 1px 3px rgba(16, 24, 40, 0.08);
+  color: var(--text-strong);
+}
+
 .profileNavMark {
   display: block;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
   overflow: visible;
 }
 
@@ -2652,14 +2576,14 @@ p.thoughtArticleCopy {
 .featuredThought {
   display: grid;
   grid-template-columns: minmax(0, 268px) minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: 5.25rem;
 }
 
 .featuredCopy h2 {
-  margin: 0.55rem 0 0.75rem;
+  margin: 8px 0;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-size: clamp(1.15rem, calc(2vw / var(--page-zoom)), 1.6rem);
   font-weight: 600;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -2668,7 +2592,7 @@ p.thoughtArticleCopy {
 .featuredCopy > p:not(.articleMeta) {
   margin: 0;
   color: #303030;
-  font-size: 0.69rem;
+  font-size: 0.75rem;
   line-height: 1.55;
 }
 
@@ -2689,7 +2613,8 @@ p.thoughtArticleCopy {
 .articleMeta strong,
 .thoughtCard > p strong {
   color: #242424;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 0.8rem;
 }
 
 .thoughtCardMeta strong {
@@ -2705,8 +2630,8 @@ p.thoughtArticleCopy {
 
 .readButton {
   min-height: 1.55rem;
-  margin-top: 0.35rem;
-  padding-inline: 0.65rem;
+  margin-top: 1rem;
+  padding-inline: 0.75rem;
   font-size: 0.56rem;
 }
 
@@ -2718,7 +2643,8 @@ p.thoughtArticleCopy {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(2rem, 8.7vw, 4.75rem);
+  padding: clamp(1.5rem, calc(4vw / var(--page-zoom)), 2.75rem)
+    clamp(2rem, calc(8.7vw / var(--page-zoom)), 4.75rem);
   overflow: hidden;
   border: 0;
   border-radius: 0.95rem;
@@ -2732,7 +2658,7 @@ p.thoughtArticleCopy {
 .featuredCard h3 {
   max-width: 26ch;
   margin: 0;
-  font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+  font-size: clamp(1.1rem, calc(2.8vw / var(--page-zoom)), 1.6rem);
   font-weight: 500;
   line-height: 1.22;
   letter-spacing: -0.03em;
@@ -2802,7 +2728,7 @@ p.thoughtArticleCopy {
 .thoughtCardCopy > h3 {
   max-width: 100%;
   margin: 0.25rem 0 0;
-  font-size: clamp(0.78rem, 0.9vw, 0.95rem);
+  font-size: clamp(0.78rem, calc(0.9vw / var(--page-zoom)), 0.95rem);
   font-weight: 600;
   line-height: 1.18;
   text-wrap: balance;
@@ -2869,7 +2795,7 @@ p.thoughtArticleCopy {
 .section {
   display: grid;
   grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4.5rem);
+  gap: clamp(1.5rem, calc(4vw / var(--page-zoom)), 4.5rem);
   padding-block: 170px;
 }
 
@@ -2911,7 +2837,7 @@ p.thoughtArticleCopy {
 .thoughtsIndex h1 {
   margin: 0;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(2.15rem, 4.4vw, 2.65rem);
+  font-size: clamp(2.15rem, calc(4.4vw / var(--page-zoom)), 2.65rem);
   font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.045em;
@@ -3320,6 +3246,28 @@ p.thoughtArticleCopy {
   letter-spacing: -0.03em;
 }
 
+.relatedThoughts {
+  margin-top: 6rem;
+}
+
+.relatedThoughtsKicker {
+  margin: 0 0 4px;
+  color: var(--text-strong);
+  font-size: 0.875rem;
+}
+
+.relatedThoughts h2 {
+  margin: 0 0 1.25rem;
+}
+
+.relatedThoughts .thoughtsGridCard {
+  background-image: url("/_next/image?url=%2Fimages%2Feditorial%2Freact-rendering-hero.png&w=828&q=75");
+}
+
+.relatedThoughts .thoughtsGridCard .featuredDate {
+  color: rgb(255 255 255 / 85%);
+}
+
 .thoughtsFeature {
   display: grid;
   align-content: start;
@@ -3529,7 +3477,7 @@ p.thoughtArticleCopy {
   margin: 0;
   color: #212225;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(2.15rem, 4.4vw, 2.65rem);
+  font-size: clamp(2.15rem, calc(4.4vw / var(--page-zoom)), 2.65rem);
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 1.08;
@@ -3752,14 +3700,16 @@ p.thoughtArticleCopy {
 
 .designSpiral {
   width: 100%;
-  height: min(48rem, 82vh);
+  height: min(48rem, calc(82vh / var(--page-zoom)));
   overflow: hidden;
   background: #fafafa;
 }
 
-/* The page column stays 852px; only the gallery breaks out to 1200px, centred. */
 .designGalleries {
-  --design-gallery-width: min(1200px, calc(100vw - 2rem));
+  --design-gallery-width: min(
+    1200px,
+    calc(calc(100vw / var(--page-zoom)) - 2rem)
+  );
 
   position: relative;
   z-index: 1;
@@ -3771,7 +3721,6 @@ p.thoughtArticleCopy {
   background: var(--portfolio-paper);
 }
 
-/* Filtered views: a masonry of cards at each export's natural shape. */
 .designGallery {
   position: relative;
   z-index: 0;
@@ -3788,8 +3737,7 @@ p.thoughtArticleCopy {
   aspect-ratio: var(--design-card-aspect, 4 / 3);
 }
 
-/* "All" view: every card pinned to its measured position in the Figma grid. */
-@media (width > 56rem) {
+@media (56rem < width < 57.2rem), (width > 61.6rem) {
   .designGallery[data-layout="featured"] {
     column-count: auto;
     aspect-ratio: var(--featured-aspect);
@@ -3855,7 +3803,6 @@ p.thoughtArticleCopy {
   );
 }
 
-/* Hold the reveal until the image is ready so each card enters in one motion. */
 .designCard.reveal.visible:has(img.designCardMedia:not([data-loaded])) {
   animation-play-state: paused;
 }
@@ -3977,9 +3924,9 @@ p.thoughtArticleCopy {
 .designLightboxFrame {
   position: relative;
   display: flex;
-  width: min(60rem, calc(100vw - 2.5rem));
-  max-width: calc(100vw - 2.5rem);
-  height: min(42rem, calc(100dvh - 11rem));
+  width: min(60rem, calc(calc(100vw / var(--page-zoom)) - 2.5rem));
+  max-width: calc(calc(100vw / var(--page-zoom)) - 2.5rem);
+  height: min(42rem, calc(calc(100dvh / var(--page-zoom)) - 11rem));
   flex: none;
   align-items: center;
   justify-content: center;
@@ -4194,7 +4141,7 @@ p.thoughtArticleCopy {
 .allPosts h2 {
   margin: 0 0 1.75rem;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-size: clamp(1.15rem, calc(2vw / var(--page-zoom)), 1.45rem);
   font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -4260,7 +4207,7 @@ p.thoughtArticleCopy {
 
 .featuredPlaceholder,
 .designScaffold {
-  min-height: clamp(13rem, 32vw, 23rem);
+  min-height: clamp(13rem, calc(32vw / var(--page-zoom)), 23rem);
   border: 1px solid var(--portfolio-line);
   background: #fafafa;
 }
@@ -4549,7 +4496,7 @@ p.thoughtArticleCopy {
 }
 
 .experienceRole {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .experienceLink {
@@ -4621,12 +4568,6 @@ p.thoughtArticleCopy {
   line-height: 22px;
 }
 
-.educationDates {
-  color: var(--text-weak);
-  font-weight: 400;
-  font-size: 12px;
-}
-
 .educationDegree {
   margin: 0;
   color: var(--text-weak);
@@ -4663,7 +4604,7 @@ p.thoughtArticleCopy {
 }
 
 .designScaffold {
-  min-height: clamp(22rem, 52vw, 38rem);
+  min-height: clamp(22rem, calc(52vw / var(--page-zoom)), 38rem);
 }
 
 .clientWork {
@@ -4678,7 +4619,6 @@ p.thoughtArticleCopy {
   gap: 1.5rem;
 }
 
-/* Title + supporting line shared by the home section headers; matches /Education. */
 .sectionIntro h2 {
   margin: 0;
   color: var(--text-strong);
@@ -4713,7 +4653,7 @@ p.thoughtArticleCopy {
   position: relative;
   grid-column: 1 / -1;
   left: 40%;
-  width: 100vw;
+  width: calc(100vw / var(--page-zoom));
   height: 630px;
   min-width: 0;
   margin-top: 2.5rem;
@@ -4734,7 +4674,8 @@ p.thoughtArticleCopy {
 }
 
 .clientCarousel .depth-carousel-stage {
-  transform: translateX(39.5vw) translateY(72px) scale(0.9);
+  transform: translateX(calc(39.5vw / var(--page-zoom))) translateY(72px)
+    scale(0.9);
 }
 
 .clientCarousel .depth-carousel-card {
@@ -5040,7 +4981,16 @@ p.thoughtArticleCopy {
   font-size: 11px;
   font-weight: 500;
   line-height: 15.46px;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.footerVisitors .visitorCount {
+  min-width: 0;
+  color: #a4a9b3;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15.46px;
 }
 
 .footerSep {
@@ -5056,14 +5006,14 @@ p.thoughtArticleCopy {
   text-decoration: underline;
 }
 
-@media (max-width: 75rem) {
+@media (max-width: 82.5rem) {
   .sideNav,
   .thoughtOnThisPage {
     display: none;
   }
 }
 
-@media (max-width: 56rem) {
+@media (width <= 56rem), (57.2rem <= width <= 61.6rem) {
   .designGallery {
     column-count: 2;
   }
@@ -5102,10 +5052,8 @@ p.thoughtArticleCopy {
     gap: 1.5rem;
   }
 
-  /* Stacked featured intro — follows the mobile design: 16px meta,
-   * 42px semibold heading (fluid so it never clips), 17/24 body. */
   .featuredCopy h2 {
-    margin: 1rem 0;
+    margin: 8px 0;
     font-size: clamp(1.75rem, 9vw, 2.625rem);
     font-weight: 600;
     line-height: 1.07;
@@ -5119,7 +5067,7 @@ p.thoughtArticleCopy {
   }
 
   .articleMeta {
-    font-size: 16px;
+    font-size: 13px;
   }
 
   .featuredCopy .readButton {
@@ -5168,8 +5116,8 @@ p.thoughtArticleCopy {
     gap: 0.5rem;
   }
 
-  .footerEmail,
-  .footerEmailSep {
+  .footerVisitors,
+  .footerVisitorsSep {
     display: none;
   }
 

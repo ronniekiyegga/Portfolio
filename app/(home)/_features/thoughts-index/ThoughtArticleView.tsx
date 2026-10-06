@@ -15,6 +15,7 @@ import { getThoughtArticleHeadings } from "./thought-articles";
 import { thoughtCategoryTitle } from "./thoughts";
 import { ThoughtCodeBlock } from "./ThoughtCodeBlock";
 import { ThoughtOnThisPage } from "./ThoughtOnThisPage";
+import { RelatedThoughts } from "./RelatedThoughts";
 
 const operationalContextSlugs = new Set([
   "what-10000-rows-actually-means",
@@ -286,11 +287,6 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
           <h1 className="mb-6 text-balance text-4xl font-bold text-[#0f1115] md:text-4xl md:leading-tight">
             {article.overlayTitle}
           </h1>
-          {/* {article.title !== article.overlayTitle ? (
-            <p className="mx-auto mb-8 max-w-2xl text-md leading-relaxed text-[#595F7A]">
-              {article.title}
-            </p>
-          ) : null} */}
           <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <div className="grid grid-cols-[auto_1fr] items-center gap-2">
               <div className="aspect-square size-6 overflow-hidden rounded-full border border-transparent bg-white shadow-md shadow-black/15 ring-1 ring-[#e6e8ef]">
@@ -353,6 +349,7 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
           </div>
         </div>
       </article>
+      <RelatedThoughts slug={article.slug} />
       <ThoughtOnThisPage headings={headings} />
     </div>
   );

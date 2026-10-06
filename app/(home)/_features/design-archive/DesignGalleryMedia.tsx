@@ -70,7 +70,6 @@ function GalleryImage({
   const imageRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // An eager image can finish before hydration attaches `onLoad`.
   useEffect(() => {
     if (imageRef.current?.complete) setIsLoaded(true);
   }, []);

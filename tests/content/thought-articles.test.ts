@@ -8,6 +8,7 @@ import ThoughtArticlePage, {
 } from "@/app/(home)/thoughts/[slug]/page";
 import {
   getAllThoughtArticleSlugs,
+  getRelatedThoughts,
   getThoughtArticle,
 } from "@/app/(home)/_features/thoughts-index/thought-articles";
 import { allThoughts } from "@/app/(home)/_features/thoughts-index/thoughts";
@@ -32,7 +33,6 @@ vi.mock("next/navigation", () => navigation);
 
 const params = (slug: string) => ({ params: Promise.resolve({ slug }) });
 
-/** Key-order-independent JSON, so the hash tracks content rather than formatting. */
 function canonical(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(canonical);
   if (value && typeof value === "object") {
@@ -147,5 +147,39 @@ describe("/thoughts/[slug] route", () => {
       ThoughtArticlePage(params("does-not-exist")),
     ).rejects.toThrow("NEXT_NOT_FOUND");
     expect(navigation.notFound).toHaveBeenCalled();
+  });
+});
+
+describe("getRelatedThoughts", () => {
+  const slugs = getAllThoughtArticleSlugs().map(({ slug }) => slug);
+
+  it("suggests three other, distinct, readable articles for every article", () => {
+    for (const slug of slugs) {
+      const related = getRelatedThoughts(slug).map((thought) => thought.slug);
+
+      expect(related).toHaveLength(3);
+      expect(related).not.toContain(slug);
+      expect(new Set(related).size).toBe(3);
+      related.forEach((other) => expect(getThoughtArticle(other)).toBeDefined());
+    }
+  });
+
+  it("returns the same suggestions for the same article", () => {
+    for (const slug of slugs) {
+      expect(getRelatedThoughts(slug)).toEqual(getRelatedThoughts(slug));
+    }
+  });
+
+  it("varies the suggestions between articles", () => {
+    const sets = new Set(
+      slugs.map((slug) =>
+        getRelatedThoughts(slug)
+          .map((thought) => thought.slug)
+          .sort()
+          .join(","),
+      ),
+    );
+
+    expect(sets.size).toBeGreaterThan(slugs.length / 2);
   });
 });

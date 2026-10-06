@@ -10,7 +10,6 @@ import {
 } from "react";
 
 const DRAG_THRESHOLD_PX = 4;
-/** Below this gain, zooming would barely enlarge the image, so it is disabled. */
 const MIN_ZOOM_GAIN = 1.15;
 
 type ZoomOrigin = { x: number; y: number };
@@ -18,7 +17,6 @@ type DragState = { x: number; y: number; left: number; top: number; moved: boole
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
-/** One image pixel per device pixel: the sharpest the export can be shown. */
 function nativeDisplayWidth(image: HTMLImageElement) {
   return image.naturalWidth / window.devicePixelRatio;
 }

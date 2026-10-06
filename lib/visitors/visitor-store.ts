@@ -42,7 +42,6 @@ function createRedisClient(): CounterClient | null {
     process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) return null;
 
-  // The SDK retries five times by default; a status-bar number should fail fast instead.
   return new Redis({ url, token, retry: { retries: 1 } });
 }
 
