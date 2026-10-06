@@ -14,7 +14,6 @@ import {
   Italianno,
 } from "next/font/google";
 import "./globals.css";
-import { SplashProvider } from "@/shared/contexts/SplashContext";
 import { ThemeProvider } from "next-themes";
 
 /* ── V1 fonts ─────────────────────────────────────────────── */
@@ -170,7 +169,7 @@ export default function RootLayout({
             }}
           />
 
-          <SplashProvider>{children}</SplashProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>

@@ -1,14 +1,9 @@
-import { ProjectContextProvider } from "@/app/contexts/ProjectContext";
 import { PortfolioShell } from "@/shared/components/portfolio/PortfolioShell";
 
-export default function V1Layout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <ProjectContextProvider>
-      <PortfolioShell>{children}</PortfolioShell>
-    </ProjectContextProvider>
-  );
+  return <PortfolioShell>{children}</PortfolioShell>;
 }

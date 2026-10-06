@@ -254,7 +254,7 @@ export function InterfacesSection() {
       <p className="sectionLabel">/ Design</p>
       <div className="sectionContent">
         <div className="interfaceHeader">
-          <div className="interfaceCopy">
+          <div className="sectionIntro">
             <h2 id="interfaces-heading">Interfaces &amp; Components</h2>
             <p>
               A selection of dashboards, search tools and interface details
