@@ -34,8 +34,8 @@ function ThoughtContextNote() {
       <p>
         Client and system details have been generalised to protect
         confidentiality. Metrics are included only where their scope and
-        measurement method can be stated. Examples are marked illustrative
-        where they are not measurements from a specific incident.
+        measurement method can be stated. Examples are marked illustrative where
+        they are not measurements from a specific incident.
       </p>
     </aside>
   );
@@ -282,15 +282,15 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
       </Breadcrumb>
 
       <article className="mt-10">
-        <header className="mx-auto mb-10 max-w-3xl text-center">
-          <h1 className="mb-6 text-balance text-4xl font-bold text-[#0c0d10] md:text-5xl md:leading-tight">
+        <header className="mx-auto mb-16 max-w-3xl text-center">
+          <h1 className="mb-6 text-balance text-4xl font-bold text-[#0f1115] md:text-4xl md:leading-tight">
             {article.overlayTitle}
           </h1>
-          {article.title !== article.overlayTitle ? (
-            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-[#595F7A]">
+          {/* {article.title !== article.overlayTitle ? (
+            <p className="mx-auto mb-8 max-w-2xl text-md leading-relaxed text-[#595F7A]">
               {article.title}
             </p>
-          ) : null}
+          ) : null} */}
           <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-4">
             <div className="grid grid-cols-[auto_1fr] items-center gap-2">
               <div className="aspect-square size-6 overflow-hidden rounded-full border border-transparent bg-white shadow-md shadow-black/15 ring-1 ring-[#e6e8ef]">
@@ -302,12 +302,12 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
                   className="size-full object-cover rounded-full"
                 />
               </div>
-              <span className="line-clamp-1 text-sm text-[#595F7A]">
+              <span className="line-clamp-1 text-xs text-[#595f7ab1]">
                 {article.authorName}
               </span>
             </div>
             <time
-              className="text-sm text-[#595F7A]"
+              className="text-xs text-[#595f7ab1]"
               dateTime={article.dateTime}
             >
               {formatDate(article.dateTime)}

@@ -2089,16 +2089,16 @@ p.thoughtArticleCopy {
 .thoughtEditorialFlowArrow svg {
   width: 0.85rem;
   fill: none;
-  stroke: #6f706d;
+  stroke: #9a9b98;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.6;
 }
 
 .thoughtArticleContextNote {
-  margin: 0 0 2.5rem;
+  margin: 0 0 2.2rem;
   padding: 0.9rem 1rem;
-  border-left: 2px solid #b9bab7;
+  border-left: 2px solid #d3d4d1;
   color: #4d4e50;
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 14px;
@@ -2492,6 +2492,10 @@ p.thoughtArticleCopy {
 
 .visitorCount[data-ticked] .visitorCountValue {
   animation: visitorCountTick 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pulseDot {
+  color: rgb(12, 184, 12);
 }
 
 @keyframes visitorCountTick {

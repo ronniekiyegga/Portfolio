@@ -28,7 +28,13 @@ export function Statusbar({ visitorCount = null }: StatusbarProps) {
         ))}
       </p>
       <div className="statusMeta">
-        <LiveVisitorCount initialCount={visitorCount} />
+        {/* <LiveVisitorCount initialCount={visitorCount} /> */}
+        <Link className="contextLine" href="mailto:kiyeggaronnie@gmail.com">
+          <span aria-hidden className="pulseDot ping">
+            ●
+          </span>{" "}
+          Open to opportunities
+        </Link>
         <SplashCursorToggle />
       </div>
     </div>
