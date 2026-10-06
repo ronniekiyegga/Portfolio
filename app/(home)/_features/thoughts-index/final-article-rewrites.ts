@@ -85,11 +85,17 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "The practical lesson is simple:" },
         { type: "p", text: "Visual hierarchy is not making one element louder. It is making the next useful decision easier to find." },
         { type: "p", text: "When the product knows what matters now, the design can make that clear. When the product does not know, no amount of larger type or brighter buttons will resolve the ambiguity." },
-        { type: "p", text: "*" },
       ],
     },
   ],
   "idempotency-matters": [
+    {
+      heading: "The invariant",
+      blocks: [
+        { type: "p", text: "A request may be delivered more than once. The business effect must remain correct after the first valid application." },
+        { type: "p", text: "The booking, payment, and subscription examples below are representative transitions. The design requirement is that duplicate delivery does not create duplicate business effects." },
+      ],
+    },
     {
       heading: "The obvious solution: block the second click",
       blocks: [
@@ -197,7 +203,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "The practical lesson:" },
         { type: "p", text: "A disabled button improves the interface. Idempotency protects the business operation." },
         { type: "p", text: "Build both when the workflow matters. Just do not confuse one for the other." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -287,7 +292,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "The practical lesson:" },
         { type: "p", text: "Whitespace is not a cosmetic gap. It is a structural signal." },
         { type: "p", text: "Use it after you have decided what belongs together. If the screen is unclear, fix the product structure first. Then let spacing make that structure easier to read." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -382,7 +386,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "Scale the layer that is actually constrained. Bound the work sent downstream. Move non-critical work off the critical path. Make overload visible." },
         { type: "p", text: "The goal is not to accept every request immediately." },
         { type: "p", text: "The goal is to keep the important user workflow reliable when demand is least predictable." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -468,11 +471,17 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "Build it early. Make it specific to the user’s situation. Explain why the next action matters. Distinguish first use from filtered results, loading, errors, permissions, and completed work." },
         { type: "p", text: "The first useful action is not a detail around the product." },
         { type: "p", text: "It is where the product begins." },
-        { type: "p", text: "*" },
       ],
     },
   ],
   "responsive-not-shrinking": [
+    {
+      heading: "The responsive decision",
+      blocks: [
+        { type: "p", text: "Responsive work begins with the task, not the breakpoint. On smaller screens, information becomes sequential, so the design has to decide what a person needs first and what can wait." },
+        { type: "p", text: "I check the workflow at representative phone, tablet, and desktop widths with long labels, validation errors, increased text size, and keyboard-only navigation. That does not replace formal usability research, but it catches layouts that work only with ideal demo content." },
+      ],
+    },
     {
       heading: "The obvious solution: stack the desktop layout",
       blocks: [
@@ -559,11 +568,17 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "When a layout changes at a breakpoint, ask more than “does it fit?”" },
         { type: "p", text: "Ask:" },
         { type: "p", text: "“What changed about the user’s work, and does the new order make the next useful action clearer?”" },
-        { type: "p", text: "*" },
       ],
     },
   ],
   "rate-limiter-1m-rps": [
+    {
+      heading: "Start with the policy",
+      blocks: [
+        { type: "p", text: "The important decision comes before the counter: what resource is being protected, whose requests share a budget, whether a burst is acceptable, and what should happen when that budget is exhausted." },
+        { type: "p", text: "The values below make the policy concrete. They are examples, not universal defaults." },
+      ],
+    },
     {
       heading: "The obvious solution: one global request cap",
       blocks: [
@@ -651,7 +666,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "code", language: "text", code: "Which resource are we protecting?\nWhich endpoint or operation creates the cost?\nWhose requests are grouped together?\nAre short bursts acceptable?\nHow is the policy enforced across instances?\nWhat does recovery look like?\nWhat do we measure?" },
         { type: "p", text: "A rate limiter is an admission-control policy." },
         { type: "p", text: "Its job is not merely to reject traffic. Its job is to preserve the service for legitimate users when demand, bugs, or abuse would otherwise consume finite capacity." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -738,7 +752,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "Start with the places where inconsistency is costly. Abstract only after repetition teaches you what is stable. Keep product-specific workflows close to the product. Make the good path easier than the custom path." },
         { type: "p", text: "The goal is not to create a library that can render every possible interface." },
         { type: "p", text: "The goal is to help teams spend less time rebuilding solved problems and more time solving the user’s actual problem." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -835,7 +848,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "When traffic peaks, find where time accumulates first. Separate queueing from execution. Bound retries. Keep non-critical work off the interactive path." },
         { type: "p", text: "The goal is not to make every request wait longer." },
         { type: "p", text: "It is to make the system fail clearly, recover safely, and preserve the important workflow under pressure." },
-        { type: "p", text: "*" },
       ],
     },
   ],
@@ -932,7 +944,6 @@ export const finalArticleSections: Record<string, ThoughtArticleSection[]> = {
         { type: "p", text: "“How do we make sure we never lose a log?”" },
         { type: "p", text: "It is:" },
         { type: "p", text: "“Which evidence must survive, how do we preserve it safely, and how do we keep the product running when the logging pipeline does not?”" },
-        { type: "p", text: "*" },
       ],
     },
   ],

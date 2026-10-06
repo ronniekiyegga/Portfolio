@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const sectionItems = [
-  { id: "exploration", label: "Exploration" },
+  { id: "exploration", label: "Engineering Notes" },
   { id: "selected-work", label: "Selected Work" },
   { id: "design", label: "Design" },
 ] as const;

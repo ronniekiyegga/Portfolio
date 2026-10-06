@@ -19,29 +19,29 @@ const featuredInvestigationHref = thoughtPath(featuredInvestigationSlug);
 
 const supportingThoughts = [
   {
-    category: "Design",
-    title: "Hick’s Law",
-    tag: "Usability & Accessibility",
-    date: "2 Sept 2026",
-    description: "Designing interfaces for people who don't know your product",
-    href: thoughtPath("hicks-law"),
-  },
-  {
     category: "System Design",
-    title: "Real-time Analytics",
-    tag: "Concurrency",
-    date: "19 Aug 2026",
-    description:
-      "Race conditions, optimistic vs pessimistic locking, hold patterns & more",
-    href: thoughtPath("burst-traffic"),
+    title: "Why disabling the button did not stop the duplicate request",
+    tag: "Reliability",
+    date: "15 Sept 2026",
+    description: "Retries, duplicate delivery and durable business invariants",
+    href: thoughtPath("idempotency-matters"),
   },
   {
     category: "Product",
-    title: "When product memory becomes surveillance",
-    tag: "Customer-focused",
-    date: "28 Jul 2026",
-    description: "Building and enhancing features that solve end-user problems",
-    href: thoughtPath("memory-inclusion"),
+    title: "Why the empty state should come before the happy path",
+    tag: "Product judgement",
+    date: "14 Aug 2026",
+    description:
+      "Designing the first useful action before the populated dashboard",
+    href: thoughtPath("empty-state-first"),
+  },
+  {
+    category: "Design",
+    title: "Why a component library can make product delivery slower",
+    tag: "Design systems",
+    date: "9 Jun 2026",
+    description: "Reuse only helps when the underlying decision is stable",
+    href: thoughtPath("design-systems-remove-decisions"),
   },
 ] as const;
 
@@ -458,9 +458,9 @@ export function FeaturedThoughtsSection({
             Problems I&apos;ve been thinking about lately
           </h2>
           <p>
-            Recent investigations into performance, real-time systems, product
-            decisions and the engineering trade-offs behind software that has to
-            work in production.
+            Engineering investigations and product notes on performance,
+            reliability, interface design and the trade-offs behind software
+            used in the real world.
           </p>
           <SpecularPill className="readButton" href={exploreHref}>
             Explore all <span aria-hidden>▸</span>

@@ -1,12 +1,7 @@
 import type { MouseEvent } from "react";
 
-/** Fired after in-page section navigation so multiple UIs can sync active state (replaceState does not emit hashchange). */
 export const HOME_SECTION_HASH_EVENT = "portfolio:home-section-hash";
 
-/**
- * In-page sections for scroll/history (DOM order).
- * Hero keeps `id="work"` for anchors and scroll spy; it is not a separate nav label (Projects covers intro + grid).
- */
 export const HOME_SCROLL_SECTION_IDS = [
   "work",
   "projects",
@@ -17,7 +12,6 @@ export const HOME_SCROLL_SECTION_IDS = [
 
 export type HomeSectionId = (typeof HOME_SCROLL_SECTION_IDS)[number];
 
-/** Header / DynamicIsland — no separate “Work”; Projects represents hero + project grid. */
 export const HOME_NAV_ITEMS = [
   { label: "Projects", id: "projects" },
   { label: "Blog", id: "blog" },
@@ -27,10 +21,8 @@ export const HOME_NAV_ITEMS = [
 
 export type HomeNavItemId = (typeof HOME_NAV_ITEMS)[number]["id"];
 
-/** Homepage Engineering Notes anchor — blog index is hidden until the listing is ready. */
 export const HOME_BLOG_SECTION_HREF = "/#blog" as const;
 
-/** Hero uses id `work` but URL stays clean (`/`) — only deeper sections get `/#section`. */
 export function replaceHomeSectionHistory(sectionId: HomeSectionId) {
   const url = new URL(window.location.href);
   url.hash = sectionId === "work" ? "" : sectionId;
@@ -49,8 +41,7 @@ export function scrollToHomeSection(
 ) {
   e?.preventDefault();
   if (pathname !== "/") {
-    window.location.href =
-      sectionId === "work" ? "/" : `/#${sectionId}`;
+    window.location.href = sectionId === "work" ? "/" : `/#${sectionId}`;
     return;
   }
   document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
