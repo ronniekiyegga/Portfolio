@@ -450,7 +450,7 @@ export function FeaturedThoughtsSection({
       <div className="featuredThought">
         <div className="featuredCopy">
           <p className="articleMeta">
-            <strong>System Design</strong>
+            <strong>Engineering</strong>
             <span>•</span>
             Recently explored
           </p>
@@ -458,12 +458,12 @@ export function FeaturedThoughtsSection({
             Problems I&apos;ve been thinking about lately
           </h2>
           <p>
-            Engineering investigations and product notes on performance,
-            reliability, interface design and the trade-offs behind software
-            used in the real world.
+            Recent investigations into performance, real-time systems, product
+            decisions and the engineering trade-offs behind software that has to
+            work in production.
           </p>
           <SpecularPill className="readButton" href={exploreHref}>
-            Explore all <span aria-hidden>▸</span>
+            Explore the work <span aria-hidden>▸</span>
           </SpecularPill>
         </div>
         <Link

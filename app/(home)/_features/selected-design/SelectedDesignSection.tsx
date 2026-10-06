@@ -43,10 +43,8 @@ export function SelectedDesignSection() {
     >
       <p className="sectionLabel">/ Selected Work</p>
       <div className="clientWorkHeader">
-        <div className="clientWorkCopy">
-          <h2 id="design-heading">
-            <strong>Products I&apos;ve designed &amp; built</strong>
-          </h2>
+        <div className="sectionIntro">
+          <h2 id="design-heading">Products I&apos;ve designed &amp; built</h2>
           <p>Taken from requirements through to delivery.</p>
         </div>
         <Link href="/design" className="clientWorkLink">
