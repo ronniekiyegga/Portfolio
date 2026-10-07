@@ -2,36 +2,28 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An endpoint becomes slow. Maybe a public API receives more traffic than expected; maybe an expensive export route is being called repeatedly. Maybe login attempts spike; maybe an integration starts polling too aggressively. Maybe one customer is consuming enough work to affect everyone else. The obvious response is simple:",
+    "An export endpoint starts consuming enough database and file-generation capacity to slow down the rest of the product. Most customers run an export occasionally, but one integration has begun polling the route throughout the day.",
+    "The quickest protection looks obvious:",
     "“Limit requests to 100 per minute.”",
-    "A number feels concrete, and it is easy to add to middleware. It produces a `429 Too Many Requests` response; the system appears protected. But 100 requests per minute from whom? To which endpoint? For which operation? Against which resource? Is a burst acceptable? What happens to a user behind a shared office network? What happens to a payment provider webhook that retries after a timeout? Without those answers, the number is not a rate-limiting strategy. It is a counter with a threshold.",
+    "A concrete number is easy to add to middleware and gives the service a clear `429 Too Many Requests` response. But the first implementation immediately creates harder questions. Is the budget shared by an IP address, a user or an organisation? Should a short burst be allowed? Does an export consume the same allowance as a cached read, and should a payment webhook be rejected because unrelated traffic used the budget first?",
+    "Until we know which resource is under pressure and which callers should share it, 100 requests per minute is only a counter with a threshold. The strategy begins when we decide how limited capacity ought to be distributed.",
   ],
   sections: [
     {
-      heading: "Start with the policy",
+      heading: "The number exposes the missing policy",
       blocks: [
         {
           type: "p",
-          text: "The important decision comes before the counter: what resource is being protected, whose requests share a budget, whether a burst is acceptable, and what should happen when that budget is exhausted. The values below make the policy concrete, and they are examples, not universal defaults.",
+          text: "Trying to choose the threshold exposes the decisions that middleware cannot make for us: what resource needs protection, whose requests share a budget, whether a burst is acceptable and what should happen when that budget is exhausted. The values below make those choices concrete; they are examples rather than universal defaults.",
         },
       ],
     },
     {
-      heading: "The obvious solution: one global request cap",
+      heading: "Not every request costs the same",
       blocks: [
         {
           type: "p",
-          text: "A global limit has some benefits, and it is easy to understand:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `If requests exceed the threshold:
-return 429`,
-        },
-        {
-          type: "p",
-          text: "It can reduce obvious accidental overload, and it can protect a small service from a single poorly behaved client. It can create a basic boundary before more detailed policies exist. The problem is that not all requests cost the same.",
+          text: "A single global cap still has value: it can reduce obvious accidental overload, protect a small service from one poorly behaved client and set a basic boundary before more detailed policies exist. Its weakness is that it counts every request as the same amount of work.",
         },
         {
           type: "code",
@@ -61,7 +53,7 @@ POST /webhooks/stripe
       ],
     },
     {
-      heading: "The hidden question: what resource needs protection?",
+      heading: "What each route is protecting",
       blocks: [
         {
           type: "p",
@@ -129,7 +121,7 @@ apply a lower separate budget`,
         },
         {
           type: "p",
-          text: "The strategy is not “choose the perfect key.” It is “choose an identity that matches the resource and does not punish unrelated users.”",
+          text: "There is rarely a perfect key. What matters is choosing an identity that matches the resource and does not punish unrelated users.",
         },
       ],
     },
@@ -147,7 +139,7 @@ apply a lower separate budget`,
         },
         {
           type: "p",
-          text: "The boundary creates a familiar issue; a client can send 100 requests at the end of one minute and another 100 immediately at the beginning of the next. The policy technically allows both, but the protected system experiences a concentrated burst. That may be fine for a low-risk endpoint, and it may not be fine for a route that triggers expensive work. Different approaches create different behaviour:",
+          text: "The boundary creates a familiar issue: a client can send 100 requests at the end of one minute and another 100 immediately at the beginning of the next. The policy technically allows both, but the protected system experiences a concentrated burst. That may be fine for a low-risk endpoint, but not for a route that triggers expensive work. Different approaches create different behaviour:",
         },
         {
           type: "code",
@@ -169,7 +161,7 @@ Smooths work toward a steady output rate.`,
         },
         {
           type: "p",
-          text: "The correct algorithm depends on the behaviour you want; if a user should be able to make a small burst of valid requests, token-bucket behaviour can be appropriate. If a dependency can only process work steadily, a queue or leaky-bucket-like policy may fit better. Choose the desired behaviour before choosing the algorithm.",
+          text: "The correct algorithm depends on the behaviour you want. If a user should be able to make a small burst of valid requests, token-bucket behaviour can be appropriate. If a dependency can only process work steadily, a queue or leaky-bucket-like policy may fit better. Choose the desired behaviour before choosing the algorithm.",
         },
       ],
     },
@@ -178,7 +170,7 @@ Smooths work toward a steady output rate.`,
       blocks: [
         {
           type: "p",
-          text: "An in-memory counter can work in a single development process, and it becomes unreliable when traffic is distributed:",
+          text: "An in-memory counter can work in a single development process, but it becomes unreliable when traffic is distributed:",
         },
         {
           type: "code",
@@ -198,13 +190,13 @@ Instance C allows 100 requests`,
       blocks: [
         {
           type: "p",
-          text: "A `429` response should not feel like a broken product; a client needs enough information to recover:",
+          text: "A `429` response should not feel like a broken product. A client needs enough information to recover, and `Retry-After` is given in seconds, so a client that must wait 42 minutes receives:",
         },
         {
           type: "code",
           language: "http",
           code: `HTTP/1.1 429 Too Many Requests
-Retry-After: 60`,
+Retry-After: 2520`,
         },
         {
           type: "p",
@@ -218,7 +210,7 @@ Try again in 42 minutes, or narrow the report before exporting.`,
         },
         {
           type: "p",
-          text: "Avoid exposing unnecessary internal details, but do not leave the user guessing whether the request succeeded. For mutations, retries need extra care; if a client times out around the point a request is processed, it may not know whether the operation happened. Idempotency protects the business operation while the rate limit protects capacity. These mechanisms need to work together.",
+          text: "Avoid exposing unnecessary internal details, but do not leave the user guessing whether the request succeeded. For mutations, retries need extra care: if a client times out around the point a request is processed, it may not know whether the operation happened. Idempotency protects the business operation while the rate limit protects capacity. These mechanisms need to work together.",
         },
       ],
     },
@@ -242,7 +234,7 @@ What do we measure?`,
         },
         {
           type: "p",
-          text: "A rate limiter is an admission-control policy. Its job is not merely to reject traffic. Its job is to preserve the service for legitimate users when demand, bugs, or abuse would otherwise consume finite capacity.",
+          text: "A rate limiter is an admission-control policy. Rejecting traffic is only the mechanism; its job is to preserve the service for legitimate users when demand, bugs or abuse would otherwise consume finite capacity.",
         },
       ],
     },

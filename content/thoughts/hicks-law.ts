@@ -1,13 +1,18 @@
 import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
+  lede: [
+    "A user opens a small menu to record how their day went. The first version offers four clear choices, and most people can answer without thinking about the interface.",
+    "As the product grows, the team adds more precise moods, a neutral option and several labels that mean almost the same thing. The menu is richer, but users now hover between choices, reopen it and wonder which answer the product expects.",
+    "Removing options would make the decision faster, but it might also remove useful nuance. The interesting question is therefore not how to show the fewest choices. It is how much distinction the task genuinely needs, and whether grouping, defaults or progressive disclosure can preserve that value without making a simple action feel like work.",
+  ],
   sections: [
     {
       heading: "The delay is in the decision",
       blocks: [
         {
           type: "p",
-          text: "Hick’s Law describes a simple pattern: as the number and complexity of choices increase, deciding generally takes longer. I find it useful because it shifts the question from “Can we fit another option here?” to “What decision are we asking someone to make?”",
+          text: "Hick’s Law gives us a way to explain the hesitation: as the number and complexity of choices increase, deciding generally takes longer. I find it useful because it shifts the review from “Can we fit another option here?” to “What decision are we asking someone to make?”",
         },
         {
           type: "p",

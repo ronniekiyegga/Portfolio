@@ -2,17 +2,19 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A product team starts noticing inconsistency. Buttons look slightly different across screens; forms handle errors differently. Spacing values vary; one dialog traps focus correctly while another does not. Teams recreate the same patterns with small variations because the existing components do not quite fit their needs. The obvious response is:",
+    "A team is shipping the same form pattern for the fourth time. Each version looks close, but the validation messages sit in different places, keyboard focus behaves differently and every designer has chosen a slightly different spacing value.",
+    "At this point, the repeated work is obvious and the proposal sounds overdue:",
     "“We need a design system.”",
-    "That can be the right conclusion; the problem is that “design system” can become shorthand for a large component library, a Figma catalogue, many tokens, extensive documentation, contribution processes, and debates about whether every product pattern should become a shared primitive. At that point, the system intended to accelerate delivery can become the slowest part of it. A design system should remove repeated decisions; if it creates more decisions than it removes, it is not yet serving the product.",
+    "A shared field, button and error pattern would remove real decisions here. The difficulty begins when that useful fix expands into a component for every card, workflow and page layout before the team understands which parts are genuinely stable. New requirements turn into props, product teams wait for library changes and the system meant to speed delivery becomes another approval layer.",
+    "The question, then, is not whether reuse is good. It is which decisions are repeated, costly and settled enough to encode. A design system earns its place when using it removes more judgement than maintaining it creates.",
   ],
   sections: [
     {
-      heading: "The obvious solution: build components for every pattern",
+      heading: "When every pattern becomes a component",
       blocks: [
         {
           type: "p",
-          text: "The appeal is clear; if the product has cards, tables, filters, settings panels, application views, onboarding flows, data summaries, empty states, badges, and modals, creating reusable versions of all of them appears to prevent future duplication. The first version often looks efficient:",
+          text: "The appeal is clear: if the product has cards, tables, filters, settings panels, application views, onboarding flows, data summaries, empty states, badges, and modals, creating reusable versions of all of them appears to prevent future duplication. The first version often looks efficient:",
         },
         {
           type: "code",
@@ -33,11 +35,11 @@ CardLayout`,
       ],
     },
     {
-      heading: "The hidden problem: abstraction arrived before repetition",
+      heading: "Abstraction arrived before repetition",
       blocks: [
         {
           type: "p",
-          text: "A shared component is most useful when the team understands the thing it is sharing. That generally requires more than one example. If two forms need the same label, validation, error, help text, focus treatment, disabled behaviour, and accessibility semantics, a shared `Field` primitive can remove real repeated work. If two screens happen to put text inside a rounded rectangle, that does not automatically mean they need the same `Card` abstraction. The better question is: Which decisions are genuinely repeated, stable, and expensive to get wrong? Strong candidates often include:",
+          text: "A shared component is most useful when the team understands the thing it is sharing. That generally requires more than one example. If two forms need the same label, validation, error, help text, focus treatment, disabled behaviour, and accessibility semantics, a shared `Field` primitive can remove real repeated work. If two screens happen to put text inside a rounded rectangle, that does not automatically mean they need the same `Card` abstraction. The decisions worth sharing are the ones that are genuinely repeated, stable and expensive to get wrong. Strong candidates often include:",
         },
         {
           type: "code",
@@ -76,7 +78,7 @@ Application review workflow`,
       ],
     },
     {
-      heading: "The second obvious solution: make every component flexible",
+      heading: "Making every component flexible",
       blocks: [
         {
           type: "p",
@@ -112,7 +114,7 @@ Application review workflow`,
         },
         {
           type: "p",
-          text: "The library has not removed decisions, and it has made them indirect. I prefer smaller primitives with clearer responsibilities, then composition at the product layer.",
+          text: "The library has not removed those decisions; it has only made them indirect. I prefer smaller primitives with clearer responsibilities, then composition at the product layer.",
         },
         {
           type: "code",
@@ -136,7 +138,7 @@ Application review workflow`,
       blocks: [
         {
           type: "p",
-          text: "Some interaction problems are too expensive and risky to rebuild repeatedly. A dialog needs more than visual styling, and it needs focus management, accessible naming, keyboard behaviour, escape handling, focus restoration, and a predictable relationship to the underlying page. The same is true for menus, selects, comboboxes, validation messages, toast notifications, and interactive tables. These are strong design-system candidates because a well-tested primitive prevents repeated accessibility regressions.",
+          text: "Some interaction problems are too expensive and risky to rebuild repeatedly. A dialog needs more than visual styling: it needs focus management, accessible naming, keyboard behaviour, escape handling, focus restoration, and a predictable relationship to the underlying page. The same is true for menus, selects, comboboxes, validation messages, toast notifications, and interactive tables. These are strong design-system candidates because a well-tested primitive prevents repeated accessibility regressions.",
         },
         {
           type: "p",
@@ -198,11 +200,11 @@ Application review workflow`,
       blocks: [
         {
           type: "p",
-          text: "A component library is not automatically a design system; a useful design system is a set of shared, tested decisions that removes recurring work and protects important interaction behaviour. Start with the places where inconsistency is costly; abstract only after repetition teaches you what is stable. Keep product-specific workflows close to the product; make the good path easier than the custom path. The goal is not to create a library that can render every possible interface.",
+          text: "A component library is not automatically a design system. A useful design system is a set of shared, tested decisions that removes recurring work and protects important interaction behaviour. Start where inconsistency is costly, abstract only after repetition shows you what is stable, keep product-specific workflows close to the product and make the good path easier than the custom one.",
         },
         {
           type: "p",
-          text: "The goal is to help teams spend less time rebuilding solved problems and more time solving the user’s actual problem.",
+          text: "The aim is a library that helps teams spend less time rebuilding solved problems and more time on the user’s actual problem, rather than one that can render every possible interface.",
         },
       ],
     },

@@ -2,17 +2,19 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A page feels busy. There are cards, status labels, buttons, metrics, filters, headings, helper text, navigation, and warnings. The information is all technically present, but the page does not feel easy to use. The obvious response is usually visual:",
+    "An application page contains everything the user asked for: status, interview details, a next action, supporting notes and controls to edit, archive or delete the record. Nothing is missing, yet people still pause because they cannot tell where to begin.",
+    "The easiest fix to reach for is visual:",
     "“Make the important thing bigger.”",
-    "The primary button becomes larger; the heading gains more weight; the warning turns brighter red. A card gets a stronger border; then another element is made prominent because it is also important. Soon, the interface contains several “most important” things. Nothing is easier to understand. That is because visual hierarchy is not the act of making an element larger. It is the decision about what a user should notice, understand, and act on first.",
+    "The primary button grows, the heading becomes heavier and the status card gains a stronger border. Then the warning needs attention too, so it becomes brighter. Soon several elements are competing to be first and the page feels louder without becoming clearer.",
+    "The issue was never the size of one component. The page had not decided what matters in the user’s current situation. Visual hierarchy begins with that decision; size, contrast, position and spacing are only ways of expressing it.",
   ],
   sections: [
     {
-      heading: "The obvious solution: make the primary action louder",
+      heading: "Actions with different consequences",
       blocks: [
         {
           type: "p",
-          text: "A larger button can be useful; if a user arrives at an empty dashboard and the intended first action is to add their first record, a clear primary action should be visible. Making it visually distinct removes hesitation. The problem appears when the screen has multiple competing goals. Consider an application-management screen:",
+          text: "A larger button can be useful. If a user arrives at an empty dashboard and the intended first action is to add their first record, a clear primary action should be visible. Making it visually distinct removes hesitation. The problem appears when the screen has multiple competing goals. Consider an application-management screen:",
         },
         {
           type: "code",
@@ -35,23 +37,11 @@ Delete`,
       ],
     },
     {
-      heading: "The hidden problem: the page has not decided what matters now",
+      heading: "What matters in this state",
       blocks: [
         {
           type: "p",
-          text: "A page can contain many important things without needing to foreground all of them at once. The question is not:",
-        },
-        {
-          type: "p",
-          text: "“Which component deserves the strongest visual treatment?”",
-        },
-        {
-          type: "p",
-          text: "It is:",
-        },
-        {
-          type: "p",
-          text: "“What decision does the user need to make on this screen, in this state?”",
+          text: "A page can contain many important things without needing to foreground all of them at once. Instead of asking which component deserves the strongest visual treatment, ask what decision the user needs to make on this screen, in this state.",
         },
         {
           type: "p",
@@ -115,7 +105,7 @@ Delete`,
       ],
     },
     {
-      heading: "The better approach: design an attention order",
+      heading: "Design an attention order",
       blocks: [
         {
           type: "p",
@@ -133,7 +123,7 @@ What can wait?`,
         },
         {
           type: "p",
-          text: "This exercise reveals when a page contains unresolved product decisions; if two different actions both appear to be primary, the issue may not be styling. The workflow may need a clearer sequence. If a dashboard puts a decorative chart above overdue work, the issue may not be the chart’s colour. The screen may be optimising for presentation rather than action. If a destructive action needs the same visual weight as a routine action to remain discoverable, the product may need to move it into a more appropriate context.",
+          text: "This exercise reveals when a page contains unresolved product decisions. If two different actions both appear to be primary, the issue may not be styling. The workflow may need a clearer sequence. If a dashboard puts a decorative chart above overdue work, the issue may not be the chart’s colour. The screen may be optimising for presentation rather than action. If a destructive action needs the same visual weight as a routine action to remain discoverable, the product may need to move it into a more appropriate context.",
         },
         {
           type: "p",
@@ -192,7 +182,7 @@ Predictable placement of controls`,
         },
         {
           type: "p",
-          text: "The goal is not to minimise information; the goal is to make the important information survive the density.",
+          text: "The goal is to make the important information survive the density, rather than to minimise information.",
         },
       ],
     },
@@ -216,7 +206,7 @@ Predictable placement of controls`,
         },
         {
           type: "p",
-          text: "If people have to inspect the entire screen carefully before answering, the hierarchy is doing too little work. The practical lesson is simple: Visual hierarchy is not making one element louder, but it is making the next useful decision easier to find. When the product knows what matters now, the design can make that clear. When the product does not know, no amount of larger type or brighter buttons will resolve the ambiguity.",
+          text: "If people have to inspect the entire screen carefully before answering, the hierarchy is doing too little work. Visual hierarchy is about making the next useful decision easier to find, rather than making one element louder. When the product knows what matters now, the design can make that clear. When the product does not know, no amount of larger type or brighter buttons will resolve the ambiguity.",
         },
       ],
     },

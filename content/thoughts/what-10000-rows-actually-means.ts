@@ -2,17 +2,11 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "10,000 records is not particularly unusual for an application. Rendering 10,000 rows in the browser is a different problem.",
-    "An analytics endpoint can return quickly and the page can still feel slow. Once the data reaches the client, React still has to render it, and the browser has to create, layout and paint the resulting DOM.",
-    "When a large table starts struggling, I do not immediately reach for useMemo or start changing the API. I first want to know where the work is happening.",
+    "An analytics page receives 10,000 records in a few hundred milliseconds, yet the loading indicator disappears only to leave the interface frozen. Scrolling stutters, filters take seconds to respond and the browser’s main thread stays busy long after the network request has finished.",
+    "Because the symptom appears in a React table, the first suggestions are usually to memoise the rows or change the API. Either might help in the right situation, but the fast response has already told us something important: retrieving the data and presenting it are separate pieces of work.",
+    "React still has to create thousands of elements, and the browser still has to build, lay out and paint their DOM nodes even though the viewport can show only a few dozen rows. Before choosing an optimisation, I want to place the cost in that pipeline. Once we know whether time is going to transfer, render, layout or paint, the correct boundary for the fix becomes much clearer.",
   ],
   sections: [
-    {
-      heading: "Context",
-      paragraphs: [
-        "This article uses a representative 10,000-record scenario to explain the boundary between data retrieval and browser rendering. The useful threshold is not the number 10,000 itself: row complexity, device class, browser, update frequency, and interaction design determine the actual cost.",
-      ],
-    },
     {
       heading: "Ten thousand is a rendering problem",
       blocks: [
@@ -35,7 +29,7 @@ export const content: ThoughtArticleContent = {
         },
         {
           type: "p",
-          text: "If the viewport only shows 20 or 30 rows, mounting thousands of EventRow components is work for content the user cannot currently see. React still walks the list. The browser still creates nodes, computes layout, and paints.",
+          text: "If the viewport only shows a few dozen rows, mounting thousands of EventRow components is work for content the user cannot currently see. React still walks the list. The browser still creates nodes, computes layout, and paints.",
         },
         {
           type: "p",
@@ -68,11 +62,11 @@ export const content: ThoughtArticleContent = {
         },
         {
           type: "p",
-          text: "DOM inspection answers a blunt question: how many nodes did we actually mount? If tbody contains 10,000 rows and the user can see 24, you already know a lot.",
+          text: "DOM inspection answers a blunt question: how many nodes did we actually mount? If tbody contains 10,000 rows and the user can see a few dozen, you already know a lot.",
         },
         {
           type: "p",
-          text: "I use those views to put the cost in one part of the pipeline before I pick a fix. An illustrative example, not a measurement from a specific incident: a 40ms query inside a 400ms frame is still a slow screen.",
+          text: "I use those views to put the cost in one part of the pipeline before I pick a fix. For example, a 40ms query followed by a 400ms long task on the main thread still makes a slow screen.",
         },
       ],
     },
@@ -89,7 +83,7 @@ export const content: ThoughtArticleContent = {
         },
         {
           type: "p",
-          text: "This repo does not ship a virtualiser. The snippet below is example code using TanStack Virtual, and only after profiling has already put the cost on DOM and render work.",
+          text: "The snippet below uses TanStack Virtual as an example, and it only makes sense once profiling has put the cost on DOM and render work.",
         },
         {
           type: "code",

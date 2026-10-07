@@ -2,29 +2,20 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "Every system eventually reaches this moment. Traffic grows; a campaign works; a feature gets adopted faster than expected. A dashboard that was quiet last month becomes part of someone’s daily workflow. Then someone asks:",
+    "Say a dashboard that served a few hundred people is about to roll out across a much larger organisation. The launch plan says 10,000 users, and the first capacity review quickly lands on the database.",
     "“Can this handle 10,000 concurrent users?”",
-    "It sounds like a capacity question; very quickly, it becomes a database question:",
+    "Someone opens the database configuration and proposes the neatest possible answer:",
     "“Should we increase the maximum connection count to 10,000?”",
-    "That response is understandable. More users appear to imply more simultaneous work, and more simultaneous work appears to imply more database connections. The problem is that a user is not a database connection. A browser can be open for an hour while making only a handful of short requests. A database query may need a connection for 20 milliseconds; a background worker may need one for a transaction and then not touch the database again for several minutes.",
-    "Giving every potential user their own connection is not scaling, but it is turning user concurrency into database overhead.",
+    "The logic sounds reasonable: more users mean more simultaneous work, so the database must need more simultaneous connections. But a person can leave a browser open for an hour while making only a handful of requests, and each of those requests may hold a connection for just a few milliseconds.",
+    "Before changing the setting, we need to understand how often work reaches the database, how long it holds a connection and what the database can actually execute in parallel. Otherwise we have not increased useful capacity; we have only made it easier to send too much work to the same bottleneck.",
   ],
   sections: [
     {
-      heading: "The capacity model",
+      heading: "What a higher limit lets in",
       blocks: [
         {
           type: "p",
-          text: "The number is useful because it exposes a common modelling mistake: concurrent users are not long-lived database connections. The relevant variables are connection-pool size, application-instance concurrency, transaction duration, query cost, and the database’s ability to perform useful concurrent work.",
-        },
-      ],
-    },
-    {
-      heading: "The obvious solution: increase the connection limit",
-      blocks: [
-        {
-          type: "p",
-          text: "Most databases expose a setting for the number of connections they will accept. Increasing it can feel like the direct fix:",
+          text: "PostgreSQL, for example, accepts 100 connections by default, so the proposal looks like this:",
         },
         {
           type: "code",
@@ -35,7 +26,7 @@ New limit: 10,000 connections`,
         },
         {
           type: "p",
-          text: "The reasoning is not irrational; if requests are failing because the database refuses new connections, a higher limit may reduce those immediate failures. In a small system, raising a low default can even be the correct short-term mitigation. But it does not answer the important question: What will all of those connections do once they are accepted? Every open connection consumes memory, socket resources, session state, and scheduling overhead. More importantly, a larger number of connections permits more work to arrive at the database at the same time.",
+          text: "That change is not always wrong. If requests are failing because the database refuses new connections, a higher limit may reduce those immediate failures, and in a small system raising a low default can be a reasonable short-term mitigation. What it does not tell us is what all of those connections will do once they are accepted. Every open connection consumes memory, socket resources, session state, and scheduling overhead. More importantly, a larger number of connections permits more work to arrive at the database at the same time.",
         },
         {
           type: "p",
@@ -63,7 +54,7 @@ More requests wait`,
       ],
     },
     {
-      heading: "The second obvious solution: make the pool bigger",
+      heading: "A pool helps until its size becomes the limit",
       blocks: [
         {
           type: "p",
@@ -75,7 +66,7 @@ More requests wait`,
         },
         {
           type: "p",
-          text: "That is directionally correct; a pool is better than letting every request create a fresh connection. It reuses a bounded set of database sessions and avoids the cost of repeated connection establishment. But a pool can still hide the real problem if it is treated as a number to keep increasing.",
+          text: "That is the right direction. A pool reuses a bounded set of database sessions instead of letting every request open a fresh connection, and it avoids the cost of repeated connection setup. But it can still hide the real problem if its size is treated as a number to keep increasing.",
         },
         {
           type: "code",
@@ -97,12 +88,12 @@ Potential database connections: 1,500`,
         },
         {
           type: "p",
-          text: "Nothing in the pool configuration changed; the database pressure did; this is especially easy to miss in serverless or autoscaling environments. One function instance may seem to have a modest pool, but a burst of traffic creates many instances at once. Each one opens connections; the aggregate connection count becomes the real system behaviour. A connection pool is not merely an optimisation, but it is a concurrency-control mechanism, and its size needs to be part of the capacity model.",
+          text: "Nothing in the pool configuration changed, yet the potential pressure on the database grew fivefold. This is especially easy to miss in serverless or autoscaling environments: one function instance may seem to have a modest pool, but a burst of traffic creates many instances at once, each opening its own connections. The aggregate connection count is what the database actually experiences. A connection pool is a concurrency limit as much as an optimisation, so its size belongs in the capacity model.",
         },
       ],
     },
     {
-      heading: "The hidden question: are queries slow, or are requests waiting?",
+      heading: "Are queries slow, or are requests waiting?",
       blocks: [
         {
           type: "p",
@@ -191,12 +182,12 @@ A database doing a bounded amount of useful concurrent work`,
             "Index the queries that matter.",
             "Move non-critical work off the interactive request path.",
             "Bound application concurrency where the database is the limiting resource.",
-            "Use a pooler when the deployment model produces many short-lived application connections.",
+            "Use an external pooler when the deployment model produces many short-lived application connections, after checking whether transaction-level pooling breaks session features the application relies on, such as prepared statements or session settings.",
           ],
         },
         {
           type: "p",
-          text: "The objective is not to eliminate waiting entirely; a small, bounded queue can be healthier than allowing unlimited work to overwhelm the database. The objective is to make waiting visible, controlled, and proportionate.",
+          text: "Some waiting is healthy. A small, bounded queue is better than allowing unlimited work to overwhelm the database; what matters is that the waiting is visible, controlled and proportionate.",
         },
       ],
     },
@@ -205,7 +196,7 @@ A database doing a bounded amount of useful concurrent work`,
       blocks: [
         {
           type: "p",
-          text: "One failure mode is easy to introduce in multi-step workflows; a service starts a database transaction, creates a pending record, then waits for a user to complete a payment flow or for an external provider to respond. That connection is now held across human and network time.",
+          text: "One failure mode is easy to introduce in multi-step workflows: a service starts a database transaction, creates a pending record, then waits for a user to complete a payment flow or for an external provider to respond. That connection is now held across human and network time.",
         },
         {
           type: "code",
@@ -222,7 +213,7 @@ Commit`,
         },
         {
           type: "p",
-          text: "That model does not survive concurrency well; user and provider delays become database resource consumption. A safer model persists the state and releases the connection:",
+          text: "That model does not survive concurrency well, because user and provider delays become database resource consumption. A safer model persists the state and releases the connection:",
         },
         {
           type: "code",
@@ -243,7 +234,7 @@ Commit`,
         },
         {
           type: "p",
-          text: "This is why workflow state, idempotency, and connection management connect; durable state lets a system wait without holding scarce resources open.",
+          text: "This is where workflow state, idempotency and connection management meet: durable state lets a system wait without holding scarce resources open.",
         },
       ],
     },
@@ -252,7 +243,7 @@ Commit`,
       blocks: [
         {
           type: "p",
-          text: "None of this means a pool should never grow; a larger pool can be appropriate when measurement shows:",
+          text: "None of this means a pool should never grow. A larger pool can be appropriate when measurement shows:",
         },
         {
           type: "list",
@@ -292,23 +283,11 @@ Other internal services`,
       blocks: [
         {
           type: "p",
-          text: "Ten thousand concurrent users does not mean ten thousand database connections. The question is not:",
+          text: "Ten thousand concurrent users does not mean ten thousand database connections. Instead of asking what the connection limit should be, ask how much concurrent database work this workload can safely run, how long that work occupies a connection and where excess work should wait.",
         },
         {
           type: "p",
-          text: "“What should I set the connection limit to?”",
-        },
-        {
-          type: "p",
-          text: "It is:",
-        },
-        {
-          type: "p",
-          text: "“How much concurrent database work is safe for this workload, how long does that work occupy a connection, and where should excess work wait?”",
-        },
-        {
-          type: "p",
-          text: "A connection is not a user session, but it is a scarce, shared resource. Borrow it briefly, use it efficiently, return it quickly, and measure where requests wait before increasing any limit.",
+          text: "A connection is a scarce, shared resource rather than a user session. Borrow it briefly, use it efficiently, return it quickly, and measure where requests wait before increasing any limit.",
         },
       ],
     },

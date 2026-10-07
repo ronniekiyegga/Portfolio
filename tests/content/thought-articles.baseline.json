@@ -1,11 +1,10 @@
 {
   "10000-concurrent-database-connections": {
-    "sha256": "351060c838c3dc2373d430b88b8f12a80c07f8fb9b08316f2fc5737cd30f6607",
+    "sha256": "917709657dea11634520ac4aec78f3446c26341ba680ef6926d7d851841a4d49",
     "headings": [
-      "The capacity model",
-      "The obvious solution: increase the connection limit",
-      "The second obvious solution: make the pool bigger",
-      "The hidden question: are queries slow, or are requests waiting?",
+      "What a higher limit lets in",
+      "A pool helps until its size becomes the limit",
+      "Are queries slow, or are requests waiting?",
       "The useful model: connections are a shared, bounded resource",
       "Do not hold a database connection across user time",
       "When a bigger pool is actually justified",
@@ -13,10 +12,10 @@
     ]
   },
   "aggregate-logs-10000-servers": {
-    "sha256": "81dabfc6a9df20fb38be43e2c633cd57b8d557325651709e2246593c90a48423",
+    "sha256": "47eac3524b7491377272bff59b1002fec46912272f9d51940480cc2de61d4afb",
     "headings": [
-      "The obvious solution: retain every log",
-      "The hidden question: which logs have the same value?",
+      "Why log volume rises with failure",
+      "Not every log has the same value",
       "Buffers need an explicit failure policy",
       "Logging must not block the primary workload",
       "Repeated errors need aggregation, not amplification",
@@ -26,23 +25,23 @@
     ]
   },
   "burst-traffic": {
-    "sha256": "e8cf8d0a179699a2ba038655ab3a509e37c9bf746a9bf618ab160c1ce504312c",
+    "sha256": "d66a33eb63e928125669f464be8297342aa04b86c48e0deac49fcc5027e4a6fc",
     "headings": [
-      "The obvious solution: scale the application tier",
-      "The hidden constraint: downstream capacity",
+      "When more servers help",
+      "Every layer has its own limit",
       "Queueing is often the real story",
-      "The second obvious solution: increase every limit",
+      "Raising every limit",
       "Keep the critical path small",
       "Backpressure is better than silent overload",
       "Final thoughts"
     ]
   },
   "design-systems-remove-decisions": {
-    "sha256": "2aa1fb14533b8172a1a09371226bfca27fea46d9fecb22fd24e7891692a1d46d",
+    "sha256": "d0b7765cc6bbfe247a3251c33ae0a5f4b784a862ea7f4bb4771a102b8f476e0e",
     "headings": [
-      "The obvious solution: build components for every pattern",
-      "The hidden problem: abstraction arrived before repetition",
-      "The second obvious solution: make every component flexible",
+      "When every pattern becomes a component",
+      "Abstraction arrived before repetition",
+      "Making every component flexible",
       "Accessibility is a strong reason to share primitives",
       "Documentation should answer real delivery questions",
       "Measure whether the system is helping",
@@ -50,11 +49,11 @@
     ]
   },
   "empty-state-first": {
-    "sha256": "1fa5e0fa63ca6a69e45f8b423fb90e94276b52129565f718ef111d6d0783b474",
+    "sha256": "a6a72aba5d37b02251534d18ced7d043a11c93c708c160572d1e423c9ba457f9",
     "headings": [
-      "The obvious solution: add “Nothing here yet”",
-      "The hidden problem: “empty” is not one condition",
-      "The better question: what should the user do next?",
+      "A placeholder is not an explanation",
+      "“Empty” is not one condition",
+      "Start from the next action",
       "Designing the empty state reveals unnecessary complexity",
       "The happy state can hide product assumptions",
       "Do not use empty states to hide uncertainty",
@@ -62,7 +61,7 @@
     ]
   },
   "hicks-law": {
-    "sha256": "b7ce39aa1a23f0a4ac431f0bccea54c2c6870de1133def4fa9fad07707c306e9",
+    "sha256": "9ccc190cf10e15296f0dbe7a57e1b07360562c52e676dd588fbe616a7c43905f",
     "headings": [
       "The delay is in the decision",
       "Reducing friction is not the same as removing choice",
@@ -70,27 +69,26 @@
     ]
   },
   "idempotency-matters": {
-    "sha256": "5279eea25bd0903843bc05a7ff132b4806f59f64179cd18ff1ffb943c9f30e14",
+    "sha256": "bc08f66115d15236d7e132a7c23eec53455458640e357a9f72bdc6a9d8176ee4",
     "headings": [
-      "The invariant",
-      "The obvious solution: block the second click",
-      "The hidden problem: delivery and effect are different things",
-      "The better question: what identifies this operation?",
+      "How the second request still arrives",
+      "Delivery and effect are different things",
+      "What identifies this operation?",
       "Why an in-memory check fails",
       "The database must resolve the race",
       "The difficult gap: work succeeded but the response did not",
       "Retrying needs a policy too",
-      "The test that proves the system is safe"
+      "Testing for duplicate safety"
     ]
   },
   "memory-inclusion": {
-    "sha256": "ef8318812929887cfc79bdc13ed592f41be2e2f843e2ee339b80bdd2ca51d1ce",
+    "sha256": "a0bf85ccac2121188e54d005208632dfc94eedd89ea9f698339216c17ed81c14",
     "headings": [
-      "The obvious solution: remember everything",
-      "The hidden question: what is the user allowing us to keep?",
+      "Why “remember everything” goes wrong",
+      "What is the user allowing us to keep?",
       "Keep context, not surveillance",
       "Visibility is part of trust",
-      "The obvious solution: add a clear-all-data button",
+      "Why a clear-all button is not enough",
       "Expiry is a feature",
       "Shared devices and account boundaries matter",
       "The system should not infer more than it needs",
@@ -98,11 +96,11 @@
     ]
   },
   "rate-limiter-1m-rps": {
-    "sha256": "16dcaf220ec044cd815d24917fd97f39effeba19043ebcf1e2f46af30ed62a7a",
+    "sha256": "67659b7170313f540bda7991e8234bc7cfdec0d2575106dd6c19990f4244c71c",
     "headings": [
-      "Start with the policy",
-      "The obvious solution: one global request cap",
-      "The hidden question: what resource needs protection?",
+      "The number exposes the missing policy",
+      "Not every request costs the same",
+      "What each route is protecting",
       "Identity determines whether the policy is fair",
       "Fixed windows look correct until the boundary",
       "A local counter is not a distributed policy",
@@ -111,37 +109,36 @@
     ]
   },
   "responsive-not-shrinking": {
-    "sha256": "d40f071ea85802dbf4061cfae0fdc969b585f19e0af7af4cbb550e4a43160341",
+    "sha256": "163ca537f71cc913ce9a553fd87af50953249caf366168032c23daf0663b666f",
     "headings": [
-      "The responsive decision",
-      "The obvious solution: stack the desktop layout",
-      "The hidden problem: smaller screens expose unclear priority",
+      "Stacking turns order into a decision",
+      "Smaller screens expose unclear priority",
       "Tables need a different decision",
       "Touch changes interaction cost",
       "Responsive design includes loading and error states",
-      "The better approach: design the narrow workflow first",
+      "Design the narrow workflow first",
       "Final thoughts"
     ]
   },
   "responsive-ten-thousand-records": {
-    "sha256": "204c196bc86c90e43e7f2af5a23ab7bb5d3bce076ccc1085c005be89d5f5d104",
+    "sha256": "6335d06929ce66d617114448cad458f72f762198582a1694b295e1a08f456531",
     "headings": [
-      "The obvious solution: profile the slow endpoint",
-      "The hidden mechanism: waiting accumulates before failure appears",
+      "Where the time actually goes",
+      "Waiting accumulates before failure appears",
       "Start with the request timeline",
-      "The second obvious solution: restart the service",
+      "Restarting the service",
       "Retries can turn a stall into a feedback loop",
-      "The useful question is “what is full?”",
+      "What is full?",
       "Preserve the critical workflow",
       "Final thoughts"
     ]
   },
   "spacing-information-architecture": {
-    "sha256": "6093bd171da3663651124378dc8bab7ece5aaccc95062c80f1157011c47d5861",
+    "sha256": "446012448763857398bedd75008595cf2c1dd5f2ef2afaa46228274fe049ebd7",
     "headings": [
-      "The obvious solution: add more margin",
-      "The hidden problem: the screen has not decided what is grouped",
-      "The better question: what relationship does this gap represent?",
+      "What spacing can do",
+      "The screen has not decided what is grouped",
+      "What relationship does this gap represent?",
       "Why perfectly even spacing can be wrong",
       "More whitespace can reduce operational usefulness",
       "Responsive layouts make spacing decisions visible",
@@ -149,12 +146,12 @@
     ]
   },
   "streaming-windows": {
-    "sha256": "21ff82eb5404c2d890f9ff7eb1152688af7a6c495b47b271d9e6bde9ed2d8bee",
+    "sha256": "33d3a2b1c3765c2fb453436f4631338e509264c0d6f567f354075ee730e0b075",
     "headings": [
-      "The obvious solution: give everyone the same limit",
-      "The hidden question: what are we protecting?",
+      "What one shared limit ignores",
+      "What are we protecting?",
       "Why identity matters",
-      "The obvious algorithm: a fixed counter",
+      "A fixed counter and its boundary",
       "Token buckets make the burst policy explicit",
       "Not every request should cost one token",
       "Saying no is part of the user experience",
@@ -164,21 +161,20 @@
     ]
   },
   "visual-hierarchy": {
-    "sha256": "1187ded816fe1e8cd120b4154cc6be0ffee2b47c460a35a685953e4cddff2c74",
+    "sha256": "9813bca504ecec8656edbaf2b888f515bafdcfacfa04476b6270ec547ed25b3b",
     "headings": [
-      "The obvious solution: make the primary action louder",
-      "The hidden problem: the page has not decided what matters now",
+      "Actions with different consequences",
+      "What matters in this state",
       "Size is only one hierarchy signal",
-      "The better approach: design an attention order",
+      "Design an attention order",
       "Different states need different hierarchy",
       "Density is not the opposite of clarity",
       "Test whether people can find the right thing"
     ]
   },
   "what-10000-rows-actually-means": {
-    "sha256": "80b021378dc13aa43bef1d7f77a69d228a13a214ae3861f194c5f0c5de978608",
+    "sha256": "82d3a56c29deddec7b624835d4be157e6394188d62dabbec8eb206981fa4635f",
     "headings": [
-      "Context",
       "Ten thousand is a rendering problem",
       "Measure before choosing the optimisation",
       "Window the work",
