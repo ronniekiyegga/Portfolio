@@ -2,19 +2,21 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A system is healthy all morning; requests are quick; dashboards load. Background jobs complete; then demand rises. A scheduled deadline arrives; a campaign launches; a large customer starts work. Users open the same dashboard; the system does not immediately crash. It stalls. Pages spin; some requests eventually succeed. Others time out. CPU may not look particularly high; the database may not be obviously at 100%. Restarting an instance may help briefly, then the problem returns. The obvious response is often to search for a slow function:",
+    "A dashboard is fast all morning, then a reporting deadline arrives and a large customer’s team signs in together. The system does not crash; it simply starts to stall. Some pages eventually load, others time out, and restarting an application instance helps only briefly.",
+    "CPU is not obviously saturated and the database is not pinned at 100%, so the investigation naturally begins in the application code:",
     "“Which line of code is taking too long?”",
-    "That is a reasonable place to start for a deterministic bug. At peak traffic, the more important question is often:",
+    "Profiling is useful when a function is doing expensive work. Here, however, the slowdown appears only when many requests overlap, which suggests that time may be accumulating somewhere a CPU profile will not show.",
+    "The more revealing question is:",
     "“Where is work waiting?”",
-    "A stall is frequently a queueing problem before it is a computation problem.",
+    "Following that waiting time—from application workers to connection pools, locks, queues and external providers—turns a vague peak-traffic failure into a capacity problem we can reason about.",
   ],
   sections: [
     {
-      heading: "The obvious solution: profile the slow endpoint",
+      heading: "Where the time actually goes",
       blocks: [
         {
           type: "p",
-          text: "Profiling is useful; if a route is doing expensive JSON processing, rendering a huge response, running an unindexed query, or performing repeated external calls, a profile can reveal it. But a peak-only slowdown can be deceptive. A request may take ten seconds while doing only a small amount of actual work:",
+          text: "A profile will reveal expensive JSON processing, a huge response, an unindexed query or repeated external calls. A peak-only slowdown is more deceptive, because a request can take over nine seconds while doing very little work. For example:",
         },
         {
           type: "code",
@@ -27,12 +29,12 @@ export const content: ThoughtArticleContent = {
         },
         {
           type: "p",
-          text: "The endpoint is slow, but the business logic is not necessarily the cause. If profiling only captures active CPU work, it may tell you very little about the time users actually experience.",
+          text: "The endpoint is slow, but the business logic is not necessarily the cause. A CPU profiler samples only active work, so it shows almost none of those nine seconds; a wall-clock or off-CPU view, or a trace with timings around each wait, is what shows where the time went.",
         },
       ],
     },
     {
-      heading: "The hidden mechanism: waiting accumulates before failure appears",
+      heading: "Waiting accumulates before failure appears",
       blocks: [
         {
           type: "p",
@@ -53,7 +55,7 @@ Thread pools`,
         },
         {
           type: "p",
-          text: "When demand approaches a limit, work begins to wait. At first, the waiting may be small enough that nobody notices. As utilisation increases, the queue can grow quickly; a small increase in traffic can create a large increase in tail latency because more work is competing for the same resource. That is why average latency can look reasonable while real users are struggling.",
+          text: "When demand approaches a limit, work begins to wait. At first, the waiting may be small enough that nobody notices. As utilisation increases, the queue can grow quickly; a small increase in traffic can create a large increase in tail latency because more work is competing for the same resource. That is why a typical request can look fine while real users are struggling. For example, the median can stay healthy while the tail does not:",
         },
         {
           type: "code",
@@ -64,7 +66,7 @@ p99: timeout`,
         },
         {
           type: "p",
-          text: "The average may hide the fact that a meaningful part of the user population is experiencing a broken workflow.",
+          text: "The median, like an average, hides the fact that a meaningful part of the user population is experiencing a broken workflow.",
         },
       ],
     },
@@ -126,7 +128,7 @@ provider_ms=130`,
       ],
     },
     {
-      heading: "The second obvious solution: restart the service",
+      heading: "Restarting the service",
       blocks: [
         {
           type: "p",
@@ -159,7 +161,7 @@ Timing relationships`,
         },
         {
           type: "p",
-          text: "The goal is not to avoid restoring service, but to restore service without learning nothing.",
+          text: "The goal is to restore service without losing what the incident could have taught you.",
         },
       ],
     },
@@ -168,7 +170,7 @@ Timing relationships`,
       blocks: [
         {
           type: "p",
-          text: "Stalled systems often receive more traffic because users and clients react to uncertainty. A person refreshes; a browser retries; a mobile client reconnects; a job worker retries. A load balancer sends another attempt.",
+          text: "Stalled systems often receive more traffic because users and clients react to uncertainty. A person refreshes, a browser retries, a mobile client reconnects, a job worker retries and a load balancer sends another attempt.",
         },
         {
           type: "code",
@@ -185,7 +187,7 @@ Requests slow further`,
         },
         {
           type: "p",
-          text: "The system begins processing original work plus retries; this is why retries need:",
+          text: "The system ends up processing the original work plus the retries, which is why retries need:",
         },
         {
           type: "code",
@@ -203,7 +205,7 @@ Idempotency for mutations`,
       ],
     },
     {
-      heading: "The useful question is “what is full?”",
+      heading: "What is full?",
       blocks: [
         {
           type: "p",
@@ -242,7 +244,7 @@ Retry traffic became a large share of incoming requests.`,
         },
         {
           type: "p",
-          text: "Each problem has a different response; the correct fix is not “make the timeout longer.” It is a change that affects the constrained part of the system.",
+          text: "Each problem has a different response, and a longer timeout fixes none of them. The fix has to change the constrained part of the system.",
         },
       ],
     },
@@ -251,7 +253,7 @@ Retry traffic became a large share of incoming requests.`,
       blocks: [
         {
           type: "p",
-          text: "Under pressure, not every feature deserves equal capacity; a system can protect important user work by reducing or deferring less critical work:",
+          text: "Under pressure, not every feature deserves equal capacity. A system can protect important user work by reducing or deferring less critical work:",
         },
         {
           type: "code",
@@ -280,7 +282,7 @@ non-essential enrichment`,
       blocks: [
         {
           type: "p",
-          text: "A peak-traffic stall is often not one slow function, but it is the interaction of finite capacity, concurrency, queues, retries, dependencies, and work that stayed synchronous longer than it needed to. When it happens, do not start by guessing which limit to increase. Start by finding where time accumulates. Then ask: What is waiting, what is it waiting for, and what can we change so the important work continues to move?",
+          text: "A peak-traffic stall is rarely one slow function. More often it is the interaction of finite capacity, concurrency, queues, retries, dependencies, and work that stayed synchronous longer than it needed to. When it happens, do not start by guessing which limit to increase. Start by finding where time accumulates. Then ask: What is waiting, what is it waiting for, and what can we change so the important work continues to move?",
         },
       ],
     },

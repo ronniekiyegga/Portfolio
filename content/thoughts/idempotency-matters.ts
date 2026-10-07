@@ -2,44 +2,25 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A user reports that an action happened twice. Maybe they received two confirmation emails; maybe a booking appeared twice. Maybe an entitlement was applied twice. Maybe an external provider sent the same event again and the application treated both deliveries as new work. The obvious explanation is usually:",
+    "A customer completes a booking, sees the confirmation and then receives the same email again. In the admin view, the booking appears twice even though the customer insists they pressed the button once.",
+    "The interface offers an easy explanation:",
     "“The user clicked the button twice.”",
-    "The obvious fix follows:",
+    "So the team reaches for a sensible first fix:",
     "“Disable the button after the first click.”",
-    "That is a sensible interface improvement, and it can prevent accidental double clicks and reassure users that their action is processing. It is not a duplicate-safety guarantee. A button only controls one way a request can be repeated. The system still has to handle retries, timeouts, browser refreshes, flaky connections, queue redelivery, application restarts, and providers that intentionally send the same webhook more than once. The real question is not:",
+    "Disabling the button improves feedback and prevents one source of duplicate requests. It does not explain why the server received the operation twice after a timeout, why a queue redelivered a message or why a provider sent the same webhook again. Those are normal behaviours in distributed systems, not unusual user mistakes.",
+    "Once delivery can repeat, preventing the second click is no longer the central problem. The real question is not:",
     "“How do we stop someone clicking twice?”",
     "It is:",
     "“What must remain true if this operation arrives more than once?”",
+    "That question moves the investigation from the button to the business operation, where duplicate safety can actually be guaranteed.",
   ],
   sections: [
     {
-      heading: "The invariant",
+      heading: "How the second request still arrives",
       blocks: [
         {
           type: "p",
-          text: "A request may be delivered more than once; the business effect must remain correct after the first valid application. The booking, payment, and subscription examples below are representative transitions; the design requirement is that duplicate delivery does not create duplicate business effects.",
-        },
-      ],
-    },
-    {
-      heading: "The obvious solution: block the second click",
-      blocks: [
-        {
-          type: "p",
-          text: "A disabled button can improve a user experience:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `User clicks “Confirm booking”
-    ↓
-Button enters loading state
-    ↓
-Second click is prevented`,
-        },
-        {
-          type: "p",
-          text: "That is useful, and it prevents visible confusion and removes one source of duplicate submission. But it does not account for this sequence:",
+          text: "Even with the button disabled, this sequence produces a second request:",
         },
         {
           type: "code",
@@ -71,12 +52,12 @@ Provider retries webhook`,
         },
         {
           type: "p",
-          text: "The duplicate is not a mistake, but it is expected behaviour in a system that prefers retrying work over silently losing it.",
+          text: "In a system that prefers retrying work to silently losing it, that duplicate is expected behaviour rather than a mistake.",
         },
       ],
     },
     {
-      heading: "The hidden problem: delivery and effect are different things",
+      heading: "Delivery and effect are different things",
       blocks: [
         {
           type: "p",
@@ -121,7 +102,7 @@ pending_payment → confirmed`,
       ],
     },
     {
-      heading: "The better question: what identifies this operation?",
+      heading: "What identifies this operation?",
       blocks: [
         {
           type: "p",
@@ -191,7 +172,7 @@ Previous in-progress record
         },
         {
           type: "p",
-          text: "That may work during a local test, and it fails under the conditions idempotency is meant to address. A process can restart; a second application instance can receive the retry. A deployment can move traffic; a concurrent request can arrive before the first process has stored the result. A serverless function may not share memory with the function that handled the previous delivery. The idempotency state must live in a shared, durable system of record. For an operation that changes database state, the database is often the right authority.",
+          text: "That may work during a local test, but it fails under exactly the conditions idempotency is meant to address. A process can restart, a second application instance can receive the retry, a deployment can move traffic, or a concurrent request can arrive before the first process has stored the result. A serverless function may not share memory with the function that handled the previous delivery. The idempotency state must live in a shared, durable system of record. For an operation that changes database state, the database is often the right authority.",
         },
       ],
     },
@@ -239,7 +220,7 @@ Request B: performs the action`,
       blocks: [
         {
           type: "p",
-          text: "The reason idempotency matters most is not the happy path, but it is the uncertain one. Imagine a request that successfully updates the database, but the process crashes before it replies. The client sees a timeout and retries. Without a stored operation identity and result, the server cannot distinguish:",
+          text: "Idempotency matters most on the uncertain path rather than the happy one. Imagine a request that successfully updates the database, but the process crashes before it replies. The client sees a timeout and retries. Without a stored operation identity and result, the server cannot distinguish:",
         },
         {
           type: "code",
@@ -283,7 +264,7 @@ External side effect`,
       blocks: [
         {
           type: "p",
-          text: "Retries are not inherently safe; a temporary network failure may justify a retry; a validation error, invalid signature, permission denial, or malformed request generally does not. A useful failure model distinguishes:",
+          text: "Retries are not inherently safe. A temporary network failure may justify a retry, but a validation error, invalid signature, permission denial or malformed request generally does not. A useful failure model distinguishes:",
         },
         {
           type: "code",
@@ -316,11 +297,11 @@ External side effect`,
       ],
     },
     {
-      heading: "The test that proves the system is safe",
+      heading: "Testing for duplicate safety",
       blocks: [
         {
           type: "p",
-          text: "The highest-value test is not “the endpoint returns 200.” It is:",
+          text: "The most valuable test goes beyond “the endpoint returns 200”:",
         },
         {
           type: "code",
@@ -345,7 +326,7 @@ And the duplicate delivery is visible but harmless`,
         },
         {
           type: "p",
-          text: "The practical lesson: A disabled button improves the interface; idempotency protects the business operation. Build both when the workflow matters; just do not confuse one for the other.",
+          text: "A disabled button improves the interface, while idempotency protects the business operation. When the workflow matters, build both, and do not mistake one for the other.",
         },
       ],
     },

@@ -2,14 +2,15 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An incident begins. Error rates rise; a dependency slows down. Requests time out; the application begins emitting more logs than usual. Then the logging destination becomes unavailable or rate-limits ingestion. The obvious response is:",
+    "An external dependency slows down during an incident, requests begin timing out and every affected service starts producing more error logs than usual. Just when the team needs those logs most, the logging destination begins rate-limiting ingestion.",
+    "The instinct is to preserve every clue:",
     "“Buffer everything until the logging platform recovers.”",
-    "That feels responsible; logs are evidence, and incidents are exactly when evidence matters most. The risk is that an unbounded buffer becomes another outage. Memory fills; disk fills; a logging sidecar consumes CPU; the application blocks while trying to write. The workload users actually need becomes less reliable because the observability pipeline is trying to preserve every line. Reliable logging is not achieved by refusing to lose anything under any conditions.",
-    "It is achieved by deciding which events matter most, how long they can wait, what can be dropped or sampled, and how the application remains useful when observability is degraded.",
+    "That feels responsible because logs are evidence. The trouble is that the buffer lives on the same machines that are already under pressure. As memory or disk fills, the sidecar consumes more CPU and application threads can begin waiting to write, so the attempt to preserve the incident record starts making the customer-facing incident worse.",
+    "Now the problem is no longer simply how to avoid losing logs. It is how to preserve the evidence that matters without allowing observability to compete with the service it is meant to explain. That forces decisions about priority, bounded waiting, sampling and what the application should do when the logging path is degraded.",
   ],
   sections: [
     {
-      heading: "The obvious solution: retain every log",
+      heading: "Why log volume rises with failure",
       blocks: [
         {
           type: "p",
@@ -27,7 +28,7 @@ What happened to this user’s workflow?`,
         },
         {
           type: "p",
-          text: "Retaining logs supports those questions; the problem is that log volume often rises with failure volume.",
+          text: "Retaining logs supports those questions. The catch is that log volume tends to rise with failure volume.",
         },
         {
           type: "code",
@@ -51,11 +52,11 @@ Producers buffer more data`,
       ],
     },
     {
-      heading: "The hidden question: which logs have the same value?",
+      heading: "Not every log has the same value",
       blocks: [
         {
           type: "p",
-          text: "Not every event needs the same delivery guarantee; a production system may emit:",
+          text: "Not every event needs the same delivery guarantee. A production system may emit:",
         },
         {
           type: "code",
@@ -90,7 +91,7 @@ May be disabled, sampled, or dropped first under pressure.`,
         },
         {
           type: "p",
-          text: "The classification is not an excuse to lose important data, but it is the only way to preserve the most important data when capacity is limited.",
+          text: "Classifying events is not an excuse to lose important data. It is how the most important data survives when capacity is limited.",
         },
       ],
     },
@@ -99,7 +100,7 @@ May be disabled, sampled, or dropped first under pressure.`,
       blocks: [
         {
           type: "p",
-          text: "A buffer protects against short disruptions, and it also needs limits.",
+          text: "A buffer protects against short disruptions, but it also needs limits.",
         },
         {
           type: "code",
@@ -182,7 +183,7 @@ Sample repeated stack traces`,
           language: "text",
           code: `payment.webhook_processing_failed
 error_class=database_timeout
-count=8,412
+count=~8,000
 first_seen=...
 last_seen=...
 affected_route=...`,
@@ -260,19 +261,11 @@ Personal information not needed for diagnosis`,
       blocks: [
         {
           type: "p",
-          text: "Buffering every log feels safe because data loss is uncomfortable, but an unbounded logging buffer can convert a degraded observability system into degraded product availability. Classify events; bound buffers. Protect the primary workload; preserve critical audit data through a stronger path. Aggregate repeated failures; make loss or delay visible. The question is not:",
+          text: "Buffering every log feels safe because data loss is uncomfortable, but an unbounded logging buffer can convert a degraded observability system into degraded product availability. In practice that means classifying events, bounding buffers, protecting the primary workload, giving critical audit data a stronger path, aggregating repeated failures and making loss or delay visible.",
         },
         {
           type: "p",
-          text: "“How do we make sure we never lose a log?”",
-        },
-        {
-          type: "p",
-          text: "It is:",
-        },
-        {
-          type: "p",
-          text: "“Which evidence must survive, how do we preserve it safely, and how do we keep the product running when the logging pipeline does not?”",
+          text: "Rather than promising never to lose a log, decide which evidence must survive, how to preserve it safely and how the product keeps running when the logging pipeline does not.",
         },
       ],
     },

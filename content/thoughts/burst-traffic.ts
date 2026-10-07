@@ -2,32 +2,19 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "Traffic increases; a marketing campaign lands; a deadline approaches; a feature is shared widely. A job opens for bookings; a popular workflow becomes part of everyone’s morning routine. Requests begin to slow down. The obvious response is:",
+    "A booking window opens at 9am and thousands of users arrive within the same few minutes. Pages that were fast during normal traffic begin to hang, while timeouts and retries start climbing.",
+    "The application tier is the most visible part of the system, so the first response is predictable:",
     "“Add more servers.”",
-    "That can be the correct response when the application tier is the constrained resource. If CPU is saturated, requests are queueing at the web layer, and the database and dependencies have capacity, more application instances can improve throughput. The mistake is treating more servers as a universal answer to burst traffic. A traffic spike does not only create more web requests, and it creates more authentication checks, database queries, cache reads, external API calls, queue messages, retries, and connections. If the bottleneck is downstream, more servers can make the spike worse.",
+    "That works when requests are waiting for application CPU and the dependencies behind it still have room. But every new instance also creates more authentication checks, database queries, cache reads, outbound calls and queue messages. If one of those shared resources is already at its limit, scaling the web tier only helps the system deliver work to the bottleneck faster.",
+    "Before adding capacity, we need to find where requests are actually waiting and decide how much concurrency that resource can safely accept. The useful question is not how quickly we can add servers, but which assumption in the request path fails first when the burst arrives.",
   ],
   sections: [
     {
-      heading: "The obvious solution: scale the application tier",
+      heading: "When more servers help",
       blocks: [
         {
           type: "p",
-          text: "The reasoning is straightforward:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `More requests
-    ↓
-More web servers
-    ↓
-More concurrent handling capacity
-    ↓
-Faster responses`,
-        },
-        {
-          type: "p",
-          text: "This works when the web tier is actually doing the limiting work. For example, a CPU-heavy image transformation service may benefit directly from more worker capacity. A stateless endpoint serving cached content may also scale horizontally well. The problem is that many product workflows are not bounded by the application server. They are bounded by a shared dependency.",
+          text: "Scaling out works when the web tier is doing the limiting work. A CPU-heavy image transformation service benefits directly from more workers, and a stateless endpoint serving cached content scales horizontally well. Many product workflows, though, are bounded by a shared dependency rather than the application server, and for them more instances mean more of everything downstream:",
         },
         {
           type: "code",
@@ -51,7 +38,7 @@ More retries when dependencies slow down`,
       ],
     },
     {
-      heading: "The hidden constraint: downstream capacity",
+      heading: "Every layer has its own limit",
       blocks: [
         {
           type: "p",
@@ -78,19 +65,11 @@ Notification provider`,
         },
         {
           type: "p",
-          text: "Each layer has a different concurrency budget; if the database can safely execute 20 expensive queries at a time, scaling the web application from five instances to fifty does not make the database capable of executing 200 expensive queries safely. It may create a longer queue, more lock contention, higher query latency, and eventually more request timeouts. The same applies to a third-party API with a strict rate limit. More web servers can turn a manageable burst into a large number of rejected or delayed outbound calls. The question is not:",
+          text: "Each layer has a different concurrency budget. Suppose the database can safely run about 20 expensive queries at once, and five web instances already reach that by sending four each. Scaling to fifty instances lets the web tier attempt 200 of those queries at a time, but the database can still only run about 20 safely; the rest wait in a longer queue, add lock contention and push query latency up until requests time out. The same applies to a third-party API with a strict rate limit, where more web servers can turn a manageable burst into a large number of rejected or delayed outbound calls.",
         },
         {
           type: "p",
-          text: "“How many servers do we need?”",
-        },
-        {
-          type: "p",
-          text: "It is:",
-        },
-        {
-          type: "p",
-          text: "“Which resource is reaching its safe capacity first, and what work should be allowed to wait?”",
+          text: "So the useful question shifts from how many servers we need to which resource reaches its safe capacity first, and what work should be allowed to wait.",
         },
       ],
     },
@@ -99,7 +78,7 @@ Notification provider`,
       blocks: [
         {
           type: "p",
-          text: "A service can feel slow even when its own CPU is not high. A request may spend most of its time waiting:",
+          text: "A service can feel slow even when its own CPU is not high, because a request may spend most of its time waiting. For example:",
         },
         {
           type: "code",
@@ -152,7 +131,7 @@ Notification provider`,
       ],
     },
     {
-      heading: "The second obvious solution: increase every limit",
+      heading: "Raising every limit",
       blocks: [
         {
           type: "p",
@@ -233,7 +212,7 @@ notifications, analytics, derived summaries, non-critical enrichment`,
         },
         {
           type: "p",
-          text: "This is backpressure, but it is not a failure to say “not now.” It is a better failure mode than accepting unlimited work until every request times out. The user experience should make the state clear:",
+          text: "This is backpressure. Saying “not now” is a better failure mode than accepting unlimited work until every request times out, as long as the user experience makes the state clear:",
         },
         {
           type: "code",
@@ -255,11 +234,11 @@ Do not submit again; we will update this page when confirmation arrives.`,
       blocks: [
         {
           type: "p",
-          text: "More servers can solve a web-server bottleneck, and they cannot automatically solve a database bottleneck, a connection-pool bottleneck, an external API limit, a retry storm, or a queueing problem. In some cases, they make those problems worse by increasing concurrent demand. Before scaling out, ask: Where does work start waiting, what is the constrained resource, and which work must remain available to users during the spike? Scale the layer that is actually constrained; bound the work sent downstream. Move non-critical work off the critical path; make overload visible.",
+          text: "More servers can solve a web-server bottleneck, but they cannot automatically solve a database bottleneck, a connection-pool bottleneck, an external API limit, a retry storm, or a queueing problem. In some cases, they make those problems worse by increasing concurrent demand. Before scaling out, ask: Where does work start waiting, what is the constrained resource, and which work must remain available to users during the spike? Then scale the layer that is actually constrained, bound the work sent downstream, move non-critical work off the critical path and make overload visible.",
         },
         {
           type: "p",
-          text: "The goal is not to accept every request immediately; the goal is to keep the important user workflow reliable when demand is least predictable.",
+          text: "Accepting every request immediately matters less than keeping the important user workflow reliable when demand is least predictable.",
         },
       ],
     },

@@ -2,16 +2,18 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A product remembers something, and it restores a draft after a browser refresh, and it keeps the filter a user selected. It returns them to the file they were editing, and it remembers the last workspace they used. At first, this feels intelligent; the product understands continuity, saves time, and prevents someone from repeating work. Then the same capability crosses a line. A private search appears again after the user thought they had moved on. A draft returns after they intentionally abandoned it; a shared computer reveals a previous person’s context.",
-    "The product stops feeling helpful, and it starts feeling haunted; the difference is not whether the system can remember, but it is whether the user understands what is remembered, why it is remembered, how long it remains, and how to make it disappear.",
+    "A user refreshes a long form and is relieved to find their draft still there. The product also remembers the filter they chose and returns them to the file they were editing, saving several small pieces of repeated work.",
+    "Then the same person searches for something private on a shared computer. The search reappears the next day, and a draft they deliberately abandoned keeps returning whenever they open the product.",
+    "Nothing about the storage mechanism changed, but the experience did. Memory felt helpful while it followed a visible task; it felt invasive when the user could no longer tell what would return, where it was stored or how to remove it.",
+    "That makes product memory less a question of how much context we can retain and more a question of the contract around it: what is remembered, for how long, on whose device or account, and under whose control.",
   ],
   sections: [
     {
-      heading: "The obvious solution: remember everything",
+      heading: "Why “remember everything” goes wrong",
       blocks: [
         {
           type: "p",
-          text: "Persistent context has obvious benefits; if a product stores more history, it can offer more continuity:",
+          text: "Persistent context has obvious benefits. If a product stores more history, it can offer more continuity:",
         },
         {
           type: "code",
@@ -30,7 +32,7 @@ Pre-fill repeated information`,
       ],
     },
     {
-      heading: "The hidden question: what is the user allowing us to keep?",
+      heading: "What is the user allowing us to keep?",
       blocks: [
         {
           type: "p",
@@ -49,7 +51,7 @@ How the user can remove it`,
         },
         {
           type: "p",
-          text: "Those are not only implementation questions, but they determine whether continuity feels like assistance or surveillance.",
+          text: "Those choices go beyond implementation, because they determine whether continuity feels like assistance or surveillance.",
         },
         {
           type: "code",
@@ -139,12 +141,12 @@ Change preference`,
         },
         {
           type: "p",
-          text: "The wording does not need to be intrusive, and it needs to make the relationship visible. Trust comes from making memory legible.",
+          text: "The wording does not need to be intrusive, but it does need to make the relationship visible. Trust comes from making memory legible.",
         },
       ],
     },
     {
-      heading: "The obvious solution: add a clear-all-data button",
+      heading: "Why a clear-all button is not enough",
       blocks: [
         {
           type: "p",
@@ -198,7 +200,7 @@ Context with no end
         },
         {
           type: "p",
-          text: "Expiry does not make a product forgetful, and it makes the product intentional.",
+          text: "Expiry makes a product intentional rather than forgetful.",
         },
       ],
     },
@@ -256,7 +258,7 @@ With the clearest user control`,
       blocks: [
         {
           type: "p",
-          text: "Memory can make a product feel attentive, and it can also make a product feel as though it has been watching too closely. The difference is not the sophistication of the technology, but it is the contract with the user. Remember context when continuity is clearly useful; make retained information visible. Give people local control to remove it; set expiry deliberately. Keep sensitive state narrow and scoped. A product should remember enough to help someone continue their work. It should not remember so much that the user has to wonder what else it knows.",
+          text: "Memory can make a product feel attentive, and it can also make a product feel as though it has been watching too closely. The difference lies in the contract with the user rather than the sophistication of the technology. Remember context when continuity is clearly useful, make retained information visible, give people local control to remove it, set expiry deliberately and keep sensitive state narrow and scoped. A product should remember enough to help someone continue their work. It should not remember so much that the user has to wonder what else it knows.",
         },
       ],
     },

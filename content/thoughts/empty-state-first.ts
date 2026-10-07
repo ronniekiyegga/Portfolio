@@ -2,13 +2,16 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A product feature often begins with a successful screen; a dashboard full of activity; a table full of records; a rich progress chart. A completed booking flow; an inbox with messages; a project board with tasks moving across columns. The happy path is easy to imagine because it shows the product after it has already delivered value. But new users do not arrive there. They arrive before anything exists. The obvious approach is:",
+    "A team is designing a project dashboard, and the mock-up looks convincing: tasks are moving across columns, progress charts show useful trends and recent activity makes the product feel alive.",
+    "There is only one problem. A new customer will see none of it. On their first visit there are no projects, no activity and no data from which to infer what the product expects them to do.",
+    "Because the populated screen demonstrates the long-term value so well, the natural plan is:",
     "“Build the populated experience first; we will add an empty state later.”",
-    "That sounds efficient, and it often creates a product that works only after the user has somehow overcome the hardest moment: getting started. The empty state should come first because it exposes the real first action, the minimum information required, and the first value the product needs to deliver.",
+    "That sounds efficient, but it postpones the moment when the product has to explain itself. If the first useful action is unclear, the customer never reaches the rich dashboard we designed for them.",
+    "Working through the empty state first reveals what someone needs to understand, what they must provide and how quickly the product can return value. It is not decoration for a screen without data; it is the first real version of the workflow.",
   ],
   sections: [
     {
-      heading: "The obvious solution: add “Nothing here yet”",
+      heading: "A placeholder is not an explanation",
       blocks: [
         {
           type: "p",
@@ -21,7 +24,7 @@ export const content: ThoughtArticleContent = {
         },
         {
           type: "p",
-          text: "Maybe there is an illustration; maybe there is a button:",
+          text: "Maybe there is an illustration, and maybe a button:",
         },
         {
           type: "code",
@@ -43,14 +46,10 @@ export const content: ThoughtArticleContent = {
             "What will happen after I take this action?",
           ],
         },
-        {
-          type: "p",
-          text: "An empty state is not a decorative absence of content, but it is the product’s first explanation of itself.",
-        },
       ],
     },
     {
-      heading: "The hidden problem: “empty” is not one condition",
+      heading: "“Empty” is not one condition",
       blocks: [
         {
           type: "p",
@@ -79,7 +78,7 @@ There is intentionally no outstanding work.`,
         },
         {
           type: "p",
-          text: "Treating all of these as “No data” creates confusing behaviour; a candidate may have twenty applications but see no results because the status filter is set to “Interviewing.” The useful action is not “Create your first application.” It is “Clear filters.” A user may see an empty list because the request failed. The useful action is “Try again,” not “Start creating records.” A user who has completed all follow-up tasks does not need an onboarding message. They need confirmation:",
+          text: "Treating all of these as “No data” creates confusing behaviour. A candidate may have twenty applications but see no results because the status filter is set to “Interviewing,” and what they need is “Clear filters,” not “Create your first application.” A user may see an empty list because the request failed. The useful action is “Try again,” not “Start creating records.” A user who has completed all follow-up tasks does not need an onboarding message. They need confirmation:",
         },
         {
           type: "code",
@@ -94,7 +93,7 @@ Your next scheduled action is Thursday.`,
       ],
     },
     {
-      heading: "The better question: what should the user do next?",
+      heading: "Start from the next action",
       blocks: [
         {
           type: "p",
@@ -236,7 +235,7 @@ View application`,
       blocks: [
         {
           type: "p",
-          text: "The happy path tells you what the product looks like after someone has succeeded. The empty state tells you whether the product can help them succeed for the first time. Build it early; make it specific to the user’s situation. Explain why the next action matters; distinguish first use from filtered results, loading, errors, permissions, and completed work. The first useful action is not a detail around the product. It is where the product begins.",
+          text: "The happy path tells you what the product looks like after someone has succeeded. The empty state tells you whether the product can help them succeed for the first time. Build it early, make it specific to the user’s situation, explain why the next action matters, and distinguish first use from filtered results, loading, errors, permissions and completed work. The first useful action is where the product begins.",
         },
       ],
     },
