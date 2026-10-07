@@ -2,20 +2,22 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A screen feels cramped; the instinct is understandable:",
+    "A settings page feels cramped. Labels, controls, help text and destructive actions run into one another, so the design review produces an uncomplicated suggestion:",
     "“Give everything more room.”",
-    "Cards gain padding; sections gain larger gaps. Headings become more separated from content; the page begins to look calmer. Sometimes that is the right fix. Sometimes it only makes an unclear interface slower to scan. Whitespace is powerful because it tells users what belongs together and what does not. But if the structure is wrong, more space cannot make it right. The better question is not:",
+    "Extra padding makes the page calmer, but it also pushes related controls farther apart. The billing action is still mixed with profile settings, and the destructive action still looks like part of the routine save flow. The screen is larger without being easier to understand.",
+    "Whitespace works because proximity communicates relationship. If the relationships are unclear, changing the gap cannot decide them for us. The useful question is not:",
     "“How much space should we add?”",
     "It is:",
     "“Which things belong together, and what relationship should the user understand?”",
+    "Once that structure is explicit, spacing can reinforce it instead of trying to compensate for its absence.",
   ],
   sections: [
     {
-      heading: "The obvious solution: add more margin",
+      heading: "What spacing can do",
       blocks: [
         {
           type: "p",
-          text: "Spacing can absolutely improve readability; a form with labels pressed against inputs is difficult to scan. A dashboard with no separation between cards becomes visually noisy; a destructive action placed too close to a safe routine action can invite mistakes. Adding space works because proximity communicates relationship.",
+          text: "Spacing can absolutely improve readability. A form with labels pressed against inputs is difficult to scan, a dashboard with no separation between cards becomes visually noisy, and a destructive action placed too close to a routine one invites mistakes. Used deliberately, space expresses relationships like these:",
         },
         {
           type: "code",
@@ -46,12 +48,12 @@ Cancel`,
         },
         {
           type: "p",
-          text: "should feel connected to the form they affect; the problem begins when spacing becomes the answer to every organisational issue.",
+          text: "should feel connected to the form they affect. The problem begins when spacing becomes the answer to every organisational issue.",
         },
       ],
     },
     {
-      heading: "The hidden problem: the screen has not decided what is grouped",
+      heading: "The screen has not decided what is grouped",
       blocks: [
         {
           type: "p",
@@ -65,7 +67,7 @@ Interview scheduled
 Next action
 Prepare examples
 Interview date
-Thursday at 10:00
+Thursday
 Archive application`,
         },
         {
@@ -82,7 +84,7 @@ Next action
 Prepare examples by Wednesday
 
 Upcoming interview
-Thursday, 10:00–11:00
+Thursday morning
 
 Application management
 Archive`,
@@ -94,11 +96,11 @@ Archive`,
       ],
     },
     {
-      heading: "The better question: what relationship does this gap represent?",
+      heading: "What relationship does this gap represent?",
       blocks: [
         {
           type: "p",
-          text: "A spacing scale is useful when it encodes relationships; for example:",
+          text: "A spacing scale is useful when it encodes relationships. For example:",
         },
         {
           type: "code",
@@ -193,7 +195,7 @@ Meaningful separation between rows and sections`,
         },
         {
           type: "p",
-          text: "Space should help the user scan, and it should not make the product feel spacious at the expense of the work the user needs to do.",
+          text: "Space should help the user scan, not make the product feel spacious at the expense of the work the user needs to do.",
         },
       ],
     },
@@ -202,7 +204,7 @@ Meaningful separation between rows and sections`,
       blocks: [
         {
           type: "p",
-          text: "Desktop layouts can use columns to express grouping; on a smaller screen, those columns become a vertical sequence. That means spacing now carries more responsibility.",
+          text: "Desktop layouts can use columns to express grouping, but on a smaller screen those columns become a vertical sequence. That means spacing now carries more responsibility.",
         },
         {
           type: "code",
@@ -219,7 +221,7 @@ Timeline`,
         },
         {
           type: "p",
-          text: "The gaps on mobile must make the new reading order understandable. A uniform vertical stack can leave users unsure whether a section is a continuation of the previous one or a separate concept. Responsive spacing is not just smaller spacing, but it is spacing that supports a changed information architecture.",
+          text: "The gaps on mobile must make the new reading order understandable. A uniform vertical stack can leave users unsure whether a section is a continuation of the previous one or a separate concept. Responsive spacing has to support a changed information architecture, not just get smaller.",
         },
       ],
     },
@@ -243,7 +245,7 @@ Timeline`,
         },
         {
           type: "p",
-          text: "The practical lesson: Whitespace is not a cosmetic gap, but it is a structural signal. Use it after you have decided what belongs together; if the screen is unclear, fix the product structure first. Then let spacing make that structure easier to read.",
+          text: "Whitespace is a structural signal rather than a cosmetic gap. Use it after you have decided what belongs together: if the screen is unclear, fix the product structure first, then let spacing make that structure easier to read.",
         },
       ],
     },

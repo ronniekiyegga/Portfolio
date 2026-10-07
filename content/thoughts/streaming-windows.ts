@@ -2,26 +2,19 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A service begins to struggle under load; an export route is expensive; a public endpoint receives bursts of traffic. One integration polls far more often than expected; a login route attracts suspicious activity. Background work competes with interactive user work. The obvious response is:",
+    "Imagine checkout during a major product launch. Traffic jumps, customers keep pressing purchase as responses slow down, retries begin piling up and one expensive endpoint starts consuming far more capacity than expected.",
+    "The first instinct is sensible:",
     "“Add a rate limit.”",
-    "A limit can protect a system, and it can also block legitimate users, preserve the wrong work, and make an already confusing failure mode feel arbitrary. The difficult part is not incrementing a counter, but deciding which requests deserve capacity when there is not enough capacity for all of them. That is what rate limiting really is: an admission-control policy.",
+    "Slow the flood before it overwhelms the service. But then the harder question appears: who exactly should be slowed down? A customer completing a payment is not the same as a client polling every second, and a cached read does not consume the same resources as an export.",
+    "Give all of them the same limit and we may protect the system by blocking the work we most wanted to keep alive. That is where rate limiting stops being about incrementing a counter and becomes an admission-control decision: when capacity is scarce, which work should be allowed through, which work should wait and which work should be rejected?",
   ],
   sections: [
     {
-      heading: "The obvious solution: give everyone the same limit",
+      heading: "What one shared limit ignores",
       blocks: [
         {
           type: "p",
-          text: "A single global limit is attractive because it is easy to explain and implement.",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: "100 requests per minute per IP address",
-        },
-        {
-          type: "p",
-          text: "It may stop a basic burst and can be a reasonable first guardrail for a low-risk public endpoint. The problem is that requests are not equally valuable or equally expensive.",
+          text: "A single limit, such as 100 requests per minute per IP address, is easy to explain and can be a reasonable first guardrail for a low-risk public endpoint. Its weakness is that requests are neither equally valuable nor equally expensive:",
         },
         {
           type: "code",
@@ -51,7 +44,7 @@ POST /webhooks/provider
       ],
     },
     {
-      heading: "The hidden question: what are we protecting?",
+      heading: "What are we protecting?",
       blocks: [
         {
           type: "p",
@@ -77,7 +70,7 @@ Webhook route
         },
         {
           type: "p",
-          text: "The policy follows from the protected resource; an export may need a low separate limit because it consumes disproportionate capacity. A cached read route may allow a short burst; a login route may need a stricter anonymous policy than an authenticated dashboard route. The goal is not to create many complicated limits, but to stop treating all traffic as one undifferentiated thing.",
+          text: "The policy follows from the protected resource. An export may need a low separate limit because it consumes disproportionate capacity, a cached read route may allow a short burst, and a login route may need a stricter anonymous policy than an authenticated dashboard route. That does not require many complicated limits, only an end to treating all traffic as one undifferentiated thing.",
         },
       ],
     },
@@ -86,7 +79,7 @@ Webhook route
       blocks: [
         {
           type: "p",
-          text: "Rate limiting needs a way to group requests; the most common choices are:",
+          text: "Rate limiting needs a way to group requests. The most common choices are:",
         },
         {
           type: "code",
@@ -100,7 +93,7 @@ A combination of these`,
         },
         {
           type: "p",
-          text: "Each has a failure mode; an IP address can group unrelated users behind a school, office, household, or mobile carrier. A user ID is more meaningful after authentication but cannot protect a login form. An API key supports a clear integration contract but does not solve a browser route without one. A sensible policy is often layered:",
+          text: "Each has a failure mode. An IP address can group unrelated users behind a school, office, household, or mobile carrier. A user ID is more meaningful after authentication but cannot protect a login form. An API key supports a clear integration contract but does not solve a browser route without one. A sensible policy is often layered:",
         },
         {
           type: "code",
@@ -119,12 +112,12 @@ Expensive operation
         },
         {
           type: "p",
-          text: "A rate limiter is not fair because it is mathematically even. It is fair because it prevents one actor from consuming a shared resource in a way that harms others.",
+          text: "Fairness here has little to do with mathematical evenness. A rate limiter is fair when it stops one actor from consuming a shared resource in a way that harms others.",
         },
       ],
     },
     {
-      heading: "The obvious algorithm: a fixed counter",
+      heading: "A fixed counter and its boundary",
       blocks: [
         {
           type: "p",
@@ -137,7 +130,7 @@ Expensive operation
         },
         {
           type: "p",
-          text: "The hidden problem is the boundary; a client can use its full allowance at the end of one window and another full allowance at the start of the next:",
+          text: "The weak point is the boundary: a client can use its full allowance at the end of one window and another full allowance at the start of the next:",
         },
         {
           type: "code",
@@ -169,11 +162,7 @@ Smooths work toward a steady output rate.`,
         },
         {
           type: "p",
-          text: "The question is not which algorithm is most advanced.",
-        },
-        {
-          type: "p",
-          text: "“Should this client be allowed to burst, and how quickly must the system recover after the burst?”",
+          text: "The choice depends less on which algorithm is most advanced than on two policy questions: should this client be allowed to burst, and how quickly must the system recover afterwards?",
         },
       ],
     },
@@ -209,7 +198,7 @@ Integration sends a bounded batch
         },
         {
           type: "p",
-          text: "The policy is not unlimited until the minute ends, and it allows a limited burst while sustained demand stays within a defined rate.",
+          text: "Unlike a fixed window, the policy does not reset to unlimited when the minute ends: it allows a limited burst while keeping sustained demand within a defined rate.",
         },
       ],
     },
@@ -265,13 +254,13 @@ Administrative operations
       blocks: [
         {
           type: "p",
-          text: "A rate limit is a refusal; the refusal needs to be clear.",
+          text: "A rate limit is a refusal, and the refusal needs to be clear. `Retry-After` is given in seconds, so a client that must wait 43 minutes receives:",
         },
         {
           type: "code",
           language: "http",
           code: `HTTP/1.1 429 Too Many Requests
-Retry-After: 60`,
+Retry-After: 2580`,
         },
         {
           type: "p",
@@ -297,7 +286,7 @@ We will notify you when it is ready.`,
         },
         {
           type: "p",
-          text: "A booking confirmation cannot silently enter an unbounded queue; a long report may be acceptable as an asynchronous job. The policy must preserve the meaning of the workflow.",
+          text: "A booking confirmation cannot silently enter an unbounded queue, while a long report may be acceptable as an asynchronous job. The policy must preserve the meaning of the workflow.",
         },
       ],
     },
@@ -380,7 +369,7 @@ Failed because a dependency was unavailable`,
       blocks: [
         {
           type: "p",
-          text: "A rate limiter is not a counter that says no after an arbitrary number. It is a policy that decides how a finite resource is shared. Start with the resource; identify the request cost. Choose an identity that makes the policy fair; decide whether short bursts are legitimate. Make rejection recoverable; measure who is being limited and why. The best rate limit is not the strictest one, but it is the one that protects the requests that matter without allowing one source of traffic to consume the capacity everyone else needs.",
+          text: "A rate limiter is a policy for sharing a finite resource rather than a counter that says no after an arbitrary number. Start with the resource and the cost of each request, choose an identity that makes the policy fair, decide whether short bursts are legitimate, make rejection recoverable and measure who is being limited and why. The best rate limit is rarely the strictest one; it protects the requests that matter without allowing one source of traffic to consume the capacity everyone else needs.",
         },
       ],
     },

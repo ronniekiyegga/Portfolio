@@ -2017,20 +2017,12 @@ p.thoughtArticleCopy {
 }
 
 .thoughtArticleContextNote {
-  margin: 0 0 2.2rem;
-  padding: 0.9rem 1rem;
-  border-left: 2px solid #d3d4d1;
-  color: #4d4e50;
+  margin: 3rem 0 0;
+  color: var(--text-weak);
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 14px;
+  font-size: 13px;
+  font-style: italic;
   line-height: 1.6;
-}
-
-.thoughtArticleContextNote strong {
-  display: block;
-  margin-bottom: 0.2rem;
-  color: #212225;
-  font-weight: 600;
 }
 
 .thoughtArticleContextNote p {

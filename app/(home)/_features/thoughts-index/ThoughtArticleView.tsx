@@ -31,12 +31,9 @@ const operationalContextSlugs = new Set([
 function ThoughtContextNote() {
   return (
     <aside className="thoughtArticleContextNote" aria-label="Context note">
-      <strong>Context note</strong>
       <p>
-        Client and system details have been generalised to protect
-        confidentiality. Metrics are included only where their scope and
-        measurement method can be stated. Examples are marked illustrative where
-        they are not measurements from a specific incident.
+        Examples are simplified or hypothetical; any details drawn from real
+        work have been anonymised.
       </p>
     </aside>
   );
@@ -324,9 +321,6 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
         </div>
 
         <div className="mx-auto max-w-2xl">
-          {operationalContextSlugs.has(article.slug) ? (
-            <ThoughtContextNote />
-          ) : null}
           <div className="thoughtArticleCopy max-w-none space-y-12">
             {article.lede?.map((paragraph) => (
               <ArticleParagraph key={paragraph} text={paragraph} />
@@ -347,6 +341,9 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
               </section>
             ))}
           </div>
+          {operationalContextSlugs.has(article.slug) ? (
+            <ThoughtContextNote />
+          ) : null}
         </div>
       </article>
       <RelatedThoughts slug={article.slug} />

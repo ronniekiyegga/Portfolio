@@ -2,22 +2,15 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A desktop interface looks good; the navigation fits; the table has useful columns; a side panel shows context. Filters are visible; actions sit where people expect them; the layout feels balanced. Then the viewport gets smaller. The obvious response is:",
+    "A hiring dashboard works well on desktop. Recruiters can see the application, interview timeline, filters and next action at the same time, and the surrounding context makes each decision easier.",
+    "On a phone, the same layout no longer fits. The first response is usually mechanical:",
     "“Make everything narrower.”",
-    "Columns compress; text wraps. Navigation collapses; cards stack. Font sizes reduce; padding is removed. Eventually, the desktop layout technically fits on a phone. The user experience may still be worse. Responsive design is not the task of preserving a desktop composition at every width. It is the task of preserving a person’s ability to understand and complete their work when screen size, input method, attention, and context change.",
+    "The navigation collapses, cards stack and the table squeezes until the desktop composition technically fits. But the relationship between the next action and the interview date may now be several screens apart, while secondary metadata appears before the task the recruiter opened the page to complete.",
+    "The viewport has exposed a priority problem rather than a width problem. A responsive design succeeds when the workflow still makes sense after information becomes sequential, touch replaces a pointer and the user has less space and attention—not when every desktop component merely survives at a smaller size.",
   ],
   sections: [
     {
-      heading: "The responsive decision",
-      blocks: [
-        {
-          type: "p",
-          text: "Responsive work begins with the task, not the breakpoint. On smaller screens, information becomes sequential, so the design has to decide what a person needs first and what can wait. I check the workflow at representative phone, tablet, and desktop widths with long labels, validation errors, increased text size, and keyboard-only navigation. That does not replace formal usability research, but it catches layouts that work only with ideal demo content.",
-        },
-      ],
-    },
-    {
-      heading: "The obvious solution: stack the desktop layout",
+      heading: "Stacking turns order into a decision",
       blocks: [
         {
           type: "p",
@@ -36,7 +29,7 @@ Context panel moves below`,
         },
         {
           type: "p",
-          text: "That is often necessary, but it is not sufficient; on desktop, the page may rely on simultaneous visibility:",
+          text: "That is often necessary, but it is not sufficient. On desktop, the page may rely on simultaneous visibility:",
         },
         {
           type: "code",
@@ -66,12 +59,12 @@ Supporting metadata`,
         },
         {
           type: "p",
-          text: "Why does that order make sense? Which part should a person see first? What should remain fixed? What can move behind a disclosure? What becomes difficult to scan once it is separated from the rest? If the design cannot answer those questions, it has only rearranged components.",
+          text: "That order needs a reason: what a person should see first, what should stay fixed, what can move behind a disclosure and what becomes hard to scan once it is separated from the rest. Without those answers, the design has only rearranged components.",
         },
       ],
     },
     {
-      heading: "The hidden problem: smaller screens expose unclear priority",
+      heading: "Smaller screens expose unclear priority",
       blocks: [
         {
           type: "p",
@@ -101,7 +94,7 @@ Detailed pipeline administration`,
         },
         {
           type: "p",
-          text: "The product should not arbitrarily delete features from mobile, and it should make the common, time-sensitive work easier and make complex work still possible.",
+          text: "The product should not arbitrarily delete features from mobile. It should make common, time-sensitive work easier while keeping complex work possible.",
         },
       ],
     },
@@ -110,7 +103,7 @@ Detailed pipeline administration`,
       blocks: [
         {
           type: "p",
-          text: "Tables demonstrate why shrinking is not enough; a desktop table can display:",
+          text: "Tables show why shrinking is not enough. A desktop table can display:",
         },
         {
           type: "code",
@@ -136,7 +129,7 @@ Use a compact list on mobile and retain the full table on larger screens.`,
         },
         {
           type: "p",
-          text: "The correct choice depends on the task; a person comparing financial records may need a table. A person checking the next application action may need a concise list. A responsive breakpoint cannot decide that for you.",
+          text: "The correct choice depends on the task. A person comparing financial records may need a table. A person checking the next application action may need a concise list. A responsive breakpoint cannot decide that for you.",
         },
       ],
     },
@@ -172,7 +165,7 @@ One-handed use`,
         },
         {
           type: "p",
-          text: "That affects interactions, not only layout; a small icon button that works with a mouse may be difficult to use by touch. A drag-and-drop board may be harder to discover and operate; a tooltip may not exist in the same way. A dense inline-editing pattern may become error-prone. For important actions, the interface needs clear labels, sufficient target size, meaningful confirmation where appropriate, and recoverable error states. The goal is not to make mobile feel like a reduced desktop. It is to make the workflow reliable in its actual context.",
+          text: "That affects interactions as well as layout. A small icon button that works with a mouse may be difficult to use by touch. A drag-and-drop board may be harder to discover and operate; a tooltip may not exist in the same way. A dense inline-editing pattern may become error-prone. For important actions, the interface needs clear labels, sufficient target size, meaningful confirmation where appropriate, and recoverable error states. Mobile should not feel like a reduced desktop; the workflow needs to be reliable in its actual context.",
         },
       ],
     },
@@ -197,12 +190,12 @@ One-handed use`,
         },
         {
           type: "p",
-          text: "The browser width is only one dimension of responsiveness. Content length, connection reliability, input method, accessibility settings, and user attention all matter.",
+          text: "The browser width is only one dimension of responsiveness. Content length, connection reliability, input method, accessibility settings, and user attention all matter. Checking these at representative phone, tablet and desktop widths does not replace usability research, but it catches layouts that only work with ideal demo content.",
         },
       ],
     },
     {
-      heading: "The better approach: design the narrow workflow first",
+      heading: "Design the narrow workflow first",
       blocks: [
         {
           type: "p",
@@ -220,7 +213,7 @@ What can be revealed on demand?`,
         },
         {
           type: "p",
-          text: "Then expand that experience for larger screens; this does not mean “mobile first” as a rigid visual rule. It means using constrained space to identify the actual hierarchy before a wide layout makes everything appear equally possible.",
+          text: "Then expand that experience for larger screens. This does not mean “mobile first” as a rigid visual rule. It means using constrained space to identify the actual hierarchy before a wide layout makes everything appear equally possible.",
         },
       ],
     },
