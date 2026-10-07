@@ -21,7 +21,7 @@ import {
 import baseline from "./thought-articles.baseline.json";
 
 const navigation = vi.hoisted(() => ({
-  redirect: vi.fn((path: string) => {
+  permanentRedirect: vi.fn((path: string) => {
     throw new Error(`NEXT_REDIRECT ${path}`);
   }),
   notFound: vi.fn(() => {
@@ -115,7 +115,7 @@ describe("getThoughtArticle", () => {
 
 describe("/thoughts/[slug] route", () => {
   beforeEach(() => {
-    navigation.redirect.mockClear();
+    navigation.permanentRedirect.mockClear();
     navigation.notFound.mockClear();
   });
 
@@ -125,22 +125,35 @@ describe("/thoughts/[slug] route", () => {
     );
   });
 
-  it("redirects the retired debug-peak-traffic slug", async () => {
-    await expect(
-      ThoughtArticlePage(params("debug-peak-traffic")),
-    ).rejects.toThrow("NEXT_REDIRECT");
-    expect(navigation.redirect).toHaveBeenCalledWith(
-      "/thoughts/responsive-ten-thousand-records",
-    );
-  });
+  const retiredSlugs = [
+    ["debug-peak-traffic", "where-request-time-goes"],
+    ["responsive-ten-thousand-records", "where-request-time-goes"],
+    ["rate-limiter-1m-rps", "rate-limiting-strategy"],
+    ["streaming-windows", "rate-limiting-strategy"],
+    ["aggregate-logs-10000-servers", "logging-under-load"],
+  ] as const;
 
-  it("describes a redirected slug using its target article", async () => {
-    const metadata = await generateMetadata(params("debug-peak-traffic"));
+  it.each(retiredSlugs)(
+    "permanently redirects the retired %s slug to %s",
+    async (retired, target) => {
+      await expect(ThoughtArticlePage(params(retired))).rejects.toThrow(
+        "NEXT_REDIRECT",
+      );
+      expect(navigation.permanentRedirect).toHaveBeenCalledWith(
+        `/thoughts/${target}`,
+      );
+      expect(getThoughtArticle(target)).toBeDefined();
+    },
+  );
 
-    expect(metadata.alternates?.canonical).toBe(
-      "/thoughts/responsive-ten-thousand-records",
-    );
-  });
+  it.each(retiredSlugs)(
+    "describes the retired %s slug using its target article",
+    async (retired, target) => {
+      const metadata = await generateMetadata(params(retired));
+
+      expect(metadata.alternates?.canonical).toBe(`/thoughts/${target}`);
+    },
+  );
 
   it("responds with not found for an unknown slug", async () => {
     await expect(

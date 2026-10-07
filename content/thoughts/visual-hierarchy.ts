@@ -163,30 +163,6 @@ Confirm the outcome and show what, if anything, happens next.`,
       ],
     },
     {
-      heading: "Density is not the opposite of clarity",
-      blocks: [
-        {
-          type: "p",
-          text: "The response to hierarchy problems is sometimes to add more whitespace and make every section larger. That can be useful for onboarding or a focused one-step task. It is not always appropriate for operational software. People using an application dashboard, case-management tool, monitoring screen, or admin interface may need to compare many items quickly. They need density, but they also need stable patterns. A dense interface can still be clear when it has:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `A visible page purpose
-Consistent status treatment
-Clear grouping
-A stable primary action
-Quiet secondary metadata
-Obvious exceptions
-Predictable placement of controls`,
-        },
-        {
-          type: "p",
-          text: "The goal is to make the important information survive the density, rather than to minimise information.",
-        },
-      ],
-    },
-    {
       heading: "Test whether people can find the right thing",
       blocks: [
         {

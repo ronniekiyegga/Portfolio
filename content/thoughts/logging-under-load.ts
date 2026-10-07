@@ -5,7 +5,7 @@ export const content: ThoughtArticleContent = {
     "An external dependency slows down during an incident, requests begin timing out and every affected service starts producing more error logs than usual. Just when the team needs those logs most, the logging destination begins rate-limiting ingestion.",
     "The instinct is to preserve every clue:",
     "“Buffer everything until the logging platform recovers.”",
-    "That feels responsible because logs are evidence. The trouble is that the buffer lives on the same machines that are already under pressure. As memory or disk fills, the sidecar consumes more CPU and application threads can begin waiting to write, so the attempt to preserve the incident record starts making the customer-facing incident worse.",
+    "That feels responsible because logs are evidence. The trouble is that the buffer lives on the same machines that are already under pressure. As memory or disk fills, the process doing the buffering consumes more CPU and application threads can begin waiting to write, so the attempt to preserve the incident record starts making the customer-facing incident worse.",
     "Now the problem is no longer simply how to avoid losing logs. It is how to preserve the evidence that matters without allowing observability to compete with the service it is meant to explain. That forces decisions about priority, bounded waiting, sampling and what the application should do when the logging path is degraded.",
   ],
   sections: [

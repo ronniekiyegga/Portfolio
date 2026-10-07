@@ -44,41 +44,40 @@ export const renderingHero = "/images/editorial/react-rendering-hero.png";
 
 export const featuredThoughts: FeaturedThought[] = [
   {
-    slug: "responsive-ten-thousand-records",
+    slug: "where-request-time-goes",
     category: "system-design",
-    overlayTitle:
-      "When traffic peaks and the system stalls, find where work is waiting",
+    overlayTitle: "When CPU looks fine but requests still stall",
     overlayLines: [
-      "When traffic peaks and the",
-      "system stalls, find where",
-      "work is waiting",
+      "When CPU looks fine",
+      "but requests still",
+      "stall",
     ],
     date: "24 Sept 2026",
     dateTime: "2026-09-24",
-    title: "Tail latency, missing traces and the lies averages tell",
+    title: "Tail latency, request timelines and the waits a CPU profile misses",
     description:
-      "Recent investigations into performance, real-time systems, product decisions and",
-    tags: ["tail latency", "tracing", "observability"],
-    href: thoughtPath("responsive-ten-thousand-records"),
+      "Finding where request time accumulates when the obvious utilisation metrics look healthy",
+    tags: ["tail latency", "tracing", "queueing"],
+    href: thoughtPath("where-request-time-goes"),
     image: blueCover,
   },
   {
-    slug: "streaming-windows",
+    slug: "rate-limiting-strategy",
     category: "system-design",
     overlayTitle:
-      "How do you rate-limit a service without starving the requests that matter?",
+      "Why “100 requests per minute” is not a rate-limiting strategy",
     overlayLines: [
-      "How do you rate-limit a",
-      "service without starving",
-      "the requests that matter?",
+      "Why “100 requests per",
+      "minute” is not a",
+      "rate-limiting strategy",
     ],
-    date: "11 Sept 2026",
-    dateTime: "2026-09-11",
+    date: "25 Jun 2026",
+    dateTime: "2026-06-25",
     title: "Token buckets, fairness and the cost of saying no",
     description:
-      "What holds when you have to refuse work without taking the system down",
-    tags: ["rate limiting", "fairness", "load shedding"],
-    href: thoughtPath("streaming-windows"),
+      "Admission control begins with resource, identity, cost and recovery",
+    tags: ["rate limiting", "fairness", "admission control"],
+    href: thoughtPath("rate-limiting-strategy"),
     image: blueCover,
   },
 ];
@@ -219,7 +218,7 @@ export const listedThoughts: ThoughtPost[] = [
     href: thoughtPath("responsive-not-shrinking"),
   },
   {
-    slug: "rate-limiter-1m-rps",
+    slug: "rate-limiting-strategy",
     category: "system-design",
     overlayTitle:
       "Why “100 requests per minute” is not a rate-limiting strategy",
@@ -228,8 +227,8 @@ export const listedThoughts: ThoughtPost[] = [
     title: "Why “100 requests per minute” is not a rate-limiting strategy",
     description:
       "Admission control begins with resource, identity, cost and recovery.",
-    tags: ["rate limiting", "scalability", "caching"],
-    href: thoughtPath("rate-limiter-1m-rps"),
+    tags: ["rate limiting", "fairness", "admission control"],
+    href: thoughtPath("rate-limiting-strategy"),
   },
   {
     slug: "design-systems-remove-decisions",
@@ -244,7 +243,7 @@ export const listedThoughts: ThoughtPost[] = [
     href: thoughtPath("design-systems-remove-decisions"),
   },
   {
-    slug: "aggregate-logs-10000-servers",
+    slug: "logging-under-load",
     category: "system-design",
     overlayTitle:
       "Why buffering every log can make an incident worse",
@@ -255,7 +254,7 @@ export const listedThoughts: ThoughtPost[] = [
     description:
       "Delivery guarantees, bounded buffers and protecting the primary workload.",
     tags: ["logging", "observability", "backpressure"],
-    href: thoughtPath("aggregate-logs-10000-servers"),
+    href: thoughtPath("logging-under-load"),
   },
 ];
 

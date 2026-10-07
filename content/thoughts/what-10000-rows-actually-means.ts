@@ -106,7 +106,7 @@ const visibleRows = virtualizer.getVirtualItems();`,
         },
         {
           type: "p",
-          text: "getItemKey is there because the virtualizer tracks items by index unless you tell it otherwise. That matters as soon as the list can be filtered, sorted, or prepended to.",
+          text: "getItemKey gives the virtualizer a stable identity for each row. By default it uses the index, which is harmless for fixed-height rows like these. Once rows are measured rather than estimated, the virtualizer caches each measured size against that key, so filtering, sorting or prepending can attach a cached height to the wrong record. Keying by id keeps the measurement with the row it belongs to. The React key on each rendered row is a separate concern, and should still be the record's id.",
         },
         {
           type: "diagram",
@@ -127,6 +127,14 @@ const visibleRows = virtualizer.getVirtualItems();`,
         {
           type: "p",
           text: "The rows above and below are still in events. They are not in the document.",
+        },
+        {
+          type: "p",
+          text: "That is also the cost. A row that is not in the document cannot be found with the browser's find-in-page. A focused row that scrolls out of the window unmounts and takes keyboard focus with it. Assistive technology no longer sees the whole table unless the row count and each row's position are supplied deliberately. Dynamic row heights add their own difficulty, because positions depend on measurements that have not been taken yet, so the scroll position can jump.",
+        },
+        {
+          type: "p",
+          text: "Virtualisation solves rendering pressure, but it is not free. I would reach for it when profiling has put the cost on rendering, then check the interactions the table has to keep: finding a record, moving through rows with the keyboard, keeping a selection while scrolling and what a screen reader announces. If people mainly need to locate one record, server-side search may serve them better than a smoother scroll through all of them.",
         },
       ],
     },
@@ -161,94 +169,27 @@ const visibleRows = virtualizer.getVirtualItems();`,
       ],
     },
     {
-      heading: "The shape of the application changes the problem",
+      heading: "Find the cost, then choose the tool",
       blocks: [
         {
           type: "p",
-          text: "Not every frontend is a large table. Before I pick a React optimisation, I want a clearer picture of what kind of work the interface is doing.",
+          text: "Pagination, server-side filtering, virtualisation, caching, memoisation when a profile shows it is worth it, a worker for genuinely heavy client CPU and transitions for non-urgent rendering all exist for real bottlenecks in data-heavy screens. They are not a stack you apply together. Each one addresses a different cost.",
         },
         {
           type: "p",
-          text: "A data-heavy application spends most of its effort ingesting, displaying, filtering, sorting and aggregating information. Analytics dashboards, monitoring tools, admin tables and operational views look like this.",
+          text: "A large dataset does not automatically mean virtualisation, useMemo, workers or pagination. First establish where the cost is.",
+        },
+        {
+          type: "list",
+          items: [
+            "If the browser is mounting thousands of nodes the user cannot see, reduce the rendered window.",
+            "If you are transferring more data than the interaction needs, reduce the dataset before it reaches React.",
+            "If computation is blocking the main thread, look at the computation.",
+          ],
         },
         {
           type: "p",
-          text: "The pressure points tend to be payload size, query strategy, rendering collections, DOM size, expensive transformations, freshness, caching, aggregation, and staying responsive while data changes.",
-        },
-        {
-          type: "p",
-          text: "Pagination, server-side filtering, virtualisation, caching, memoisation when a profile shows it is worth it, a worker for genuinely heavy client CPU, and transitions for non-urgent rendering all exist for those bottlenecks. They are not a stack you apply together. Each one addresses a different cost.",
-        },
-        {
-          type: "p",
-          text: "A workflow-heavy product is a different shape. Onboarding, booking, checkout, case management, approvals and multi-step admin flows often do not care about 10,000 rows.",
-        },
-        {
-          type: "p",
-          text: "The harder problems are the current step, which transitions are valid, persisting progress, recovering after a refresh or a dropped request, validation, duplicate submits, keeping people out of impossible states, permissions, and keeping client state honest against the server.",
-        },
-        {
-          type: "p",
-          text: "A bag of booleans is how those products get into trouble:",
-        },
-        {
-          type: "code",
-          language: "ts",
-          code: `{
-  submitted: true,
-  approved: false,
-  completed: true
-}`,
-        },
-        {
-          type: "p",
-          text: "Depending on the workflow, that combination should not exist. Making the status explicit is usually enough:",
-        },
-        {
-          type: "code",
-          language: "ts",
-          code: `type ApplicationStatus =
-  | "draft"
-  | "submitted"
-  | "under_review"
-  | "approved"
-  | "completed";`,
-        },
-        {
-          type: "p",
-          text: "That is not an argument for a state machine library on every form. It is an argument for not encoding a workflow as independent flags.",
-        },
-        {
-          type: "p",
-          text: "A product can be both. A case-management system might have a data-heavy dashboard of thousands of cases, while each case follows a workflow with strict states, permissions and transitions.",
-        },
-        {
-          type: "p",
-          text: "In that situation I do not start with which React optimisation to use. I start with what the screen is doing, and where it is constrained.",
-        },
-        {
-          type: "p",
-          text: "A large dataset does not automatically mean virtualisation, useMemo, workers or pagination.",
-        },
-        {
-          type: "p",
-          text: "First establish where the cost is.",
-        },
-        {
-          type: "p",
-          text: "If the browser is mounting thousands of nodes the user cannot see, reduce the rendered window.",
-        },
-        {
-          type: "p",
-          text: "If you are transferring more data than the interaction needs, reduce the dataset before it reaches React.",
-        },
-        {
-          type: "p",
-          text: "If computation is blocking the main thread, look at the computation.",
-        },
-        {
-          type: "p",
-          text: "Choose the tool after you know the bottleneck.",
+          text: "A 40ms query followed by a 400ms main-thread task is still a slow screen. A fast API is not the same thing as a responsive interface, and the fix belongs wherever the time is actually spent.",
         },
       ],
     },
