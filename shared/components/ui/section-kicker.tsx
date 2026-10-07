@@ -2,13 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Style_Script } from "next/font/google";
+import { styleScript } from "@/app/fonts";
 
 const GRADIENT_1 = "linear-gradient(77deg, #3A07F2 10.26%, #0CD1CF 98.05%)";
 
 const TEXT_GRADIENT = "linear-gradient(to bottom, #69eacb, #6654f1)";
-
-const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 const MUTED_TEXT_COLOR = "#9ca3af";
 const MUTED_LINE_COLOR = "#f0f0f0";

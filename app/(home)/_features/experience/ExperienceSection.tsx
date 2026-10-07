@@ -1,10 +1,5 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
-
-const experienceType = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
+import { inter as experienceType } from "@/app/fonts";
 
 type ExperienceMark = "srs" | "adaptive";
 

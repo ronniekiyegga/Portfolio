@@ -1,77 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import {
-  Geist,
-  Geist_Mono,
-  Playfair_Display,
-  Source_Serif_4,
-  Style_Script,
-  Bodoni_Moda,
-  Cormorant_Garamond,
-  JetBrains_Mono,
-  Outfit,
-  David_Libre,
-  Italianno,
-} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-source-serif",
-  weight: ["400", "600", "700"],
-});
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair-display",
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
-});
-const styleScript = Style_Script({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-style-script",
-});
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-const bodoniModa = Bodoni_Moda({
-  variable: "--font-bodoni-moda",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-});
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-jetbrains",
-});
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-outfit",
-});
-const davidLibre = David_Libre({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-david-libre",
-});
-const italianno = Italianno({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-italianno",
-});
+import {
+  bodoniModa,
+  cormorant,
+  geistMono,
+  geistSans,
+  italianno,
+  jetbrains,
+  outfit,
+  playfairDisplay,
+  sourceSerif,
+} from "./fonts";
 
 export const metadata: Metadata = {
   title: "Ronnie Kiyegga | Full Stack Software Engineer",
@@ -97,7 +38,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${playfairDisplay.variable} ${styleScript.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${davidLibre.variable} ${italianno.variable} antialiased overflow-x-hidden min-h-screen bg-[#FAFAFA]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${playfairDisplay.variable} ${bodoniModa.variable} ${cormorant.variable} ${jetbrains.variable} ${outfit.variable} ${italianno.variable} antialiased overflow-x-hidden min-h-screen bg-[#FAFAFA]`}
         suppressHydrationWarning
       >
         <Script
