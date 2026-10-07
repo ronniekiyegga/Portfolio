@@ -2,10 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A hiring dashboard works well on desktop. Recruiters can see the application, interview timeline, filters and next action at the same time, and the surrounding context makes each decision easier.",
+    "A job-application tracker works well on desktop. A candidate can see each application, its interview timeline, filters and the next action at the same time, and the surrounding context makes each decision easier.",
     "On a phone, the same layout no longer fits. The first response is usually mechanical:",
     "“Make everything narrower.”",
-    "The navigation collapses, cards stack and the table squeezes until the desktop composition technically fits. But the relationship between the next action and the interview date may now be several screens apart, while secondary metadata appears before the task the recruiter opened the page to complete.",
+    "The navigation collapses, cards stack and the table squeezes until the desktop composition technically fits. But the relationship between the next action and the interview date may now be several screens apart, while secondary metadata appears before the task the candidate opened the page to complete.",
     "The viewport has exposed a priority problem rather than a width problem. A responsive design succeeds when the workflow still makes sense after information becomes sequential, touch replaces a pointer and the user has less space and attention—not when every desktop component merely survives at a smaller size.",
   ],
   sections: [
@@ -59,7 +59,7 @@ Supporting metadata`,
         },
         {
           type: "p",
-          text: "That order needs a reason: what a person should see first, what should stay fixed, what can move behind a disclosure and what becomes hard to scan once it is separated from the rest. Without those answers, the design has only rearranged components.",
+          text: "That order needs a reason: what a person should see first, what should stay fixed, what can move behind a disclosure and what becomes hard to scan once it is separated from the rest. Spacing also carries more of the structure once columns become a sequence: without side-by-side placement, the gaps alone have to show whether the next block continues the previous one or starts something new. Without those answers, the design has only rearranged components.",
         },
       ],
     },
@@ -68,7 +68,7 @@ Supporting metadata`,
       blocks: [
         {
           type: "p",
-          text: "Wide screens allow teams to postpone prioritisation. There is room for every panel, every filter, every data point, every action, and every piece of secondary context. A smaller screen removes that luxury. The important question becomes: What is the user most likely trying to do here? For a job-search workflow product, mobile tasks may include:",
+          text: "Wide screens allow teams to postpone prioritisation. There is room for every panel, every filter, every data point, every action, and every piece of secondary context. A smaller screen removes that luxury. The important question becomes: What is the candidate most likely trying to do here? On a phone, their tasks may include:",
         },
         {
           type: "code",

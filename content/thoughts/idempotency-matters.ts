@@ -152,6 +152,10 @@ Previous in-progress record
         },
         {
           type: "p",
+          text: "The in-progress branch assumes the first attempt will finish. If the process that claimed the key crashes before completing, every retry is told the operation is still pending, indefinitely. An in-progress record therefore needs a recovery boundary: a lease or expiry after which the operation can be retried or reconciled against what actually happened. The right boundary depends on how long the operation can legitimately take, and it has a risk of its own, because a slow attempt that is still running can overlap with the retry. The atomic guarantee described below still has to hold. Records that stay in progress long past their boundary are worth surfacing to operators, since each one is an outcome nobody is producing.",
+        },
+        {
+          type: "p",
           text: "The key turns “I think this is the same request” into something the system can verify.",
         },
       ],

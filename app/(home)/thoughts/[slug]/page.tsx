@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { ThoughtArticleView } from "../../_features/thoughts-index/ThoughtArticleView";
 import {
@@ -8,7 +8,11 @@ import {
 } from "../../_features/thoughts-index/thought-articles";
 
 const thoughtRedirects: Record<string, string> = {
-  "debug-peak-traffic": "responsive-ten-thousand-records",
+  "debug-peak-traffic": "where-request-time-goes",
+  "responsive-ten-thousand-records": "where-request-time-goes",
+  "rate-limiter-1m-rps": "rate-limiting-strategy",
+  "streaming-windows": "rate-limiting-strategy",
+  "aggregate-logs-10000-servers": "logging-under-load",
 };
 
 export function generateStaticParams() {
@@ -42,7 +46,7 @@ export default async function ThoughtArticlePage({
   const { slug } = await params;
 
   if (thoughtRedirects[slug]) {
-    redirect(`/thoughts/${thoughtRedirects[slug]}`);
+    permanentRedirect(`/thoughts/${thoughtRedirects[slug]}`);
   }
 
   const article = getThoughtArticle(slug);

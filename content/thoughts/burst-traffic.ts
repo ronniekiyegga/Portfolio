@@ -78,19 +78,7 @@ Notification provider`,
       blocks: [
         {
           type: "p",
-          text: "A service can feel slow even when its own CPU is not high, because a request may spend most of its time waiting. For example:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `20ms    application work
-1,800ms waiting for a database connection
-90ms    database query
-2,000ms waiting for an external provider`,
-        },
-        {
-          type: "p",
-          text: "Adding web servers does not reduce that waiting, and it can increase the number of requests waiting at the same time. This is why burst traffic needs visibility into:",
+          text: "A service can feel slow even when its own CPU is not high, because a request may spend most of its time waiting for a connection, a lock or an external provider rather than doing work. Adding web servers does not reduce that waiting, and it can increase the number of requests waiting at the same time. This is why burst traffic needs visibility into:",
         },
         {
           type: "list",
@@ -126,7 +114,7 @@ Notification provider`,
         },
         {
           type: "p",
-          text: "Those lead to different fixes.",
+          text: "Those lead to different fixes. More servers help with the first only when the work is happening in the tier being scaled. They do nothing for the second.",
         },
       ],
     },
@@ -189,6 +177,14 @@ notifications, analytics, derived summaries, non-critical enrichment`,
         {
           type: "p",
           text: "The point is not to push everything into a queue, but to avoid making an interactive request wait for work that does not affect the immediate outcome.",
+        },
+        {
+          type: "p",
+          text: "Moving work off the request path does not make it disappear. It still has to run, and the queue can become the next constrained resource. If consumers fall behind during the spike, the backlog grows and the oldest pending item keeps getting older, so a notification meant to be slightly delayed can arrive after it stops being useful. The age of the oldest pending work often says more than the number of items waiting. Background jobs are also commonly retried, so a job can run more than once, and anything with an external effect, such as sending a notification, needs to be safe to repeat.",
+        },
+        {
+          type: "p",
+          text: "That is the trade-off. Asynchronous processing protects interactive latency by exchanging immediate completion for eventual completion, which only works when the user's outcome genuinely does not depend on the deferred work.",
         },
       ],
     },

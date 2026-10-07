@@ -57,37 +57,42 @@ Cancel`,
       blocks: [
         {
           type: "p",
-          text: "Consider a page with:",
+          text: "Consider the settings page from the review:",
         },
         {
           type: "code",
           language: "text",
-          code: `Application status
-Interview scheduled
-Next action
-Prepare examples
-Interview date
-Thursday
-Archive application`,
+          code: `Name
+Email address
+Email notifications
+Weekly summary
+Payment method
+Change plan
+Save changes
+Delete account`,
         },
         {
           type: "p",
-          text: "If these items are simply stacked with arbitrary gaps, users must infer the relationships. Does “Prepare examples” belong to the next action or the interview date? Is “Archive application” part of the status section or a separate account-level action? Is the date a property of the application or the next action? No amount of additional margin answers those questions reliably. The content needs a structure first:",
+          text: "If these items are simply stacked with arbitrary gaps, users must infer the relationships. Is “Weekly summary” a notification setting or part of the profile? Does “Save changes” apply to the payment method, or only to the fields above it? Does “Change plan” take effect immediately? Is “Delete account” part of the save flow? No amount of additional margin answers those questions reliably. The content needs a structure first:",
         },
         {
           type: "code",
           language: "text",
-          code: `Current status
-Interview scheduled
+          code: `Profile
+Name
+Email address
+Save changes
 
-Next action
-Prepare examples by Wednesday
+Notifications
+Email notifications
+Weekly summary
 
-Upcoming interview
-Thursday morning
+Billing
+Payment method
+Change plan
 
-Application management
-Archive`,
+Delete account
+Permanently remove your account and data`,
         },
         {
           type: "p",
@@ -133,17 +138,17 @@ major page regions or workflow stages`,
         {
           type: "code",
           language: "text",
-          code: `Heading
+          code: `Settings
 16px
-Status
+Profile
 16px
-Next action
+Name
 16px
-Task details
+Email address
 16px
-Section heading
+Notifications
 16px
-Footer actions`,
+Delete account`,
         },
         {
           type: "p",
@@ -152,22 +157,24 @@ Footer actions`,
         {
           type: "code",
           language: "text",
-          code: `Heading
+          code: `Settings
 8px
-Supporting description
-
-24px
-Current status
-8px
-Status value
+Manage your account and preferences
 
 32px
-Next action
+Profile
 8px
-Action detail
+Name
+16px
+Email address
+
+32px
+Notifications
+8px
+Email notifications
 
 48px
-History`,
+Delete account`,
         },
         {
           type: "p",
@@ -180,7 +187,7 @@ History`,
       blocks: [
         {
           type: "p",
-          text: "Whitespace is often associated with good design because it is visible in marketing pages and editorial layouts. Operational interfaces have different constraints. Someone reviewing many applications, invoices, support cases, bookings, or alerts may need to compare information quickly. If every record becomes a large card with broad empty areas, the user sees less context at once and spends more time scrolling. The answer is not to eliminate space, but to make density intentional. A dense table can still be readable when it uses:",
+          text: "A settings page is visited occasionally, so generous space costs the user very little there. The same instinct is riskier elsewhere. Whitespace is often associated with good design because it is visible in marketing pages and editorial layouts, but operational interfaces have different constraints. Someone reviewing many applications, invoices, support cases, bookings, or alerts may need to compare information quickly. If every record becomes a large card with broad empty areas, the user sees less context at once and spends more time scrolling. The answer is not to eliminate space, but to make density intentional. A dense table can still be readable when it uses:",
         },
         {
           type: "code",
@@ -196,32 +203,6 @@ Meaningful separation between rows and sections`,
         {
           type: "p",
           text: "Space should help the user scan, not make the product feel spacious at the expense of the work the user needs to do.",
-        },
-      ],
-    },
-    {
-      heading: "Responsive layouts make spacing decisions visible",
-      blocks: [
-        {
-          type: "p",
-          text: "Desktop layouts can use columns to express grouping, but on a smaller screen those columns become a vertical sequence. That means spacing now carries more responsibility.",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `Desktop:
-Details · Next action
-Timeline · Tasks
-
-Mobile:
-Details
-Next action
-Tasks
-Timeline`,
-        },
-        {
-          type: "p",
-          text: "The gaps on mobile must make the new reading order understandable. A uniform vertical stack can leave users unsure whether a section is a continuation of the previous one or a separate concept. Responsive spacing has to support a changed information architecture, not just get smaller.",
         },
       ],
     },

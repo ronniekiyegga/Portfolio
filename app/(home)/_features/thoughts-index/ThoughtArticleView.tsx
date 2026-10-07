@@ -22,10 +22,9 @@ const operationalContextSlugs = new Set([
   "idempotency-matters",
   "burst-traffic",
   "10000-concurrent-database-connections",
-  "rate-limiter-1m-rps",
-  "streaming-windows",
-  "aggregate-logs-10000-servers",
-  "responsive-ten-thousand-records",
+  "rate-limiting-strategy",
+  "logging-under-load",
+  "where-request-time-goes",
 ]);
 
 function ThoughtContextNote() {

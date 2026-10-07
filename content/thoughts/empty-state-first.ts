@@ -2,11 +2,11 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A team is designing a project dashboard, and the mock-up looks convincing: tasks are moving across columns, progress charts show useful trends and recent activity makes the product feel alive.",
-    "There is only one problem. A new customer will see none of it. On their first visit there are no projects, no activity and no data from which to infer what the product expects them to do.",
+    "A team is designing a job-application tracker, and the mock-up looks convincing: applications are moving through stages, follow-ups are lined up for the week and a chart shows how responses are trending.",
+    "There is only one problem. A new user will see none of it. On their first visit there are no applications, no follow-ups and no history from which to infer what the product expects them to do.",
     "Because the populated screen demonstrates the long-term value so well, the natural plan is:",
     "“Build the populated experience first; we will add an empty state later.”",
-    "That sounds efficient, but it postpones the moment when the product has to explain itself. If the first useful action is unclear, the customer never reaches the rich dashboard we designed for them.",
+    "That sounds efficient, but it postpones the moment when the product has to explain itself. If the first useful action is unclear, the user never reaches the rich dashboard we designed for them.",
     "Working through the empty state first reveals what someone needs to understand, what they must provide and how quickly the product can return value. It is not decoration for a screen without data; it is the first real version of the workflow.",
   ],
   sections: [
@@ -88,7 +88,7 @@ Your next scheduled action is Thursday.`,
         },
         {
           type: "p",
-          text: "The product needs to know what kind of empty it is showing.",
+          text: "The product needs to know what kind of empty it is showing, and the interface can only know what the data it receives preserves. If an API answers a permission failure, a failed query and a genuinely empty collection with the same empty list, the frontend cannot recover the difference. The user is invited to add their first application when the real problem is access or a failed request.",
         },
       ],
     },
@@ -97,7 +97,7 @@ Your next scheduled action is Thursday.`,
       blocks: [
         {
           type: "p",
-          text: "The empty state should begin with the user’s next meaningful action. For Offerline, an initial dashboard might say:",
+          text: "The empty state should begin with the user’s next meaningful action. For the tracker, a first-use dashboard might say:",
         },
         {
           type: "code",
@@ -174,15 +174,15 @@ Next action date`,
         {
           type: "code",
           language: "text",
-          code: `Status
-Owner
+          code: `Stage
+Next action
+Contacts
 Tags
-History
-Tasks
-Analytics
 Notes
 Documents
-Activity`,
+Follow-ups
+Activity history
+Response analytics`,
         },
         {
           type: "p",

@@ -11,21 +11,8 @@
       "The closing rule"
     ]
   },
-  "aggregate-logs-10000-servers": {
-    "sha256": "47eac3524b7491377272bff59b1002fec46912272f9d51940480cc2de61d4afb",
-    "headings": [
-      "Why log volume rises with failure",
-      "Not every log has the same value",
-      "Buffers need an explicit failure policy",
-      "Logging must not block the primary workload",
-      "Repeated errors need aggregation, not amplification",
-      "Structured logs make the pipeline recoverable",
-      "Privacy is part of the logging design",
-      "Final thoughts"
-    ]
-  },
   "burst-traffic": {
-    "sha256": "d66a33eb63e928125669f464be8297342aa04b86c48e0deac49fcc5027e4a6fc",
+    "sha256": "579daa4f63b8eba1a2c31c629efd0b71eda3d36fe704bb0af61b6b770127c99d",
     "headings": [
       "When more servers help",
       "Every layer has its own limit",
@@ -49,7 +36,7 @@
     ]
   },
   "empty-state-first": {
-    "sha256": "a6a72aba5d37b02251534d18ced7d043a11c93c708c160572d1e423c9ba457f9",
+    "sha256": "93a19097c2f4cc728f49f70dbd2679f3ef9f0612cdec207a19accdf66e1773ff",
     "headings": [
       "A placeholder is not an explanation",
       "“Empty” is not one condition",
@@ -69,7 +56,7 @@
     ]
   },
   "idempotency-matters": {
-    "sha256": "bc08f66115d15236d7e132a7c23eec53455458640e357a9f72bdc6a9d8176ee4",
+    "sha256": "df365de3272ed92ba3297ae384befa669a04b5e8a2581bfe496d3532e2f03583",
     "headings": [
       "How the second request still arrives",
       "Delivery and effect are different things",
@@ -79,6 +66,19 @@
       "The difficult gap: work succeeded but the response did not",
       "Retrying needs a policy too",
       "Testing for duplicate safety"
+    ]
+  },
+  "logging-under-load": {
+    "sha256": "da9f5394ecccb1a126ba3c1e32060d53d83dd3f268e1cebd0370a34022ab8cfb",
+    "headings": [
+      "Why log volume rises with failure",
+      "Not every log has the same value",
+      "Buffers need an explicit failure policy",
+      "Logging must not block the primary workload",
+      "Repeated errors need aggregation, not amplification",
+      "Structured logs make the pipeline recoverable",
+      "Privacy is part of the logging design",
+      "Final thoughts"
     ]
   },
   "memory-inclusion": {
@@ -95,21 +95,24 @@
       "Final thoughts"
     ]
   },
-  "rate-limiter-1m-rps": {
-    "sha256": "67659b7170313f540bda7991e8234bc7cfdec0d2575106dd6c19990f4244c71c",
+  "rate-limiting-strategy": {
+    "sha256": "b5da22a6246faa294219cd1708684cf90ab8568d68de801f7306e92a43098377",
     "headings": [
-      "The number exposes the missing policy",
-      "Not every request costs the same",
+      "One count for very different work",
       "What each route is protecting",
       "Identity determines whether the policy is fair",
       "Fixed windows look correct until the boundary",
+      "Token buckets make the burst policy explicit",
+      "Not every request should cost one token",
       "A local counter is not a distributed policy",
-      "A rejection needs a recovery path",
-      "Final thoughts"
+      "Reject, queue or delay",
+      "Rate limits and retries can fight each other",
+      "Observe who is being limited",
+      "Before choosing the number"
     ]
   },
   "responsive-not-shrinking": {
-    "sha256": "163ca537f71cc913ce9a553fd87af50953249caf366168032c23daf0663b666f",
+    "sha256": "e4654c7c69403b022b70f833670c5e24faa00be7329eef72b6e757510da0d7c9",
     "headings": [
       "Stacking turns order into a decision",
       "Smaller screens expose unclear priority",
@@ -120,8 +123,40 @@
       "Final thoughts"
     ]
   },
-  "responsive-ten-thousand-records": {
-    "sha256": "6335d06929ce66d617114448cad458f72f762198582a1694b295e1a08f456531",
+  "spacing-information-architecture": {
+    "sha256": "62b5c92bd27aa66e169abc9e417cbcc4ead3b0942b60e9f084d517bc7b69b55b",
+    "headings": [
+      "What spacing can do",
+      "The screen has not decided what is grouped",
+      "What relationship does this gap represent?",
+      "Why perfectly even spacing can be wrong",
+      "More whitespace can reduce operational usefulness",
+      "The practical test"
+    ]
+  },
+  "visual-hierarchy": {
+    "sha256": "0ee5ed11bc418381ab2cb10ca6549f05978ac41878a09d91a7e7035739468f95",
+    "headings": [
+      "Actions with different consequences",
+      "What matters in this state",
+      "Size is only one hierarchy signal",
+      "Design an attention order",
+      "Different states need different hierarchy",
+      "Test whether people can find the right thing"
+    ]
+  },
+  "what-10000-rows-actually-means": {
+    "sha256": "a4a9d0bc3e77ebfc79fe93eed5d35b096b3d96bd01258d8990916835644a7656",
+    "headings": [
+      "Ten thousand is a rendering problem",
+      "Measure before choosing the optimisation",
+      "Window the work",
+      "But should 10,000 records be in the browser?",
+      "Find the cost, then choose the tool"
+    ]
+  },
+  "where-request-time-goes": {
+    "sha256": "8cff4e02cba538a76ec45692917ed36a6e4d8863d86ddbbbe7dec441a93e1081",
     "headings": [
       "Where the time actually goes",
       "Waiting accumulates before failure appears",
@@ -129,57 +164,7 @@
       "Restarting the service",
       "Retries can turn a stall into a feedback loop",
       "What is full?",
-      "Preserve the critical workflow",
-      "Final thoughts"
-    ]
-  },
-  "spacing-information-architecture": {
-    "sha256": "446012448763857398bedd75008595cf2c1dd5f2ef2afaa46228274fe049ebd7",
-    "headings": [
-      "What spacing can do",
-      "The screen has not decided what is grouped",
-      "What relationship does this gap represent?",
-      "Why perfectly even spacing can be wrong",
-      "More whitespace can reduce operational usefulness",
-      "Responsive layouts make spacing decisions visible",
-      "The practical test"
-    ]
-  },
-  "streaming-windows": {
-    "sha256": "33d3a2b1c3765c2fb453436f4631338e509264c0d6f567f354075ee730e0b075",
-    "headings": [
-      "What one shared limit ignores",
-      "What are we protecting?",
-      "Why identity matters",
-      "A fixed counter and its boundary",
-      "Token buckets make the burst policy explicit",
-      "Not every request should cost one token",
-      "Saying no is part of the user experience",
-      "Rate limits and retries can fight each other",
-      "Observe who is being limited",
-      "Final thoughts"
-    ]
-  },
-  "visual-hierarchy": {
-    "sha256": "9813bca504ecec8656edbaf2b888f515bafdcfacfa04476b6270ec547ed25b3b",
-    "headings": [
-      "Actions with different consequences",
-      "What matters in this state",
-      "Size is only one hierarchy signal",
-      "Design an attention order",
-      "Different states need different hierarchy",
-      "Density is not the opposite of clarity",
-      "Test whether people can find the right thing"
-    ]
-  },
-  "what-10000-rows-actually-means": {
-    "sha256": "82d3a56c29deddec7b624835d4be157e6394188d62dabbec8eb206981fa4635f",
-    "headings": [
-      "Ten thousand is a rendering problem",
-      "Measure before choosing the optimisation",
-      "Window the work",
-      "But should 10,000 records be in the browser?",
-      "The shape of the application changes the problem"
+      "Start where time accumulates"
     ]
   }
 }

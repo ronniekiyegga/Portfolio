@@ -95,35 +95,26 @@ Response returned`,
           type: "code",
           language: "text",
           code: `Normal:
-db_acquire_ms=5
-query_ms=40
-provider_ms=120
+connection wait: short
+query: short
+provider call: short
 
 Peak:
-db_acquire_ms=2,100
-query_ms=55
-provider_ms=180`,
+connection wait: most of the request
+query: about the same
+provider call: about the same`,
         },
         {
           type: "p",
-          text: "That points toward a connection or concurrency issue, not a suddenly slow query. Another trace may show:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `Normal:
-db_acquire_ms=5
-query_ms=40
-provider_ms=120
-
-Peak:
-db_acquire_ms=10
-query_ms=2,800
-provider_ms=130`,
+          text: "That points toward a connection or concurrency issue, not a suddenly slow query.",
         },
         {
           type: "p",
-          text: "That suggests the database is executing work slowly—perhaps due to locks, I/O pressure, missing indexes under a different data shape, or a query plan that degrades at volume. The same user-visible symptom leads to different investigations.",
+          text: "Another trace may show connection wait and query time much as they are under normal traffic, while the call to the external provider accounts for most of the request. Here the database is barely involved. The provider may be slowing under its own load or throttling the concurrent calls the service now sends it. The same user-visible symptom leads to a different investigation, and nothing on the application's own CPU graph would have pointed there.",
+        },
+        {
+          type: "p",
+          text: "Traces have limits of their own. They only show the waits someone instrumented, so time spent queuing for a pool or a lock without its own span appears as an unexplained gap, or not at all. Sampling can also drop the slow requests being investigated, particularly when the decision to keep a trace is made before anyone knows the request will be slow. No slow span does not mean nothing was slow.",
         },
       ],
     },
@@ -246,39 +237,14 @@ Retry traffic became a large share of incoming requests.`,
           type: "p",
           text: "Each problem has a different response, and a longer timeout fixes none of them. The fix has to change the constrained part of the system.",
         },
-      ],
-    },
-    {
-      heading: "Preserve the critical workflow",
-      blocks: [
         {
           type: "p",
-          text: "Under pressure, not every feature deserves equal capacity. A system can protect important user work by reducing or deferring less critical work:",
-        },
-        {
-          type: "code",
-          language: "text",
-          code: `Keep:
-authentication
-core reads and writes
-payment or booking confirmation
-critical state transitions
-
-Defer:
-email sending
-analytics updates
-report generation
-recommendation refreshes
-non-essential enrichment`,
-        },
-        {
-          type: "p",
-          text: "This is a product decision as much as an infrastructure decision. The system is deciding what users can still rely on when capacity is constrained.",
+          text: "While that fix is found, pausing non-critical work such as email sending, analytics updates or report generation can keep sign-in and core reads and writes moving. Which work counts as critical is a product decision, and it is easier to make before an incident than during one.",
         },
       ],
     },
     {
-      heading: "Final thoughts",
+      heading: "Start where time accumulates",
       blocks: [
         {
           type: "p",
