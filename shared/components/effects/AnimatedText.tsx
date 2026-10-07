@@ -1,13 +1,11 @@
 "use client";
 import { LinkPreview } from "@/shared/components/ui/link-preview";
-import { Style_Script } from "next/font/google";
+import { styleScript } from "@/app/fonts";
 
 interface AnimatedTextProps {
   figma?: string;
   engineering?: string;
 }
-
-const styleScript = Style_Script({ weight: "400", subsets: ["latin"] });
 
 export default function AnimatedText({
   figma = "Design, ",

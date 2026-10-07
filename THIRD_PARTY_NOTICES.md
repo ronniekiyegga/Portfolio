@@ -1,8 +1,8 @@
 # Third-party notices
 
-This project includes code adapted from the open-source projects below. Each
-entry lists the files it covers and reproduces the licence under which that
-code is used.
+This project includes code and fonts from the open-source projects below. Each
+entry lists the files it covers and includes the licence under which that
+material is used.
 
 ## React Bits
 
@@ -84,3 +84,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Fonts
+
+- Source: Google Fonts latin subsets (retrieved 2026-10-07)
+- Licence: SIL Open Font License 1.1
+- Files: `app/fonts/` — each family's folder holds its `.woff2` file(s) and the
+  full `OFL.txt` with that family's copyright notice.
+
+| Family             | Copyright                                        |
+| ------------------ | ------------------------------------------------ |
+| Geist, Geist Mono  | 2024 The Geist Project Authors                   |
+| Inter              | 2020 The Inter Project Authors                   |
+| Source Serif 4     | 2014 The Source Serif 4 Project Authors          |
+| Playfair Display   | 2017 The Playfair Display Project Authors        |
+| Bodoni Moda        | 2020 The Bodoni Moda Project Authors             |
+| Cormorant Garamond | 2015 the Cormorant Project Authors               |
+| JetBrains Mono     | 2020 The JetBrains Mono Project Authors          |
+| Outfit             | 2021 The Outfit Project Authors                  |
+| Italianno          | 2009 The Italianno Project Authors               |
+| Style Script       | 2013 The Style Script Project Authors            |
