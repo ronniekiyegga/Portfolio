@@ -2,10 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A user refreshes a long form and is relieved to find their draft still there. The product also remembers the filter they chose and returns them to the file they were editing, saving several small pieces of repeated work.",
-    "Then the same person searches for something private on a shared computer. The search reappears the next day, and a draft they deliberately abandoned keeps returning whenever they open the product.",
-    "Nothing about the storage mechanism changed, but the experience did. Memory felt helpful while it followed a visible task; it felt invasive when the user could no longer tell what would return, where it was stored or how to remove it.",
-    "That makes product memory less a question of how much context we can retain and more a question of the contract around it: what is remembered, for how long, on whose device or account, and under whose control.",
+    "Products that remember things feel thoughtful. Your draft is still there after a refresh, your filter is still applied and you land back in the file you were editing.",
+    "But the same memory can feel invasive. A private search reappears on a shared computer the next day, or a draft you deliberately abandoned keeps coming back every time you open the app.",
+    "Nothing about the storage changed between those two experiences. What changed is whether you could tell what would come back, where it was kept and how to remove it.",
+    "So product memory is less about how much context to keep and more about **the contract around it**: what’s remembered, for how long, on whose device or account, and under whose control. Here’s how I’d think that contract through.",
   ],
   sections: [
     {

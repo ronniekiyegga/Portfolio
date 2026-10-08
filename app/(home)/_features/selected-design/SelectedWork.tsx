@@ -1,40 +1,13 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-import type { DepthCarouselItem } from "./DepthCarousel";
+import { clientWork } from "./client-work";
 
 const DepthCarousel = dynamic(() => import("./DepthCarousel"), {
   loading: () => <div className="clientCarousel" aria-hidden />,
 });
 
-const clientWork: DepthCarouselItem[] = [
-  {
-    image: "/images/editorial/client-work/ms-maryams-maths.webp",
-    alt: "Ms Maryam's Maths tutoring website",
-  },
-  {
-    image: "/images/editorial/client-work/provenant.webp",
-    alt: "Provenant agent evidence platform website",
-  },
-  {
-    image: "/images/editorial/client-work/Footer.webp",
-    alt: "Mathematics tutoring newsletter and footer design",
-  },
-  {
-    image: "/images/editorial/client-work/edufeedbackpro.webp",
-    alt: "EduFeedbackPro school intelligence dashboard website",
-  },
-  {
-    image: "/images/editorial/client-work/john-canary.webp",
-    alt: "John Canary cleaning services website",
-  },
-  {
-    image: "/images/editorial/client-work/true-founders.webp",
-    alt: "True Founders coaching website",
-  },
-];
-
-export function SelectedDesignSection() {
+export function SelectedWorkSection() {
   return (
     <section
       id="selected-work"
@@ -67,8 +40,8 @@ export function SelectedDesignSection() {
           cardHeight={395}
           radius={0}
           depth={45}
-          spread={-200}
-          verticalSpread={-20}
+          spread={-190}
+          verticalSpread={-25}
           tilt={-45}
           rotation={0}
           rotateX={-5}

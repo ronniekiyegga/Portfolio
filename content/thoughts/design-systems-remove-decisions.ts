@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A team is shipping the same form pattern for the fourth time. Each version looks close, but the validation messages sit in different places, keyboard focus behaves differently and every designer has chosen a slightly different spacing value.",
-    "At this point, the repeated work is obvious and the proposal sounds overdue:",
-    "“We need a design system.”",
-    "A shared field, button and error pattern would remove real decisions here. The difficulty begins when that useful fix expands into a component for every card, workflow and page layout before the team understands which parts are genuinely stable. New requirements turn into props, product teams wait for library changes and the system meant to speed delivery becomes another approval layer.",
-    "The question, then, is not whether reuse is good. It is which decisions are repeated, costly and settled enough to encode. A design system earns its place when using it removes more judgement than maintaining it creates.",
+    "Once a team has built the same form a few times over, a pattern shows up. The validation messages sit in different places, keyboard focus behaves differently and the spacing is never quite the same.",
+    "At that point, a **design system** sounds overdue. And a shared field, button and error pattern genuinely does remove repeated decisions.",
+    "The trouble starts when that useful fix grows into a component for every card, workflow and layout before anyone knows which parts are stable. New requirements turn into props, teams wait on library changes, and the system meant to speed things up becomes another approval step.",
+    "So the question isn’t whether reuse is good. It’s which decisions are **repeated, costly and settled enough to encode**. Here’s how I’d tell the difference.",
   ],
   sections: [
     {

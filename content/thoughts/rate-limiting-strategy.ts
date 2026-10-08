@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An export endpoint starts consuming enough database and file-generation capacity to slow down the rest of the product. Most customers run an export occasionally, but one integration has begun polling the route throughout the day.",
-    "The quickest protection looks obvious:",
-    "“Limit requests to 100 per minute.”",
-    "A concrete number is easy to add to middleware and gives the service a clear `429 Too Many Requests` response. But the first implementation immediately creates harder questions. Is the budget shared by an IP address, a user or an organisation? Should a short burst be allowed? Does an export consume the same allowance as a cached read, and should a payment webhook be rejected because unrelated traffic used the budget first?",
-    "Until we know which resource is under pressure and which callers should share it, 100 requests per minute is only a counter with a threshold. The strategy begins when we decide how limited capacity ought to be distributed.",
+    "When one route starts eating more than its share of capacity, such as an export endpoint that an integration is polling all day, the quickest protection is a number: **limit requests to 100 per minute**.",
+    "It’s easy to add to middleware, and it gives clients a clear 429 Too Many Requests response. But it immediately raises harder questions. Is the limit per IP address, per user or per organisation? Should short bursts be allowed? Should an export cost the same as a cached read? And should a payment webhook be rejected because unrelated traffic used up the budget first?",
+    "Until you know which resource needs protecting and whose requests should share it, 100 requests per minute is just **a counter with a threshold**.",
+    "In this article, I’ll turn that number into an actual strategy: what each limit protects, who it applies to, how bursts and refusals should work and what happens when the limiter itself fails.",
   ],
   sections: [
     {

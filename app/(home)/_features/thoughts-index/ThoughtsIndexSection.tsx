@@ -120,7 +120,7 @@ export function ThoughtsIndexSection() {
               <ThoughtPreviewCard
                 key={thought.slug}
                 thought={thought}
-                cover="featured"
+                layout="featured"
               />
             ))}
           </div>
@@ -132,7 +132,7 @@ export function ThoughtsIndexSection() {
               <ThoughtPreviewCard
                 key={thought.slug}
                 thought={thought}
-                cover="grid"
+                layout="grid"
               />
             ))}
           </div>

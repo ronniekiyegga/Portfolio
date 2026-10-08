@@ -2,9 +2,9 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An analytics page receives 10,000 records in a few hundred milliseconds, yet the loading indicator disappears only to leave the interface frozen. Scrolling stutters, filters take seconds to respond and the browser’s main thread stays busy long after the network request has finished.",
-    "Because the symptom appears in a React table, the first suggestions are usually to memoise the rows or change the API. Either might help in the right situation, but the fast response has already told us something important: retrieving the data and presenting it are separate pieces of work.",
-    "React still has to create thousands of elements, and the browser still has to build, lay out and paint their DOM nodes even though the viewport can show only a few dozen rows. Before choosing an optimisation, I want to place the cost in that pipeline. Once we know whether time is going to transfer, render, layout or paint, the correct boundary for the fix becomes much clearer.",
+    "When a React table gets slow, the first fixes people reach for are memoising rows or changing the API. Sometimes they help. Often they don’t, because **fetching the data** and **rendering it** are two different costs.",
+    "Fetching 10,000 records can take a few hundred milliseconds. Rendering them means React creating thousands of elements, and the browser laying out and painting every DOM node, even though the screen only shows a few dozen rows.",
+    "In this article, I’ll show how to work out which part of that pipeline is slow, when **virtualisation** is the right fix and when the better answer is not sending 10,000 rows to the browser at all.",
   ],
   sections: [
     {
@@ -12,7 +12,7 @@ export const content: ThoughtArticleContent = {
       blocks: [
         {
           type: "p",
-          text: "This is the implementation I see most often, including in my own work:",
+          text: "This is the most common implementation:",
         },
         {
           type: "code",

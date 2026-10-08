@@ -1,6 +1,6 @@
 {
   "10000-concurrent-database-connections": {
-    "sha256": "917709657dea11634520ac4aec78f3446c26341ba680ef6926d7d851841a4d49",
+    "sha256": "8581ca3cabd6b27815a7e1d79187396c4c4c9a10ade64ec0578f7943ba47f98d",
     "headings": [
       "What a higher limit lets in",
       "A pool helps until its size becomes the limit",
@@ -12,7 +12,7 @@
     ]
   },
   "burst-traffic": {
-    "sha256": "579daa4f63b8eba1a2c31c629efd0b71eda3d36fe704bb0af61b6b770127c99d",
+    "sha256": "3e4ae9ab77bcc9691fde788dc372392fd2a3211034edafc797f822b72e7281e7",
     "headings": [
       "When more servers help",
       "Every layer has its own limit",
@@ -24,7 +24,7 @@
     ]
   },
   "design-systems-remove-decisions": {
-    "sha256": "d0b7765cc6bbfe247a3251c33ae0a5f4b784a862ea7f4bb4771a102b8f476e0e",
+    "sha256": "c25dbbed188b3b543768a9e42b8321ba3ca00349d86c37e504fdf69aa1d8f783",
     "headings": [
       "When every pattern becomes a component",
       "Abstraction arrived before repetition",
@@ -36,7 +36,7 @@
     ]
   },
   "empty-state-first": {
-    "sha256": "93a19097c2f4cc728f49f70dbd2679f3ef9f0612cdec207a19accdf66e1773ff",
+    "sha256": "b15fedd80ad82829bc41859cf60fbb2fc6c89e82255f4eccad7bcd08cf661ae2",
     "headings": [
       "A placeholder is not an explanation",
       "“Empty” is not one condition",
@@ -56,7 +56,7 @@
     ]
   },
   "idempotency-matters": {
-    "sha256": "df365de3272ed92ba3297ae384befa669a04b5e8a2581bfe496d3532e2f03583",
+    "sha256": "00c686723a57c58ac31961eaf20a8f7c279fbfbbfc8a5fb63f430f670e5c2ef8",
     "headings": [
       "How the second request still arrives",
       "Delivery and effect are different things",
@@ -69,7 +69,7 @@
     ]
   },
   "logging-under-load": {
-    "sha256": "da9f5394ecccb1a126ba3c1e32060d53d83dd3f268e1cebd0370a34022ab8cfb",
+    "sha256": "4c5b3db86e82146a9fe451e733a88514de520a16bd0615889aeb68ca79d2f57c",
     "headings": [
       "Why log volume rises with failure",
       "Not every log has the same value",
@@ -82,7 +82,7 @@
     ]
   },
   "memory-inclusion": {
-    "sha256": "a0bf85ccac2121188e54d005208632dfc94eedd89ea9f698339216c17ed81c14",
+    "sha256": "53f058b7b71c4e788967d36d95088c2b92fc6426f3e1e24f059a385a670c3c63",
     "headings": [
       "Why “remember everything” goes wrong",
       "What is the user allowing us to keep?",
@@ -96,7 +96,7 @@
     ]
   },
   "rate-limiting-strategy": {
-    "sha256": "b5da22a6246faa294219cd1708684cf90ab8568d68de801f7306e92a43098377",
+    "sha256": "468317cb0d2a1ebbd919d13a5cc12e1100af9995b9ee5054cb715397a39fada9",
     "headings": [
       "One count for very different work",
       "What each route is protecting",
@@ -112,7 +112,7 @@
     ]
   },
   "responsive-not-shrinking": {
-    "sha256": "e4654c7c69403b022b70f833670c5e24faa00be7329eef72b6e757510da0d7c9",
+    "sha256": "59fc361b0c63eb13981dcd33d341633b74468b4a6b643c981f979a28f9499341",
     "headings": [
       "Stacking turns order into a decision",
       "Smaller screens expose unclear priority",
@@ -124,7 +124,7 @@
     ]
   },
   "spacing-information-architecture": {
-    "sha256": "62b5c92bd27aa66e169abc9e417cbcc4ead3b0942b60e9f084d517bc7b69b55b",
+    "sha256": "c704394b8bc2c0f1a10cda5581bf0d65ba85ccab3c875df4a35a16473ae66bbe",
     "headings": [
       "What spacing can do",
       "The screen has not decided what is grouped",
@@ -135,7 +135,7 @@
     ]
   },
   "visual-hierarchy": {
-    "sha256": "0ee5ed11bc418381ab2cb10ca6549f05978ac41878a09d91a7e7035739468f95",
+    "sha256": "97707e2b7593e1ba02c80ba8621033605b9b534328cf79f790ed21eb5e6b30f6",
     "headings": [
       "Actions with different consequences",
       "What matters in this state",
@@ -146,7 +146,7 @@
     ]
   },
   "what-10000-rows-actually-means": {
-    "sha256": "a4a9d0bc3e77ebfc79fe93eed5d35b096b3d96bd01258d8990916835644a7656",
+    "sha256": "70d2531c4b62270c54409a8e03a331ea48b5f21913239f437fd91f9b8f265fcd",
     "headings": [
       "Ten thousand is a rendering problem",
       "Measure before choosing the optimisation",
@@ -156,7 +156,7 @@
     ]
   },
   "where-request-time-goes": {
-    "sha256": "8cff4e02cba538a76ec45692917ed36a6e4d8863d86ddbbbe7dec441a93e1081",
+    "sha256": "289fa26b667b772a6b94bab24ac9cca6958808e7ee56f68420c4c2c2e2defdfd",
     "headings": [
       "Where the time actually goes",
       "Waiting accumulates before failure appears",

@@ -2,12 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A team is designing a job-application tracker, and the mock-up looks convincing: applications are moving through stages, follow-ups are lined up for the week and a chart shows how responses are trending.",
-    "There is only one problem. A new user will see none of it. On their first visit there are no applications, no follow-ups and no history from which to infer what the product expects them to do.",
-    "Because the populated screen demonstrates the long-term value so well, the natural plan is:",
-    "“Build the populated experience first; we will add an empty state later.”",
-    "That sounds efficient, but it postpones the moment when the product has to explain itself. If the first useful action is unclear, the user never reaches the rich dashboard we designed for them.",
-    "Working through the empty state first reveals what someone needs to understand, what they must provide and how quickly the product can return value. It is not decoration for a screen without data; it is the first real version of the workflow.",
+    "Most products get designed from the full screen first: the dashboard packed with data that shows the product working. It’s the version that looks best in a mock-up, so it’s usually the one that gets built first.",
+    "But it isn’t the screen a new user sees. On day one there’s no data, and the product has to explain itself with nothing to show.",
+    "That’s where **the empty state** comes in. It isn’t a placeholder for missing data; it’s the **first real version of the workflow**.",
+    "In this article, I’ll walk through why it’s worth designing first, the different kinds of “empty” a product has to tell apart and what the empty state reveals about the rest of the product.",
   ],
   sections: [
     {
@@ -97,7 +95,7 @@ Your next scheduled action is Thursday.`,
       blocks: [
         {
           type: "p",
-          text: "The empty state should begin with the user’s next meaningful action. For the tracker, a first-use dashboard might say:",
+          text: "The empty state should begin with the user’s next meaningful action. For a job-application tracker, a first-use dashboard might say:",
         },
         {
           type: "code",

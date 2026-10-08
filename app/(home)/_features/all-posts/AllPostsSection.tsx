@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { formatMonthDayYear } from "@/lib/format-date";
+
 import { ThoughtTags } from "../thoughts-index/ThoughtTags";
 import { listedThoughts } from "../thoughts-index/thoughts";
 
@@ -20,7 +22,7 @@ export function AllPostsSection() {
                 <ThoughtTags thought={post} className="allPostsTags" />
               </span>
               <time className="allPostsDate" dateTime={post.dateTime}>
-                {post.date}
+                {formatMonthDayYear(post.dateTime)}
               </time>
             </Link>
           </li>

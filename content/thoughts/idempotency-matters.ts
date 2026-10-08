@@ -2,17 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A customer completes a booking, sees the confirmation and then receives the same email again. In the admin view, the booking appears twice even though the customer insists they pressed the button once.",
-    "The interface offers an easy explanation:",
-    "“The user clicked the button twice.”",
-    "So the team reaches for a sensible first fix:",
-    "“Disable the button after the first click.”",
-    "Disabling the button improves feedback and prevents one source of duplicate requests. It does not explain why the server received the operation twice after a timeout, why a queue redelivered a message or why a provider sent the same webhook again. Those are normal behaviours in distributed systems, not unusual user mistakes.",
-    "Once delivery can repeat, preventing the second click is no longer the central problem. The real question is not:",
-    "“How do we stop someone clicking twice?”",
-    "It is:",
-    "“What must remain true if this operation arrives more than once?”",
-    "That question moves the investigation from the button to the business operation, where duplicate safety can actually be guaranteed.",
+    "Sooner or later, every product that takes bookings or payments sees the same thing happen: one action, two records. A customer gets the confirmation email twice, and the admin view shows two bookings, even though they’re sure they only pressed the button once.",
+    "The quick fix is to **disable the button after the first click**. That’s worth doing, because it improves feedback and removes one source of duplicates. But it doesn’t explain the rest. Servers receive the same request twice after a timeout, queues redeliver messages and payment providers resend webhooks. None of that is a user mistake. It’s normal behaviour for systems that would rather retry than lose work.",
+    "That’s where **idempotency** comes in. Instead of asking how to stop someone clicking twice, it asks **what must stay true when the same operation arrives more than once**.",
+    "In this article, we’ll follow the second request from the button to the database and look at how to make a repeated operation safe.",
   ],
   sections: [
     {
