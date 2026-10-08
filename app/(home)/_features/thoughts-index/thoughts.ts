@@ -7,22 +7,23 @@ export const thoughtCategories = [
 
 export type ThoughtCategorySlug = (typeof thoughtCategories)[number]["slug"];
 
-export type ThoughtPost = {
+type ThoughtTags = [string, string, string, ...string[]];
+
+type ThoughtRecord = {
   slug: string;
   category: Exclude<ThoughtCategorySlug, "all">;
   overlayTitle: string;
-  overlayLines?: [string, string, string];
-  date: string;
-  dateTime: string;
-  title: string;
+  title?: string;
   description: string;
-  tags: [string, string, string, ...string[]];
-  href: string;
+  dateTime: string;
+  tags: ThoughtTags;
+  hasContextNote?: boolean;
 };
 
-export type FeaturedThought = ThoughtPost & {
-  overlayLines: [string, string, string];
-  image: string;
+export type ThoughtPost = Omit<ThoughtRecord, "title"> & {
+  title: string;
+  href: string;
+  isFeatured?: boolean;
 };
 
 const categoryTitles = new Map<ThoughtCategorySlug, string>(
@@ -37,233 +38,206 @@ export function thoughtPath(slug: string) {
   return `/thoughts/${slug}`;
 }
 
-export const featuredInvestigationSlug = "what-10000-rows-actually-means";
-export const blueCover = "/images/editorial/darkblue-card.jpg";
-export const tealCover = "/images/editorial/darkblue-green-card.jpg";
 export const renderingHero = "/images/editorial/react-rendering-hero.png";
 
-export const featuredThoughts: FeaturedThought[] = [
+const thoughtRecords: ThoughtRecord[] = [
   {
     slug: "where-request-time-goes",
     category: "system-design",
     overlayTitle: "When CPU looks fine but requests still stall",
-    overlayLines: [
-      "When CPU looks fine",
-      "but requests still",
-      "stall",
-    ],
-    date: "24 Sept 2026",
+    title: "Tail latency and the waits a CPU profile misses",
+    description: "Where time goes when utilisation looks fine",
     dateTime: "2026-09-24",
-    title: "Tail latency, request timelines and the waits a CPU profile misses",
-    description:
-      "Finding where request time accumulates when the obvious utilisation metrics look healthy",
     tags: ["tail latency", "tracing", "queueing"],
-    href: thoughtPath("where-request-time-goes"),
-    image: blueCover,
+    hasContextNote: true,
   },
-  {
-    slug: "rate-limiting-strategy",
-    category: "system-design",
-    overlayTitle:
-      "Why “100 requests per minute” is not a rate-limiting strategy",
-    overlayLines: [
-      "Why “100 requests per",
-      "minute” is not a",
-      "rate-limiting strategy",
-    ],
-    date: "25 Jun 2026",
-    dateTime: "2026-06-25",
-    title: "Token buckets, fairness and the cost of saying no",
-    description:
-      "Admission control begins with resource, identity, cost and recovery",
-    tags: ["rate limiting", "fairness", "admission control"],
-    href: thoughtPath("rate-limiting-strategy"),
-    image: blueCover,
-  },
-];
-
-export const gridThoughts: ThoughtPost[] = [
-  {
-    slug: "hicks-law",
-    category: "design",
-    overlayTitle: "Why more options can make a simple task feel harder",
-    date: "2 Sept 2026",
-    dateTime: "2026-09-02",
-    title: "Why more options can make a simple task feel harder",
-    description:
-      "Using hierarchy, defaults and progressive disclosure to make decisions easier",
-    tags: ["usability", "defaults", "decision-making"],
-    href: thoughtPath("hicks-law"),
-  },
-  {
-    slug: "burst-traffic",
-    category: "system-design",
-    overlayTitle:
-      "Why adding servers does not automatically survive a traffic spike",
-    date: "19 Aug 2026",
-    dateTime: "2026-08-19",
-    title: "Why adding servers does not automatically survive a traffic spike",
-    description: "What breaks first when traffic is not a smooth line",
-    tags: ["queues", "backpressure", "retries"],
-    href: thoughtPath("burst-traffic"),
-  },
-  {
-    slug: "memory-inclusion",
-    category: "product",
-    overlayTitle: "When product memory becomes surveillance",
-    date: "28 Jul 2026",
-    dateTime: "2026-07-28",
-    title: "Keeping context without making the product feel haunted",
-    description:
-      "How much a product should remember, and when remembering is worse",
-    tags: ["personalisation", "context", "privacy"],
-    href: thoughtPath("memory-inclusion"),
-  },
-];
-
-export const listedThoughts: ThoughtPost[] = [
   {
     slug: "visual-hierarchy",
     category: "design",
     overlayTitle: "Why making it bigger does not create visual hierarchy",
-    date: "Sept 22 2026",
+    description: "When everything asks for attention, nothing gets it.",
     dateTime: "2026-09-22",
-    title: "Why making it bigger does not create visual hierarchy",
-    description: "If everything asks for attention, nothing gets priority.",
     tags: ["hierarchy", "typography", "layout"],
-    href: thoughtPath("visual-hierarchy"),
   },
   {
     slug: "idempotency-matters",
     category: "system-design",
     overlayTitle: "Why disabling the button did not stop the duplicate request",
-    date: "Sept 15 2026",
+    description: "Retries, redelivery and the server's invariant.",
     dateTime: "2026-09-15",
-    title: "Why disabling the button did not stop the duplicate request",
-    description:
-      "Retries, duplicate delivery and the invariant the server must protect.",
     tags: ["concurrency", "idempotency", "databases"],
-    href: thoughtPath("idempotency-matters"),
+    hasContextNote: true,
   },
   {
     slug: "spacing-information-architecture",
     category: "design",
     overlayTitle:
       "Why adding more whitespace does not fix an unclear interface",
-    date: "Sept 8 2026",
+    description: "Proximity explains structure before a border does.",
     dateTime: "2026-09-08",
-    title: "Why adding more whitespace does not fix an unclear interface",
-    description: "Proximity can explain structure before a border ever does.",
     tags: ["spacing", "grouping", "layout"],
-    href: thoughtPath("spacing-information-architecture"),
+  },
+  {
+    slug: "hicks-law",
+    category: "design",
+    overlayTitle: "Why more options can make a simple task feel harder",
+    description: "Defaults and disclosure make choices easier",
+    dateTime: "2026-09-02",
+    tags: ["usability", "defaults", "decision-making"],
   },
   {
     slug: "what-10000-rows-actually-means",
     category: "system-design",
     overlayTitle: "What 10,000 rows actually means for a React interface",
-    date: "Aug 27 2026",
+    description: "Rendering 10,000 rows is a different problem.",
     dateTime: "2026-08-27",
-    title: "What 10,000 rows actually means for a React interface",
-    description:
-      "Rendering 10,000 rows is a different problem from returning 10,000 records.",
     tags: ["react", "virtualisation", "pagination"],
-    href: thoughtPath("what-10000-rows-actually-means"),
+    hasContextNote: true,
   },
   {
     slug: "burst-traffic",
     category: "system-design",
     overlayTitle:
       "Why adding servers does not automatically survive a traffic spike",
-    date: "Aug 19 2026",
+    description: "Find the constrained resource before scaling out.",
     dateTime: "2026-08-19",
-    title: "Why adding servers does not automatically survive a traffic spike",
-    description:
-      "Finding the constrained resource before scaling the application tier.",
     tags: ["queues", "backpressure", "retries"],
-    href: thoughtPath("burst-traffic"),
+    hasContextNote: true,
   },
   {
     slug: "empty-state-first",
     category: "product",
     overlayTitle: "Why the empty state should come before the happy path",
-    date: "Aug 14 2026",
+    description: "Design the first visit before the full dashboard.",
     dateTime: "2026-08-14",
-    title: "Why the empty state should come before the happy path",
-    description: "A dashboard isn't finished when the mock data looks good.",
     tags: ["empty states", "error handling", "ux writing"],
-    href: thoughtPath("empty-state-first"),
   },
   {
     slug: "10000-concurrent-database-connections",
     category: "system-design",
     overlayTitle: "Why 10,000 database connections is not a database setting",
-    date: "Jul 30 2026",
+    description: "Pools, hold time and where excess work waits.",
     dateTime: "2026-07-30",
-    title: "Why 10,000 database connections is not a database setting",
-    description:
-      "Connection pools, transaction time and where excess work should wait.",
     tags: ["connection pooling", "postgres", "dynamodb"],
-    href: thoughtPath("10000-concurrent-database-connections"),
+    hasContextNote: true,
+  },
+  {
+    slug: "memory-inclusion",
+    category: "product",
+    overlayTitle: "When product memory becomes surveillance",
+    title: "Keeping context without making the product feel haunted",
+    description: "What to remember, and when to forget",
+    dateTime: "2026-07-28",
+    tags: ["personalisation", "context", "privacy"],
   },
   {
     slug: "responsive-not-shrinking",
     category: "design",
     overlayTitle:
       "Why shrinking the desktop does not make a design responsive",
-    date: "Jul 16 2026",
+    description: "Smaller screens force you to decide what matters.",
     dateTime: "2026-07-16",
-    title: "Why shrinking the desktop does not make a design responsive",
-    description: "Smaller screens force you to decide what actually matters.",
     tags: ["responsive", "breakpoints", "layout"],
-    href: thoughtPath("responsive-not-shrinking"),
   },
   {
     slug: "rate-limiting-strategy",
     category: "system-design",
     overlayTitle:
       "Why “100 requests per minute” is not a rate-limiting strategy",
-    date: "Jun 25 2026",
+    description: "Rate limits start with resource, identity and cost.",
     dateTime: "2026-06-25",
-    title: "Why “100 requests per minute” is not a rate-limiting strategy",
-    description:
-      "Admission control begins with resource, identity, cost and recovery.",
     tags: ["rate limiting", "fairness", "admission control"],
-    href: thoughtPath("rate-limiting-strategy"),
+    hasContextNote: true,
   },
   {
     slug: "design-systems-remove-decisions",
     category: "design",
     overlayTitle: "Why a component library can make product delivery slower",
-    date: "Jun 9 2026",
+    description: "Reuse helps only when the decision is the same.",
     dateTime: "2026-06-09",
-    title: "Why a component library can make product delivery slower",
-    description:
-      "Reuse is useful when the underlying decision is actually the same.",
     tags: ["design systems", "components", "consistency"],
-    href: thoughtPath("design-systems-remove-decisions"),
   },
   {
     slug: "logging-under-load",
     category: "system-design",
-    overlayTitle:
-      "Why buffering every log can make an incident worse",
-    date: "Apr 30 2026",
+    overlayTitle: "Why buffering every log can make an incident worse",
+    description: "Keep the evidence without starving the service.",
     dateTime: "2026-04-30",
-    title:
-      "Why buffering every log can make an incident worse",
-    description:
-      "Delivery guarantees, bounded buffers and protecting the primary workload.",
     tags: ["logging", "observability", "backpressure"],
-    href: thoughtPath("logging-under-load"),
+    hasContextNote: true,
   },
 ];
+
+export const retiredThoughtSlugs: Readonly<Record<string, string>> = {
+  "debug-peak-traffic": "where-request-time-goes",
+  "responsive-ten-thousand-records": "where-request-time-goes",
+  "rate-limiter-1m-rps": "rate-limiting-strategy",
+  "streaming-windows": "rate-limiting-strategy",
+  "aggregate-logs-10000-servers": "logging-under-load",
+};
+
+const recordsBySlug = new Map(
+  thoughtRecords.map((record) => [record.slug, record]),
+);
+
+function getThoughtRecord(slug: string): ThoughtRecord {
+  const record = recordsBySlug.get(slug);
+  if (!record) {
+    throw new Error(`Unknown thought slug: "${slug}"`);
+  }
+  return record;
+}
+
+export function getThoughtPost(slug: string): ThoughtPost {
+  const { title, ...record } = getThoughtRecord(slug);
+  return {
+    ...record,
+    title: title ?? record.overlayTitle,
+    href: thoughtPath(slug),
+  };
+}
+
+export const featuredThoughts: ThoughtPost[] = [
+  {
+    ...getThoughtPost("where-request-time-goes"),
+    isFeatured: true,
+  },
+  {
+    ...getThoughtPost("rate-limiting-strategy"),
+    isFeatured: true,
+    title: "Token buckets, fairness and the cost of saying no",
+  },
+];
+
+export const gridThoughts: ThoughtPost[] = [
+  getThoughtPost("hicks-law"),
+  {
+    ...getThoughtPost("burst-traffic"),
+    description: "What breaks first when traffic is not a smooth line",
+  },
+  getThoughtPost("memory-inclusion"),
+];
+
+export const listedThoughts: ThoughtPost[] = [
+  "visual-hierarchy",
+  "idempotency-matters",
+  "spacing-information-architecture",
+  "what-10000-rows-actually-means",
+  "burst-traffic",
+  "empty-state-first",
+  "10000-concurrent-database-connections",
+  "responsive-not-shrinking",
+  "rate-limiting-strategy",
+  "design-systems-remove-decisions",
+  "logging-under-load",
+].map(getThoughtPost);
+
+const placedSlugs = new Set(
+  [...featuredThoughts, ...gridThoughts].map((thought) => thought.slug),
+);
 
 export const allThoughts: ThoughtPost[] = [
   ...featuredThoughts,
   ...gridThoughts,
-  ...listedThoughts.filter(
-    (post) =>
-      !featuredThoughts.some((thought) => thought.slug === post.slug) &&
-      !gridThoughts.some((thought) => thought.slug === post.slug),
-  ),
+  ...listedThoughts.filter((thought) => !placedSlugs.has(thought.slug)),
 ];

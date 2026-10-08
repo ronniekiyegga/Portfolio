@@ -2,13 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A dashboard is fast all morning, then a reporting deadline arrives and a large customer’s team signs in together. The system does not crash; it simply starts to stall. Some pages eventually load, others time out, and restarting an application instance helps only briefly.",
-    "CPU is not obviously saturated and the database is not pinned at 100%, so the investigation naturally begins in the application code:",
-    "“Which line of code is taking too long?”",
-    "Profiling is useful when a function is doing expensive work. Here, however, the slowdown appears only when many requests overlap, which suggests that time may be accumulating somewhere a CPU profile will not show.",
-    "The more revealing question is:",
-    "“Where is work waiting?”",
-    "Following that waiting time—from application workers to connection pools, locks, queues and external providers—turns a vague peak-traffic failure into a capacity problem we can reason about.",
+    "Some systems don’t crash under load. **They stall**. Pages that were fast all morning start hanging once lots of people sign in at the same time. Some requests eventually load, others time out, and restarting a server only helps for a while.",
+    "But CPU isn’t maxed out and the database isn’t pinned at 100%, so the natural first step is to profile the code and look for the slow line.",
+    "Profiling helps when a function is doing expensive work. When the slowdown only appears as requests overlap, though, the time is usually going somewhere a CPU profile can’t see: requests waiting for a connection, a lock, a queue or another service.",
+    "So instead of asking which line of code is slow, it’s more useful to ask **where the work is waiting**. Let’s follow that waiting time through a request and see what it tells you.",
   ],
   sections: [
     {

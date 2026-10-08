@@ -20,21 +20,6 @@ export type ToolDefinition = {
   figure?: ToolFigureId;
 };
 
-export const sectionLinks = [
-  { label: "About", href: "#about-heading", figure: "book", hideOnMobile: false },
-  { label: "Experience", href: "#experience-heading", figure: "analytics", hideOnMobile: false },
-  { label: "Education", href: "#education-heading", figure: "graduate", hideOnMobile: false },
-  { label: "Design Case Studies", href: "#interfaces-heading", figure: "usecases", hideOnMobile: true },
-] as const;
-
-export const GITHUB_URL =
-  process.env.NEXT_PUBLIC_GITHUB_URL ?? "https://github.com/ronniekiyegga";
-
-export const socialLinks = [
-  { label: "GitHub", href: GITHUB_URL },
-  { label: "LinkedIn", href: "https://linkedin.com/in/ronniekiyegga" },
-] as const;
-
 export const tools: ToolDefinition[] = [
   {
     name: "Figma",

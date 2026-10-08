@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An application page contains everything the user asked for: status, interview details, a next action, supporting notes and controls to edit, archive or delete the record. Nothing is missing, yet people still pause because they cannot tell where to begin.",
-    "The easiest fix to reach for is visual:",
-    "“Make the important thing bigger.”",
-    "The primary button grows, the heading becomes heavier and the status card gains a stronger border. Then the warning needs attention too, so it becomes brighter. Soon several elements are competing to be first and the page feels louder without becoming clearer.",
-    "The issue was never the size of one component. The page had not decided what matters in the user’s current situation. Visual hierarchy begins with that decision; size, contrast, position and spacing are only ways of expressing it.",
+    "A page can contain everything the user needs and still leave them stuck. Picture an application page with the status, interview details, a next action, notes and controls to edit, archive or delete. Nothing is missing, yet people pause because they can’t tell where to start.",
+    "The easiest fix to reach for is visual: **make the important thing bigger**. So the main button grows, the heading gets heavier and the status card gets a stronger border. Then the warning needs attention too, so it gets brighter. Soon everything is competing to be first, and the page is louder without being any clearer.",
+    "The problem was never the size of one component. The page hadn’t decided **what matters in the user’s current situation**, and size, contrast, position and spacing are only ways of expressing that decision.",
+    "Here’s how I’d make that decision first and then let the visual treatment follow.",
   ],
   sections: [
     {

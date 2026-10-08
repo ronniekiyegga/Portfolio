@@ -2,14 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A settings page feels cramped. Labels, controls, help text and destructive actions run into one another, so the design review produces an uncomplicated suggestion:",
-    "“Give everything more room.”",
-    "Extra padding makes the page calmer, but it also pushes related controls farther apart. The billing action is still mixed with profile settings, and the destructive action still looks like part of the routine save flow. The screen is larger without being easier to understand.",
-    "Whitespace works because proximity communicates relationship. If the relationships are unclear, changing the gap cannot decide them for us. The useful question is not:",
-    "“How much space should we add?”",
-    "It is:",
-    "“Which things belong together, and what relationship should the user understand?”",
-    "Once that structure is explicit, spacing can reinforce it instead of trying to compensate for its absence.",
+    "When a screen feels cramped, the most common design-review suggestion is to **give everything more room**. Take a settings page where labels, controls, help text and destructive actions all run into one another.",
+    "More padding does make it calmer. But it also pushes related controls further apart. The billing action is still mixed in with the profile settings, and the delete button still looks like part of the normal save flow. The page is bigger without being any clearer.",
+    "That’s because whitespace works through **proximity**: space tells you which things belong together. If those relationships haven’t been decided, changing the gaps can’t decide them for you.",
+    "In this article, I’ll look at how to settle what belongs together first, and then use spacing to make that structure obvious.",
   ],
   sections: [
     {
@@ -57,7 +53,7 @@ Cancel`,
       blocks: [
         {
           type: "p",
-          text: "Consider the settings page from the review:",
+          text: "Consider that settings page:",
         },
         {
           type: "code",

@@ -19,7 +19,7 @@ export function RelatedThoughts({ slug }: { slug: string }) {
       </h2>
       <div className="thoughtsGrid">
         {thoughts.map((thought) => (
-          <ThoughtPreviewCard key={thought.slug} thought={thought} cover="grid" />
+          <ThoughtPreviewCard key={thought.slug} thought={thought} layout="grid" />
         ))}
       </div>
     </section>

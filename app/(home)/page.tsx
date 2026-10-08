@@ -4,7 +4,7 @@ import { ExperienceSection } from "./_features/experience/ExperienceSection";
 import { FeaturedThoughtsSection } from "./_features/featured-thoughts/FeaturedThoughtsSection";
 import { IdentitySection } from "./_features/identity/IdentitySection";
 import { InterfacesSection } from "./_features/interfaces/InterfacesSection";
-import { SelectedDesignSection } from "./_features/selected-design/SelectedDesignSection";
+import { SelectedWorkSection } from "./_features/selected-design/SelectedWork";
 import { ToolsSection } from "./_features/tools/ToolsSection";
 
 export const revalidate = 60;
@@ -19,7 +19,7 @@ export default function Home() {
       <AboutSection />
       <ToolsSection />
       <ExperienceSection />
-      <SelectedDesignSection />
+      <SelectedWorkSection />
       <EducationSection />
       <InterfacesSection />
     </div>

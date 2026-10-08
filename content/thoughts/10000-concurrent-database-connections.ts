@@ -2,12 +2,11 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "Say a dashboard that served a few hundred people is about to roll out across a much larger organisation. The launch plan says 10,000 users, and the first capacity review quickly lands on the database.",
-    "“Can this handle 10,000 concurrent users?”",
-    "Someone opens the database configuration and proposes the neatest possible answer:",
-    "“Should we increase the maximum connection count to 10,000?”",
-    "The logic sounds reasonable: more users mean more simultaneous work, so the database must need more simultaneous connections. But a person can leave a browser open for an hour while making only a handful of requests, and each of those requests may hold a connection for just a few milliseconds.",
-    "Before changing the setting, we need to understand how often work reaches the database, how long it holds a connection and what the database can actually execute in parallel. Otherwise we have not increased useful capacity; we have only made it easier to send too much work to the same bottleneck.",
+    "When an application grows from a few hundred users to thousands, the database is usually the first thing people worry about. And the neatest-looking fix is a setting: **raise the maximum connection count** to match the number of users.",
+    "It sounds logical. More users means more simultaneous work, so surely the database needs more simultaneous connections.",
+    "But **users and connections aren’t the same thing**. Someone can keep a tab open for an hour while making only a handful of requests, and each request may hold a connection for just a few milliseconds.",
+    "So the real question isn’t how many users you have. It’s how much work actually reaches the database at once, how long each piece holds a connection and what the database can run in parallel.",
+    "Let’s work through why a higher limit can make things worse, how a **connection pool** changes the picture and how to tell a slow query from a request that’s simply waiting.",
   ],
   sections: [
     {

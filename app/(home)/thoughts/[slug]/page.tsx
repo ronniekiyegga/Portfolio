@@ -6,14 +6,10 @@ import {
   getAllThoughtArticleSlugs,
   getThoughtArticle,
 } from "../../_features/thoughts-index/thought-articles";
-
-const thoughtRedirects: Record<string, string> = {
-  "debug-peak-traffic": "where-request-time-goes",
-  "responsive-ten-thousand-records": "where-request-time-goes",
-  "rate-limiter-1m-rps": "rate-limiting-strategy",
-  "streaming-windows": "rate-limiting-strategy",
-  "aggregate-logs-10000-servers": "logging-under-load",
-};
+import {
+  retiredThoughtSlugs,
+  thoughtPath,
+} from "../../_features/thoughts-index/thoughts";
 
 export function generateStaticParams() {
   return getAllThoughtArticleSlugs();
@@ -25,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getThoughtArticle(thoughtRedirects[slug] ?? slug);
+  const article = getThoughtArticle(retiredThoughtSlugs[slug] ?? slug);
 
   if (!article) {
     return { title: "Thought not found" };
@@ -45,8 +41,9 @@ export default async function ThoughtArticlePage({
 }) {
   const { slug } = await params;
 
-  if (thoughtRedirects[slug]) {
-    permanentRedirect(`/thoughts/${thoughtRedirects[slug]}`);
+  const replacementSlug = retiredThoughtSlugs[slug];
+  if (replacementSlug) {
+    permanentRedirect(thoughtPath(replacementSlug));
   }
 
   const article = getThoughtArticle(slug);

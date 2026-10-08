@@ -3,7 +3,7 @@ import Link from "next/link";
 import { UserRoundPlus } from "lucide-react";
 
 import { SpecularPill } from "@/app/components/SpecularButton";
-import { sectionLinks } from "@/lib/constants";
+import { sectionLinks } from "./section-links";
 import { cn } from "@/lib/utils";
 
 import {

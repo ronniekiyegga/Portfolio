@@ -36,7 +36,9 @@ Next.js (App Router), React, TypeScript and Tailwind CSS, deployed on Vercel.
 - `content/thoughts/` — one source file per article; a duplicated slug fails
   the build.
 - `shared/components/` — the site shell, navigation and reusable UI.
-- `lib/` — utilities and the Redis-backed visitor counter.
+- `shared/hooks/` — React hooks used by more than one feature.
+- `lib/` — cross-feature utilities, site links and the Redis-backed visitor
+  counter.
 
 ## Run locally
 

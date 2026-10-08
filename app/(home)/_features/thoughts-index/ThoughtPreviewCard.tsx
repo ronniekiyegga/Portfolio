@@ -1,21 +1,25 @@
 import Link from "next/link";
 
-import { GradientDot } from "./GradientDot";
+import { formatDayMonthYear } from "@/lib/format-date";
+
 import { thoughtCategoryTitle, type ThoughtPost } from "./thoughts";
 
 export function ThoughtPreviewCard({
   thought,
-  cover,
+  layout,
 }: {
   thought: ThoughtPost;
-  cover: "featured" | "grid";
+  layout: "featured" | "grid";
 }) {
-  const isFeatured = cover === "featured";
+  const isFeaturedLayout = layout === "featured";
+  const cardClassName = isFeaturedLayout
+    ? "featuredCard"
+    : `thoughtsGridCard${thought.isFeatured ? " is-featured" : ""}`;
 
   return (
     <article className="thoughtsFeature">
       <Link
-        className={isFeatured ? "featuredCard" : "thoughtsGridCard"}
+        className={cardClassName}
         href={thought.href}
         aria-label={`Read ${thought.overlayTitle}`}
       >
@@ -23,15 +27,7 @@ export function ThoughtPreviewCard({
           <span className="featuredDate">
             {thoughtCategoryTitle(thought.category)}
           </span>
-          <h3>
-            {isFeatured && thought.overlayLines
-              ? thought.overlayLines.map((line) => (
-                  <span className="featuredTitleLine" key={line}>
-                    {line}
-                  </span>
-                ))
-              : thought.overlayTitle}
-          </h3>
+          <h3>{thought.overlayTitle}</h3>
         </span>
       </Link>
 
@@ -39,14 +35,18 @@ export function ThoughtPreviewCard({
         <div className="thoughtsFeatureBody">
           <p className="thoughtsFeatureMeta">
             <strong>{thoughtCategoryTitle(thought.category)}</strong>
-            <GradientDot />
-            <time dateTime={thought.dateTime}>{thought.date}</time>
+            <span aria-hidden>•</span>
+            <time dateTime={thought.dateTime}>
+              {formatDayMonthYear(thought.dateTime)}
+            </time>
           </p>
-          <h3>
-            <Link href={thought.href} title={thought.title}>
-              {thought.title}
-            </Link>
-          </h3>
+          {isFeaturedLayout ? (
+            <h3>
+              <Link href={thought.href} title={thought.title}>
+                {thought.title}
+              </Link>
+            </h3>
+          ) : null}
           <p className="thoughtsFeatureCopy">{thought.description}</p>
         </div>
 

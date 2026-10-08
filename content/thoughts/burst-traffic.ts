@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A booking window opens at 9am and thousands of users arrive within the same few minutes. Pages that were fast during normal traffic begin to hang, while timeouts and retries start climbing.",
-    "The application tier is the most visible part of the system, so the first response is predictable:",
-    "“Add more servers.”",
-    "That works when requests are waiting for application CPU and the dependencies behind it still have room. But every new instance also creates more authentication checks, database queries, cache reads, outbound calls and queue messages. If one of those shared resources is already at its limit, scaling the web tier only helps the system deliver work to the bottleneck faster.",
-    "Before adding capacity, we need to find where requests are actually waiting and decide how much concurrency that resource can safely accept. The useful question is not how quickly we can add servers, but which assumption in the request path fails first when the burst arrives.",
+    "When traffic arrives all at once (a booking window opening, a launch, a sale), pages that were fast a minute ago start to hang, and timeouts and retries begin to climb.",
+    "The obvious response is to **add more servers**. Sometimes that’s exactly right: if requests are waiting for application CPU, more instances help.",
+    "But every new instance also makes more database queries, cache reads, outbound calls and queue messages. If one of those shared resources is already at its limit, adding servers just **delivers work to the bottleneck faster**.",
+    "In this article, I’ll look at how to find the resource that gives out first, why raising every limit makes things worse and what to do with work that doesn’t need to happen straight away.",
   ],
   sections: [
     {

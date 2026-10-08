@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "An external dependency slows down during an incident, requests begin timing out and every affected service starts producing more error logs than usual. Just when the team needs those logs most, the logging destination begins rate-limiting ingestion.",
-    "The instinct is to preserve every clue:",
-    "“Buffer everything until the logging platform recovers.”",
-    "That feels responsible because logs are evidence. The trouble is that the buffer lives on the same machines that are already under pressure. As memory or disk fills, the process doing the buffering consumes more CPU and application threads can begin waiting to write, so the attempt to preserve the incident record starts making the customer-facing incident worse.",
-    "Now the problem is no longer simply how to avoid losing logs. It is how to preserve the evidence that matters without allowing observability to compete with the service it is meant to explain. That forces decisions about priority, bounded waiting, sampling and what the application should do when the logging path is degraded.",
+    "During an incident, every struggling service starts writing more error logs, just when you need them most. And that’s often the moment the logging platform starts rate-limiting what it accepts.",
+    "The natural instinct is to **buffer everything** until it recovers. Logs are evidence, so keeping all of them feels responsible.",
+    "But the buffer lives on the same machines that are already under pressure. As memory or disk fills up, the buffering process takes more CPU and application threads can end up waiting to write. The attempt to preserve the record starts making the incident worse.",
+    "So the real question is how to **keep the evidence that matters** without letting logging compete with the service it’s meant to explain. Let’s look at what that takes: priorities, bounded buffers, sampling and a plan for when the logging path itself is degraded.",
   ],
   sections: [
     {

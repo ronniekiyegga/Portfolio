@@ -2,11 +2,10 @@ import type { ThoughtArticleContent } from "./types";
 
 export const content: ThoughtArticleContent = {
   lede: [
-    "A job-application tracker works well on desktop. A candidate can see each application, its interview timeline, filters and the next action at the same time, and the surrounding context makes each decision easier.",
-    "On a phone, the same layout no longer fits. The first response is usually mechanical:",
-    "“Make everything narrower.”",
-    "The navigation collapses, cards stack and the table squeezes until the desktop composition technically fits. But the relationship between the next action and the interview date may now be several screens apart, while secondary metadata appears before the task the candidate opened the page to complete.",
-    "The viewport has exposed a priority problem rather than a width problem. A responsive design succeeds when the workflow still makes sense after information becomes sequential, touch replaces a pointer and the user has less space and attention—not when every desktop component merely survives at a smaller size.",
+    "Take a job-application tracker that works well on desktop. A candidate can see each application, its interview timeline, the filters and the next action all at once, and that context makes every decision easier.",
+    "On a phone, none of it fits. The usual response is to **make everything narrower**: the navigation collapses, cards stack and the table squeezes until it technically fits.",
+    "But now the next action and the interview date might be several screens apart, and secondary details appear before the thing the candidate opened the page to do.",
+    "That isn’t a width problem. It’s a **priority problem** the smaller screen has exposed. Let’s look at what responsive design actually has to decide once content becomes a single column, touch replaces a pointer and the user has less space and attention.",
   ],
   sections: [
     {

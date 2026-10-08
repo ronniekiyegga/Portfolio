@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { type ToolFigureId, tools } from "@/lib/constants";
+import { type ToolFigureId, tools } from "./tools";
 
 import { ToolCard } from "./ToolCard";
 import {

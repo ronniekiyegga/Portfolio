@@ -6,7 +6,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "@/app/components/ui/breadcrumb";
+} from "@/shared/components/ui/breadcrumb";
 import { formatDate } from "@/lib/format-date";
 import { slugify } from "@/lib/slugify";
 
@@ -16,16 +16,6 @@ import { thoughtCategoryTitle } from "./thoughts";
 import { ThoughtCodeBlock } from "./ThoughtCodeBlock";
 import { ThoughtOnThisPage } from "./ThoughtOnThisPage";
 import { RelatedThoughts } from "./RelatedThoughts";
-
-const operationalContextSlugs = new Set([
-  "what-10000-rows-actually-means",
-  "idempotency-matters",
-  "burst-traffic",
-  "10000-concurrent-database-connections",
-  "rate-limiting-strategy",
-  "logging-under-load",
-  "where-request-time-goes",
-]);
 
 function ThoughtContextNote() {
   return (
@@ -169,6 +159,18 @@ function isStandaloneQuote(text: string) {
   );
 }
 
+function InlineText({ text }: { text: string }) {
+  return text
+    .split(/(\*\*[^*]+\*\*)/)
+    .map((part, index) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <strong key={index}>{part.slice(2, -2)}</strong>
+      ) : (
+        part
+      ),
+    );
+}
+
 function ArticleParagraph({ text }: { text: string }) {
   if (text.trim() === "*") {
     return null;
@@ -178,7 +180,11 @@ function ArticleParagraph({ text }: { text: string }) {
     return <blockquote className="thoughtArticleQuote">{text}</blockquote>;
   }
 
-  return <p>{text}</p>;
+  return (
+    <p>
+      <InlineText text={text} />
+    </p>
+  );
 }
 
 function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
@@ -197,7 +203,9 @@ function ArticleSectionBody({ section }: { section: ThoughtArticleSection }) {
           return (
             <ul key={index}>
               {block.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>
+                  <InlineText text={item} />
+                </li>
               ))}
             </ul>
           );
@@ -340,7 +348,7 @@ export function ThoughtArticleView({ article }: { article: ThoughtArticle }) {
               </section>
             ))}
           </div>
-          {operationalContextSlugs.has(article.slug) ? (
+          {article.hasContextNote ? (
             <ThoughtContextNote />
           ) : null}
         </div>

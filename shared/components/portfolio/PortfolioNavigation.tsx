@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useActiveItemCenter } from "@/shared/hooks/use-active-item-center";
+import { usePinnedNavTop } from "@/shared/hooks/use-pinned-nav-top";
+import { useScrollSpy } from "@/shared/hooks/use-scroll-spy";
 
 const sectionItems = [
   { id: "exploration", label: "Engineering Notes" },
@@ -11,80 +14,22 @@ const sectionItems = [
 ] as const;
 
 const SECTION_IDS = sectionItems.map((item) => item.id);
-
-const NAV_REST_TOP = 220;
-const NAV_PINNED_TOP = 48;
-
-function useActiveSection(enabled: boolean) {
-  const [activeId, setActiveId] = useState<string>(SECTION_IDS[0]);
-
-  useEffect(() => {
-    if (!enabled) return;
-
-    const nodes = SECTION_IDS.map((id) => document.getElementById(id)).filter(
-      (node): node is HTMLElement => node !== null,
-    );
-    if (nodes.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        const nextId = visible[0]?.target.id;
-        if (nextId) setActiveId(nextId);
-      },
-      { rootMargin: "-25% 0px -55% 0px", threshold: [0.15, 0.35, 0.55] },
-    );
-
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, [enabled]);
-
-  return [activeId, setActiveId] as const;
-}
+const ACTIVE_MARK_SIZE = 7.1;
 
 export function PortfolioNavigation() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const navRef = useRef<HTMLElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
-  const [activeId, setActiveId] = useActiveSection(isHome);
-  const [markTop, setMarkTop] = useState(0);
+  const { activeId, scrollToId } = useScrollSpy(SECTION_IDS, isHome);
+  const labelCenter = useActiveItemCenter(
+    linksRef,
+    "[aria-current='location'] .navLinkLabel",
+    `${activeId}:${isHome}`,
+  );
+  const markTop = (labelCenter ?? ACTIVE_MARK_SIZE / 2) - ACTIVE_MARK_SIZE / 2;
 
-  const scrollToSection = (id: string) => {
-    const node = document.getElementById(id);
-    if (!node) return;
-    node.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `#${id}`);
-    setActiveId(id);
-  };
-
-  useLayoutEffect(() => {
-    const root = linksRef.current;
-    const active = root?.querySelector<HTMLElement>("[aria-current='location']");
-    if (!root || !active) return;
-
-    const iconSize = 7.1;
-    const rootBox = root.getBoundingClientRect();
-    const label =
-      active.querySelector<HTMLElement>(".navLinkLabel") ?? active;
-    const textBox = label.getBoundingClientRect();
-    setMarkTop(textBox.top - rootBox.top + (textBox.height - iconSize) / 2);
-  }, [activeId, isHome]);
-
-  useEffect(() => {
-    const nav = navRef.current;
-    if (!nav || !isHome) return;
-
-    const syncTop = () => {
-      nav.style.top = `${Math.max(NAV_PINNED_TOP, NAV_REST_TOP - window.scrollY)}px`;
-    };
-
-    syncTop();
-    window.addEventListener("scroll", syncTop, { passive: true });
-    return () => window.removeEventListener("scroll", syncTop);
-  }, [isHome]);
+  usePinnedNavTop(navRef, isHome);
 
   if (!isHome) return null;
 
@@ -112,7 +57,7 @@ export function PortfolioNavigation() {
               className={cn("navLink", active && "is-active")}
               onClick={(event) => {
                 event.preventDefault();
-                scrollToSection(id);
+                scrollToId(id);
               }}
             >
               <span className="navLinkLabel">{label}</span>
